@@ -11,11 +11,25 @@ const starContainerStyle = {
 };
 
 interface IStarRating {
+  /**
+   * The max of star for rating
+   */
   maxRating?: number;
+  /**
+   * The color of star
+   */
   color?: string;
+  /**
+   * The size of star
+   */
   size?: number;
-  className?: string;
+  /**
+   * The array of message for each star (The length of array must equal with amount of star)
+   */
   messages?: string[];
+  /**
+   * The default rating
+   */
   defaultRating?: number;
 }
 
@@ -23,7 +37,6 @@ export const StarRating = ({
   maxRating = 5,
   color = "#fcc419",
   size = 48,
-  className = "",
   messages = [],
   defaultRating = 0,
 }: IStarRating) => {
@@ -42,7 +55,7 @@ export const StarRating = ({
   };
 
   return (
-    <div style={containerStyle} className={className}>
+    <div style={containerStyle}>
       <div style={starContainerStyle}>
         {Array.from({ length: maxRating }, (_, i) => (
           <span key={i}>

@@ -25,7 +25,6 @@ export const Secondary: Story = {
   args: {
     size: 50,
     maxRating: 5,
-    color: "beach",
     defaultRating: 5,
     messages: ["Worst", "Worse", "Normal", "Good", "Best"],
   },
