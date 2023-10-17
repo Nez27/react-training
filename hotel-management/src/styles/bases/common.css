@@ -1,0 +1,5 @@
+button:has(svg) {
+  line-height: 0;
+
+  cursor: pointer;
+}
