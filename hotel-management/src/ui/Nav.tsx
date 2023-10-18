@@ -4,7 +4,7 @@ import { MdSpaceDashboard } from 'react-icons/md';
 import { HiUsers } from 'react-icons/hi2';
 import { BsHouseDoorFill } from 'react-icons/bs';
 
-const StyledNav = styled.div`
+const StyledNav = styled.nav`
   margin-top: 70px;
   display: flex;
   flex-direction: column;

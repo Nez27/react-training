@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+
+// Components
 import Nav from './Nav';
 
 const StyledSidebar = styled.aside`

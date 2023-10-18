@@ -1,9 +1,14 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
+// Components
 import AppLayout from './ui/AppLayout';
 import User from './pages/User';
 import Dashboard from './pages/Dashboard';
 import Room from './pages/Room';
 import NotFound from './pages/NotFound';
+
+// Constants
+import * as PATH from './constants/path';
 
 function App() {
   return (
@@ -11,12 +16,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
-            <Route index element={<Navigate replace to="user" />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="user" element={<User />} />
-            <Route path="room" element={<Room />} />
+            <Route index element={<Navigate replace to={PATH.USER} />} />
+            <Route path={PATH.DASHBOARD} element={<Dashboard />} />
+            <Route path={PATH.USER} element={<User />} />
+            <Route path={PATH.ROOM} element={<Room />} />
           </Route>
-          <Route path="*" element={<NotFound />} />
+          <Route path={PATH.OTHER_PATH} element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>
