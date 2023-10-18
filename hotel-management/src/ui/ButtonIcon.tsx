@@ -8,7 +8,7 @@ const ButtonIcon = styled.button`
   border-radius: var(--radius-sm);
 
   &:hover {
-    background-color: #f3f4f6;
+    background-color: var(--hover-background-color);
   }
 
   & svg {
