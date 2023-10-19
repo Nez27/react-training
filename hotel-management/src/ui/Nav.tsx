@@ -16,7 +16,7 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   gap: 20px;
   padding: 15px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   transition: all 0.3s;
 
   & svg {

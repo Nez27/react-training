@@ -9,7 +9,7 @@ const Button = styled.button`
   font-weight: 500;
   cursor: pointer;
 
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
 `;
 
 export default Button;
