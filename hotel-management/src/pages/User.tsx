@@ -5,6 +5,8 @@ import Table from '../ui/Table';
 import UserModel from '../models/User';
 import Empty from '../ui/Empty';
 import Menus from '../ui/Menus';
+import { HiSquare2Stack } from 'react-icons/hi2';
+import { HiTrash } from 'react-icons/hi';
 
 const StyledUser = styled.main`
   padding: 20px;
@@ -38,8 +40,8 @@ const UserRow = ({ user }: { user: UserModel }) => {
         <Menus.Toggle id={user.id} />
 
         <Menus.List id={user.id}>
-          <Menus.Button>Edit</Menus.Button>
-          <Menus.Button>Delete</Menus.Button>
+          <Menus.Button icon={<HiSquare2Stack />}>Edit</Menus.Button>
+          <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
         </Menus.List>
       </Menus.Menu>
     </Table.Row>
@@ -135,7 +137,6 @@ const User = () => {
                 <div>Identified Code</div>
                 <div>Phone</div>
                 <div>Room</div>
-                <div>Action</div>
               </Table.Header>
               <Table.Body<UserModel>
                 data={sampleData}

@@ -20,7 +20,18 @@ const StyledButton = styled.button`
 
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+
+  &:hover {
+    background-color: var(--hover-background-color);
+  }
+
+  & svg {
+    width: 18px;
+    height: 18px;
+    color: var(--primary-color);
+    transition: all 0.3s;
+  }
 `;
 
 const StyledToggle = styled.button`
@@ -67,6 +78,12 @@ interface IMenusContext {
   open?: React.Dispatch<React.SetStateAction<string>>;
 }
 
+interface IButton {
+  children?: string;
+  icon?: JSX.Element;
+  onClick?: () => void;
+}
+
 const MenusContext = createContext<IMenusContext>({});
 
 const Menus = ({ children }: { children: JSX.Element }) => {
@@ -110,10 +127,19 @@ const List = ({
   return <StyledList $position={{ x: -10, y: 40 }}> {children}</StyledList>;
 };
 
-const Button = ({ children }: { children: string }): React.JSX.Element => {
+const Button = ({ children, icon, onClick }: IButton): React.JSX.Element => {
+  const { close } = useContext(MenusContext);
+
+  const handleClick = () => {
+    onClick?.();
+    close!();
+  };
+
   return (
     <li>
-      <StyledButton>{children}</StyledButton>
+      <StyledButton onClick={handleClick}>
+        {icon} <span>{children}</span>
+      </StyledButton>
     </li>
   );
 };

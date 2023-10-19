@@ -31,8 +31,11 @@ const StyledRow = styled(CommonRow)`
 
 const StyledHeader = styled(CommonRow)`
   padding: 10px 20px;
+
   border-bottom: 1px solid var(--border-color);
   background-color: var(--header-table-color);
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
 
   font-size: var(--fs-sm);
   text-transform: capitalize;

@@ -5,7 +5,7 @@ export default class User {
     public identifiedCode: string,
     public address: string,
     public phone: string,
-    public roomId: string
+    public roomId: string,
   ) {
     this.id = id;
     this.name = name;
