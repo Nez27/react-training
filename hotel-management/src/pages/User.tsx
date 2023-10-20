@@ -1,12 +1,17 @@
 import styled from 'styled-components';
+import { HiSquare2Stack } from 'react-icons/hi2';
+import { HiTrash } from 'react-icons/hi';
+
+// Components
 import Direction from '../ui/Direction';
 import Button from '../ui/Button';
 import Table from '../ui/Table';
-import UserModel from '../models/User';
 import Empty from '../ui/Empty';
 import Menus from '../ui/Menus';
-import { HiSquare2Stack } from 'react-icons/hi2';
-import { HiTrash } from 'react-icons/hi';
+
+// Models
+import UserModel from '../models/User';
+import { sampleData } from '../constants/sampleData';
 
 const StyledUser = styled.main`
   padding: 20px;
@@ -40,8 +45,18 @@ const UserRow = ({ user }: { user: UserModel }) => {
         <Menus.Toggle id={user.id} />
 
         <Menus.List id={user.id}>
-          <Menus.Button icon={<HiSquare2Stack />}>Edit</Menus.Button>
-          <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+          <Menus.Button
+            icon={<HiSquare2Stack />}
+            onClick={() => alert(`Id: ${user.id}`)}
+          >
+            Edit
+          </Menus.Button>
+          <Menus.Button
+            icon={<HiTrash />}
+            onClick={() => alert(`Id: ${user.id}`)}
+          >
+            Delete
+          </Menus.Button>
         </Menus.List>
       </Menus.Menu>
     </Table.Row>
@@ -49,73 +64,6 @@ const UserRow = ({ user }: { user: UserModel }) => {
 };
 
 const User = () => {
-  const sampleData: UserModel[] = [
-    {
-      id: '123',
-      name: 'Nezumi',
-      identifiedCode: '123',
-      phone: '0937425123',
-      roomId: '246',
-      address: 'Da Nang',
-    },
-    {
-      id: '456',
-      name: 'Nezumi',
-      identifiedCode: '123',
-      phone: '123',
-      roomId: '246',
-      address: 'Da Nang',
-    },
-    {
-      id: '231',
-      name: 'Nezumi',
-      identifiedCode: '123',
-      phone: '123',
-      roomId: '246',
-      address: 'Da Nang',
-    },
-    {
-      id: '241',
-      name: 'Nezumi',
-      identifiedCode: '123',
-      phone: '123',
-      roomId: '246',
-      address: 'Da Nang',
-    },
-    {
-      id: '512',
-      name: 'Nezumi',
-      identifiedCode: '123',
-      phone: '123',
-      roomId: '246',
-      address: 'Da Nang',
-    },
-    {
-      id: '524',
-      name: 'Nezumi',
-      identifiedCode: '123',
-      phone: '123',
-      roomId: '246',
-      address: 'Da Nang',
-    },
-    {
-      id: '125',
-      name: 'Nezumi',
-      identifiedCode: '123',
-      phone: '123',
-      roomId: '246',
-      address: 'Da Nang',
-    },
-    {
-      id: '111',
-      name: 'Nezumi',
-      identifiedCode: '123',
-      phone: '123',
-      roomId: '246',
-      address: 'Da Nang',
-    },
-  ];
-
   return (
     <StyledUser>
       <Direction type="horizontal">

@@ -1,0 +1,68 @@
+import UserModel from '../models/User';
+
+export const sampleData: UserModel[] = [
+  {
+    id: '123',
+    name: 'Nezumi',
+    identifiedCode: '123',
+    phone: '0937425123',
+    roomId: '246',
+    address: 'Da Nang',
+  },
+  {
+    id: '456',
+    name: 'Nezumi',
+    identifiedCode: '123',
+    phone: '123',
+    roomId: '246',
+    address: 'Da Nang',
+  },
+  {
+    id: '231',
+    name: 'Nezumi',
+    identifiedCode: '123',
+    phone: '123',
+    roomId: '246',
+    address: 'Da Nang',
+  },
+  {
+    id: '241',
+    name: 'Nezumi',
+    identifiedCode: '123',
+    phone: '123',
+    roomId: '246',
+    address: 'Da Nang',
+  },
+  {
+    id: '512',
+    name: 'Nezumi',
+    identifiedCode: '123',
+    phone: '123',
+    roomId: '246',
+    address: 'Da Nang',
+  },
+  {
+    id: '524',
+    name: 'Nezumi',
+    identifiedCode: '123',
+    phone: '123',
+    roomId: '246',
+    address: 'Da Nang',
+  },
+  {
+    id: '125',
+    name: 'Nezumi',
+    identifiedCode: '123',
+    phone: '123',
+    roomId: '246',
+    address: 'Da Nang',
+  },
+  {
+    id: '111',
+    name: 'Nezumi',
+    identifiedCode: '123',
+    phone: '123',
+    roomId: '246',
+    address: 'Da Nang',
+  },
+];

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import styled from 'styled-components';
 
@@ -49,11 +49,10 @@ const StyledToggle = styled.button`
   & svg {
     width: 18px;
     height: 18px;
-    color: var(--primary-color);
   }
 `;
 
-const StyledList = styled.ul<IListPos>`
+const StyledList = styled.ul`
   position: absolute;
   z-index: 1000;
 
@@ -61,17 +60,11 @@ const StyledList = styled.ul<IListPos>`
   box-shadow: var(--shadow-sm);
   border-radius: var(--radius-sm);
 
-  right: ${(props) => props.$position.x}px;
-  top: ${(props) => props.$position.y}px;
+  right: -10px;
+  top: 40px;
 `;
 
-interface IListPos {
-  $position: {
-    x: number;
-    y: number;
-  };
-}
-
+// ------------- Interface ------------- //
 interface IMenusContext {
   openId?: string;
   close?: () => void;
@@ -84,6 +77,30 @@ interface IButton {
   onClick?: () => void;
 }
 
+// ------------- Custom hooks ------------- //
+const useOutsideClick = (
+  handler: () => void,
+  listeningCapturing = true,
+): React.MutableRefObject<HTMLUListElement | null> => {
+  const ref = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: Event) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        handler();
+      }
+    };
+
+    document.addEventListener('click', handleClick, listeningCapturing);
+
+    return () =>
+      document.removeEventListener('click', handleClick, listeningCapturing);
+  }, [handler, listeningCapturing]);
+
+  return ref;
+};
+
+// ------------- Menu Component ------------- //
 const MenusContext = createContext<IMenusContext>({});
 
 const Menus = ({ children }: { children: JSX.Element }) => {
@@ -102,12 +119,14 @@ const Menus = ({ children }: { children: JSX.Element }) => {
 const Toggle = ({ id }: { id: string }): React.JSX.Element => {
   const { openId, close, open } = useContext(MenusContext);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+
     openId === '' || openId !== id ? open!(id) : close!();
   };
 
   return (
-    <StyledToggle onClick={handleClick}>
+    <StyledToggle onClick={(e) => handleClick(e)}>
       <HiEllipsisVertical />
     </StyledToggle>
   );
@@ -120,11 +139,12 @@ const List = ({
   id: string;
   children: JSX.Element[];
 }): React.JSX.Element | null => {
-  const { openId } = useContext(MenusContext);
+  const { openId, close } = useContext(MenusContext);
+  const ref = useOutsideClick(close!, false);
 
   if (openId !== id) return null;
 
-  return <StyledList $position={{ x: -10, y: 40 }}> {children}</StyledList>;
+  return <StyledList ref={ref}>{children}</StyledList>;
 };
 
 const Button = ({ children, icon, onClick }: IButton): React.JSX.Element => {
