@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from '../ui/Button';
+
+// Constants
+import Button from '../components/Button';
 
 const StyledNotFound = styled.div`
   height: 100vh;

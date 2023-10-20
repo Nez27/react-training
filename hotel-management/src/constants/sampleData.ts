@@ -1,6 +1,6 @@
-import UserModel from '../models/User';
+import { TUser } from '../globals/types';
 
-export const sampleData: UserModel[] = [
+export const sampleData: TUser[] = [
   {
     id: '123',
     name: 'Nezumi',

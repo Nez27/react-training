@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 // Components
-import AppLayout from './ui/AppLayout';
+import AppLayout from './components/AppLayout';
 import User from './pages/User';
 import Dashboard from './pages/Dashboard';
 import Room from './pages/Room';

@@ -1,6 +1,8 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import styled from 'styled-components';
+import { useOutsideClick } from '../hooks/useOutsideClick';
+import { IButton, IMenusContext } from '../globals/interfaces';
 
 const StyledMenu = styled.div`
   position: relative;
@@ -63,42 +65,6 @@ const StyledList = styled.ul`
   right: -10px;
   top: 40px;
 `;
-
-// ------------- Interface ------------- //
-interface IMenusContext {
-  openId?: string;
-  close?: () => void;
-  open?: React.Dispatch<React.SetStateAction<string>>;
-}
-
-interface IButton {
-  children?: string;
-  icon?: JSX.Element;
-  onClick?: () => void;
-}
-
-// ------------- Custom hooks ------------- //
-const useOutsideClick = (
-  handler: () => void,
-  listeningCapturing = true,
-): React.MutableRefObject<HTMLUListElement | null> => {
-  const ref = useRef<HTMLUListElement>(null);
-
-  useEffect(() => {
-    const handleClick = (e: Event) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        handler();
-      }
-    };
-
-    document.addEventListener('click', handleClick, listeningCapturing);
-
-    return () =>
-      document.removeEventListener('click', handleClick, listeningCapturing);
-  }, [handler, listeningCapturing]);
-
-  return ref;
-};
 
 // ------------- Menu Component ------------- //
 const MenusContext = createContext<IMenusContext>({});
