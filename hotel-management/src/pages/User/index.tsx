@@ -1,6 +1,6 @@
 // Components
-import Direction from '../commons/direction';
-import Button from '../../components/Button';
+import Direction from '../../commons/styles/Direction';
+import Button from '../../commons/styles/Button';
 import { StyledUser, Title } from './styled';
 import UserTable from './userTable';
 

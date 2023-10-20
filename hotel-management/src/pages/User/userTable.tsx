@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types';
-
 // Components
 import { HiSquare2Stack } from 'react-icons/hi2';
 import { HiTrash } from 'react-icons/hi';
 import { StyledOperationTable } from './styled';
-import Menus from '../../components/Menus';
+import Menus from '../../components/Menus/Menus';
 import Table from '../../components/Table';
-import Direction from '../commons/direction';
+import Direction from '../../commons/styles/Direction';
 import Empty from '../../components/Empty';
 
 // Types
@@ -44,10 +42,6 @@ const UserRow = ({ user }: { user: TUser }) => {
       </Menus.Menu>
     </Table.Row>
   );
-};
-
-UserRow.propTypes = {
-  user: PropTypes.objectOf(PropTypes.any),
 };
 
 const UserTable = () => {

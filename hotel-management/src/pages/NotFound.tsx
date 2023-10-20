@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 // Constants
-import Button from '../components/Button';
+import Button from '../commons/styles/Button';
 
 const StyledNotFound = styled.div`
   height: 100vh;
