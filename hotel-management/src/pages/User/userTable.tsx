@@ -13,7 +13,13 @@ import { TUser } from '../../globals/types';
 // Constants
 import { sampleData } from '../../constants/sampleData';
 
-const UserRow = ({ user }: { user: TUser }) => {
+type TUserModal = { user: TUser };
+
+const UserRow = ({ user }: TUserModal) => {
+  const handleOnClick = (id: string) => {
+    alert(`Id: ${id}`);
+  };
+
   return (
     <Table.Row>
       <div>{user.id}</div>
@@ -28,13 +34,13 @@ const UserRow = ({ user }: { user: TUser }) => {
         <Menus.List id={user.id}>
           <Menus.Button
             icon={<HiSquare2Stack />}
-            onClick={() => alert(`Id: ${user.id}`)}
+            onClick={() => handleOnClick(user.id)}
           >
             Edit
           </Menus.Button>
           <Menus.Button
             icon={<HiTrash />}
-            onClick={() => alert(`Id: ${user.id}`)}
+            onClick={() => handleOnClick(user.id)}
           >
             Delete
           </Menus.Button>
@@ -52,7 +58,7 @@ const UserTable = () => {
       </StyledOperationTable>
 
       <Menus>
-        <Table $columns="10% 30% 20% 20% 10% 5%">
+        <Table columns="10% 30% 20% 20% 10% 5%">
           <Table.Header>
             <div>Id</div>
             <div>Name</div>

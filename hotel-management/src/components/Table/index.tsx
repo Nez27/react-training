@@ -1,18 +1,19 @@
-import { ReactNode, createContext, useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 
 // Components
 import { StyledBody, StyledHeader, StyledRow, StyledTable } from './styled';
 
-// Interface
+// Interfaces
 import { ITable, ITableBody } from '../../globals/interfaces';
 
-const TableContext = createContext('');
+// Contexts
+import TableContext from '../../contexts/TableContext';
 
 type CallbackMapFunc<T> = (value: T, index: number, array: T[]) => ReactNode;
 
-const Table = ({ $columns, children }: ITable) => {
+const Table = ({ columns, children }: ITable) => {
   return (
-    <TableContext.Provider value={$columns!}>
+    <TableContext.Provider value={columns!}>
       <StyledTable>{children}</StyledTable>
     </TableContext.Provider>
   );
@@ -20,7 +21,7 @@ const Table = ({ $columns, children }: ITable) => {
 
 const Header = ({ children }: ITable) => {
   const columns = useContext(TableContext);
-  return <StyledHeader $columns={columns}>{children}</StyledHeader>;
+  return <StyledHeader columns={columns}>{children}</StyledHeader>;
 };
 
 const Body = <T,>({ data, render }: ITableBody<T>) => {
@@ -30,7 +31,7 @@ const Body = <T,>({ data, render }: ITableBody<T>) => {
 
 const Row = ({ children }: ITable) => {
   const columns = useContext(TableContext);
-  return <StyledRow $columns={columns}>{children}</StyledRow>;
+  return <StyledRow columns={columns}>{children}</StyledRow>;
 };
 
 Table.Header = Header;

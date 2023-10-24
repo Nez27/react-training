@@ -1,14 +1,15 @@
-import { createContext, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 
 // Components
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { StyledButton, StyledList, StyledMenu, StyledToggle } from './styled';
 
-// Interface
-import { IButton, IMenusContext } from '../../globals/interfaces';
+// Interfaces
+import { IButton } from '../../globals/interfaces';
 
-const MenusContext = createContext<IMenusContext>({});
+// Contexts
+import MenusContext from '../../contexts/MenuContext';
 
 const Menus = ({ children }: { children: JSX.Element }) => {
   const [openId, setOpenId] = useState('');

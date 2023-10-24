@@ -11,7 +11,7 @@ export interface IButton {
 }
 
 export interface ITable {
-  $columns?: string;
+  columns?: string;
   children: React.ReactNode;
 }
 

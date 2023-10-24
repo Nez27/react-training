@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+
+// Interfaces
 import { ITable } from '../../globals/interfaces';
 
 export const StyledTable = styled.div`
@@ -10,7 +12,7 @@ export const StyledTable = styled.div`
 
 const CommonRow = styled.div<ITable>`
   display: grid;
-  grid-template-columns: ${(props) => props.$columns};
+  grid-template-columns: ${(props) => props.columns};
   column-gap: 10px;
   align-items: center;
 `;

@@ -1,8 +1,10 @@
 // Components
 import Direction from '../../commons/styles/Direction';
 import Button from '../../commons/styles/Button';
-import { StyledUser, Title } from './styled';
 import UserTable from './userTable';
+
+// Styled
+import { StyledUser, Title } from './styled';
 
 const User = () => {
   return (
