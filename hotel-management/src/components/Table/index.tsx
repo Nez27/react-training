@@ -25,8 +25,10 @@ const Header = ({ children }: ITable) => {
 };
 
 const Body = <T,>({ data, render }: ITableBody<T>) => {
-  data!.length > 0 && (
-    <StyledBody>{data?.map(render as CallbackMapFunc<T>)}</StyledBody>
+  return (
+    data!.length && (
+      <StyledBody>{data?.map(render as CallbackMapFunc<T>)}</StyledBody>
+    )
   );
 };
 
