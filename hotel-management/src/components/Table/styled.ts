@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // Interfaces
 import { ITable } from '../../globals/interfaces';
 
-export const StyledTable = styled.div`
+const StyledTable = styled.div`
   border: 1px solid var(--border-color);
 
   font-size: 20px;
@@ -17,11 +17,11 @@ const CommonRow = styled.div<ITable>`
   align-items: center;
 `;
 
-export const StyledBody = styled.div`
+const StyledBody = styled.div`
   font-size: var(--fs-sm-x);
 `;
 
-export const StyledRow = styled(CommonRow)`
+const StyledRow = styled(CommonRow)`
   padding: 20px;
 
   &:not(:last-child) {
@@ -29,7 +29,7 @@ export const StyledRow = styled(CommonRow)`
   }
 `;
 
-export const StyledHeader = styled(CommonRow)`
+const StyledHeader = styled(CommonRow)`
   padding: 10px 20px;
 
   border-bottom: 1px solid var(--border-color);
@@ -41,3 +41,5 @@ export const StyledHeader = styled(CommonRow)`
   text-transform: capitalize;
   font-weight: 600;
 `;
+
+export { StyledBody, StyledHeader, StyledRow, StyledTable };
