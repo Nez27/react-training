@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { IoPersonCircleOutline } from 'react-icons/io5';
-import { HiOutlineLogout } from 'react-icons/hi';
 
 // Components
-import ButtonIcon from './ButtonIcon';
+import { IoPersonCircleOutline } from 'react-icons/io5';
+import { HiOutlineLogout } from 'react-icons/hi';
+import ButtonIcon from '../commons/styles/ButtonIcon';
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
