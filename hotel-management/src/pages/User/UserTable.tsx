@@ -5,7 +5,7 @@ import { StyledOperationTable } from './styled';
 import Menus from '../../components/Menus/Menus';
 import Table from '../../components/Table';
 import Direction from '../../commons/styles/Direction';
-import Empty from '../../components/Message';
+import Message from '../../components/Message';
 
 // Types
 import { TUser } from '../../globals/types';
@@ -20,28 +20,27 @@ const UserRow = ({ user }: TUserModal) => {
     alert(`Id: ${id}`);
   };
 
+  const { id, name, identifiedCode, phone, roomId } = user;
+
   return (
     <Table.Row>
-      <div>{user.id}</div>
-      <div>{user.name}</div>
-      <div>{user.identifiedCode}</div>
-      <div>{user.phone}</div>
-      <div>{user.roomId}</div>
+      <div>{id}</div>
+      <div>{name}</div>
+      <div>{identifiedCode}</div>
+      <div>{phone}</div>
+      <div>{roomId}</div>
 
       <Menus.Menu>
-        <Menus.Toggle id={user.id} />
+        <Menus.Toggle id={id} />
 
-        <Menus.List id={user.id}>
+        <Menus.List id={id}>
           <Menus.Button
             icon={<HiSquare2Stack />}
-            onClick={() => handleOnClick(user.id)}
+            onClick={() => handleOnClick(id)}
           >
             Edit
           </Menus.Button>
-          <Menus.Button
-            icon={<HiTrash />}
-            onClick={() => handleOnClick(user.id)}
-          >
+          <Menus.Button icon={<HiTrash />} onClick={() => handleOnClick(id)}>
             Delete
           </Menus.Button>
         </Menus.List>
@@ -51,7 +50,7 @@ const UserRow = ({ user }: TUserModal) => {
 };
 
 const UserTable = () => {
-  return sampleData.length > 0 ? (
+  return sampleData.length ? (
     <Direction>
       <StyledOperationTable>
         <p>Sort / Filter / Search table</p>
@@ -74,7 +73,7 @@ const UserTable = () => {
       </Menus>
     </Direction>
   ) : (
-    <Empty>No data to show here!</Empty>
+    <Message>No data to show here!</Message>
   );
 };
 
