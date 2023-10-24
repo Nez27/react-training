@@ -14,6 +14,8 @@ const StyledAppLayout = styled.div`
 
 const Main = styled.main`
   border: 1px solid var(--border-color);
+
+  overflow: scroll;
 `;
 
 const AppLayout = () => {
