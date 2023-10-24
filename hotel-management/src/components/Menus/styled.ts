@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export const StyledMenu = styled.div`
+const StyledMenu = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 `;
 
-export const StyledButton = styled.button`
+const StyledButton = styled.button`
   width: 100%;
   text-align: left;
   background: none;
@@ -32,7 +32,7 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const StyledToggle = styled.button`
+const StyledToggle = styled.button`
   background: none;
   border: none;
   padding: 8px;
@@ -50,7 +50,7 @@ export const StyledToggle = styled.button`
   }
 `;
 
-export const StyledList = styled.ul`
+const StyledList = styled.ul`
   position: absolute;
   z-index: 1000;
 
@@ -61,3 +61,5 @@ export const StyledList = styled.ul`
   right: -10px;
   top: 40px;
 `;
+
+export { StyledMenu, StyledButton, StyledList, StyledToggle };

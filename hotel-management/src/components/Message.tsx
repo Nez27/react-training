@@ -6,8 +6,8 @@ const StyledMessage = styled.p`
   padding: 20px;
 `;
 
-const Empty = ({ children }: { children: string }) => {
+const Message = ({ children }: { children: string }) => {
   return <StyledMessage>{children}</StyledMessage>;
 };
 
-export default Empty;
+export default Message;

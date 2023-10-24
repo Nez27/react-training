@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 // Components
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
-import { StyledButton, StyledList, StyledMenu, StyledToggle } from './styled';
+import { StyledMenu, StyledButton, StyledList, StyledToggle } from './styled';
 
 // Interfaces
 import { IButton } from '../../globals/interfaces';
@@ -30,11 +30,14 @@ const Toggle = ({ id }: { id: string }): React.JSX.Element => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
 
-    openId === '' || openId !== id ? open!(id) : close!();
+    // prettier-ignore
+    openId === '' || openId !== id 
+      ? open!(id) 
+      : close!();
   };
 
   return (
-    <StyledToggle onClick={(e) => handleClick(e)}>
+    <StyledToggle onClick={handleClick}>
       <HiEllipsisVertical />
     </StyledToggle>
   );
