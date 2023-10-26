@@ -4,9 +4,9 @@ const VALUE = 'value';
 const ERROR = 'error';
 const REQUIRED_FIELD_ERROR = 'This is required field';
 
-function isBool(value: unknown) {
+const isBool = (value: unknown) => {
   return typeof value === 'boolean';
-}
+};
 
 const isObject = (value: unknown) => {
   return typeof value === 'object' && value !== null;
