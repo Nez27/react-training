@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
+
+// Utils
 import {
   ERROR,
   VALUE,
@@ -6,6 +8,8 @@ import {
   isObject,
   isRequired,
 } from '../helpers/utils';
+
+// Types
 import { TKeyValue, TValidator } from '../globals/types';
 
 /**
@@ -16,23 +20,19 @@ import { TKeyValue, TValidator } from '../globals/types';
  * @param submitFormCallback function to be execute during form submission.
  * @returns
  */
-function useForm(
+const useForm = (
   stateSchema = {},
   stateValidatorSchema = {} as TValidator,
   submitFormCallback: (values: TKeyValue) => void,
-) {
-  const [state, setStateSchema] = useState(stateSchema);
-
-  const [values, setValues] = useState(getPropValues(state, VALUE));
-  const [errors, setErrors] = useState(getPropValues(state, ERROR));
-  const [dirty, setDirty] = useState(getPropValues(state));
-
+) => {
+  const [values, setValues] = useState(getPropValues(stateSchema, VALUE));
+  const [errors, setErrors] = useState(getPropValues(stateSchema, ERROR));
+  const [dirty, setDirty] = useState(getPropValues(stateSchema));
   const [disable, setDisable] = useState(true);
   const [isDirty, setIsDirty] = useState(false);
 
   // Get a local copy of stateSchema
   useEffect(() => {
-    setStateSchema(stateSchema);
     setDisable(true); // Disable button in initial render.
     setInitialErrorState();
   }, []); // eslint-disable-line
@@ -118,7 +118,6 @@ function useForm(
       // before calling the submit callback function
       if (!validateErrorState()) {
         submitFormCallback(values);
-        console.log(values);
       }
     },
     [validateErrorState, submitFormCallback, values],
@@ -134,6 +133,6 @@ function useForm(
     setErrors,
     dirty,
   };
-}
+};
 
 export default useForm;

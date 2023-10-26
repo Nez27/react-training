@@ -1,5 +1,9 @@
 import { forwardRef } from 'react';
+
+// Components
 import { IDialogProps } from '../../globals/interfaces';
+
+// Styled
 import { StyledBody, StyledDialog, StyledTitle } from './styled';
 
 const Dialog = forwardRef((props, ref) => {
