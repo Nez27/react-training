@@ -1,8 +1,8 @@
 import { TKeyValue, TPropValues, TStateSchema } from '../globals/types';
 
-export const VALUE = 'value';
-export const ERROR = 'error';
-export const REQUIRED_FIELD_ERROR = 'This is required field';
+const VALUE = 'value';
+const ERROR = 'error';
+const REQUIRED_FIELD_ERROR = 'This is required field';
 
 function isBool(value: unknown) {
   return typeof value === 'boolean';
@@ -27,4 +27,11 @@ const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
   }, {} as TKeyValue);
 };
 
-export { isObject, isRequired, getPropValues };
+export {
+  isObject,
+  isRequired,
+  getPropValues,
+  VALUE,
+  ERROR,
+  REQUIRED_FIELD_ERROR,
+};

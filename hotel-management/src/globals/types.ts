@@ -1,4 +1,4 @@
-export type TUser = {
+type TUser = {
   id: string;
   name: string;
   identifiedCode: string;
@@ -7,20 +7,20 @@ export type TUser = {
   roomId: string;
 };
 
-export type TStateSchema = {
+type TStateSchema = {
   [key: string]: {
     value?: string;
     error?: string;
   };
 };
 
-export type TKeyValue = {
+type TKeyValue = {
   [key: string]: string | undefined | boolean;
 };
 
-export type TPropValues = 'value' | 'error' | boolean;
+type TPropValues = 'value' | 'error' | boolean;
 
-export type TValidator = {
+type TValidator = {
   [key: string]: {
     required?: boolean;
     validator?: {
@@ -29,3 +29,5 @@ export type TValidator = {
     };
   };
 };
+
+export type { TUser, TStateSchema, TKeyValue, TPropValues, TValidator };
