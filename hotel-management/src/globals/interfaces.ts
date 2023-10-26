@@ -19,3 +19,10 @@ export interface ITableBody<T> {
   data?: T[];
   render?: (value: T) => JSX.Element;
 }
+
+export interface IDialogProps {
+  title?: string;
+  children?: JSX.Element[] | JSX.Element;
+  onClose?: () => void;
+  ref?: React.MutableRefObject<HTMLDialogElement | undefined>;
+}

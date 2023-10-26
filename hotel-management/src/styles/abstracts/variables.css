@@ -1,10 +1,17 @@
 :root {
   --primary-color: #0010ba;
+
   --header-table-color: #ebebeb;
   --border-color: #8c8c8c;
+
+  --secondary-btn-color: #d1d1d1;
+  --disabled-btn-color: #7f82a6;
+
   --hover-background-color: #f3f4f6;
+
   --light-text: #fff;
   --dark-text: #787878;
+  --error-text: #ff3d3d;
 
   --radius-sm: 5px;
   --radius-md: 10px;
@@ -15,4 +22,5 @@
   --fs-lg: 40px;
   --fs-sm: 18px;
   --fs-sm-x: 16px;
+  --fs-sm-2x: 12px;
 }
