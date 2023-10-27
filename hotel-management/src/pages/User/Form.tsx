@@ -23,6 +23,7 @@ import {
   isValidPhoneNumber,
   isValidString,
 } from '../../helpers/validators';
+import { addValidator } from '../../helpers/utils.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -49,6 +50,44 @@ const UserForm = ({ onClose }: IUserFormProp) => {
     address: { value: '', error: '' },
   };
 
+  const stateValidatorSchema = {
+    fullName: {
+      required: true,
+      validator: addValidator(
+        (input: string) => isValidString(input),
+        'full name',
+      ),
+    },
+    identifiedCode: {
+      required: true,
+      validator: addValidator(
+        (input: string) => isValidNumber(input),
+        'identified code',
+      ),
+    },
+    phone: {
+      required: true,
+      validator: addValidator(
+        (input: string) => isValidPhoneNumber(input),
+        'phone',
+      ),
+    },
+    room: {
+      required: true,
+      validator: addValidator(
+        (input: string) => isValidNumber(input),
+        'room number',
+      ),
+    },
+    address: {
+      required: true,
+      validator: addValidator(
+        (input: string) => isValidAddress(input),
+        'address',
+      ),
+    },
+  };
+
   // Submit form
   const onSubmitForm = (state: TKeyValue) => {
     alert(JSON.stringify(state, null, 2));
@@ -56,54 +95,32 @@ const UserForm = ({ onClose }: IUserFormProp) => {
     onResetForm();
   };
 
-  const { values, errors, dirty, handleOnChange, handleOnSubmit, disable } =
+  // prettier-ignore
+  const { 
+    values, 
+    errors, 
+    dirty, 
+    handleOnChange, 
+    handleOnSubmit, 
+    disable }  =
     useForm(
       stateSchema,
-      {
-        fullName: {
-          required: true,
-          validator: {
-            func: (input) => isValidString(input),
-            error: 'Invalid full name format.',
-          },
-        },
-        identifiedCode: {
-          required: true,
-          validator: {
-            func: (input) => isValidNumber(input),
-            error: 'Invalid identified code format.',
-          },
-        },
-        phone: {
-          required: true,
-          validator: {
-            func: (input) => isValidPhoneNumber(input),
-            error: 'Invalid phone format.',
-          },
-        },
-        room: {
-          required: true,
-          validator: {
-            func: (input) => isValidNumber(input),
-            error: 'Invalid room number format.',
-          },
-        },
-        address: {
-          required: true,
-          validator: {
-            func: (input) => isValidAddress(input),
-            error: 'Invalid address format.',
-          },
-        },
-      },
+      stateValidatorSchema,
       onSubmitForm,
     );
 
-  const { fullName, identifiedCode, phone, room, address } = values;
+  // prettier-ignore
+  const { 
+    fullName, 
+    identifiedCode,
+    phone,
+    room, 
+    address 
+  } = values;
 
   // Reset form
   const onResetForm = () => {
-    setReset(() => !reset);
+    setReset(!reset);
     Object.keys(values).forEach((key) => (values[key] = ''));
   };
 
@@ -113,7 +130,10 @@ const UserForm = ({ onClose }: IUserFormProp) => {
       <FormRow
         label="Full Name"
         error={
-          errors.fullName && dirty.fullName ? (errors.fullName as string) : ''
+          // prettier-ignore
+          errors.fullName && dirty.fullName ? 
+            (errors.fullName as string) 
+            : ''
         }
       >
         <Input
@@ -142,7 +162,12 @@ const UserForm = ({ onClose }: IUserFormProp) => {
 
       <FormRow
         label="Phone"
-        error={errors.phone && dirty.phone ? (errors.phone as string) : ''}
+        error={
+          // prettier-ignore
+          errors.phone && dirty.phone ? 
+            (errors.phone as string) 
+            : ''
+        }
       >
         <Input
           type="text"
@@ -154,7 +179,12 @@ const UserForm = ({ onClose }: IUserFormProp) => {
 
       <FormRow
         label="Room"
-        error={errors.room && dirty.room ? (errors.room as string) : ''}
+        error={
+          // prettier-ignore
+          errors.room && dirty.room ? 
+            (errors.room as string) 
+            : ''
+        }
       >
         <Input
           type="text"
@@ -167,7 +197,10 @@ const UserForm = ({ onClose }: IUserFormProp) => {
       <FormRow
         label="Address"
         error={
-          errors.address && dirty.address ? (errors.address as string) : ''
+          // prettier-ignore
+          errors.address && dirty.address ? 
+            (errors.address as string) 
+            : ''
         }
       >
         <TextArea
