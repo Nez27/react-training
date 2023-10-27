@@ -11,7 +11,10 @@ import Message from '../../components/Message';
 import { TUser } from '../../globals/types';
 
 // Constants
-import { sampleData } from '../../constants/sampleData';
+import { useFetch } from '../../hooks/useFetch';
+
+// Styled
+import Spinner from '../../commons/styles/Spinner';
 
 type TUserModal = { user: TUser };
 
@@ -50,10 +53,19 @@ const UserRow = ({ user }: TUserModal) => {
 };
 
 const UserTable = () => {
-  return sampleData.length ? (
+  const { data, isPending, errorMsg } = useFetch('users');
+  let users: TUser[] = [];
+
+  if (data) users = data;
+
+  if (isPending) return <Spinner />;
+
+  if (errorMsg) console.error(errorMsg);
+
+  return users.length ? (
     <Direction>
       <StyledOperationTable>
-        <p>Sort / Filter / Search table</p>
+        <p>Sort / Search table</p>
       </StyledOperationTable>
 
       <Menus>
@@ -66,7 +78,7 @@ const UserTable = () => {
             <div>Room</div>
           </Table.Header>
           <Table.Body<TUser>
-            data={sampleData}
+            data={users}
             render={(user: TUser) => <UserRow user={user} key={user.id} />}
           />
         </Table>
