@@ -28,13 +28,13 @@ const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
   }, {} as TKeyValue);
 };
 
-type test = {
+type TValidator = {
   validatorFunc: (value: string) => boolean;
   prop: string;
   required?: boolean;
 };
 
-const addValidator = ({ validatorFunc, prop, required = true }: test) => {
+const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
   return {
     required: required,
     validator: {
