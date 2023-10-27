@@ -27,7 +27,7 @@ const UserDialog = forwardRef((props, ref) => {
         }
       });
     }
-  });
+  }, [dialogRef]);
 
   return (
     <Dialog title={'Add user'} onClose={onClose} ref={dialogRef}>
