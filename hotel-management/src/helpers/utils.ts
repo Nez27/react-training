@@ -28,10 +28,19 @@ const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
   }, {} as TKeyValue);
 };
 
-const addValidator = (func: (input: string) => boolean, error: string) => {
+type test = {
+  validatorFunc: (value: string) => boolean;
+  prop: string;
+  required?: boolean;
+};
+
+const addValidator = ({ validatorFunc, prop, required = true }: test) => {
   return {
-    func: func,
-    error: invalidFormatMessage(error),
+    required: required,
+    validator: {
+      func: validatorFunc,
+      error: invalidFormatMessage(prop),
+    },
   };
 };
 

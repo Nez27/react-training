@@ -11,7 +11,7 @@ import FormRow from '../../components/FormRow';
 import Button from '../../commons/styles/Button.ts';
 
 // Types
-import { TKeyValue, TStateSchema } from '../../globals/types';
+import { TKeyValue, TStateSchema, TValidator } from '../../globals/types';
 
 // Hooks
 import useForm from '../../hooks/useForm';
@@ -50,42 +50,25 @@ const UserForm = ({ onClose }: IUserFormProp) => {
     address: { value: '', error: '' },
   };
 
-  const stateValidatorSchema = {
-    fullName: {
-      required: true,
-      validator: addValidator(
-        (input: string) => isValidString(input),
-        'full name',
-      ),
-    },
-    identifiedCode: {
-      required: true,
-      validator: addValidator(
-        (input: string) => isValidNumber(input),
-        'identified code',
-      ),
-    },
-    phone: {
-      required: true,
-      validator: addValidator(
-        (input: string) => isValidPhoneNumber(input),
-        'phone',
-      ),
-    },
-    room: {
-      required: true,
-      validator: addValidator(
-        (input: string) => isValidNumber(input),
-        'room number',
-      ),
-    },
-    address: {
-      required: true,
-      validator: addValidator(
-        (input: string) => isValidAddress(input),
-        'address',
-      ),
-    },
+  // prettier-ignore
+  const stateValidatorSchema: TValidator = {
+    fullName: addValidator({ 
+      validatorFunc: isValidString, 
+      prop: 'full name' }),
+    identifiedCode: addValidator({
+      validatorFunc: isValidNumber,
+      prop: 'identified code',
+    }),
+    phone: addValidator({
+      validatorFunc: isValidPhoneNumber,
+      prop: 'phone number',
+    }),
+    room: addValidator({ 
+      validatorFunc: isValidNumber, 
+      prop: 'room number' }),
+    address: addValidator({ 
+      validatorFunc: isValidAddress, 
+      prop: 'address' }),
   };
 
   // Submit form
