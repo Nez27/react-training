@@ -1,3 +1,4 @@
+import { invalidFormatMessage } from '../constants/messages';
 import { TKeyValue, TPropValues, TStateSchema } from '../globals/types';
 
 const VALUE = 'value';
@@ -27,10 +28,27 @@ const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
   }, {} as TKeyValue);
 };
 
+type TValidator = {
+  validatorFunc: (value: string) => boolean;
+  prop: string;
+  required?: boolean;
+};
+
+const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
+  return {
+    required,
+    validator: {
+      func: validatorFunc,
+      error: invalidFormatMessage(prop),
+    },
+  };
+};
+
 export {
   isObject,
   isRequired,
   getPropValues,
+  addValidator,
   VALUE,
   ERROR,
   REQUIRED_FIELD_ERROR,
