@@ -33,7 +33,6 @@ const useForm = (
 
   // Get a local copy of stateSchema
   useEffect(() => {
-    setDisable(true); // Disable button in initial render.
     setInitialErrorState();
   }, []); // eslint-disable-line
 
@@ -116,8 +115,10 @@ const useForm = (
 
       // Making sure that there's no error in the state
       // before calling the submit callback function
+      // and disabled button
       if (!validateErrorState()) {
         submitFormCallback(values);
+        setDisable(true);
       }
     },
     [validateErrorState, submitFormCallback, values],
