@@ -54,7 +54,8 @@ const UserForm = ({ onClose }: IUserFormProp) => {
   const stateValidatorSchema: TValidator = {
     fullName: addValidator({ 
       validatorFunc: isValidString, 
-      prop: 'full name' }),
+      prop: 'full name' 
+    }),
     identifiedCode: addValidator({
       validatorFunc: isValidNumber,
       prop: 'identified code',
@@ -65,10 +66,12 @@ const UserForm = ({ onClose }: IUserFormProp) => {
     }),
     room: addValidator({ 
       validatorFunc: isValidNumber, 
-      prop: 'room number' }),
+      prop: 'room number' 
+    }),
     address: addValidator({ 
       validatorFunc: isValidAddress, 
-      prop: 'address' }),
+      prop: 'address' 
+    }),
   };
 
   // Submit form

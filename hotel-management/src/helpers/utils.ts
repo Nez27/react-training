@@ -36,7 +36,7 @@ type TValidator = {
 
 const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
   return {
-    required: required,
+    required,
     validator: {
       func: validatorFunc,
       error: invalidFormatMessage(prop),
