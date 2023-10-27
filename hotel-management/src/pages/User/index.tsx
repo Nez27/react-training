@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 // Components
 import Direction from '../../commons/styles/Direction';
-import Button from '../../commons/styles/Button.ts';
+import Button from '../../commons/styles/Button';
 import UserTable from './Table';
 
 // Styled
