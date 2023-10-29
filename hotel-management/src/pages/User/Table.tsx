@@ -11,7 +11,11 @@ import Message from '../../components/Message';
 import { TUser } from '../../globals/types';
 
 // Constants
-import { sampleData } from '../../constants/sampleData';
+import { useFetch } from '../../hooks/useFetch';
+
+// Styled
+import Spinner from '../../commons/styles/Spinner';
+import { useEffect, useState } from 'react';
 
 type TUserModal = { user: TUser };
 
@@ -50,30 +54,48 @@ const UserRow = ({ user }: TUserModal) => {
 };
 
 const UserTable = () => {
-  return sampleData.length ? (
-    <Direction>
-      <StyledOperationTable>
-        <p>Sort / Filter / Search table</p>
-      </StyledOperationTable>
+  const { data, isPending, errorMsg } = useFetch('users');
+  const [users, setUsers] = useState<TUser[]>([]);
 
-      <Menus>
-        <Table columns="10% 30% 20% 20% 10% 5%">
-          <Table.Header>
-            <div>Id</div>
-            <div>Name</div>
-            <div>Identified Code</div>
-            <div>Phone</div>
-            <div>Room</div>
-          </Table.Header>
-          <Table.Body<TUser>
-            data={sampleData}
-            render={(user: TUser) => <UserRow user={user} key={user.id} />}
-          />
-        </Table>
-      </Menus>
-    </Direction>
-  ) : (
-    <Message>No data to show here!</Message>
+  useEffect(() => {
+    if (data) {
+      setUsers(data);
+    }
+
+    if (errorMsg) {
+      console.error(errorMsg);
+    }
+  }, [data, errorMsg]);
+
+  return (
+    <>
+      {isPending && <Spinner />}
+      {users.length ? (
+        <Direction>
+          <StyledOperationTable>
+            <p>Sort / Search table</p>
+          </StyledOperationTable>
+
+          <Menus>
+            <Table columns="10% 30% 20% 20% 10% 5%">
+              <Table.Header>
+                <div>Id</div>
+                <div>Name</div>
+                <div>Identified Code</div>
+                <div>Phone</div>
+                <div>Room</div>
+              </Table.Header>
+              <Table.Body<TUser>
+                data={users}
+                render={(user: TUser) => <UserRow user={user} key={user.id} />}
+              />
+            </Table>
+          </Menus>
+        </Direction>
+      ) : (
+        <Message>No data to show here!</Message>
+      )}
+    </>
   );
 };
 
