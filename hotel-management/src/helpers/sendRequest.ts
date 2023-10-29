@@ -8,9 +8,6 @@ export const sendRequest = async (
   body: BodyInit | null | undefined,
   method: TMethodRequest = 'GET',
 ): Promise<TResponse> => {
-  const controller = new AbortController();
-  const signal = controller.signal;
-
   const response = await fetch(BASE_URL + path, {
     method,
     body,
@@ -19,7 +16,6 @@ export const sendRequest = async (
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    signal,
   });
 
   return {

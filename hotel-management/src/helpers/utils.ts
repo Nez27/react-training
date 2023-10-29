@@ -1,5 +1,5 @@
 import { INVALID_FORMAT_MSG } from '../constants/messages';
-import { TKeyValue, TPropValues, TStateSchema } from '../globals/types';
+import { TKeyValue, TPropValues, TStateSchema, TUser } from '../globals/types';
 
 const VALUE = 'value';
 const ERROR = 'error';
@@ -44,10 +44,19 @@ const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
   };
 };
 
+const getValueUser = (user: TUser | null = null, prop: string): string => {
+  if (user) {
+    return user[prop as keyof TUser];
+  }
+
+  return '';
+};
+
 export {
   isObject,
   isRequired,
   getPropValues,
+  getValueUser,
   addValidator,
   VALUE,
   ERROR,
