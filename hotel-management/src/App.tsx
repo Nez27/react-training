@@ -1,7 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import isPropValid from '@emotion/is-prop-valid';
 import { StyleSheetManager } from 'styled-components';
-import { Toaster } from 'react-hot-toast';
 
 // Components
 import AppLayout from './components/AppLayout';
@@ -12,6 +11,7 @@ import NotFound from './pages/NotFound';
 
 // Constants
 import * as PATH from './constants/path';
+import Toast from './components/Toast';
 
 function App() {
   return (
@@ -30,24 +30,7 @@ function App() {
         </BrowserRouter>
       </StyleSheetManager>
 
-      <Toaster
-        position="top-center"
-        gutter={12}
-        containerStyle={{ margin: '8px', zIndex: 1 }}
-        toastOptions={{
-          success: {
-            duration: 3000,
-          },
-          error: {
-            duration: 5000,
-          },
-          style: {
-            fontSize: '16px',
-            maxWidth: '500px',
-            padding: '16px 24px',
-          },
-        }}
-      />
+      <Toast />
     </>
   );
 }
