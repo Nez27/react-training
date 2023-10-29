@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 // Components
 import { HiSquare2Stack } from 'react-icons/hi2';
 import { HiTrash } from 'react-icons/hi';
@@ -15,7 +17,6 @@ import { useFetch } from '../../hooks/useFetch';
 
 // Styled
 import Spinner from '../../commons/styles/Spinner';
-import { useEffect, useState } from 'react';
 
 type TUserModal = { user: TUser };
 
@@ -53,13 +54,19 @@ const UserRow = ({ user }: TUserModal) => {
   );
 };
 
-const UserTable = () => {
-  const { data, isPending, errorMsg } = useFetch('users');
+interface IUserTable {
+  reload: boolean;
+}
+
+const UserTable = ({ reload }: IUserTable) => {
+  const { data, isPending, errorMsg } = useFetch('users', reload);
   const [users, setUsers] = useState<TUser[]>([]);
 
   useEffect(() => {
     if (data) {
       setUsers(data);
+    } else {
+      setUsers([]);
     }
 
     if (errorMsg) {

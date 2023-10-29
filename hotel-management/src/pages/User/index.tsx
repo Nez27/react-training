@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 // Components
 import Direction from '../../commons/styles/Direction';
@@ -11,6 +11,7 @@ import UserDialog from './Dialog';
 
 const User = () => {
   const dialogRef = useRef<HTMLDialogElement>();
+  const [reload, setReload] = useState(true);
 
   const openDialog = () => {
     dialogRef.current?.showModal();
@@ -28,10 +29,15 @@ const User = () => {
           <Button onClick={openDialog}>Add user</Button>
         </Direction>
 
-        <UserTable />
+        <UserTable reload={reload} />
       </StyledUser>
 
-      <UserDialog onClose={closeDialog} ref={dialogRef} />
+      <UserDialog
+        onClose={closeDialog}
+        ref={dialogRef}
+        setReload={setReload}
+        reload={reload}
+      />
     </>
   );
 };

@@ -24,6 +24,8 @@ interface IDialogProps {
   title?: string;
   children?: JSX.Element[] | JSX.Element;
   onClose?: () => void;
+  reload?: boolean;
+  setReload?: React.Dispatch<React.SetStateAction<boolean>>;
   ref?: React.MutableRefObject<HTMLDialogElement | undefined>;
 }
 
