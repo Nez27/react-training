@@ -11,7 +11,7 @@ const UserDialog = forwardRef((props, ref) => {
   const dialogRef = ref as React.MutableRefObject<
     HTMLDialogElement | undefined
   >;
-  const { onClose } = props;
+  const { onClose, setReload, reload } = props;
 
   useEffect(() => {
     if (dialogRef.current) {
@@ -31,7 +31,7 @@ const UserDialog = forwardRef((props, ref) => {
 
   return (
     <Dialog title={'Add user'} onClose={onClose} ref={dialogRef}>
-      <UserForm onClose={onClose!} />
+      <UserForm onClose={onClose!} reload={reload!} setReload={setReload!} />
     </Dialog>
   );
 }) as React.FC<IDialogProps>;

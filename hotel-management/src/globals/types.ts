@@ -30,4 +30,16 @@ type TValidator = {
   };
 };
 
-export type { TUser, TStateSchema, TKeyValue, TPropValues, TValidator };
+type TResponse = {
+  statusCode: number;
+  msg: string;
+};
+
+export type {
+  TUser,
+  TStateSchema,
+  TKeyValue,
+  TPropValues,
+  TValidator,
+  TResponse,
+};

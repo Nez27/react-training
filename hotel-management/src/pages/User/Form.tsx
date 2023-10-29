@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import toast from 'react-hot-toast';
 
 // Styled
 import Input from '../../commons/styles/Input';
-import { useState } from 'react';
 import TextArea from '../../commons/styles/TextArea';
 
 // Components
@@ -11,7 +12,12 @@ import FormRow from '../../components/FormRow';
 import Button from '../../commons/styles/Button.ts';
 
 // Types
-import { TKeyValue, TStateSchema, TValidator } from '../../globals/types';
+import {
+  TKeyValue,
+  TResponse,
+  TStateSchema,
+  TValidator,
+} from '../../globals/types';
 
 // Hooks
 import useForm from '../../hooks/useForm';
@@ -24,6 +30,11 @@ import {
   isValidString,
 } from '../../helpers/validators';
 import { addValidator } from '../../helpers/utils.ts';
+import { sendRequest } from '../../helpers/sendRequest.ts';
+
+// Constants
+import { STATUS_CODE } from '../../constants/statusCode.ts';
+import { ADD_SUCCESS, errorMsg } from '../../constants/messages.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -36,23 +47,25 @@ const FormBtn = styled(Button)`
 
 interface IUserFormProp {
   onClose: () => void;
+  reload: boolean;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserForm = ({ onClose }: IUserFormProp) => {
+const UserForm = ({ onClose, reload, setReload }: IUserFormProp) => {
   const [reset, setReset] = useState(true);
 
   // Define your state schema
   const stateSchema: TStateSchema = {
-    fullName: { value: '', error: '' },
+    name: { value: '', error: '' },
     identifiedCode: { value: '', error: '' },
     phone: { value: '', error: '' },
-    room: { value: '', error: '' },
+    roomId: { value: '', error: '' },
     address: { value: '', error: '' },
   };
 
   // prettier-ignore
   const stateValidatorSchema: TValidator = {
-    fullName: addValidator({ 
+    name: addValidator({ 
       validatorFunc: isValidString, 
       prop: 'full name' 
     }),
@@ -64,7 +77,7 @@ const UserForm = ({ onClose }: IUserFormProp) => {
       validatorFunc: isValidPhoneNumber,
       prop: 'phone number',
     }),
-    room: addValidator({ 
+    roomId: addValidator({ 
       validatorFunc: isValidNumber, 
       prop: 'room number' 
     }),
@@ -75,19 +88,40 @@ const UserForm = ({ onClose }: IUserFormProp) => {
   };
 
   // Submit form
-  const onSubmitForm = (state: TKeyValue) => {
-    alert(JSON.stringify(state, null, 2));
+  const onSubmitForm = async (state: TKeyValue) => {
+    try {
+      const response = await sendRequest(
+        'users',
+        JSON.stringify(state),
+        'POST',
+      );
+
+      if (response.statusCode === STATUS_CODE.CREATE) {
+        toast.success(ADD_SUCCESS);
+
+        // Reload table data
+        setReload(!reload);
+      } else {
+        toast.error(errorMsg(response.statusCode, response.msg));
+      }
+
+      onResetForm();
+    } catch (error) {
+      toast.error(
+        errorMsg((error as TResponse).statusCode, (error as TResponse).msg),
+      );
+    }
+
     onClose();
-    onResetForm();
   };
 
   // prettier-ignore
   const { 
-    values, 
-    errors, 
-    dirty, 
-    handleOnChange, 
-    handleOnSubmit, 
+    values,
+    errors,
+    dirty,
+    handleOnChange,
+    handleOnSubmit,
     disable }  =
     useForm(
       stateSchema,
@@ -97,10 +131,10 @@ const UserForm = ({ onClose }: IUserFormProp) => {
 
   // prettier-ignore
   const { 
-    fullName, 
+    name, 
     identifiedCode,
     phone,
-    room, 
+    roomId, 
     address 
   } = values;
 
@@ -117,15 +151,15 @@ const UserForm = ({ onClose }: IUserFormProp) => {
         label="Full Name"
         error={
           // prettier-ignore
-          errors.fullName && dirty.fullName ? 
-            (errors.fullName as string) 
+          errors.name && dirty.name ? 
+            (errors.name as string) 
             : ''
         }
       >
         <Input
           type="text"
-          name="fullName"
-          value={fullName as string}
+          name="name"
+          value={name as string}
           onChange={handleOnChange}
         />
       </FormRow>
@@ -167,15 +201,15 @@ const UserForm = ({ onClose }: IUserFormProp) => {
         label="Room"
         error={
           // prettier-ignore
-          errors.room && dirty.room ? 
-            (errors.room as string) 
+          errors.roomId && dirty.roomId ? 
+            (errors.roomId as string) 
             : ''
         }
       >
         <Input
           type="text"
-          name="room"
-          value={room as string}
+          name="roomId"
+          value={roomId as string}
           onChange={handleOnChange}
         />
       </FormRow>
