@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound';
 
 // Constants
 import * as PATH from './constants/path';
+import Toast from './components/Toast';
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
           </Routes>
         </BrowserRouter>
       </StyleSheetManager>
+
+      <Toast />
     </>
   );
 }
