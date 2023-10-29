@@ -34,7 +34,7 @@ import { sendRequest } from '../../helpers/sendRequest.ts';
 
 // Constants
 import { STATUS_CODE } from '../../constants/statusCode.ts';
-import { ADD_SUCCESS, ERROR_MSG } from '../../constants/messages.ts';
+import { ADD_SUCCESS, errorMsg } from '../../constants/messages.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -102,13 +102,13 @@ const UserForm = ({ onClose, reload, setReload }: IUserFormProp) => {
         // Reload table data
         setReload(!reload);
       } else {
-        toast.error(ERROR_MSG(response.statusCode, response.msg));
+        toast.error(errorMsg(response.statusCode, response.msg));
       }
 
       onResetForm();
     } catch (error) {
       toast.error(
-        ERROR_MSG((error as TResponse).statusCode, (error as TResponse).msg),
+        errorMsg((error as TResponse).statusCode, (error as TResponse).msg),
       );
     }
 
