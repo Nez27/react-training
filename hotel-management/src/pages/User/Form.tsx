@@ -48,10 +48,10 @@ const FormBtn = styled(Button)`
 interface IUserFormProp {
   onClose: () => void;
   reload: boolean;
-  onReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserForm = ({ onClose, reload, onReload }: IUserFormProp) => {
+const UserForm = ({ onClose, reload, setReload }: IUserFormProp) => {
   const [reset, setReset] = useState(true);
 
   // Define your state schema
@@ -98,7 +98,9 @@ const UserForm = ({ onClose, reload, onReload }: IUserFormProp) => {
 
       if (response.statusCode === STATUS_CODE.CREATE) {
         toast.success(ADD_SUCCESS);
-        onReload(!reload);
+
+        // Reload table data
+        setReload(!reload);
       } else {
         toast.error(ERROR_MSG(response.statusCode, response.msg));
       }

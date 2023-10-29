@@ -31,7 +31,7 @@ const UserDialog = forwardRef((props, ref) => {
 
   return (
     <Dialog title={'Add user'} onClose={onClose} ref={dialogRef}>
-      <UserForm onClose={onClose!} reload={reload!} onReload={setReload!} />
+      <UserForm onClose={onClose!} reload={reload!} setReload={setReload!} />
     </Dialog>
   );
 }) as React.FC<IDialogProps>;
