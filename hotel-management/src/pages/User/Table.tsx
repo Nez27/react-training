@@ -105,8 +105,8 @@ const UserTable = ({
   openFormDialog,
   setUser,
 }: IUserTable) => {
-  const [keyPhone, setKeyPhone] = useState('');
-  const { data, isPending, errorMsg } = useFetch('users', keyPhone, reload);
+  const [phoneSearch, setPhoneSearch] = useState('');
+  const { data, isPending, errorMsg } = useFetch('users', phoneSearch, reload);
   const [users, setUsers] = useState<TUser[]>([]);
 
   useEffect(() => {
@@ -125,7 +125,7 @@ const UserTable = ({
     <>
       <Direction>
         <StyledOperationTable>
-          <Search setKeyPhone={setKeyPhone} />
+          <Search setPhoneSearch={setPhoneSearch} />
         </StyledOperationTable>
 
         {isPending && <Spinner />}
@@ -156,7 +156,7 @@ const UserTable = ({
             </Table>
           </Menus>
         ) : (
-          <Message>No data to show here!</Message>
+          !isPending && <Message>No data to show here!</Message>
         )}
       </Direction>
     </>

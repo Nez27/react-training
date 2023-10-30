@@ -9,19 +9,19 @@ const StyledSearch = styled.input`
 `;
 
 interface ISearch {
-  setKeyPhone: React.Dispatch<React.SetStateAction<string>>;
+  setPhoneSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Search = ({ setKeyPhone }: ISearch) => {
+const Search = ({ setPhoneSearch }: ISearch) => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      setKeyPhone(query);
+      setPhoneSearch(query);
     }, 500);
 
     return () => clearTimeout(timeOut);
-  }, [setKeyPhone, query]);
+  }, [setPhoneSearch, query]);
 
   return (
     <StyledSearch
