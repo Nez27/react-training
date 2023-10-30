@@ -25,6 +25,9 @@ import Spinner from '../../commons/styles/Spinner';
 // Utils
 import { sendRequest } from '../../helpers/sendRequest';
 import Search from '../../components/Search';
+import SortBy from '../../components/SortBy';
+import OrderBy from '../../components/OrderBy';
+import { useSearchParams } from 'react-router-dom';
 
 interface IUserRow {
   user: TUser;
@@ -106,8 +109,22 @@ const UserTable = ({
   setUser,
 }: IUserTable) => {
   const [phoneSearch, setPhoneSearch] = useState('');
-  const { data, isPending, errorMsg } = useFetch('users', phoneSearch, reload);
+  const [searchParams] = useSearchParams();
   const [users, setUsers] = useState<TUser[]>([]);
+  const sortByValue = searchParams.get('sortBy')
+    ? searchParams.get('sortBy')!
+    : '';
+  const orderByValue = searchParams.get('orderBy')
+    ? searchParams.get('orderBy')!
+    : '';
+
+  const { data, isPending, errorMsg } = useFetch(
+    'users',
+    phoneSearch,
+    sortByValue,
+    orderByValue,
+    reload,
+  );
 
   useEffect(() => {
     if (data) {
@@ -125,6 +142,25 @@ const UserTable = ({
     <>
       <Direction>
         <StyledOperationTable>
+          <OrderBy
+            options={[
+              { value: 'asc', label: 'Ascending' },
+              { value: 'desc', label: 'Descending' },
+            ]}
+          />
+
+          <SortBy
+            options={[
+              { value: 'id', label: 'Sort by id' },
+              { value: 'name', label: 'Sort by name' },
+              {
+                value: 'identifiedCode',
+                label: 'Sort by identified code',
+              },
+              { value: 'phone', label: 'Sort by phone' },
+              { value: 'room', label: 'Sort by room' },
+            ]}
+          />
           <Search setPhoneSearch={setPhoneSearch} />
         </StyledOperationTable>
 

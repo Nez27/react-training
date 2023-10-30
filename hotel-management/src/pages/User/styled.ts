@@ -16,7 +16,9 @@ const Title = styled.h2`
 `;
 
 const StyledOperationTable = styled.div`
-  text-align: right;
+  display: flex;
+  gap: 30px;
+  justify-content: flex-end;
 `;
 
 export { StyledUser, Title, StyledOperationTable };

@@ -1,4 +1,4 @@
-import { ReactNode, useContext } from 'react';
+import { ReactNode, memo, useContext } from 'react';
 
 // Components
 import { StyledBody, StyledHeader, StyledRow, StyledTable } from './styled';
@@ -19,10 +19,10 @@ const Table = ({ columns, children }: ITable) => {
   );
 };
 
-const Header = ({ children }: ITable) => {
+const Header = memo(({ children }: ITable) => {
   const columns = useContext(TableContext);
   return <StyledHeader columns={columns}>{children}</StyledHeader>;
-};
+});
 
 const Body = <T,>({ data, render }: ITableBody<T>) => {
   return (

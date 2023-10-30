@@ -55,12 +55,35 @@ const getValueUser = (user: TUser | null = null, prop: string): string => {
   return '';
 };
 
+const searchQuery = (phone: string, sort: string, order: string) => {
+  const phoneParams = phone ? 'phone_like=' + phone : '';
+  const sortParams = sort ? '_sort=' + sort : '_sort=id';
+  const orderParams = order ? '_order=' + order : '_order=asc';
+  const finalParam = [phoneParams, sortParams, orderParams];
+  let query = '';
+  let isFirstParam = true;
+
+  finalParam.forEach((param) => {
+    if (param) {
+      if (isFirstParam) {
+        query = query.concat('', param);
+        isFirstParam = false;
+      } else {
+        query = query.concat('&', param);
+      }
+    }
+  });
+
+  return query;
+};
+
 export {
   isObject,
   isRequired,
   getPropValues,
   getValueUser,
   addValidator,
+  searchQuery,
   VALUE,
   ERROR,
   REQUIRED_FIELD_ERROR,
