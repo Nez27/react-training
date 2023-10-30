@@ -11,7 +11,14 @@ const UserDialog = forwardRef((props, ref) => {
   const dialogRef = ref as React.MutableRefObject<
     HTMLDialogElement | undefined
   >;
-  const { onClose, setReload, reload, user, isAdd } = props;
+  // prettier-ignore
+  const { 
+    onClose,
+    setReload,
+    reload,
+    user,
+    isAdd 
+  } = props;
 
   useEffect(() => {
     if (dialogRef.current) {
