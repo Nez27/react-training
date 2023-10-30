@@ -9,15 +9,21 @@ import UserTable from './Table';
 import { StyledUser, Title } from './styled';
 import UserDialog from './Dialog';
 
+// Types
+import { TUser } from '../../globals/types';
+
 const User = () => {
   const dialogRef = useRef<HTMLDialogElement>();
   const [reload, setReload] = useState(true);
+  const [user, setUser] = useState<TUser | null>(null);
+  const [isAdd, setIsAdd] = useState(false);
 
-  const openDialog = () => {
+  const openFormDialog = (isAddForm: boolean = false) => {
+    setIsAdd(isAddForm);
     dialogRef.current?.showModal();
   };
 
-  const closeDialog = () => {
+  const closeFormDialog = () => {
     dialogRef.current?.close();
   };
 
@@ -26,17 +32,24 @@ const User = () => {
       <StyledUser>
         <Direction type="horizontal">
           <Title>List User</Title>
-          <Button onClick={openDialog}>Add user</Button>
+          <Button onClick={() => openFormDialog(true)}>Add user</Button>
         </Direction>
 
-        <UserTable reload={reload} />
+        <UserTable
+          reload={reload}
+          setReload={setReload}
+          openFormDialog={() => openFormDialog()}
+          setUser={setUser}
+        />
       </StyledUser>
 
       <UserDialog
-        onClose={closeDialog}
+        onClose={closeFormDialog}
         ref={dialogRef}
         setReload={setReload}
         reload={reload}
+        user={user}
+        isAdd={isAdd}
       />
     </>
   );

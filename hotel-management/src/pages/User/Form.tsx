@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 
@@ -14,8 +14,8 @@ import Button from '../../commons/styles/Button.ts';
 // Types
 import {
   TKeyValue,
-  TResponse,
   TStateSchema,
+  TUser,
   TValidator,
 } from '../../globals/types';
 
@@ -29,12 +29,17 @@ import {
   isValidPhoneNumber,
   isValidString,
 } from '../../helpers/validators';
-import { addValidator } from '../../helpers/utils.ts';
+import { addValidator, getValueUser } from '../../helpers/utils.ts';
 import { sendRequest } from '../../helpers/sendRequest.ts';
 
 // Constants
 import { STATUS_CODE } from '../../constants/statusCode.ts';
-import { ADD_SUCCESS, errorMsg } from '../../constants/messages.ts';
+import {
+  ADD_SUCCESS,
+  EDIT_SUCCESS,
+  errorMsg,
+} from '../../constants/messages.ts';
+import { USER_PATH } from '../../constants/path.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -49,18 +54,32 @@ interface IUserFormProp {
   onClose: () => void;
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  user?: TUser | null;
+  isAdd: boolean;
 }
 
-const UserForm = ({ onClose, reload, setReload }: IUserFormProp) => {
+const UserForm = ({
+  onClose,
+  reload,
+  setReload,
+  user,
+  isAdd,
+}: IUserFormProp) => {
   const [reset, setReset] = useState(true);
+  // prettier-ignore
+  const initialValue: string = isAdd 
+    ? '' 
+    : user! 
+    && user.id;
 
   // Define your state schema
   const stateSchema: TStateSchema = {
-    name: { value: '', error: '' },
-    identifiedCode: { value: '', error: '' },
-    phone: { value: '', error: '' },
-    roomId: { value: '', error: '' },
-    address: { value: '', error: '' },
+    id: { value: getValueUser(user, 'id') },
+    name: { value: getValueUser(user, 'name'), error: '' },
+    identifiedCode: { value: getValueUser(user, 'identifiedCode'), error: '' },
+    phone: { value: getValueUser(user, 'phone'), error: '' },
+    roomId: { value: getValueUser(user, 'roomId'), error: '' },
+    address: { value: getValueUser(user, 'address'), error: '' },
   };
 
   // prettier-ignore
@@ -90,29 +109,49 @@ const UserForm = ({ onClose, reload, setReload }: IUserFormProp) => {
   // Submit form
   const onSubmitForm = async (state: TKeyValue) => {
     try {
-      const response = await sendRequest(
-        'users',
-        JSON.stringify(state),
-        'POST',
-      );
+      if (isAdd) {
+        // Add request
+        const response = await sendRequest(
+          USER_PATH,
+          JSON.stringify(state),
+          'POST',
+        );
 
-      if (response.statusCode === STATUS_CODE.CREATE) {
-        toast.success(ADD_SUCCESS);
-
-        // Reload table data
-        setReload(!reload);
+        if (response.statusCode === STATUS_CODE.CREATE) {
+          toast.success(ADD_SUCCESS);
+        } else {
+          throw new Error(errorMsg(response.statusCode, response.msg));
+        }
       } else {
-        toast.error(errorMsg(response.statusCode, response.msg));
-      }
+        // Edit request
+        const response = await sendRequest(
+          USER_PATH + `/${user!.id}`,
+          JSON.stringify(state),
+          'PUT',
+        );
 
+        if (response.statusCode == STATUS_CODE.OK) {
+          toast.success(EDIT_SUCCESS);
+        } else {
+          throw new Error(errorMsg(response.statusCode, response.msg));
+        }
+      }
+      // Reload table data
+      setReload(!reload);
       onResetForm();
-    } catch (error) {
-      toast.error(
-        errorMsg((error as TResponse).statusCode, (error as TResponse).msg),
-      );
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     }
 
     onClose();
+  };
+
+  // Close and reset form
+  const closeAndReset = () => {
+    onClose();
+    onResetForm();
   };
 
   // prettier-ignore
@@ -127,16 +166,24 @@ const UserForm = ({ onClose, reload, setReload }: IUserFormProp) => {
       stateSchema,
       stateValidatorSchema,
       onSubmitForm,
+      initialValue
     );
 
   // prettier-ignore
-  const { 
+  const {
+    id,
     name, 
     identifiedCode,
     phone,
     roomId, 
     address 
   } = values;
+
+  useEffect(() => {
+    if (isAdd) {
+      Object.keys(values).forEach((key) => (values[key] = ''));
+    }
+  }, [isAdd]); // eslint-disable-line
 
   // Reset form
   const onResetForm = () => {
@@ -146,7 +193,7 @@ const UserForm = ({ onClose, reload, setReload }: IUserFormProp) => {
 
   return (
     <Form onSubmit={handleOnSubmit}>
-      <Input type="hidden" id="id" />
+      <Input type="hidden" name="id" value={id as string} />
       <FormRow
         label="Full Name"
         error={
@@ -235,7 +282,7 @@ const UserForm = ({ onClose, reload, setReload }: IUserFormProp) => {
         <FormBtn type="submit" name="submit" disabled={disable}>
           Add
         </FormBtn>
-        <FormBtn type="button" styled="secondary" onClick={onClose}>
+        <FormBtn type="button" styled="secondary" onClick={closeAndReset}>
           Close
         </FormBtn>
       </Form.Action>

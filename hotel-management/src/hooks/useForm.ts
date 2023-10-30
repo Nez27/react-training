@@ -24,6 +24,7 @@ const useForm = (
   stateSchema = {},
   stateValidatorSchema = {} as TValidator,
   submitFormCallback: (values: TKeyValue) => void,
+  initialValue: string = '',
 ) => {
   const [values, setValues] = useState(getPropValues(stateSchema, VALUE));
   const [errors, setErrors] = useState(getPropValues(stateSchema, ERROR));
@@ -33,8 +34,17 @@ const useForm = (
 
   // Get a local copy of stateSchema
   useEffect(() => {
-    setInitialErrorState();
-  }, []); // eslint-disable-line
+    setInitialErrorState(initialValue);
+    setDisable(true);
+
+    // If initial value true, setValues again from stateSchema
+    // and enabled button
+    if (initialValue) {
+      setValues({});
+      setValues(getPropValues(stateSchema, VALUE));
+      setDisable(false);
+    }
+  }, [initialValue]); // eslint-disable-line
 
   // Validate fields in forms
   const validateFormFields = useCallback(
@@ -47,15 +57,19 @@ const useForm = (
       const field = validator[name];
 
       let error = '';
-      error = isRequired(value, field!.required);
 
-      if (isObject(field['validator']) && error === '') {
-        const fieldValidator = field['validator'];
+      // Skip check id field
+      if (name !== 'id') {
+        error = isRequired(value, field!.required);
 
-        // Test the function callback if the value is meet the criteria
-        const testFunc = fieldValidator!['func'];
-        if (!testFunc!(value)) {
-          error = fieldValidator!['error']!;
+        if (isObject(field['validator']) && error === '') {
+          const fieldValidator = field['validator'];
+
+          // Test the function callback if the value is meet the criteria
+          const testFunc = fieldValidator!['func'];
+          if (!testFunc!(value)) {
+            error = fieldValidator!['error']!;
+          }
         }
       }
 
@@ -66,14 +80,19 @@ const useForm = (
 
   // Set Initial Error State
   // When hooks was first rendered...
-  const setInitialErrorState = useCallback(() => {
-    Object.keys(errors).map((name) =>
-      setErrors((prevState) => ({
-        ...prevState,
-        [name]: validateFormFields(name, values[name] as string),
-      })),
-    );
-  }, [errors, values, validateFormFields]);
+  const setInitialErrorState = useCallback(
+    (initialValue: string) => {
+      Object.keys(errors).map((name) =>
+        setErrors((prevState) => ({
+          ...prevState,
+          [name]: !initialValue // Skip error when initialValue have values
+            ? validateFormFields(name, values[name] as string)
+            : '',
+        })),
+      );
+    },
+    [errors, values, validateFormFields],
+  );
 
   // Used to disable submit button if there's a value in errors
   // or the required field in state has no value.
@@ -116,6 +135,7 @@ const useForm = (
       // Making sure that there's no error in the state
       // before calling the submit callback function
       // and disabled button
+
       if (!validateErrorState()) {
         submitFormCallback(values);
         setDisable(true);

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 // Components
 import { HiSquare2Stack } from 'react-icons/hi2';
@@ -14,15 +15,51 @@ import { TUser } from '../../globals/types';
 
 // Constants
 import { useFetch } from '../../hooks/useFetch';
+import { USER_PATH } from '../../constants/path';
+import { STATUS_CODE } from '../../constants/statusCode';
+import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
 
 // Styled
 import Spinner from '../../commons/styles/Spinner';
 
-type TUserModal = { user: TUser };
+// Utils
+import { sendRequest } from '../../helpers/sendRequest';
 
-const UserRow = ({ user }: TUserModal) => {
-  const handleOnClick = (id: string) => {
-    alert(`Id: ${id}`);
+interface IUserRow {
+  user: TUser;
+  openFormDialog: () => void;
+  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
+  reload: boolean;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const UserRow = ({
+  user,
+  openFormDialog,
+  setUser,
+  reload,
+  setReload,
+}: IUserRow) => {
+  const handleOnEdit = (user: TUser) => {
+    setUser(user);
+    openFormDialog();
+  };
+
+  const handleOnDelete = async (user: TUser) => {
+    if (confirm(CONFIRM_DELETE)) {
+      const response = await sendRequest(
+        USER_PATH + `/${user.id}`,
+        null,
+        'DELETE',
+      );
+
+      if (response.statusCode === STATUS_CODE.OK) {
+        toast.success(DELETE_SUCCESS);
+
+        // Reload table
+        setReload(!reload);
+      }
+    }
   };
 
   const { id, name, identifiedCode, phone, roomId } = user;
@@ -41,11 +78,11 @@ const UserRow = ({ user }: TUserModal) => {
         <Menus.List id={id}>
           <Menus.Button
             icon={<HiSquare2Stack />}
-            onClick={() => handleOnClick(id)}
+            onClick={() => handleOnEdit(user)}
           >
             Edit
           </Menus.Button>
-          <Menus.Button icon={<HiTrash />} onClick={() => handleOnClick(id)}>
+          <Menus.Button icon={<HiTrash />} onClick={() => handleOnDelete(user)}>
             Delete
           </Menus.Button>
         </Menus.List>
@@ -56,9 +93,17 @@ const UserRow = ({ user }: TUserModal) => {
 
 interface IUserTable {
   reload: boolean;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  openFormDialog: () => void;
+  setUser?: React.Dispatch<React.SetStateAction<TUser | null>>;
 }
 
-const UserTable = ({ reload }: IUserTable) => {
+const UserTable = ({
+  reload,
+  setReload,
+  openFormDialog,
+  setUser,
+}: IUserTable) => {
   const { data, isPending, errorMsg } = useFetch('users', reload);
   const [users, setUsers] = useState<TUser[]>([]);
 
@@ -94,7 +139,16 @@ const UserTable = ({ reload }: IUserTable) => {
               </Table.Header>
               <Table.Body<TUser>
                 data={users}
-                render={(user: TUser) => <UserRow user={user} key={user.id} />}
+                render={(user: TUser) => (
+                  <UserRow
+                    user={user}
+                    key={user.id}
+                    reload={reload}
+                    setReload={setReload}
+                    openFormDialog={openFormDialog}
+                    setUser={setUser!}
+                  />
+                )}
               />
             </Table>
           </Menus>
