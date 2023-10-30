@@ -66,13 +66,11 @@ const UserForm = ({
   isAdd,
 }: IUserFormProp) => {
   const [reset, setReset] = useState(true);
-  let initialValue: string = '';
-
-  if (isAdd) {
-    initialValue = '';
-  } else if (user) {
-    initialValue = user.id;
-  }
+  // prettier-ignore
+  const initialValue: string = isAdd 
+    ? '' 
+    : user! 
+    && user.id;
 
   // Define your state schema
   const stateSchema: TStateSchema = {
