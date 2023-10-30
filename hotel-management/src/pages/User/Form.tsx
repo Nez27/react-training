@@ -37,7 +37,7 @@ import { STATUS_CODE } from '../../constants/statusCode.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
-  ERROR_MSG,
+  errorMsg,
 } from '../../constants/messages.ts';
 import { USER_PATH } from '../../constants/path.ts';
 
@@ -122,7 +122,7 @@ const UserForm = ({
         if (response.statusCode === STATUS_CODE.CREATE) {
           toast.success(ADD_SUCCESS);
         } else {
-          throw new Error(ERROR_MSG(response.statusCode, response.msg));
+          throw new Error(errorMsg(response.statusCode, response.msg));
         }
       } else {
         // Edit request
@@ -135,7 +135,7 @@ const UserForm = ({
         if (response.statusCode == STATUS_CODE.OK) {
           toast.success(EDIT_SUCCESS);
         } else {
-          throw new Error(ERROR_MSG(response.statusCode, response.msg));
+          throw new Error(errorMsg(response.statusCode, response.msg));
         }
       }
       // Reload table data

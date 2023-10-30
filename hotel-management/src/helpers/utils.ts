@@ -1,4 +1,4 @@
-import { INVALID_FORMAT_MSG } from '../constants/messages';
+import { invalidFormatMsg } from '../constants/messages';
 import { TKeyValue, TPropValues, TStateSchema, TUser } from '../globals/types';
 
 const VALUE = 'value';
@@ -39,7 +39,7 @@ const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
     required,
     validator: {
       func: validatorFunc,
-      error: INVALID_FORMAT_MSG(prop),
+      error: invalidFormatMsg(prop),
     },
   };
 };

@@ -9,14 +9,6 @@
       "address": "Da Nang"
     },
     {
-      "id": 2,
-      "name": "Phan Huu Loi",
-      "identifiedCode": "123",
-      "phone": "0937425123",
-      "roomId": 246,
-      "address": "Ho Chi Minh"
-    },
-    {
       "id": 3,
       "name": "Nezumi",
       "identifiedCode": "123",
@@ -81,12 +73,12 @@
       "id": 13
     },
     {
-      "id": 16,
+      "id": 17,
       "name": "Phan Huu Loi",
-      "identifiedCode": "3213123212312",
-      "phone": "0327768321",
-      "roomId": "3123",
-      "address": "32131312332131"
+      "identifiedCode": "123",
+      "phone": "0937425123",
+      "roomId": "246",
+      "address": "233123132131321"
     }
   ]
 }

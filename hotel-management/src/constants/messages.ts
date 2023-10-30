@@ -1,8 +1,8 @@
-const INVALID_FORMAT_MSG = (field: string) => {
+const invalidFormatMsg = (field: string) => {
   return `Invalid ${field} format`;
 };
 
-const ERROR_MSG = (errorCode: number, msg: string) => {
+const errorMsg = (errorCode: number, msg: string) => {
   return `Error code: ${errorCode}. Message: ${msg}`;
 };
 
@@ -12,9 +12,9 @@ const CONFIRM_DELETE = 'Are you sure to delete it?';
 const DELETE_SUCCESS = 'Delete success';
 
 export {
-  INVALID_FORMAT_MSG,
+  invalidFormatMsg,
   ADD_SUCCESS,
-  ERROR_MSG,
+  errorMsg,
   EDIT_SUCCESS,
   CONFIRM_DELETE,
   DELETE_SUCCESS,
