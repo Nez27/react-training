@@ -24,6 +24,7 @@ import Spinner from '../../commons/styles/Spinner';
 
 // Utils
 import { sendRequest } from '../../helpers/sendRequest';
+import Search from '../../components/Search';
 
 interface IUserRow {
   user: TUser;
@@ -104,7 +105,8 @@ const UserTable = ({
   openFormDialog,
   setUser,
 }: IUserTable) => {
-  const { data, isPending, errorMsg } = useFetch('users', reload);
+  const [phoneSearch, setPhoneSearch] = useState('');
+  const { data, isPending, errorMsg } = useFetch('users', phoneSearch, reload);
   const [users, setUsers] = useState<TUser[]>([]);
 
   useEffect(() => {
@@ -121,13 +123,14 @@ const UserTable = ({
 
   return (
     <>
-      {isPending && <Spinner />}
-      {users.length ? (
-        <Direction>
-          <StyledOperationTable>
-            <p>Sort / Search table</p>
-          </StyledOperationTable>
+      <Direction>
+        <StyledOperationTable>
+          <Search setPhoneSearch={setPhoneSearch} />
+        </StyledOperationTable>
 
+        {isPending && <Spinner />}
+
+        {users.length ? (
           <Menus>
             <Table columns="10% 30% 20% 20% 10% 5%">
               <Table.Header>
@@ -152,10 +155,10 @@ const UserTable = ({
               />
             </Table>
           </Menus>
-        </Direction>
-      ) : (
-        <Message>No data to show here!</Message>
-      )}
+        ) : (
+          !isPending && <Message>No data to show here!</Message>
+        )}
+      </Direction>
     </>
   );
 };

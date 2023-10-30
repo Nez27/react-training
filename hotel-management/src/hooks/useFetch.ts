@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // Constants
 import { BASE_URL } from '../constants/path';
 
-export const useFetch = (path: string, reload?: boolean) => {
+export const useFetch = (path: string, phoneNum: string, reload?: boolean) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -15,8 +15,13 @@ export const useFetch = (path: string, reload?: boolean) => {
     const fetchData = async () => {
       setIsPending(true);
 
+      // prettier-ignore
+      const query = phoneNum
+        ? `?phone_like=${phoneNum}`
+        : '';
+
       try {
-        const response = await fetch(BASE_URL + path);
+        const response = await fetch(BASE_URL + path + query);
         const json = await response.json();
 
         if (!response.ok)
@@ -34,6 +39,6 @@ export const useFetch = (path: string, reload?: boolean) => {
     };
 
     fetchData();
-  }, [path, reload]);
+  }, [path, reload, phoneNum]);
   return { data, isPending, errorMsg };
 };
