@@ -17,7 +17,7 @@ const StyledSelect = styled.select`
   font-weight: 500;
 `;
 
-function Select({ options, value, onChange }: ISelect) {
+const Select = ({ options, value, onChange }: ISelect) => {
   return (
     <StyledSelect value={value} onChange={onChange}>
       {options.map((option) => (
@@ -27,6 +27,6 @@ function Select({ options, value, onChange }: ISelect) {
       ))}
     </StyledSelect>
   );
-}
+};
 
 export default Select;

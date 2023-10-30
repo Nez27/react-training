@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 // Constants
 import { BASE_URL } from '../constants/path';
 import { searchQuery } from '../helpers/utils';
+import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '../constants/config';
 
 export const useFetch = (
   path: string,
   phoneNum: string,
-  sortBy: string,
-  orderBy: string,
+  tempSortBy: string,
+  tempOrderBy: string,
   reload?: boolean,
 ) => {
   const [data, setData] = useState(null);
@@ -22,6 +23,11 @@ export const useFetch = (
     const fetchData = async () => {
       setIsPending(true);
 
+      // Set default value
+      const sortBy = tempSortBy ? tempSortBy : DEFAULT_SORT_BY;
+      const orderBy = tempOrderBy ? tempOrderBy : DEFAULT_ORDER_BY;
+
+      // Query search
       const query = searchQuery(phoneNum, sortBy, orderBy);
 
       try {
@@ -43,6 +49,6 @@ export const useFetch = (
     };
 
     fetchData();
-  }, [path, reload, phoneNum, orderBy, sortBy]);
+  }, [path, reload, phoneNum, tempOrderBy, tempSortBy]);
   return { data, isPending, errorMsg };
 };

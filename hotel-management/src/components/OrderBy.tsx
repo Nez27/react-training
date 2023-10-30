@@ -41,7 +41,7 @@ interface IFilterProps {
   }[];
 }
 
-function OrderBy({ options }: IFilterProps) {
+const OrderBy = ({ options }: IFilterProps) => {
   const field = 'orderBy';
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -67,6 +67,6 @@ function OrderBy({ options }: IFilterProps) {
       ))}
     </StyledFilter>
   );
-}
+};
 
 export default OrderBy;
