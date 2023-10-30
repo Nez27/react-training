@@ -37,6 +37,8 @@ const useForm = (
     setInitialErrorState(initialValue);
     setDisable(true);
 
+    // If initial value true, setValues again from stateSchema
+    // and enabled button
     if (initialValue) {
       setValues({});
       setValues(getPropValues(stateSchema, VALUE));
@@ -83,7 +85,7 @@ const useForm = (
       Object.keys(errors).map((name) =>
         setErrors((prevState) => ({
           ...prevState,
-          [name]: !initialValue
+          [name]: !initialValue // Skip error when initialValue have values
             ? validateFormFields(name, values[name] as string)
             : '',
         })),

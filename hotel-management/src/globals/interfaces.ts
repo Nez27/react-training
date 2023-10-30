@@ -1,3 +1,4 @@
+// Types
 import { TUser } from './types';
 
 interface IMenusContext {

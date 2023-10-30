@@ -150,7 +150,7 @@ const UserForm = ({
     onClose();
   };
 
-  // Close form
+  // Close and reset form
   const closeAndReset = () => {
     onClose();
     onResetForm();

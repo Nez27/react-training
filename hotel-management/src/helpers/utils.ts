@@ -1,4 +1,7 @@
+// Constants
 import { invalidFormatMsg } from '../constants/messages';
+
+// Types
 import { TKeyValue, TPropValues, TStateSchema, TUser } from '../globals/types';
 
 const VALUE = 'value';

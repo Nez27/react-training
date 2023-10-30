@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 // Components
 import { HiSquare2Stack } from 'react-icons/hi2';
@@ -14,14 +15,15 @@ import { TUser } from '../../globals/types';
 
 // Constants
 import { useFetch } from '../../hooks/useFetch';
+import { USER_PATH } from '../../constants/path';
+import { STATUS_CODE } from '../../constants/statusCode';
+import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
 
 // Styled
 import Spinner from '../../commons/styles/Spinner';
+
+// Utils
 import { sendRequest } from '../../helpers/sendRequest';
-import { USER_PATH } from '../../constants/path';
-import toast from 'react-hot-toast';
-import { STATUS_CODE } from '../../constants/statusCode';
-import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
 
 interface IUserRow {
   user: TUser;
