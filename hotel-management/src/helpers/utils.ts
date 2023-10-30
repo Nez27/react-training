@@ -57,8 +57,8 @@ const getValueUser = (user: TUser | null = null, prop: string): string => {
 
 const searchQuery = (phone: string, sort: string, order: string) => {
   const phoneParams = phone ? 'phone_like=' + phone : '';
-  const sortParams = sort ? '_sort=' + sort : '_sort=id';
-  const orderParams = order ? '_order=' + order : '_order=asc';
+  const sortParams = sort ? '_sort=' + sort : '';
+  const orderParams = order ? '_order=' + order : '';
   const finalParam = [phoneParams, sortParams, orderParams];
   let query = '';
   let isFirstParam = true;

@@ -28,6 +28,7 @@ import Search from '../../components/Search';
 import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 import { useSearchParams } from 'react-router-dom';
+import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '../../constants/config';
 
 interface IUserRow {
   user: TUser;
@@ -113,10 +114,10 @@ const UserTable = ({
   const [users, setUsers] = useState<TUser[]>([]);
   const sortByValue = searchParams.get('sortBy')
     ? searchParams.get('sortBy')!
-    : '';
+    : DEFAULT_SORT_BY;
   const orderByValue = searchParams.get('orderBy')
     ? searchParams.get('orderBy')!
-    : '';
+    : DEFAULT_ORDER_BY;
 
   const { data, isPending, errorMsg } = useFetch(
     'users',
