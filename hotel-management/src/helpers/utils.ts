@@ -56,9 +56,20 @@ const getValueUser = (user: TUser | null = null, prop: string): string => {
 };
 
 const searchQuery = (phone: string, sort: string, order: string) => {
-  const phoneParams = phone ? 'phone_like=' + phone : '';
-  const sortParams = sort ? '_sort=' + sort : '';
-  const orderParams = order ? '_order=' + order : '';
+  // prettier-ignore
+  const phoneParams = phone
+    ? 'phone_like=' + phone
+    : '';
+
+  // prettier-ignore
+  const sortParams = sort
+    ? '_sort=' + sort
+    : '';
+
+  // prettier-ignore
+  const orderParams = order 
+    ? '_order=' + order 
+    : '';
   const finalParam = [phoneParams, sortParams, orderParams];
   let query = '';
   let isFirstParam = true;

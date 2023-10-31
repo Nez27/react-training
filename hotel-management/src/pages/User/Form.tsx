@@ -198,8 +198,8 @@ const UserForm = ({
         label="Full Name"
         error={
           // prettier-ignore
-          errors.name && dirty.name ? 
-            (errors.name as string) 
+          errors.name && dirty.name 
+            ? (errors.name as string) 
             : ''
         }
       >
@@ -231,8 +231,8 @@ const UserForm = ({
         label="Phone"
         error={
           // prettier-ignore
-          errors.phone && dirty.phone ? 
-            (errors.phone as string) 
+          errors.phone && dirty.phone 
+            ? (errors.phone as string) 
             : ''
         }
       >
@@ -248,8 +248,8 @@ const UserForm = ({
         label="Room"
         error={
           // prettier-ignore
-          errors.roomId && dirty.roomId ? 
-            (errors.roomId as string) 
+          errors.roomId && dirty.roomId
+            ? (errors.roomId as string) 
             : ''
         }
       >
@@ -265,8 +265,8 @@ const UserForm = ({
         label="Address"
         error={
           // prettier-ignore
-          errors.address && dirty.address ? 
-            (errors.address as string) 
+          errors.address && dirty.address 
+            ? (errors.address as string) 
             : ''
         }
       >

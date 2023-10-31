@@ -24,8 +24,15 @@ export const useFetch = (
       setIsPending(true);
 
       // Set default value
-      const sortBy = tempSortBy ? tempSortBy : DEFAULT_SORT_BY;
-      const orderBy = tempOrderBy ? tempOrderBy : DEFAULT_ORDER_BY;
+      // prettier-ignore
+      const sortBy = tempSortBy
+        ? tempSortBy
+        : DEFAULT_SORT_BY;
+
+      // prettier-ignore
+      const orderBy = tempOrderBy
+        ? tempOrderBy
+        : DEFAULT_ORDER_BY;
 
       // Query search
       const query = searchQuery(phoneNum, sortBy, orderBy);

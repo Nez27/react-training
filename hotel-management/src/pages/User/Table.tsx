@@ -28,6 +28,7 @@ import Spinner from '../../commons/styles/Spinner';
 
 // Utils
 import { sendRequest } from '../../helpers/sendRequest';
+import { USER_PAGE } from '../../constants/variables';
 
 interface IUserRow {
   user: TUser;
@@ -142,25 +143,9 @@ const UserTable = ({
     <>
       <Direction>
         <StyledOperationTable>
-          <OrderBy
-            options={[
-              { value: 'asc', label: 'Ascending' },
-              { value: 'desc', label: 'Descending' },
-            ]}
-          />
+          <OrderBy options={USER_PAGE.ORDERBY_OPTIONS} />
 
-          <SortBy
-            options={[
-              { value: 'id', label: 'Sort by id' },
-              { value: 'name', label: 'Sort by name' },
-              {
-                value: 'identifiedCode',
-                label: 'Sort by identified code',
-              },
-              { value: 'phone', label: 'Sort by phone' },
-              { value: 'roomId', label: 'Sort by room' },
-            ]}
-          />
+          <SortBy options={USER_PAGE.SORTBY_OPTIONS} />
           <Search setPhoneSearch={setPhoneSearch} />
         </StyledOperationTable>
 
