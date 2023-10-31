@@ -158,7 +158,7 @@ const UserTable = ({
                 label: 'Sort by identified code',
               },
               { value: 'phone', label: 'Sort by phone' },
-              { value: 'room', label: 'Sort by room' },
+              { value: 'roomId', label: 'Sort by room' },
             ]}
           />
           <Search setPhoneSearch={setPhoneSearch} />
