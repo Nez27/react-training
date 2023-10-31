@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-const StyledFilter = styled.div`
+const StyledOrder = styled.div`
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   padding: 5px;
@@ -9,11 +9,11 @@ const StyledFilter = styled.div`
   gap: 10px;
 `;
 
-interface IFilterBtn {
+interface IOrderBtn {
   active: boolean;
 }
 
-const FilterButton = styled.button<IFilterBtn>`
+const OrderButton = styled.button<IOrderBtn>`
   border: none;
 
   ${(props) =>
@@ -34,18 +34,18 @@ const FilterButton = styled.button<IFilterBtn>`
   }
 `;
 
-interface IFilterProps {
+interface IOrderProps {
   options: {
     value: string;
     label: string;
   }[];
 }
 
-const OrderBy = ({ options }: IFilterProps) => {
+const OrderBy = ({ options }: IOrderProps) => {
   const field = 'orderBy';
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get(field) || options[0].value;
+  const currentOrder = searchParams.get(field) || options[0].value;
 
   const handleClick = (value: string) => {
     searchParams.set(field, value);
@@ -54,18 +54,18 @@ const OrderBy = ({ options }: IFilterProps) => {
   };
 
   return (
-    <StyledFilter>
+    <StyledOrder>
       {options.map((option) => (
-        <FilterButton
+        <OrderButton
           key={option.value}
           onClick={() => handleClick(option.value)}
-          active={option.value === currentFilter}
-          disabled={option.value === currentFilter}
+          active={option.value === currentOrder}
+          disabled={option.value === currentOrder}
         >
           {option.label}
-        </FilterButton>
+        </OrderButton>
       ))}
-    </StyledFilter>
+    </StyledOrder>
   );
 };
 
