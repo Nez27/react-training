@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -9,6 +10,9 @@ import Menus from '../../components/Menus/Menus';
 import Table from '../../components/Table';
 import Direction from '../../commons/styles/Direction';
 import Message from '../../components/Message';
+import Search from '../../components/Search';
+import SortBy from '../../components/SortBy';
+import OrderBy from '../../components/OrderBy';
 
 // Types
 import { TUser } from '../../globals/types';
@@ -24,7 +28,7 @@ import Spinner from '../../commons/styles/Spinner';
 
 // Utils
 import { sendRequest } from '../../helpers/sendRequest';
-import Search from '../../components/Search';
+import { USER_PAGE } from '../../constants/variables';
 
 interface IUserRow {
   user: TUser;
@@ -106,8 +110,22 @@ const UserTable = ({
   setUser,
 }: IUserTable) => {
   const [phoneSearch, setPhoneSearch] = useState('');
-  const { data, isPending, errorMsg } = useFetch('users', phoneSearch, reload);
+  const [searchParams] = useSearchParams();
   const [users, setUsers] = useState<TUser[]>([]);
+  const sortByValue = searchParams.get('sortBy')
+    ? searchParams.get('sortBy')!
+    : '';
+  const orderByValue = searchParams.get('orderBy')
+    ? searchParams.get('orderBy')!
+    : '';
+
+  const { data, isPending, errorMsg } = useFetch(
+    'users',
+    phoneSearch,
+    sortByValue,
+    orderByValue,
+    reload,
+  );
 
   useEffect(() => {
     if (data) {
@@ -125,6 +143,9 @@ const UserTable = ({
     <>
       <Direction>
         <StyledOperationTable>
+          <OrderBy options={USER_PAGE.ORDERBY_OPTIONS} />
+
+          <SortBy options={USER_PAGE.SORTBY_OPTIONS} />
           <Search setPhoneSearch={setPhoneSearch} />
         </StyledOperationTable>
 

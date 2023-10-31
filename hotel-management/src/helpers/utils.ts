@@ -55,12 +55,46 @@ const getValueUser = (user: TUser | null = null, prop: string): string => {
   return '';
 };
 
+const searchQuery = (phone: string, sort: string, order: string) => {
+  // prettier-ignore
+  const phoneParams = phone
+    ? 'phone_like=' + phone
+    : '';
+
+  // prettier-ignore
+  const sortParams = sort
+    ? '_sort=' + sort
+    : '';
+
+  // prettier-ignore
+  const orderParams = order 
+    ? '_order=' + order 
+    : '';
+  const finalParam = [phoneParams, sortParams, orderParams];
+  let query = '';
+  let isFirstParam = true;
+
+  finalParam.forEach((param) => {
+    if (param) {
+      if (isFirstParam) {
+        query = query.concat('', param);
+        isFirstParam = false;
+      } else {
+        query = query.concat('&', param);
+      }
+    }
+  });
+
+  return query;
+};
+
 export {
   isObject,
   isRequired,
   getPropValues,
   getValueUser,
   addValidator,
+  searchQuery,
   VALUE,
   ERROR,
   REQUIRED_FIELD_ERROR,
