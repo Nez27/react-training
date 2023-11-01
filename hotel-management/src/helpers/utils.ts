@@ -9,19 +9,41 @@ import {
   TStateSchema,
 } from '../globals/types';
 
+/**
+ * The function check value has type boolean or not
+ * @param value The value need to checked
+ * @returns A boolean indicating whether or not the argument has type boolean
+ */
 const isBool = (value: unknown) => {
   return typeof value === 'boolean';
 };
 
+/**
+ * The function check value has type object or not
+ * @param value The value need to checked
+ * @returns A boolean indicating whether or not the argument has type object.
+ */
 const isObject = (value: unknown) => {
   return typeof value === 'object' && value !== null;
 };
 
+/**
+ * Set required error for value
+ * @param value The value set required or not
+ * @param isRequired Set required for value
+ * @returns Return error text if value has required
+ */
 const isRequired = (value: string | number, isRequired: unknown) => {
   if (!value && isRequired) return REQUIRED_FIELD_ERROR;
   return '';
 };
 
+/**
+ * Get values from props
+ * @param stateSchema StateSchema value
+ * @param prop Prop value (Has 3 type: boolean | "value" | "error")
+ * @returns Return value object depend on props
+ */
 const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
   return Object.keys(stateSchema).reduce((field, key) => {
     field[key] = isBool(prop)
@@ -38,6 +60,11 @@ type TValidator = {
   required?: boolean;
 };
 
+/**
+ * Create validator object
+ * @param param0 Pass TValidator object
+ * @returns An object contains condition validator
+ */
 const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
   return {
     required,
@@ -48,6 +75,11 @@ const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
   };
 };
 
+/**
+ * Return the object contains values of object pass
+ * @param obj Object need to get value
+ * @returns The object contains value of object
+ */
 const getValueFromObj = <T>(obj: T | null = null): TKeyString => {
   let result = {};
 
@@ -66,15 +98,23 @@ const getValueFromObj = <T>(obj: T | null = null): TKeyString => {
   return result;
 };
 
+/**
+ * Create query url for search
+ * @param columnSearch Column want to search
+ * @param keySearch Keyword search
+ * @param sort Sort by
+ * @param order Order by
+ * @returns Return query url
+ */
 const searchQuery = (
   columnSearch: string,
-  phone: string,
+  keySearch: string,
   sort: string,
   order: string,
 ) => {
   // prettier-ignore
-  const phoneParams = phone
-    ? `${columnSearch}_like=` + phone
+  const phoneParams = keySearch
+    ? `${columnSearch}_like=` + keySearch
     : '';
 
   // prettier-ignore
