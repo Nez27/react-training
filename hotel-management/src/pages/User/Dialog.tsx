@@ -6,6 +6,8 @@ import UserForm from './Form';
 
 // Interfaces
 import { IDialogProps } from '../../globals/interfaces';
+
+// Types
 import { TUser } from '../../globals/types';
 
 const UserDialog = forwardRef((props, ref) => {

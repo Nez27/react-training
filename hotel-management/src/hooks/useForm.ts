@@ -5,6 +5,8 @@ import { getPropValues, isObject, isRequired } from '../helpers/utils';
 
 // Types
 import { TKeyValue, TValidator } from '../globals/types';
+
+// Constants
 import { ERROR, VALUE } from '../constants/variables';
 
 /**

@@ -88,14 +88,35 @@ const RoomForm = ({
   } = getValueFromObj<TRoom>(room);
 
   // Define your state schema
+  // prettier-ignore
   const stateSchema: TStateSchema = {
-    id: { value: idValue || '' },
-    name: { value: nameValue || '', error: '' },
-    amount: { value: amountValue || '', error: '' },
-    price: { value: priceValue || '', error: '' },
-    discount: { value: discountValue || '', error: '' },
-    status: { value: statusValue || '', error: '' },
-    description: { value: descriptionValue || '', error: '' },
+    id: { 
+      value: idValue || '' 
+    },
+    name: { 
+      value: nameValue || '',
+      error: '' 
+    },
+    amount: { 
+      value: amountValue || '',
+      error: '' 
+    },
+    price: { 
+      value: priceValue || '',
+      error: '' 
+    },
+    discount: { 
+      value: discountValue || '',
+      error: '' 
+    },
+    status: { 
+      value: statusValue || '',
+      error: '' 
+    },
+    description: { 
+      value: descriptionValue || '',
+      error: '' 
+    },
   };
 
   // prettier-ignore
