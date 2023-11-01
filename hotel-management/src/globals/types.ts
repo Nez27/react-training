@@ -25,10 +25,10 @@ type TStateSchema = {
 };
 
 type TKeyValue = {
-  [key: string]: string | undefined | boolean | number;
+  [key: string]: boolean | undefined | string;
 };
 
-export type Test = {
+type TKeyString = {
   [key: string]: string;
 };
 
@@ -54,6 +54,7 @@ export type {
   TRoom,
   TStateSchema,
   TKeyValue,
+  TKeyString,
   TPropValues,
   TValidator,
   TResponse,

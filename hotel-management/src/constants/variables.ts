@@ -74,4 +74,7 @@ const ROOM_PAGE = {
   ],
 }
 
-export { USER_PAGE, ROOM_PAGE };
+const VALUE = 'value';
+const ERROR = 'error';
+
+export { USER_PAGE, ROOM_PAGE, VALUE, ERROR };
