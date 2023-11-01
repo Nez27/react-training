@@ -87,7 +87,9 @@ const getValueFromObj = <T>(obj: T | null = null): TKeyString => {
     for (const key of Object.keys(obj)) {
       const tempValue = obj[key as keyof typeof obj];
       const value: string | boolean | number =
-        typeof tempValue === 'boolean' || typeof tempValue === 'string'
+        typeof tempValue === 'boolean' ||
+        typeof tempValue === 'string' ||
+        typeof tempValue === 'number'
           ? tempValue
           : '';
 
