@@ -2,17 +2,18 @@ import { forwardRef, useEffect } from 'react';
 
 // Components
 import Dialog from '../../components/Dialog';
-import UserForm from './Form';
+import RoomForm from './Form';
 
 // Interfaces
 import { IDialogProps } from '../../globals/interfaces';
-import { TUser } from '../../globals/types';
 
-const UserDialog = forwardRef((props, ref) => {
+// Types
+import { TRoom } from '../../globals/types';
+
+const RoomDialog = forwardRef((props, ref) => {
   const dialogRef = ref as React.MutableRefObject<
     HTMLDialogElement | undefined
   >;
-
   // prettier-ignore
   const { 
     onClose,
@@ -39,16 +40,16 @@ const UserDialog = forwardRef((props, ref) => {
   }, [dialogRef]);
 
   return (
-    <Dialog title={'Add user'} onClose={onClose} ref={dialogRef}>
-      <UserForm
+    <Dialog title={'Add room'} onClose={onClose} ref={dialogRef}>
+      <RoomForm
         onClose={onClose!}
         reload={reload!}
         setReload={setReload!}
-        user={data}
+        room={data}
         isAdd={isAdd!}
       />
     </Dialog>
   );
-}) as React.FC<IDialogProps<TUser>>;
+}) as React.FC<IDialogProps<TRoom>>;
 
-export default UserDialog;
+export default RoomDialog;

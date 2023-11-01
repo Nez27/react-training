@@ -1,16 +1,11 @@
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 
 // Utils
-import {
-  ERROR,
-  VALUE,
-  getPropValues,
-  isObject,
-  isRequired,
-} from '../helpers/utils';
+import { getPropValues, isObject, isRequired } from '../helpers/utils';
 
 // Types
 import { TKeyValue, TValidator } from '../globals/types';
+import { ERROR, VALUE } from '../constants/variables';
 
 /**
  * Custom hooks to validate your Form...
@@ -36,11 +31,11 @@ const useForm = (
   useEffect(() => {
     setInitialErrorState(initialValue);
     setDisable(true);
+    setDirty(getPropValues(stateSchema));
 
     // If initial value true, setValues again from stateSchema
     // and enabled button
     if (initialValue) {
-      setValues({});
       setValues(getPropValues(stateSchema, VALUE));
       setDisable(false);
     }
@@ -116,10 +111,19 @@ const useForm = (
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setIsDirty(true);
 
+      let error = '';
       const name = (event.target! as HTMLInputElement).name;
-      const value = (event.target! as HTMLInputElement).value;
+      let value: string | boolean = '';
 
-      const error = validateFormFields(name, value);
+      if ((event.target! as HTMLInputElement).type === 'checkbox') {
+        value = (event.target! as HTMLInputElement).checked;
+      } else {
+        value = (event.target! as HTMLInputElement).value;
+      }
+
+      if (typeof value === 'string') {
+        error = validateFormFields(name, value)!;
+      }
 
       setValues((prevState) => ({ ...prevState, [name]: value }));
       setErrors((prevState) => ({ ...prevState, [name]: error }));

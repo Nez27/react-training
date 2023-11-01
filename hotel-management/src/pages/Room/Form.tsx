@@ -3,32 +3,31 @@ import styled from 'styled-components';
 import toast from 'react-hot-toast';
 
 // Styled
-import Input from '../../commons/styles/Input';
-import TextArea from '../../commons/styles/TextArea';
+import Input from '../../commons/styles/Input.ts';
+import TextArea from '../../commons/styles/TextArea.ts';
 
 // Components
-import Form from '../../components/Form';
-import FormRow from '../../components/FormRow';
+import Form from '../../components/Form/index.tsx';
+import FormRow from '../../components/FormRow/index.tsx';
 import Button from '../../commons/styles/Button.ts';
 
 // Types
 import {
   TKeyValue,
+  TRoom,
   TStateSchema,
-  TUser,
   TValidator,
-} from '../../globals/types';
+} from '../../globals/types.ts';
 
 // Hooks
-import useForm from '../../hooks/useForm';
+import useForm from '../../hooks/useForm.ts';
 
 // Utils
 import {
-  isValidString,
   isValidNumber,
-  isValidPhoneNumber,
-  isValidName,
-} from '../../helpers/validators';
+  isValidString,
+  skipCheck,
+} from '../../helpers/validators.ts';
 import { addValidator, getValueFromObj } from '../../helpers/utils.ts';
 import { sendRequest } from '../../helpers/sendRequest.ts';
 
@@ -39,7 +38,7 @@ import {
   EDIT_SUCCESS,
   errorMsg,
 } from '../../constants/messages.ts';
-import { USER_PATH } from '../../constants/path.ts';
+import { ROOM_PATH } from '../../constants/path.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -50,90 +49,81 @@ const FormBtn = styled(Button)`
   }
 `;
 
-interface IUserFormProp {
+interface IRoomFormProp {
   onClose: () => void;
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
-  user?: TUser | null;
+  room?: TRoom | null;
   isAdd: boolean;
 }
 
-const UserForm = ({
+const RoomForm = ({
   onClose,
   reload,
   setReload,
-  user,
+  room,
   isAdd,
-}: IUserFormProp) => {
+}: IRoomFormProp) => {
   const [reset, setReset] = useState(true);
 
   if (isAdd) {
     // If this is add form, reset value
-    user = null;
+    room = null;
   }
 
   // prettier-ignore
   const initialValue: string = isAdd 
     ? '' 
-    : user! 
-    && user.id;
+    : room! 
+    && room.id;
 
   const {
     idValue,
     nameValue,
-    identifiedCodeValue,
-    phoneValue,
-    roomIdValue,
-    addressValue,
-  } = getValueFromObj<TUser>(user);
+    amountValue,
+    priceValue,
+    discountValue,
+    statusValue,
+    descriptionValue,
+  } = getValueFromObj<TRoom>(room);
 
   // Define your state schema
-  // prettier-ignore
   const stateSchema: TStateSchema = {
     id: { value: idValue || '' },
-    name: { 
-      value: nameValue || '',
-      error: '' ,
-    },
-    identifiedCode: {
-      value: identifiedCodeValue || '',
-      error: '',
-    },
-    phone: { 
-      value: phoneValue || '',
-       error: '',
-    },
-    roomId: { 
-      value: roomIdValue || '',
-      error: '' ,
-    },
-    address: { 
-      value: addressValue || '',
-      error: ''
-    },
+    name: { value: nameValue || '', error: '' },
+    amount: { value: amountValue || '', error: '' },
+    price: { value: priceValue || '', error: '' },
+    discount: { value: discountValue || '', error: '' },
+    status: { value: statusValue || '', error: '' },
+    description: { value: descriptionValue || '', error: '' },
   };
 
   // prettier-ignore
   const stateValidatorSchema: TValidator = {
     name: addValidator({ 
-      validatorFunc: isValidName, 
-      prop: 'full name' 
-    }),
-    identifiedCode: addValidator({
-      validatorFunc: isValidNumber,
-      prop: 'identified code',
-    }),
-    phone: addValidator({
-      validatorFunc: isValidPhoneNumber,
-      prop: 'phone number',
-    }),
-    roomId: addValidator({ 
-      validatorFunc: isValidNumber, 
-      prop: 'room number' 
-    }),
-    address: addValidator({ 
       validatorFunc: isValidString, 
-      prop: 'address' 
+      prop: 'name' 
+    }),
+    amount: addValidator({
+      validatorFunc: isValidNumber,
+      prop: 'amount',
+    }),
+    price: addValidator({
+      validatorFunc: isValidNumber,
+      prop: 'price',
+    }),
+    discount: addValidator({ 
+      validatorFunc: isValidNumber, 
+      prop: 'discount' 
+    }),
+    status: addValidator({
+      validatorFunc: skipCheck,
+      prop: 'status',
+      required: false,
+    }),
+    description: addValidator({ 
+      validatorFunc: isValidString, 
+      prop: 'description' 
     }),
   };
 
@@ -143,22 +133,22 @@ const UserForm = ({
       if (isAdd) {
         // Add request
         const response = await sendRequest(
-          USER_PATH,
+          ROOM_PATH,
           JSON.stringify(state),
           'POST',
         );
 
         if (response.statusCode === STATUS_CODE.CREATE) {
           toast.success(ADD_SUCCESS);
+
+          onResetForm();
         } else {
           throw new Error(errorMsg(response.statusCode, response.msg));
         }
-
-        onResetForm();
       } else {
         // Edit request
         const response = await sendRequest(
-          USER_PATH + `/${user!.id}`,
+          ROOM_PATH + `/${room!.id}`,
           JSON.stringify(state),
           'PUT',
         );
@@ -186,6 +176,8 @@ const UserForm = ({
     onResetForm();
   };
 
+  console.log(initialValue);
+
   // prettier-ignore
   const { 
     values,
@@ -205,12 +197,14 @@ const UserForm = ({
   const {
     id,
     name, 
-    identifiedCode,
-    phone,
-    roomId, 
-    address 
+    amount,
+    price,
+    discount, 
+    status,
+    description 
   } = values;
 
+  // Clear form value when this is a add form
   useEffect(() => {
     if (isAdd) {
       Object.keys(values).forEach((key) => (values[key] = ''));
@@ -227,7 +221,7 @@ const UserForm = ({
     <Form onSubmit={handleOnSubmit}>
       <Input type="hidden" name="id" value={id as string} />
       <FormRow
-        label="Full Name"
+        label="Name"
         error={
           // prettier-ignore
           errors.name && dirty.name 
@@ -244,40 +238,41 @@ const UserForm = ({
       </FormRow>
 
       <FormRow
-        label="Identified Code"
+        label="Amount"
+        // prettier-ignore
         error={
-          errors.identifiedCode && dirty.identifiedCode
-            ? (errors.identifiedCode as string)
+          errors.amount && dirty.amount 
+            ? (errors.amount as string) 
             : ''
-        }
+          }
       >
         <Input
           type="text"
-          name="identifiedCode"
-          value={identifiedCode as string}
+          name="amount"
+          value={amount as string}
           onChange={handleOnChange}
         />
       </FormRow>
 
       <FormRow
-        label="Phone"
+        label="Price"
         error={
           // prettier-ignore
-          errors.phone && dirty.phone 
-            ? (errors.phone as string) 
+          errors.price && dirty.price 
+            ? (errors.price as string) 
             : ''
         }
       >
         <Input
           type="text"
-          name="phone"
-          value={phone as string}
+          name="price"
+          value={price as string}
           onChange={handleOnChange}
         />
       </FormRow>
 
       <FormRow
-        label="Room"
+        label="Discount"
         error={
           // prettier-ignore
           errors.roomId && dirty.roomId
@@ -287,25 +282,34 @@ const UserForm = ({
       >
         <Input
           type="text"
-          name="roomId"
-          value={roomId as string}
+          name="discount"
+          value={discount as string}
+          onChange={handleOnChange}
+        />
+      </FormRow>
+
+      <FormRow label="Status">
+        <Input
+          type="checkbox"
+          name="status"
+          checked={status as boolean}
           onChange={handleOnChange}
         />
       </FormRow>
 
       <FormRow
-        label="Address"
+        label="Description"
         error={
           // prettier-ignore
-          errors.address && dirty.address 
-            ? (errors.address as string) 
+          errors.description && dirty.description 
+            ? (errors.description as string) 
             : ''
         }
       >
         <TextArea
-          name="address"
+          name="description"
           rows={3}
-          value={address as string}
+          value={description as string}
           onChange={handleOnChange}
         />
       </FormRow>
@@ -327,4 +331,4 @@ const UserForm = ({
   );
 };
 
-export default UserForm;
+export default RoomForm;

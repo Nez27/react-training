@@ -2,12 +2,25 @@ import { useEffect, useState } from 'react';
 
 // Constants
 import { BASE_URL } from '../constants/path';
-import { searchQuery } from '../helpers/utils';
 import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '../constants/config';
 
-export const useFetch = (
+// Utils
+import { searchQuery } from '../helpers/utils';
+
+/**
+ *
+ * @param path The path of url
+ * @param columnSearch Column need to search
+ * @param keyWord The key word to search
+ * @param tempSortBy Sort by
+ * @param tempOrderBy Order by
+ * @param reload Fetch again
+ * @returns data: A data after fetch, isPending: A boolean indicating whether or not the progress of fetch data is done, errorMsg: A error message from the server.
+ */
+const useFetch = (
   path: string,
-  phoneNum: string,
+  columnSearch: string,
+  keyWord: string,
   tempSortBy: string,
   tempOrderBy: string,
   reload?: boolean,
@@ -35,7 +48,7 @@ export const useFetch = (
         : DEFAULT_ORDER_BY;
 
       // Query search
-      const query = searchQuery(phoneNum, sortBy, orderBy);
+      const query = searchQuery(columnSearch, keyWord, sortBy, orderBy);
 
       try {
         const response = await fetch(BASE_URL + path + '?' + query);
@@ -56,6 +69,8 @@ export const useFetch = (
     };
 
     fetchData();
-  }, [path, reload, phoneNum, tempOrderBy, tempSortBy]);
+  }, [path, reload, columnSearch, keyWord, tempOrderBy, tempSortBy]);
   return { data, isPending, errorMsg };
 };
+
+export { useFetch };
