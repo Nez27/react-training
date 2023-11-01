@@ -27,7 +27,6 @@ import {
   isValidString,
   isValidNumber,
   isValidPhoneNumber,
-  isValidName,
 } from '../../helpers/validators';
 import { addValidator, getValueFromObj } from '../../helpers/utils.ts';
 import { sendRequest } from '../../helpers/sendRequest.ts';
@@ -76,7 +75,7 @@ const UserForm = ({
   const initialValue: string = isAdd 
     ? '' 
     : user! 
-    && user.id;
+    && user.id.toLocaleString();
 
   const {
     idValue,
@@ -116,7 +115,7 @@ const UserForm = ({
   // prettier-ignore
   const stateValidatorSchema: TValidator = {
     name: addValidator({ 
-      validatorFunc: isValidName, 
+      validatorFunc: isValidString, 
       prop: 'full name' 
     }),
     identifiedCode: addValidator({
@@ -139,12 +138,22 @@ const UserForm = ({
 
   // Submit form
   const onSubmitForm = async (state: TKeyValue) => {
+    // Convert to user type
+    const data: TUser = {
+      id: +state.id!,
+      name: '' + state.name,
+      identifiedCode: '' + state.identifiedCode,
+      phone: '' + state.phone,
+      roomId: +state.roomId!,
+      address: '' + state.address,
+    };
+
     try {
       if (isAdd) {
         // Add request
         const response = await sendRequest(
           USER_PATH,
-          JSON.stringify(state),
+          JSON.stringify(data),
           'POST',
         );
 
@@ -159,7 +168,7 @@ const UserForm = ({
         // Edit request
         const response = await sendRequest(
           USER_PATH + `/${user!.id}`,
-          JSON.stringify(state),
+          JSON.stringify(data),
           'PUT',
         );
 

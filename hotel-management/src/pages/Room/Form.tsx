@@ -75,7 +75,7 @@ const RoomForm = ({
   const initialValue: string = isAdd 
     ? '' 
     : room! 
-    && room.id;
+    && room.id.toString();
 
   const {
     idValue,
@@ -150,12 +150,23 @@ const RoomForm = ({
 
   // Submit form
   const onSubmitForm = async (state: TKeyValue) => {
+    // Convert to room type
+    const data: TRoom = {
+      id: +state.id!,
+      name: '' + state.name,
+      amount: +state.amount!,
+      discount: +state.discount!,
+      price: +state.price!,
+      status: !!state.status,
+      description: '' + state.description,
+    };
+
     try {
       if (isAdd) {
         // Add request
         const response = await sendRequest(
           ROOM_PATH,
-          JSON.stringify(state),
+          JSON.stringify(data),
           'POST',
         );
 
@@ -170,7 +181,7 @@ const RoomForm = ({
         // Edit request
         const response = await sendRequest(
           ROOM_PATH + `/${room!.id}`,
-          JSON.stringify(state),
+          JSON.stringify(data),
           'PUT',
         );
 
@@ -196,8 +207,6 @@ const RoomForm = ({
     onClose();
     onResetForm();
   };
-
-  console.log(initialValue);
 
   // prettier-ignore
   const { 

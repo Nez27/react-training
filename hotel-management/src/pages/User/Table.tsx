@@ -78,9 +78,9 @@ const UserRow = ({
       <div>{roomId}</div>
 
       <Menus.Menu>
-        <Menus.Toggle id={id} />
+        <Menus.Toggle id={id.toString()} />
 
-        <Menus.List id={id}>
+        <Menus.List id={id.toString()}>
           <Menus.Button
             icon={<HiSquare2Stack />}
             onClick={() => handleOnEdit(user)}

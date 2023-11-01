@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const StyledSearch = styled.input`
@@ -10,10 +10,10 @@ const StyledSearch = styled.input`
 
 interface ISearch {
   setPlaceHolder: string;
-  setValueSearch: React.Dispatch<React.SetStateAction<string>>;
+  setValueSearch: (phone: string) => void;
 }
 
-const Search = ({ setValueSearch, setPlaceHolder }: ISearch) => {
+const Search = memo(({ setValueSearch, setPlaceHolder }: ISearch) => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -30,6 +30,6 @@ const Search = ({ setValueSearch, setPlaceHolder }: ISearch) => {
       placeholder={setPlaceHolder}
     />
   );
-};
+});
 
 export default Search;

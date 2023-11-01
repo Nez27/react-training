@@ -71,8 +71,8 @@ const RoomRow = ({
 
   // prettier-ignore
   const statusText = status
-    ? 'Valid' 
-    : 'Invalid';
+    ? 'Invalid' 
+    : 'Valid';
 
   return (
     <Table.Row>
@@ -84,9 +84,9 @@ const RoomRow = ({
       <div>{statusText}</div>
 
       <Menus.Menu>
-        <Menus.Toggle id={id} />
+        <Menus.Toggle id={id.toString()} />
 
-        <Menus.List id={id}>
+        <Menus.List id={id.toString()}>
           <Menus.Button
             icon={<HiSquare2Stack />}
             onClick={() => handleOnEdit(room)}
