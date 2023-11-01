@@ -2,7 +2,7 @@
 import { invalidFormatMsg } from '../constants/messages';
 
 // Types
-import { TKeyValue, TPropValues, TStateSchema, TUser } from '../globals/types';
+import { TKeyValue, TPropValues, TStateSchema, Test } from '../globals/types';
 
 const VALUE = 'value';
 const ERROR = 'error';
@@ -47,18 +47,35 @@ const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
   };
 };
 
-const getValueUser = (user: TUser | null = null, prop: string): string => {
-  if (user) {
-    return user[prop as keyof TUser];
+const getValueFromObj = <T>(obj: T | null = null): Test => {
+  let result = {};
+
+  if (obj) {
+    for (const key of Object.keys(obj)) {
+      const tempValue = obj[key as keyof typeof obj];
+      const value: string | boolean | number =
+        typeof tempValue === 'boolean' ||
+        typeof tempValue === 'string' ||
+        typeof tempValue === 'number'
+          ? tempValue
+          : '';
+
+      result = { ...result, [`${key}Value`]: value };
+    }
   }
 
-  return '';
+  return result;
 };
 
-const searchQuery = (phone: string, sort: string, order: string) => {
+const searchQuery = (
+  columnSearch: string,
+  phone: string,
+  sort: string,
+  order: string,
+) => {
   // prettier-ignore
   const phoneParams = phone
-    ? 'phone_like=' + phone
+    ? `${columnSearch}_like=` + phone
     : '';
 
   // prettier-ignore
@@ -92,7 +109,7 @@ export {
   isObject,
   isRequired,
   getPropValues,
-  getValueUser,
+  getValueFromObj,
   addValidator,
   searchQuery,
   VALUE,

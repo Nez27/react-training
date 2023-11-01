@@ -34,4 +34,44 @@ const USER_PAGE = {
   ],
 };
 
-export { USER_PAGE };
+// prettier-ignore
+const ROOM_PAGE = {
+  ORDERBY_OPTIONS: [
+    {
+      value: 'asc',
+      label: 'Ascending',
+    },
+    {
+      value: 'desc',
+      label: 'Descending',
+    },
+  ],
+  SORTBY_OPTIONS: [
+    { 
+      value: 'id',
+      label: 'Sort by id',
+    },
+    { 
+      value: 'name',
+      label: 'Sort by name',
+    },
+    {
+      value: 'amount',
+      label: 'Sort by amount',
+    },
+    { 
+      value: 'price',
+      label: 'Sort by price',
+    },
+    { 
+      value: 'discount',
+      label: 'Sort by discount',
+    },
+    { 
+      value: 'status',
+      label: 'Sort by status',
+    },
+  ],
+}
+
+export { USER_PAGE, ROOM_PAGE };

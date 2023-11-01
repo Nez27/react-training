@@ -9,24 +9,25 @@ const StyledSearch = styled.input`
 `;
 
 interface ISearch {
-  setPhoneSearch: React.Dispatch<React.SetStateAction<string>>;
+  setPlaceHolder: string;
+  setValueSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Search = ({ setPhoneSearch }: ISearch) => {
+const Search = ({ setValueSearch, setPlaceHolder }: ISearch) => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      setPhoneSearch(query);
+      setValueSearch(query);
     }, 500);
 
     return () => clearTimeout(timeOut);
-  }, [setPhoneSearch, query]);
+  }, [setValueSearch, query]);
 
   return (
     <StyledSearch
       onChange={(e) => setQuery(e.target.value)}
-      placeholder="Search by phone..."
+      placeholder={setPlaceHolder}
     />
   );
 };
