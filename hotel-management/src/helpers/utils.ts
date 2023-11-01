@@ -59,7 +59,7 @@ const getValueFromObj = <T>(obj: T | null = null): TKeyString => {
           ? tempValue
           : '';
 
-      result = { ...result, [`${key}Value`]: value as string };
+      result = { ...result, [`${key}Value`]: value };
     }
   }
 

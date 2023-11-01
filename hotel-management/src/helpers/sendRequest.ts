@@ -1,6 +1,9 @@
 // Constants
 import { BASE_URL } from '../constants/path';
+
+// Types
 import { TResponse } from '../globals/types';
+
 type TMethodRequest = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export const sendRequest = async (
