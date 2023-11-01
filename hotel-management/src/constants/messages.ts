@@ -10,6 +10,7 @@ const ADD_SUCCESS = 'Add success';
 const EDIT_SUCCESS = 'Edit success';
 const CONFIRM_DELETE = 'Are you sure to delete it?';
 const DELETE_SUCCESS = 'Delete success';
+const REQUIRED_FIELD_ERROR = 'This is required field';
 
 export {
   invalidFormatMsg,
@@ -18,4 +19,5 @@ export {
   EDIT_SUCCESS,
   CONFIRM_DELETE,
   DELETE_SUCCESS,
+  REQUIRED_FIELD_ERROR,
 };

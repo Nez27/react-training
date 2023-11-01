@@ -7,7 +7,7 @@ import { IDialogProps } from '../../globals/interfaces';
 import { StyledBody, StyledDialog, StyledTitle } from './styled';
 
 const Dialog = forwardRef((props, ref) => {
-  const { title, children, onClose } = props as IDialogProps;
+  const { title, children, onClose } = props as IDialogProps<unknown>;
   return (
     <StyledDialog
       ref={ref as React.LegacyRef<HTMLDialogElement> | undefined}
@@ -17,6 +17,6 @@ const Dialog = forwardRef((props, ref) => {
       <StyledBody>{children}</StyledBody>
     </StyledDialog>
   );
-}) as React.FC<IDialogProps>;
+}) as React.FC<IDialogProps<unknown>>;
 
 export default Dialog;

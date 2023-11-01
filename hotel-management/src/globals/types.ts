@@ -7,6 +7,16 @@ type TUser = {
   roomId: string;
 };
 
+type TRoom = {
+  id: string;
+  name: string;
+  amount: string;
+  price: string;
+  discount: string;
+  description: string;
+  status: boolean;
+};
+
 type TStateSchema = {
   [key: string]: {
     value?: string;
@@ -15,7 +25,11 @@ type TStateSchema = {
 };
 
 type TKeyValue = {
-  [key: string]: string | undefined | boolean;
+  [key: string]: boolean | undefined | string;
+};
+
+type TKeyString = {
+  [key: string]: string;
 };
 
 type TPropValues = 'value' | 'error' | boolean;
@@ -37,8 +51,10 @@ type TResponse = {
 
 export type {
   TUser,
+  TRoom,
   TStateSchema,
   TKeyValue,
+  TKeyString,
   TPropValues,
   TValidator,
   TResponse,

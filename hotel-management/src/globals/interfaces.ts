@@ -1,6 +1,3 @@
-// Types
-import { TUser } from './types';
-
 interface IMenusContext {
   openId?: string;
   close?: () => void;
@@ -23,14 +20,14 @@ interface ITableBody<T> {
   render?: (value: T) => JSX.Element;
 }
 
-interface IDialogProps {
+interface IDialogProps<T> {
   title?: string;
   children?: JSX.Element[] | JSX.Element;
   onClose?: () => void;
   reload?: boolean;
   setReload?: React.Dispatch<React.SetStateAction<boolean>>;
   ref?: React.MutableRefObject<HTMLDialogElement | undefined>;
-  user?: TUser | null;
+  data?: T | null;
   isAdd?: boolean;
 }
 

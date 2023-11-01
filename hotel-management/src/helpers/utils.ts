@@ -1,26 +1,49 @@
 // Constants
-import { invalidFormatMsg } from '../constants/messages';
+import { REQUIRED_FIELD_ERROR, invalidFormatMsg } from '../constants/messages';
 
 // Types
-import { TKeyValue, TPropValues, TStateSchema, TUser } from '../globals/types';
+import {
+  TKeyString,
+  TKeyValue,
+  TPropValues,
+  TStateSchema,
+} from '../globals/types';
 
-const VALUE = 'value';
-const ERROR = 'error';
-const REQUIRED_FIELD_ERROR = 'This is required field';
-
+/**
+ * The function check value has type boolean or not
+ * @param value The value need to checked
+ * @returns A boolean indicating whether or not the argument has type boolean
+ */
 const isBool = (value: unknown) => {
   return typeof value === 'boolean';
 };
 
+/**
+ * The function check value has type object or not
+ * @param value The value need to checked
+ * @returns A boolean indicating whether or not the argument has type object.
+ */
 const isObject = (value: unknown) => {
   return typeof value === 'object' && value !== null;
 };
 
+/**
+ * Set required error for value
+ * @param value The value set required or not
+ * @param isRequired Set required for value
+ * @returns Return error text if value has required
+ */
 const isRequired = (value: string | number, isRequired: unknown) => {
   if (!value && isRequired) return REQUIRED_FIELD_ERROR;
   return '';
 };
 
+/**
+ * Get values from props
+ * @param stateSchema StateSchema value
+ * @param prop Prop value (Has 3 type: boolean | "value" | "error")
+ * @returns Return value object depend on props
+ */
 const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
   return Object.keys(stateSchema).reduce((field, key) => {
     field[key] = isBool(prop)
@@ -37,6 +60,11 @@ type TValidator = {
   required?: boolean;
 };
 
+/**
+ * Create validator object
+ * @param param0 Pass TValidator object
+ * @returns An object contains condition validator
+ */
 const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
   return {
     required,
@@ -47,18 +75,46 @@ const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
   };
 };
 
-const getValueUser = (user: TUser | null = null, prop: string): string => {
-  if (user) {
-    return user[prop as keyof TUser];
+/**
+ * Return the object contains values of object pass
+ * @param obj Object need to get value
+ * @returns The object contains value of object
+ */
+const getValueFromObj = <T>(obj: T | null = null): TKeyString => {
+  let result = {};
+
+  if (obj) {
+    for (const key of Object.keys(obj)) {
+      const tempValue = obj[key as keyof typeof obj];
+      const value: string | boolean | number =
+        typeof tempValue === 'boolean' || typeof tempValue === 'string'
+          ? tempValue
+          : '';
+
+      result = { ...result, [`${key}Value`]: value };
+    }
   }
 
-  return '';
+  return result;
 };
 
-const searchQuery = (phone: string, sort: string, order: string) => {
+/**
+ * Create query url for search
+ * @param columnSearch Column want to search
+ * @param keySearch Keyword search
+ * @param sort Sort by
+ * @param order Order by
+ * @returns Return query url
+ */
+const searchQuery = (
+  columnSearch: string,
+  keySearch: string,
+  sort: string,
+  order: string,
+) => {
   // prettier-ignore
-  const phoneParams = phone
-    ? 'phone_like=' + phone
+  const phoneParams = keySearch
+    ? `${columnSearch}_like=` + keySearch
     : '';
 
   // prettier-ignore
@@ -92,10 +148,8 @@ export {
   isObject,
   isRequired,
   getPropValues,
-  getValueUser,
+  getValueFromObj,
   addValidator,
   searchQuery,
-  VALUE,
-  ERROR,
   REQUIRED_FIELD_ERROR,
 };
