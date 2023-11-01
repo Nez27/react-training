@@ -13,12 +13,16 @@ const StyledHeaderMenu = styled.ul`
 const HeaderMenu = () => {
   return (
     <StyledHeaderMenu>
-      <ButtonIcon>
-        <IoPersonCircleOutline />
-      </ButtonIcon>
-      <ButtonIcon>
-        <HiOutlineLogout />
-      </ButtonIcon>
+      <li>
+        <ButtonIcon aria-label="Profile">
+          <IoPersonCircleOutline />
+        </ButtonIcon>
+      </li>
+      <li>
+        <ButtonIcon aria-label="Logout">
+          <HiOutlineLogout />
+        </ButtonIcon>
+      </li>
     </StyledHeaderMenu>
   );
 };

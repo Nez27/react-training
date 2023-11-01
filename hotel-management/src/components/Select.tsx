@@ -19,7 +19,7 @@ const StyledSelect = styled.select`
 
 const Select = ({ options, value, onChange }: ISelect) => {
   return (
-    <StyledSelect value={value} onChange={onChange}>
+    <StyledSelect value={value} onChange={onChange} aria-label="Sort">
       {options.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}

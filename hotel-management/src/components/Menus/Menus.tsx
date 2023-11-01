@@ -37,7 +37,7 @@ const Toggle = ({ id }: { id: string }): React.JSX.Element => {
   };
 
   return (
-    <StyledToggle onClick={handleClick}>
+    <StyledToggle onClick={handleClick} aria-label={`Menu item ${id}`}>
       <HiEllipsisVertical />
     </StyledToggle>
   );
