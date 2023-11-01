@@ -15,45 +15,45 @@ import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 
 // Types
-import { TUser } from '../../globals/types';
+import { TRoom } from '../../globals/types';
 
 // Constants
 import { useFetch } from '../../hooks/useFetch';
-import { USER_PATH } from '../../constants/path';
+import { ROOM_PATH } from '../../constants/path';
 import { STATUS_CODE } from '../../constants/statusCode';
 import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
+import { ROOM_PAGE } from '../../constants/variables';
 
 // Styled
 import Spinner from '../../commons/styles/Spinner';
 
 // Utils
 import { sendRequest } from '../../helpers/sendRequest';
-import { USER_PAGE } from '../../constants/variables';
 
-interface IUserRow {
-  user: TUser;
+interface IRoomRow {
+  room: TRoom;
   openFormDialog: () => void;
-  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
+  setRoom: React.Dispatch<React.SetStateAction<TRoom | null>>;
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserRow = ({
-  user,
+const RoomRow = ({
+  room,
   openFormDialog,
-  setUser,
+  setRoom,
   reload,
   setReload,
-}: IUserRow) => {
-  const handleOnEdit = (user: TUser) => {
-    setUser(user);
+}: IRoomRow) => {
+  const handleOnEdit = (room: TRoom) => {
+    setRoom(room);
     openFormDialog();
   };
 
-  const handleOnDelete = async (user: TUser) => {
+  const handleOnDelete = async (room: TRoom) => {
     if (confirm(CONFIRM_DELETE)) {
       const response = await sendRequest(
-        USER_PATH + `/${user.id}`,
+        ROOM_PATH + `/${room.id}`,
         null,
         'DELETE',
       );
@@ -67,15 +67,21 @@ const UserRow = ({
     }
   };
 
-  const { id, name, identifiedCode, phone, roomId } = user;
+  const { id, name, amount, price, discount, status } = room;
+
+  // prettier-ignore
+  const statusText = status
+    ? 'Valid' 
+    : 'Invalid';
 
   return (
     <Table.Row>
       <div>{id}</div>
       <div>{name}</div>
-      <div>{identifiedCode}</div>
-      <div>{phone}</div>
-      <div>{roomId}</div>
+      <div>{amount}</div>
+      <div>{price}</div>
+      <div>{discount}</div>
+      <div>{statusText}</div>
 
       <Menus.Menu>
         <Menus.Toggle id={id} />
@@ -83,11 +89,11 @@ const UserRow = ({
         <Menus.List id={id}>
           <Menus.Button
             icon={<HiSquare2Stack />}
-            onClick={() => handleOnEdit(user)}
+            onClick={() => handleOnEdit(room)}
           >
             Edit
           </Menus.Button>
-          <Menus.Button icon={<HiTrash />} onClick={() => handleOnDelete(user)}>
+          <Menus.Button icon={<HiTrash />} onClick={() => handleOnDelete(room)}>
             Delete
           </Menus.Button>
         </Menus.List>
@@ -96,22 +102,22 @@ const UserRow = ({
   );
 };
 
-interface IUserTable {
+interface IRoomTable {
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
   openFormDialog: () => void;
-  setUser?: React.Dispatch<React.SetStateAction<TUser | null>>;
+  setRoom?: React.Dispatch<React.SetStateAction<TRoom | null>>;
 }
 
-const UserTable = ({
+const RoomTable = ({
   reload,
   setReload,
   openFormDialog,
-  setUser,
-}: IUserTable) => {
-  const [phoneSearch, setPhoneSearch] = useState('');
+  setRoom,
+}: IRoomTable) => {
+  const [nameSearch, setNameSearch] = useState('');
   const [searchParams] = useSearchParams();
-  const [users, setUsers] = useState<TUser[]>([]);
+  const [rooms, setRooms] = useState<TRoom[]>([]);
   const sortByValue = searchParams.get('sortBy')
     ? searchParams.get('sortBy')!
     : '';
@@ -120,9 +126,9 @@ const UserTable = ({
     : '';
 
   const { data, isPending, errorMsg } = useFetch(
-    'users',
-    'phone',
-    phoneSearch,
+    'rooms',
+    'name',
+    nameSearch,
     sortByValue,
     orderByValue,
     reload,
@@ -130,9 +136,9 @@ const UserTable = ({
 
   useEffect(() => {
     if (data) {
-      setUsers(data);
+      setRooms(data);
     } else {
-      setUsers([]);
+      setRooms([]);
     }
 
     if (errorMsg) {
@@ -144,37 +150,38 @@ const UserTable = ({
     <>
       <Direction>
         <StyledOperationTable>
-          <OrderBy options={USER_PAGE.ORDERBY_OPTIONS} />
+          <OrderBy options={ROOM_PAGE.ORDERBY_OPTIONS} />
 
-          <SortBy options={USER_PAGE.SORTBY_OPTIONS} />
+          <SortBy options={ROOM_PAGE.SORTBY_OPTIONS} />
           <Search
-            setValueSearch={setPhoneSearch}
-            setPlaceHolder="Search by phone..."
+            setValueSearch={setNameSearch}
+            setPlaceHolder="Search by name..."
           />
         </StyledOperationTable>
 
         {isPending && <Spinner />}
 
-        {users.length ? (
+        {rooms.length ? (
           <Menus>
-            <Table columns="10% 30% 20% 20% 10% 5%">
+            <Table columns="10% 20% 20% 20% 10% 10% 5%">
               <Table.Header>
                 <div>Id</div>
                 <div>Name</div>
-                <div>Identified Code</div>
-                <div>Phone</div>
-                <div>Room</div>
+                <div>Amount</div>
+                <div>Price</div>
+                <div>Discount</div>
+                <div>Status</div>
               </Table.Header>
-              <Table.Body<TUser>
-                data={users}
-                render={(user: TUser) => (
-                  <UserRow
-                    user={user}
-                    key={user.id}
+              <Table.Body<TRoom>
+                data={rooms}
+                render={(room: TRoom) => (
+                  <RoomRow
+                    room={room}
+                    key={room.id}
                     reload={reload}
                     setReload={setReload}
                     openFormDialog={openFormDialog}
-                    setUser={setUser!}
+                    setRoom={setRoom!}
                   />
                 )}
               />
@@ -188,4 +195,4 @@ const UserTable = ({
   );
 };
 
-export default UserTable;
+export default RoomTable;

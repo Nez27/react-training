@@ -3,19 +3,19 @@ import { useRef, useState } from 'react';
 // Components
 import Direction from '../../commons/styles/Direction';
 import Button from '../../commons/styles/Button';
-import UserTable from './Table';
+import RoomTable from './Table';
 
 // Styled
-import { StyledUser, Title } from './styled';
-import UserDialog from './Dialog';
+import { StyledRoom, Title } from './styled';
+import RoomDialog from './Dialog';
 
 // Types
-import { TUser } from '../../globals/types';
+import { TRoom } from '../../globals/types';
 
-const User = () => {
+const Room = () => {
   const dialogRef = useRef<HTMLDialogElement>();
   const [reload, setReload] = useState(true);
-  const [user, setUser] = useState<TUser | null>(null);
+  const [room, setRoom] = useState<TRoom | null>(null);
   const [isAdd, setIsAdd] = useState(false);
 
   const openFormDialog = (isAddForm: boolean = false) => {
@@ -29,30 +29,30 @@ const User = () => {
 
   return (
     <>
-      <StyledUser>
+      <StyledRoom>
         <Direction type="horizontal">
-          <Title>List User</Title>
-          <Button onClick={() => openFormDialog(true)}>Add user</Button>
+          <Title>List Room</Title>
+          <Button onClick={() => openFormDialog(true)}>Add room</Button>
         </Direction>
 
-        <UserTable
+        <RoomTable
           reload={reload}
           setReload={setReload}
           openFormDialog={() => openFormDialog()}
-          setUser={setUser}
+          setRoom={setRoom}
         />
-      </StyledUser>
+      </StyledRoom>
 
-      <UserDialog
+      <RoomDialog
         onClose={closeFormDialog}
         ref={dialogRef}
         setReload={setReload}
         reload={reload}
-        data={user}
+        data={room}
         isAdd={isAdd}
       />
     </>
   );
 };
 
-export default User;
+export default Room;
