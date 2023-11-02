@@ -4,10 +4,14 @@ import HeaderMenu from '../HeaderMenu';
 // Styled
 import { StyledHeader } from './styled';
 
-const Header = () => {
+interface IHeader {
+  accountName: string
+}
+
+const Header = ({accountName}: IHeader) => {
   return (
     <StyledHeader>
-      <p>Hi, Admin!</p>
+      <p>Hi, {accountName}!</p>
       <HeaderMenu />
     </StyledHeader>
   );

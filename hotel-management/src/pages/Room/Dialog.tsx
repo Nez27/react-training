@@ -1,11 +1,8 @@
 import { forwardRef, useEffect } from 'react';
 
 // Components
-import Dialog from '../../components/Dialog';
+import  Dialog, { IDialogProps } from '../../components/Dialog';
 import RoomForm from './Form';
-
-// Interfaces
-import { IDialogProps } from '../../globals/interfaces';
 
 // Types
 import { TRoom } from '../../globals/types';

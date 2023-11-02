@@ -8,7 +8,7 @@ import TextArea from '../../commons/styles/TextArea';
 
 // Components
 import Form from '../../components/Form';
-import FormRow from '../../components/FormRow';
+import FormRow from '../../components/LabelControl/index.tsx';
 import Button from '../../commons/styles/Button.ts';
 
 // Types
@@ -39,11 +39,8 @@ import {
   errorMsg,
 } from '../../constants/messages.ts';
 import { USER_PATH } from '../../constants/path.ts';
-import Select from '../../components/Select/index.tsx';
+import Select, { ISelectOptions } from '../../components/Select/index.tsx';
 import { useFetch } from '../../hooks/useFetch.ts';
-
-// Interfaces
-import { ISelectOptions } from '../../globals/interfaces.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -130,7 +127,7 @@ const UserForm = ({
        error: '',
     },
     roomId: { 
-      value: roomIdValue || '',
+      value: roomIdValue || '' + (options && options[0].value),
       error: '' ,
     },
     address: { 
@@ -181,7 +178,7 @@ const UserForm = ({
         const response = await sendRequest(
           USER_PATH,
           JSON.stringify(data),
-          'POST',
+          'POST'
         );
 
         if (response.statusCode === STATUS_CODE.CREATE) {
@@ -196,7 +193,7 @@ const UserForm = ({
         const response = await sendRequest(
           USER_PATH + `/${user!.id}`,
           JSON.stringify(data),
-          'PUT',
+          'PUT'
         );
 
         if (response.statusCode == STATUS_CODE.OK) {
@@ -226,7 +223,7 @@ const UserForm = ({
   const { 
     values,
     errors,
-    dirty,
+    valid,
     handleOnChange,
     handleOnSubmit,
     disable }  =
@@ -266,7 +263,7 @@ const UserForm = ({
         label="Full Name"
         error={
           // prettier-ignore
-          errors.name && dirty.name 
+          errors.name && valid.name 
             ? (errors.name as string) 
             : ''
         }
@@ -282,7 +279,7 @@ const UserForm = ({
       <FormRow
         label="Identified Code"
         error={
-          errors.identifiedCode && dirty.identifiedCode
+          errors.identifiedCode && valid.identifiedCode
             ? (errors.identifiedCode as string)
             : ''
         }
@@ -299,7 +296,7 @@ const UserForm = ({
         label="Phone"
         error={
           // prettier-ignore
-          errors.phone && dirty.phone 
+          errors.phone && valid.phone 
             ? (errors.phone as string) 
             : ''
         }
@@ -316,17 +313,11 @@ const UserForm = ({
         label="Room"
         error={
           // prettier-ignore
-          errors.roomId && dirty.roomId
+          errors.roomId && valid.roomId
             ? (errors.roomId as string) 
             : ''
         }
       >
-        {/* <Input
-          type="text"
-          name="roomId"
-          value={roomId as string}
-          onChange={handleOnChange}
-        /> */}
         <Select
           name="roomId"
           value={roomId as string}
@@ -339,7 +330,7 @@ const UserForm = ({
         label="Address"
         error={
           // prettier-ignore
-          errors.address && dirty.address 
+          errors.address && valid.address 
             ? (errors.address as string) 
             : ''
         }

@@ -8,7 +8,7 @@ import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '../constants/config';
 import { searchQuery } from '../helpers/utils';
 
 /**
- *
+ * The function use to fetch data on server API.
  * @param path The path of url
  * @param columnSearch Column need to search
  * @param keyWord The key word to search
@@ -23,7 +23,7 @@ const useFetch = (
   keyWord: string = '',
   tempSortBy?: string,
   tempOrderBy?: string,
-  reload?: boolean,
+  reload?: boolean
 ) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
@@ -56,7 +56,7 @@ const useFetch = (
 
         if (!response.ok)
           throw new Error(
-            `Error code: ${response.status} \n Messages: ${response.statusText}`,
+            `Error code: ${response.status} \n Messages: ${response.statusText}`
           );
 
         setIsPending(false);

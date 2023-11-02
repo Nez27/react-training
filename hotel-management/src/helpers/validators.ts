@@ -13,7 +13,6 @@ const isValidNumber = (value: string): boolean => {
  * @returns A boolean indicating whether or not the argument has valid
  */
 const isValidDiscount = (value: string): boolean => {
-  console.log(Boolean(+value >= 0 && +value <= 100));
   return +value >= 0 && +value <= 100;
 };
 

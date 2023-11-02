@@ -1,10 +1,18 @@
 import { forwardRef } from 'react';
 
-// Components
-import { IDialogProps } from '../../globals/interfaces';
-
 // Styled
 import { StyledBody, StyledDialog, StyledTitle } from './styled';
+
+export interface IDialogProps<T> {
+  title?: string;
+  children?: JSX.Element[] | JSX.Element;
+  onClose?: () => void;
+  reload?: boolean;
+  setReload?: React.Dispatch<React.SetStateAction<boolean>>;
+  ref?: React.MutableRefObject<HTMLDialogElement | undefined>;
+  data?: T | null;
+  isAdd?: boolean;
+}
 
 const Dialog = forwardRef((props, ref) => {
   const { title, children, onClose } = props as IDialogProps<unknown>;

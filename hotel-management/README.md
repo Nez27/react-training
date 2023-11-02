@@ -6,7 +6,7 @@
 
 - Introduce: Build a hotel management web application using HTML5, CSS3, Typescript, json-server, React and compile by Vite.
 - Plan: [Link](https://docs.google.com/document/d/1t2kx17iGCceEe3EbaKO6-3g70ejOJ1PAu9u3KXSKWi4/edit?usp=sharing)
-- Deploy: _Update later_
+- Deploy: [Link](https://hotel-management.loiphan.com/)
 
 ## Requirements
 
@@ -31,7 +31,7 @@
 
 ## Technical
 
-- [HTML5](https://www.tutorialspoint.com/html5/html5_overview.htm): CSS (Cascading Style Sheets) consist of a group of formatting rules that you use to control the layout and appearance of the content on a web page.
+- [HTML5](https://www.tutorialspoint.com/html5/html5_overview.htm): HTML5 is the latest standard of Hypertext Markup Language, the code that describes the structure and presentation of web pages.
 - [CSS3](https://www.htmlgoodies.com/html5/an-overview-of-css3/): Cascading Style Sheets (CSS) is a language used to illustrate a document’s look, style, and format in any markup language. In simple words, it is used to style and organize the layout of Web pages. CSS3 is the latest version of an earlier CSS version, CSS2.
 - [Typescript](https://www.typescriptlang.org/): TypeScript is a strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.
 - [React](https://react.dev/): React is a framework that employs Webpack to automatically compile React, JSX, and ES6 code while handling CSS file prefixes. React is a JavaScript-based UI development library. Although React is a library rather than a language, it is widely used in web development.
@@ -42,7 +42,7 @@
 
 - Timeline:
   - Estimate: 11 days
-  - Actual: -- days.
+  - Actual: 13 days.
   - Calendar:
     - Start: 2023/10/16
     - End: 2023/10/30

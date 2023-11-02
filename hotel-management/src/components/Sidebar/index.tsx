@@ -4,10 +4,14 @@ import Nav from '../Nav';
 // Styled
 import { Heading, StyledSidebar } from './styled';
 
-const Sidebar = () => {
+interface ISidebar {
+  heading: string;
+}
+
+const Sidebar = ({heading}: ISidebar) => {
   return (
     <StyledSidebar>
-      <Heading>Hotel Management</Heading>
+      <Heading>{heading}</Heading>
       <Nav />
     </StyledSidebar>
   );

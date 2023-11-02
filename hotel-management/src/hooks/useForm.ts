@@ -7,7 +7,7 @@ import { getPropValues, isObject, isRequired } from '../helpers/utils';
 import { TKeyValue, TValidator } from '../globals/types';
 
 // Constants
-import { ERROR, VALUE } from '../constants/variables';
+import { ERROR, INITIAL_STATE_SCHEMA, VALUE } from '../constants/variables';
 
 /**
  * Custom hooks to validate your Form...
@@ -21,11 +21,11 @@ const useForm = (
   stateSchema = {},
   stateValidatorSchema = {} as TValidator,
   submitFormCallback: (values: TKeyValue) => void,
-  initialValue: string = '',
+  initialValue: string = ''
 ) => {
-  const [values, setValues] = useState(getPropValues(stateSchema, VALUE));
+  const [values, setValues] = useState<TKeyValue>(INITIAL_STATE_SCHEMA);
   const [errors, setErrors] = useState(getPropValues(stateSchema, ERROR));
-  const [dirty, setDirty] = useState(getPropValues(stateSchema));
+  const [valid, isValid] = useState(getPropValues(stateSchema));
   const [disable, setDisable] = useState(true);
   const [isDirty, setIsDirty] = useState(false);
 
@@ -33,7 +33,8 @@ const useForm = (
   useEffect(() => {
     setInitialErrorState(initialValue);
     setDisable(true);
-    setDirty(getPropValues(stateSchema));
+    isValid(getPropValues(stateSchema));
+    setValues(getPropValues(stateSchema, VALUE));
 
     // If initial value true, setValues again from stateSchema
     // and enabled button
@@ -56,7 +57,7 @@ const useForm = (
       let error = '';
 
       // Skip check id field
-      if (name !== 'id') {
+      if (name !== 'id' && name !== 'roomId') {
         error = isRequired(value, field!.required);
 
         if (isObject(field['validator']) && error === '') {
@@ -72,7 +73,7 @@ const useForm = (
 
       return error;
     },
-    [stateValidatorSchema],
+    [stateValidatorSchema]
   );
 
   // Set Initial Error State
@@ -85,10 +86,10 @@ const useForm = (
           [name]: !initialValue // Skip error when initialValue have values
             ? validateFormFields(name, values[name] as string)
             : '',
-        })),
+        }))
       );
     },
-    [errors, values, validateFormFields],
+    [errors, values, validateFormFields]
   );
 
   // Used to disable submit button if there's a value in errors
@@ -97,7 +98,7 @@ const useForm = (
   // in every re-render in component
   const validateErrorState = useCallback(
     () => Object.values(errors).some((error) => error),
-    [errors],
+    [errors]
   );
 
   // For every changed in our state this will be fired
@@ -113,7 +114,7 @@ const useForm = (
     (
       event: ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >,
+      >
     ) => {
       setIsDirty(true);
 
@@ -133,9 +134,9 @@ const useForm = (
 
       setValues((prevState) => ({ ...prevState, [name]: value }));
       setErrors((prevState) => ({ ...prevState, [name]: error }));
-      setDirty((prevState) => ({ ...prevState, [name]: true }));
+      isValid((prevState) => ({ ...prevState, [name]: true }));
     },
-    [validateFormFields],
+    [validateFormFields]
   );
 
   const handleOnSubmit = useCallback(
@@ -151,7 +152,7 @@ const useForm = (
         setDisable(true);
       }
     },
-    [validateErrorState, submitFormCallback, values],
+    [validateErrorState, submitFormCallback, values]
   );
 
   return {
@@ -162,7 +163,7 @@ const useForm = (
     disable,
     setValues,
     setErrors,
-    dirty,
+    valid,
   };
 };
 

@@ -1,6 +1,9 @@
-import { ISelectOptions } from '../../globals/interfaces';
 import { StyledSelect } from './styled';
 
+export interface ISelectOptions {
+  value: string;
+  label: string;
+}
 interface ISelect {
   options: ISelectOptions[];
   value: string;

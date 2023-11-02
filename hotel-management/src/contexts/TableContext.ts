@@ -1,5 +1,9 @@
 import { createContext } from 'react';
 
-const TableContext = createContext('');
+interface ITableContext {
+  columns?: string;
+}
+
+const TableContext = createContext<ITableContext>({});
 
 export default TableContext;

@@ -6,18 +6,21 @@ import { BsHouseDoorFill } from 'react-icons/bs';
 // Styled
 import { StyledNav, StyledNavLink } from './styled';
 
+// Constants
+import { DASHBOARD, ROOM, USER } from '../../constants/path';
+
 const Nav = () => {
   return (
     <StyledNav>
-      <StyledNavLink to={'/dashboard'}>
+      <StyledNavLink to={DASHBOARD}>
         <MdSpaceDashboard />
         <span>Dashboard</span>
       </StyledNavLink>
-      <StyledNavLink to={'/user'}>
+      <StyledNavLink to={USER}>
         <HiUsers />
         <span>User</span>
       </StyledNavLink>
-      <StyledNavLink to={'/room'}>
+      <StyledNavLink to={ROOM}>
         <BsHouseDoorFill />
         <span>Room</span>
       </StyledNavLink>

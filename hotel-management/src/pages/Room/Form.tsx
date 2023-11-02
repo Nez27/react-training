@@ -8,7 +8,7 @@ import TextArea from '../../commons/styles/TextArea.ts';
 
 // Components
 import Form from '../../components/Form/index.tsx';
-import FormRow from '../../components/FormRow/index.tsx';
+import FormRow from '../../components/LabelControl/index.tsx';
 import Button from '../../commons/styles/Button.ts';
 
 // Types
@@ -170,7 +170,7 @@ const RoomForm = ({
         const response = await sendRequest(
           ROOM_PATH,
           JSON.stringify(data),
-          'POST',
+          'POST'
         );
 
         if (response.statusCode === STATUS_CODE.CREATE) {
@@ -185,7 +185,7 @@ const RoomForm = ({
         const response = await sendRequest(
           ROOM_PATH + `/${room!.id}`,
           JSON.stringify(data),
-          'PUT',
+          'PUT'
         );
 
         if (response.statusCode == STATUS_CODE.OK) {
@@ -215,7 +215,7 @@ const RoomForm = ({
   const { 
     values,
     errors,
-    dirty,
+    valid,
     handleOnChange,
     handleOnSubmit,
     disable }  =
@@ -257,7 +257,7 @@ const RoomForm = ({
         label="Name"
         error={
           // prettier-ignore
-          errors.name && dirty.name 
+          errors.name && valid.name 
             ? (errors.name as string) 
             : ''
         }
@@ -274,7 +274,7 @@ const RoomForm = ({
         label="Amount"
         // prettier-ignore
         error={
-          errors.amount && dirty.amount 
+          errors.amount && valid.amount 
             ? (errors.amount as string) 
             : ''
           }
@@ -291,7 +291,7 @@ const RoomForm = ({
         label="Price"
         error={
           // prettier-ignore
-          errors.price && dirty.price 
+          errors.price && valid.price 
             ? (errors.price as string) 
             : ''
         }
@@ -308,7 +308,7 @@ const RoomForm = ({
         label="Discount"
         error={
           // prettier-ignore
-          errors.discount && dirty.discount
+          errors.discount && valid.discount
             ? (errors.discount as string) 
             : ''
         }
@@ -334,7 +334,7 @@ const RoomForm = ({
         label="Description"
         error={
           // prettier-ignore
-          errors.description && dirty.description 
+          errors.description && valid.description 
             ? (errors.description as string) 
             : ''
         }

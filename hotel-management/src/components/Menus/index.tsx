@@ -5,11 +5,14 @@ import { HiEllipsisVertical } from 'react-icons/hi2';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { StyledMenu, StyledButton, StyledList, StyledToggle } from './styled';
 
-// Interfaces
-import { IButton } from '../../globals/interfaces';
-
 // Contexts
 import MenusContext from '../../contexts/MenuContext';
+
+interface IButton {
+  children?: string;
+  icon?: JSX.Element;
+  onClick?: () => void;
+}
 
 const Menus = ({ children }: { children: JSX.Element }) => {
   const [openId, setOpenId] = useState('');
@@ -30,7 +33,6 @@ const Toggle = ({ id }: { id: string }): React.JSX.Element => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
 
-    // prettier-ignore
     openId === '' || openId !== id 
       ? open!(id) 
       : close!();

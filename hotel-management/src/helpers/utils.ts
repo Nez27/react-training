@@ -124,7 +124,7 @@ const searchQuery = (
   columnSearch: string,
   keySearch: string,
   sort: string,
-  order: string,
+  order: string
 ) => {
   // prettier-ignore
   const phoneParams = keySearch

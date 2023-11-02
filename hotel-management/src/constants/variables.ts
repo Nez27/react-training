@@ -74,7 +74,16 @@ const ROOM_PAGE = {
   ],
 }
 
+const INITIAL_STATE_SCHEMA = {
+  id: '',
+  name: '',
+  identifiedCode: '',
+  phone: '',
+  roomId: 'undefined',
+  address: '',
+};
+
 const VALUE = 'value';
 const ERROR = 'error';
 
-export { USER_PAGE, ROOM_PAGE, VALUE, ERROR };
+export { USER_PAGE, ROOM_PAGE, VALUE, ERROR, INITIAL_STATE_SCHEMA };

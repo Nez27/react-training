@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { HiSquare2Stack } from 'react-icons/hi2';
 import { HiTrash } from 'react-icons/hi';
 import { StyledOperationTable } from './styled';
-import Menus from '../../components/Menus/Menus';
+import Menus from '../../components/Menus';
 import Table from '../../components/Table';
 import Direction from '../../commons/styles/Direction';
 import Message from '../../components/Message';
