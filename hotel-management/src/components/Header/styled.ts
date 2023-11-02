@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 
-// Components
-import HeaderMenu from './HeaderMenu';
-
 const StyledHeader = styled.header`
   border-bottom: 1px solid var(--border-color);
   padding: 20px 40px;
@@ -13,13 +10,4 @@ const StyledHeader = styled.header`
   gap: 30px;
 `;
 
-const Header = () => {
-  return (
-    <StyledHeader>
-      <p>Hi, Admin!</p>
-      <HeaderMenu />
-    </StyledHeader>
-  );
-};
-
-export default Header;
+export { StyledHeader };

@@ -19,15 +19,15 @@ import { searchQuery } from '../helpers/utils';
  */
 const useFetch = (
   path: string,
-  columnSearch: string,
-  keyWord: string,
-  tempSortBy: string,
-  tempOrderBy: string,
+  columnSearch: string = '',
+  keyWord: string = '',
+  tempSortBy?: string,
+  tempOrderBy?: string,
   reload?: boolean,
 ) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [errorFetchMsg, setErrorFetchMsg] = useState<string | null>(null);
 
   useEffect(() => {
     // Clear data
@@ -61,16 +61,16 @@ const useFetch = (
 
         setIsPending(false);
         setData(json);
-        setErrorMsg(null);
+        setErrorFetchMsg(null);
       } catch (error) {
-        setErrorMsg(`Could not fetch data.\n ${error}`);
+        setErrorFetchMsg(`Could not fetch data.\n ${error}`);
         setIsPending(false);
       }
     };
 
     fetchData();
   }, [path, reload, columnSearch, keyWord, tempOrderBy, tempSortBy]);
-  return { data, isPending, errorMsg };
+  return { data, isPending, errorFetchMsg };
 };
 
 export { useFetch };

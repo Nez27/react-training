@@ -56,7 +56,8 @@ const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
 
 type TValidator = {
   validatorFunc: (value: string) => boolean;
-  prop: string;
+  prop?: string;
+  customErrorMsg?: string;
   required?: boolean;
 };
 
@@ -65,12 +66,20 @@ type TValidator = {
  * @param param0 Pass TValidator object
  * @returns An object contains condition validator
  */
-const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
+const addValidator = ({
+  validatorFunc,
+  prop = '',
+  customErrorMsg = '',
+  required = true,
+}: TValidator) => {
   return {
     required,
     validator: {
       func: validatorFunc,
-      error: invalidFormatMsg(prop),
+      // prettier-ignore
+      error: customErrorMsg
+        ? customErrorMsg
+        : invalidFormatMsg(prop),
     },
   };
 };

@@ -22,13 +22,13 @@ import { useFetch } from '../../hooks/useFetch';
 import { USER_PATH } from '../../constants/path';
 import { STATUS_CODE } from '../../constants/statusCode';
 import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
+import { USER_PAGE } from '../../constants/variables';
 
 // Styled
 import Spinner from '../../commons/styles/Spinner';
 
 // Utils
 import { sendRequest } from '../../helpers/sendRequest';
-import { USER_PAGE } from '../../constants/variables';
 
 interface IUserRow {
   user: TUser;
@@ -119,7 +119,7 @@ const UserTable = ({
     ? searchParams.get('orderBy')!
     : '';
 
-  const { data, isPending, errorMsg } = useFetch(
+  const { data, isPending, errorFetchMsg } = useFetch(
     'users',
     'phone',
     phoneSearch,
@@ -135,10 +135,10 @@ const UserTable = ({
       setUsers([]);
     }
 
-    if (errorMsg) {
-      console.error(errorMsg);
+    if (errorFetchMsg) {
+      console.error(errorFetchMsg);
     }
-  }, [data, errorMsg]);
+  }, [data, errorFetchMsg]);
 
   return (
     <>
@@ -163,7 +163,7 @@ const UserTable = ({
                 <div>Name</div>
                 <div>Identified Code</div>
                 <div>Phone</div>
-                <div>Room</div>
+                <div>Room Id</div>
               </Table.Header>
               <Table.Body<TUser>
                 data={users}

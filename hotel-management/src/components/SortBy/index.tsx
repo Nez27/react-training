@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 
 // Components
-import Select from './Select';
+import Select from '../Select';
 import { memo } from 'react';
 
 interface ISortByProps {

@@ -8,6 +8,16 @@ const isValidNumber = (value: string): boolean => {
 };
 
 /**
+ * Check value is valid discount or not
+ * @param value Value need to be checked
+ * @returns A boolean indicating whether or not the argument has valid
+ */
+const isValidDiscount = (value: string): boolean => {
+  console.log(Boolean(+value >= 0 && +value <= 100));
+  return +value >= 0 && +value <= 100;
+};
+
+/**
  * Check value is valid phone number or not
  * @param value Value need to be checked
  * @returns A boolean indicating whether or not the argument has valid
@@ -31,4 +41,10 @@ const isValidString = (value: string): boolean => {
  */
 const skipCheck = () => true;
 
-export { isValidNumber, isValidPhoneNumber, isValidString, skipCheck };
+export {
+  isValidNumber,
+  isValidPhoneNumber,
+  isValidString,
+  skipCheck,
+  isValidDiscount,
+};

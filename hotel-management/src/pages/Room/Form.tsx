@@ -24,6 +24,7 @@ import useForm from '../../hooks/useForm.ts';
 
 // Utils
 import {
+  isValidDiscount,
   isValidNumber,
   isValidString,
   skipCheck,
@@ -35,6 +36,7 @@ import { sendRequest } from '../../helpers/sendRequest.ts';
 import { STATUS_CODE } from '../../constants/statusCode.ts';
 import {
   ADD_SUCCESS,
+  DISCOUNT_FIELD_ERROR,
   EDIT_SUCCESS,
   errorMsg,
 } from '../../constants/messages.ts';
@@ -46,6 +48,7 @@ const FormBtn = styled(Button)`
   &:disabled,
   &[disabled] {
     background-color: var(--disabled-btn-color);
+    cursor: no-drop;
   }
 `;
 
@@ -134,8 +137,8 @@ const RoomForm = ({
       prop: 'price',
     }),
     discount: addValidator({ 
-      validatorFunc: isValidNumber, 
-      prop: 'discount' 
+      validatorFunc: isValidDiscount, 
+      customErrorMsg: DISCOUNT_FIELD_ERROR
     }),
     status: addValidator({
       validatorFunc: skipCheck,
@@ -305,8 +308,8 @@ const RoomForm = ({
         label="Discount"
         error={
           // prettier-ignore
-          errors.roomId && dirty.roomId
-            ? (errors.roomId as string) 
+          errors.discount && dirty.discount
+            ? (errors.discount as string) 
             : ''
         }
       >
@@ -350,7 +353,7 @@ const RoomForm = ({
             // prettier-ignore
             isAdd
               ? 'Add'
-              : 'Edit'
+              : 'Save'
           }
         </FormBtn>
         <FormBtn type="button" styled="secondary" onClick={closeAndReset}>

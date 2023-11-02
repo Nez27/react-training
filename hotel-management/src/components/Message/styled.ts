@@ -6,8 +6,4 @@ const StyledMessage = styled.p`
   padding: 20px;
 `;
 
-const Message = ({ children }: { children: string }) => {
-  return <StyledMessage>{children}</StyledMessage>;
-};
-
-export default Message;
+export { StyledMessage };

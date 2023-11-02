@@ -110,7 +110,11 @@ const useForm = (
 
   // Event handler for handling changes in input.
   const handleOnChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (
+      event: ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >,
+    ) => {
       setIsDirty(true);
 
       let error = '';

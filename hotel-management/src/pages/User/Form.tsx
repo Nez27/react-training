@@ -39,6 +39,11 @@ import {
   errorMsg,
 } from '../../constants/messages.ts';
 import { USER_PATH } from '../../constants/path.ts';
+import Select from '../../components/Select/index.tsx';
+import { useFetch } from '../../hooks/useFetch.ts';
+
+// Interfaces
+import { ISelectOptions } from '../../globals/interfaces.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -46,6 +51,7 @@ const FormBtn = styled(Button)`
   &:disabled,
   &[disabled] {
     background-color: var(--disabled-btn-color);
+    cursor: no-drop;
   }
 `;
 
@@ -65,6 +71,27 @@ const UserForm = ({
   isAdd,
 }: IUserFormProp) => {
   const [reset, setReset] = useState(true);
+  const [options, setOptions] = useState<ISelectOptions[]>();
+  const { data, errorFetchMsg } = useFetch('rooms');
+
+  useEffect(() => {
+    if (data) {
+      const tempData = data as TKeyValue[];
+      const tempOptions: ISelectOptions[] = [];
+      tempData.forEach((item) => {
+        tempOptions.push({
+          label: item.name! as string,
+          value: item.id! as string,
+        });
+      });
+
+      setOptions(tempOptions);
+    }
+
+    if (errorFetchMsg) {
+      toast.error(errorFetchMsg);
+    }
+  }, [data, errorFetchMsg]);
 
   if (isAdd) {
     // If this is add form, reset value
@@ -294,11 +321,17 @@ const UserForm = ({
             : ''
         }
       >
-        <Input
+        {/* <Input
           type="text"
           name="roomId"
           value={roomId as string}
           onChange={handleOnChange}
+        /> */}
+        <Select
+          name="roomId"
+          value={roomId as string}
+          onChange={handleOnChange}
+          options={options!}
         />
       </FormRow>
 
@@ -325,7 +358,7 @@ const UserForm = ({
             // prettier-ignore
             isAdd
               ? 'Add'
-              : 'Edit'
+              : 'Save'
           }
         </FormBtn>
         <FormBtn type="button" styled="secondary" onClick={closeAndReset}>

@@ -125,7 +125,7 @@ const RoomTable = ({
     ? searchParams.get('orderBy')!
     : '';
 
-  const { data, isPending, errorMsg } = useFetch(
+  const { data, isPending, errorFetchMsg } = useFetch(
     'rooms',
     'name',
     nameSearch,
@@ -141,10 +141,10 @@ const RoomTable = ({
       setRooms([]);
     }
 
-    if (errorMsg) {
-      console.error(errorMsg);
+    if (errorFetchMsg) {
+      console.error(errorFetchMsg);
     }
-  }, [data, errorMsg]);
+  }, [data, errorFetchMsg]);
 
   return (
     <>
