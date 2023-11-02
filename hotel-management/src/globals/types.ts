@@ -1,18 +1,18 @@
 type TUser = {
-  id: string;
+  id: number;
   name: string;
   identifiedCode: string;
   address: string;
   phone: string;
-  roomId: string;
+  roomId: number;
 };
 
 type TRoom = {
-  id: string;
+  id: number;
   name: string;
-  amount: string;
-  price: string;
-  discount: string;
+  amount: number;
+  price: number;
+  discount: number;
   description: string;
   status: boolean;
 };

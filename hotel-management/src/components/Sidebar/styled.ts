@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 
-// Components
-import Nav from './Nav';
-
 const StyledSidebar = styled.aside`
   padding: 50px 20px;
 
@@ -17,13 +14,4 @@ const Heading = styled.h1`
   color: var(--primary-color);
 `;
 
-const Sidebar = () => {
-  return (
-    <StyledSidebar>
-      <Heading>Hotel Management</Heading>
-      <Nav />
-    </StyledSidebar>
-  );
-};
-
-export default Sidebar;
+export { StyledSidebar, Heading };

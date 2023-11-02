@@ -1,38 +1,8 @@
+import { memo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import styled, { css } from 'styled-components';
 
-const StyledOrder = styled.div`
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 5px;
-  display: flex;
-  gap: 10px;
-`;
-
-interface IOrderBtn {
-  active: boolean;
-}
-
-const OrderButton = styled.button<IOrderBtn>`
-  border: none;
-
-  ${(props) =>
-    props.active &&
-    css`
-      background-color: var(--primary-color);
-      color: var(--light-text);
-    `}
-
-  border-radius: var(--radius-sm);
-  font-weight: 500;
-  font-size: var(--fs-sm-x);
-  padding: 5px 10px;
-  transition: all 0.3s;
-
-  &:hover:not(:disabled) {
-    background-color: var(--hover-dark-background-color);
-  }
-`;
+// Styled
+import { OrderButton, StyledOrder } from './styled';
 
 interface IOrderProps {
   options: {
@@ -41,7 +11,7 @@ interface IOrderProps {
   }[];
 }
 
-const OrderBy = ({ options }: IOrderProps) => {
+const OrderBy = memo(({ options }: IOrderProps) => {
   const field = 'orderBy';
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -67,6 +37,6 @@ const OrderBy = ({ options }: IOrderProps) => {
       ))}
     </StyledOrder>
   );
-};
+});
 
 export default OrderBy;

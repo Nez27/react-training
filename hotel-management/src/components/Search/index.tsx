@@ -1,19 +1,12 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-const StyledSearch = styled.input`
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  font-size: var(--fs-sm-x);
-  padding: 5px 10px;
-`;
+import { memo, useEffect, useState } from 'react';
+import { StyledSearch } from './styled';
 
 interface ISearch {
   setPlaceHolder: string;
-  setValueSearch: React.Dispatch<React.SetStateAction<string>>;
+  setValueSearch: (phone: string) => void;
 }
 
-const Search = ({ setValueSearch, setPlaceHolder }: ISearch) => {
+const Search = memo(({ setValueSearch, setPlaceHolder }: ISearch) => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -30,6 +23,6 @@ const Search = ({ setValueSearch, setPlaceHolder }: ISearch) => {
       placeholder={setPlaceHolder}
     />
   );
-};
+});
 
 export default Search;

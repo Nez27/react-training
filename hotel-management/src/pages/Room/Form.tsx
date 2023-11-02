@@ -24,6 +24,7 @@ import useForm from '../../hooks/useForm.ts';
 
 // Utils
 import {
+  isValidDiscount,
   isValidNumber,
   isValidString,
   skipCheck,
@@ -35,6 +36,7 @@ import { sendRequest } from '../../helpers/sendRequest.ts';
 import { STATUS_CODE } from '../../constants/statusCode.ts';
 import {
   ADD_SUCCESS,
+  DISCOUNT_FIELD_ERROR,
   EDIT_SUCCESS,
   errorMsg,
 } from '../../constants/messages.ts';
@@ -46,6 +48,7 @@ const FormBtn = styled(Button)`
   &:disabled,
   &[disabled] {
     background-color: var(--disabled-btn-color);
+    cursor: no-drop;
   }
 `;
 
@@ -75,7 +78,7 @@ const RoomForm = ({
   const initialValue: string = isAdd 
     ? '' 
     : room! 
-    && room.id;
+    && room.id.toString();
 
   const {
     idValue,
@@ -134,8 +137,8 @@ const RoomForm = ({
       prop: 'price',
     }),
     discount: addValidator({ 
-      validatorFunc: isValidNumber, 
-      prop: 'discount' 
+      validatorFunc: isValidDiscount, 
+      customErrorMsg: DISCOUNT_FIELD_ERROR
     }),
     status: addValidator({
       validatorFunc: skipCheck,
@@ -150,12 +153,23 @@ const RoomForm = ({
 
   // Submit form
   const onSubmitForm = async (state: TKeyValue) => {
+    // Convert to room type
+    const data: TRoom = {
+      id: +state.id!,
+      name: '' + state.name,
+      amount: +state.amount!,
+      discount: +state.discount!,
+      price: +state.price!,
+      status: !!state.status,
+      description: '' + state.description,
+    };
+
     try {
       if (isAdd) {
         // Add request
         const response = await sendRequest(
           ROOM_PATH,
-          JSON.stringify(state),
+          JSON.stringify(data),
           'POST',
         );
 
@@ -170,7 +184,7 @@ const RoomForm = ({
         // Edit request
         const response = await sendRequest(
           ROOM_PATH + `/${room!.id}`,
-          JSON.stringify(state),
+          JSON.stringify(data),
           'PUT',
         );
 
@@ -196,8 +210,6 @@ const RoomForm = ({
     onClose();
     onResetForm();
   };
-
-  console.log(initialValue);
 
   // prettier-ignore
   const { 
@@ -296,8 +308,8 @@ const RoomForm = ({
         label="Discount"
         error={
           // prettier-ignore
-          errors.roomId && dirty.roomId
-            ? (errors.roomId as string) 
+          errors.discount && dirty.discount
+            ? (errors.discount as string) 
             : ''
         }
       >
@@ -341,7 +353,7 @@ const RoomForm = ({
             // prettier-ignore
             isAdd
               ? 'Add'
-              : 'Edit'
+              : 'Save'
           }
         </FormBtn>
         <FormBtn type="button" styled="secondary" onClick={closeAndReset}>

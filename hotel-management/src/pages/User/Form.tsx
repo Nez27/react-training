@@ -27,7 +27,6 @@ import {
   isValidString,
   isValidNumber,
   isValidPhoneNumber,
-  isValidName,
 } from '../../helpers/validators';
 import { addValidator, getValueFromObj } from '../../helpers/utils.ts';
 import { sendRequest } from '../../helpers/sendRequest.ts';
@@ -40,6 +39,11 @@ import {
   errorMsg,
 } from '../../constants/messages.ts';
 import { USER_PATH } from '../../constants/path.ts';
+import Select from '../../components/Select/index.tsx';
+import { useFetch } from '../../hooks/useFetch.ts';
+
+// Interfaces
+import { ISelectOptions } from '../../globals/interfaces.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -47,6 +51,7 @@ const FormBtn = styled(Button)`
   &:disabled,
   &[disabled] {
     background-color: var(--disabled-btn-color);
+    cursor: no-drop;
   }
 `;
 
@@ -66,6 +71,27 @@ const UserForm = ({
   isAdd,
 }: IUserFormProp) => {
   const [reset, setReset] = useState(true);
+  const [options, setOptions] = useState<ISelectOptions[]>();
+  const { data, errorFetchMsg } = useFetch('rooms');
+
+  useEffect(() => {
+    if (data) {
+      const tempData = data as TKeyValue[];
+      const tempOptions: ISelectOptions[] = [];
+      tempData.forEach((item) => {
+        tempOptions.push({
+          label: item.name! as string,
+          value: item.id! as string,
+        });
+      });
+
+      setOptions(tempOptions);
+    }
+
+    if (errorFetchMsg) {
+      toast.error(errorFetchMsg);
+    }
+  }, [data, errorFetchMsg]);
 
   if (isAdd) {
     // If this is add form, reset value
@@ -76,7 +102,7 @@ const UserForm = ({
   const initialValue: string = isAdd 
     ? '' 
     : user! 
-    && user.id;
+    && user.id.toLocaleString();
 
   const {
     idValue,
@@ -116,7 +142,7 @@ const UserForm = ({
   // prettier-ignore
   const stateValidatorSchema: TValidator = {
     name: addValidator({ 
-      validatorFunc: isValidName, 
+      validatorFunc: isValidString, 
       prop: 'full name' 
     }),
     identifiedCode: addValidator({
@@ -139,12 +165,22 @@ const UserForm = ({
 
   // Submit form
   const onSubmitForm = async (state: TKeyValue) => {
+    // Convert to user type
+    const data: TUser = {
+      id: +state.id!,
+      name: '' + state.name,
+      identifiedCode: '' + state.identifiedCode,
+      phone: '' + state.phone,
+      roomId: +state.roomId!,
+      address: '' + state.address,
+    };
+
     try {
       if (isAdd) {
         // Add request
         const response = await sendRequest(
           USER_PATH,
-          JSON.stringify(state),
+          JSON.stringify(data),
           'POST',
         );
 
@@ -159,7 +195,7 @@ const UserForm = ({
         // Edit request
         const response = await sendRequest(
           USER_PATH + `/${user!.id}`,
-          JSON.stringify(state),
+          JSON.stringify(data),
           'PUT',
         );
 
@@ -285,11 +321,17 @@ const UserForm = ({
             : ''
         }
       >
-        <Input
+        {/* <Input
           type="text"
           name="roomId"
           value={roomId as string}
           onChange={handleOnChange}
+        /> */}
+        <Select
+          name="roomId"
+          value={roomId as string}
+          onChange={handleOnChange}
+          options={options!}
         />
       </FormRow>
 
@@ -316,7 +358,7 @@ const UserForm = ({
             // prettier-ignore
             isAdd
               ? 'Add'
-              : 'Edit'
+              : 'Save'
           }
         </FormBtn>
         <FormBtn type="button" styled="secondary" onClick={closeAndReset}>

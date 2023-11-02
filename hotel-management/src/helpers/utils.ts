@@ -56,7 +56,8 @@ const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
 
 type TValidator = {
   validatorFunc: (value: string) => boolean;
-  prop: string;
+  prop?: string;
+  customErrorMsg?: string;
   required?: boolean;
 };
 
@@ -65,12 +66,20 @@ type TValidator = {
  * @param param0 Pass TValidator object
  * @returns An object contains condition validator
  */
-const addValidator = ({ validatorFunc, prop, required = true }: TValidator) => {
+const addValidator = ({
+  validatorFunc,
+  prop = '',
+  customErrorMsg = '',
+  required = true,
+}: TValidator) => {
   return {
     required,
     validator: {
       func: validatorFunc,
-      error: invalidFormatMsg(prop),
+      // prettier-ignore
+      error: customErrorMsg
+        ? customErrorMsg
+        : invalidFormatMsg(prop),
     },
   };
 };
@@ -86,12 +95,15 @@ const getValueFromObj = <T>(obj: T | null = null): TKeyString => {
   if (obj) {
     for (const key of Object.keys(obj)) {
       const tempValue = obj[key as keyof typeof obj];
-      const value: string | boolean | number =
-        typeof tempValue === 'boolean' ||
-        typeof tempValue === 'string' ||
-        typeof tempValue === 'number'
-          ? tempValue
-          : '';
+      let value: string | boolean = '';
+
+      if (typeof tempValue === 'string' || typeof tempValue === 'boolean') {
+        value = tempValue;
+      }
+
+      if (typeof tempValue === 'number') {
+        value = tempValue.toString();
+      }
 
       result = { ...result, [`${key}Value`]: value };
     }

@@ -1,19 +1,20 @@
 /**
- * Check value is valid name or not
- * @param value Values need to be checked
- * @returns A boolean indicating whether or not the argument has valid
- */
-const isValidName = (value: string): boolean => {
-  return /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/gm.test(value);
-};
-
-/**
  * Check value is valid number or not
  * @param value Value need to be checked
  * @returns A boolean indicating whether or not the argument has valid
  */
 const isValidNumber = (value: string): boolean => {
   return /^[0-9]*$/.test(value);
+};
+
+/**
+ * Check value is valid discount or not
+ * @param value Value need to be checked
+ * @returns A boolean indicating whether or not the argument has valid
+ */
+const isValidDiscount = (value: string): boolean => {
+  console.log(Boolean(+value >= 0 && +value <= 100));
+  return +value >= 0 && +value <= 100;
 };
 
 /**
@@ -41,9 +42,9 @@ const isValidString = (value: string): boolean => {
 const skipCheck = () => true;
 
 export {
-  isValidName,
   isValidNumber,
   isValidPhoneNumber,
   isValidString,
   skipCheck,
+  isValidDiscount,
 };

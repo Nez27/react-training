@@ -20,6 +20,11 @@ interface ITableBody<T> {
   render?: (value: T) => JSX.Element;
 }
 
+interface ISelectOptions {
+  value: string;
+  label: string;
+}
+
 interface IDialogProps<T> {
   title?: string;
   children?: JSX.Element[] | JSX.Element;
@@ -31,4 +36,11 @@ interface IDialogProps<T> {
   isAdd?: boolean;
 }
 
-export type { IMenusContext, IButton, ITable, ITableBody, IDialogProps };
+export type {
+  IMenusContext,
+  IButton,
+  ITable,
+  ITableBody,
+  IDialogProps,
+  ISelectOptions,
+};

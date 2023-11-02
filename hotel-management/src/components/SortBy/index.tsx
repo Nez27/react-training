@@ -1,7 +1,8 @@
 import { useSearchParams } from 'react-router-dom';
 
 // Components
-import Select from './Select';
+import Select from '../Select';
+import { memo } from 'react';
 
 interface ISortByProps {
   options: {
@@ -10,7 +11,7 @@ interface ISortByProps {
   }[];
 }
 
-const SortBy = ({ options }: ISortByProps) => {
+const SortBy = memo(({ options }: ISortByProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get('sortBy') || '';
 
@@ -27,6 +28,6 @@ const SortBy = ({ options }: ISortByProps) => {
       onChange={handleChange} 
     />
   );
-};
+});
 
 export default SortBy;
