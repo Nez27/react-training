@@ -10,8 +10,8 @@ import { Main, StyledAppLayout } from './styled';
 const AppLayout = () => {
   return (
     <StyledAppLayout>
-      <Header accountName='Admin'/>
-      <Sidebar heading='Hotel Management'/>
+      <Header accountName="Admin" />
+      <Sidebar heading="Hotel Management" />
       <Main>
         <Outlet />
       </Main>

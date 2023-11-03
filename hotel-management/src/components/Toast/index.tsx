@@ -1,17 +1,29 @@
-import { DefaultToastOptions, ToastOptions, ToastPosition, Toaster } from 'react-hot-toast';
+import {
+  DefaultToastOptions,
+  ToastOptions,
+  ToastPosition,
+  Toaster,
+} from 'react-hot-toast';
 import { CSSProperties } from 'styled-components';
 
 interface IToast {
-  position: ToastPosition;
-  gutter: number;
-  containerStyle: CSSProperties;
-  toastOptions: DefaultToastOptions;
-  success: ToastOptions;
-  error: ToastOptions;
-  style: CSSProperties | undefined;
+  position?: ToastPosition;
+  gutter?: number;
+  containerStyle?: CSSProperties;
+  toastOptions?: DefaultToastOptions;
+  success?: ToastOptions;
+  error?: ToastOptions;
+  style?: CSSProperties | undefined;
 }
 
-const Toast = ({position, gutter, containerStyle, success, error, style}: IToast) => {
+const Toast = ({
+  position,
+  gutter,
+  containerStyle,
+  success,
+  error,
+  style,
+}: IToast) => {
   return (
     <Toaster
       position={position}
@@ -20,27 +32,27 @@ const Toast = ({position, gutter, containerStyle, success, error, style}: IToast
       toastOptions={{
         success,
         error,
-        style
+        style,
       }}
     />
   );
 };
 
 Toast.defaultProps = {
-  position: "top-center",
+  position: 'top-center',
   gutter: 12,
   containerStyle: { margin: '8px', zIndex: 1 },
   success: {
     duration: 3000,
   },
-  error:{
+  error: {
     duration: 5000,
   },
   style: {
     fontSize: '16px',
     maxWidth: '500px',
     padding: '16px 24px',
-  }
-}
+  },
+};
 
 export default Toast;

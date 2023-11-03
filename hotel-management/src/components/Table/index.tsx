@@ -6,7 +6,7 @@ import { StyledBody, StyledHeader, StyledRow, StyledTable } from './styled';
 // Contexts
 import TableContext from '../../contexts/TableContext';
 
-interface ITable {
+export interface ITable {
   columns?: string;
   children: React.ReactNode;
 }

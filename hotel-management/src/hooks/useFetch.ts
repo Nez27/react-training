@@ -23,7 +23,7 @@ const useFetch = (
   keyWord: string = '',
   tempSortBy?: string,
   tempOrderBy?: string,
-  reload?: boolean
+  reload?: boolean,
 ) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
@@ -56,7 +56,7 @@ const useFetch = (
 
         if (!response.ok)
           throw new Error(
-            `Error code: ${response.status} \n Messages: ${response.statusText}`
+            `Error code: ${response.status} \n Messages: ${response.statusText}`,
           );
 
         setIsPending(false);

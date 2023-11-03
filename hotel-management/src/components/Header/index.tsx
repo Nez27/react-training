@@ -5,10 +5,10 @@ import HeaderMenu from '../HeaderMenu';
 import { StyledHeader } from './styled';
 
 interface IHeader {
-  accountName: string
+  accountName: string;
 }
 
-const Header = ({accountName}: IHeader) => {
+const Header = ({ accountName }: IHeader) => {
   return (
     <StyledHeader>
       <p>Hi, {accountName}!</p>

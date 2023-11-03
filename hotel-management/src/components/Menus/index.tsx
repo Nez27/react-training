@@ -33,9 +33,7 @@ const Toggle = ({ id }: { id: string }): React.JSX.Element => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
 
-    openId === '' || openId !== id 
-      ? open!(id) 
-      : close!();
+    openId === '' || openId !== id ? open!(id) : close!();
   };
 
   return (

@@ -8,7 +8,7 @@ interface ISidebar {
   heading: string;
 }
 
-const Sidebar = ({heading}: ISidebar) => {
+const Sidebar = ({ heading }: ISidebar) => {
   return (
     <StyledSidebar>
       <Heading>{heading}</Heading>
