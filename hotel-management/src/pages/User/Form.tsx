@@ -39,7 +39,7 @@ import {
   errorMsg,
 } from '../../constants/messages.ts';
 import { USER_PATH } from '../../constants/path.ts';
-import Select, { ISelectOptions } from '../../components/Select/index.tsx';
+import Select, { ISelectOptions } from '../../components/Select';
 import { useFetch } from '../../hooks/useFetch.ts';
 
 const FormBtn = styled(Button)`
@@ -163,7 +163,7 @@ const UserForm = ({
   // Submit form
   const onSubmitForm = async (state: TKeyValue) => {
     // Convert to user type
-    const data: TUser = {
+    const user: TUser = {
       id: +state.id!,
       name: '' + state.name,
       identifiedCode: '' + state.identifiedCode,
@@ -177,8 +177,8 @@ const UserForm = ({
         // Add request
         const response = await sendRequest(
           USER_PATH,
-          JSON.stringify(data),
-          'POST'
+          JSON.stringify(user),
+          'POST',
         );
 
         if (response.statusCode === STATUS_CODE.CREATE) {
@@ -187,13 +187,15 @@ const UserForm = ({
           throw new Error(errorMsg(response.statusCode, response.msg));
         }
 
+        // TODO Update status when user create
+
         onResetForm();
       } else {
         // Edit request
         const response = await sendRequest(
           USER_PATH + `/${user!.id}`,
           JSON.stringify(data),
-          'PUT'
+          'PUT',
         );
 
         if (response.statusCode == STATUS_CODE.OK) {

@@ -83,7 +83,6 @@ const RoomForm = ({
   const {
     idValue,
     nameValue,
-    amountValue,
     priceValue,
     discountValue,
     statusValue,
@@ -98,10 +97,6 @@ const RoomForm = ({
     },
     name: { 
       value: nameValue || '',
-      error: '' 
-    },
-    amount: { 
-      value: amountValue || '',
       error: '' 
     },
     price: { 
@@ -128,10 +123,6 @@ const RoomForm = ({
       validatorFunc: isValidString, 
       prop: 'name' 
     }),
-    amount: addValidator({
-      validatorFunc: isValidNumber,
-      prop: 'amount',
-    }),
     price: addValidator({
       validatorFunc: isValidNumber,
       prop: 'price',
@@ -157,7 +148,6 @@ const RoomForm = ({
     const data: TRoom = {
       id: +state.id!,
       name: '' + state.name,
-      amount: +state.amount!,
       discount: +state.discount!,
       price: +state.price!,
       status: !!state.status,
@@ -170,7 +160,7 @@ const RoomForm = ({
         const response = await sendRequest(
           ROOM_PATH,
           JSON.stringify(data),
-          'POST'
+          'POST',
         );
 
         if (response.statusCode === STATUS_CODE.CREATE) {
@@ -185,7 +175,7 @@ const RoomForm = ({
         const response = await sendRequest(
           ROOM_PATH + `/${room!.id}`,
           JSON.stringify(data),
-          'PUT'
+          'PUT',
         );
 
         if (response.statusCode == STATUS_CODE.OK) {
@@ -229,8 +219,7 @@ const RoomForm = ({
   // prettier-ignore
   const {
     id,
-    name, 
-    amount,
+    name,
     price,
     discount, 
     status,
@@ -269,24 +258,6 @@ const RoomForm = ({
           onChange={handleOnChange}
         />
       </FormRow>
-
-      <FormRow
-        label="Amount"
-        // prettier-ignore
-        error={
-          errors.amount && valid.amount 
-            ? (errors.amount as string) 
-            : ''
-          }
-      >
-        <Input
-          type="text"
-          name="amount"
-          value={amount as string}
-          onChange={handleOnChange}
-        />
-      </FormRow>
-
       <FormRow
         label="Price"
         error={

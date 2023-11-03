@@ -10,7 +10,6 @@ type TUser = {
 type TRoom = {
   id: number;
   name: string;
-  amount: number;
   price: number;
   discount: number;
   description: string;

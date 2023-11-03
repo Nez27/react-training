@@ -55,10 +55,6 @@ const ROOM_PAGE = {
       value: 'name',
       label: 'Sort by name',
     },
-    {
-      value: 'amount',
-      label: 'Sort by amount',
-    },
     { 
       value: 'price',
       label: 'Sort by price',

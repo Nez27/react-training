@@ -67,18 +67,17 @@ const RoomRow = ({
     }
   };
 
-  const { id, name, amount, price, discount, status } = room;
+  const { id, name, price, discount, status } = room;
 
   // prettier-ignore
   const statusText = status
-    ? 'Invalid' 
-    : 'Valid';
+    ? 'Unavailable' 
+    : 'Available';
 
   return (
     <Table.Row>
       <div>{id}</div>
       <div>{name}</div>
-      <div>{amount}</div>
       <div>{price}</div>
       <div>{discount}</div>
       <div>{statusText}</div>
@@ -163,11 +162,10 @@ const RoomTable = ({
 
         {rooms.length ? (
           <Menus>
-            <Table columns="10% 20% 20% 20% 10% 10% 5%">
+            <Table columns="10% 30% 20% 10% 20% 5%">
               <Table.Header>
                 <div>Id</div>
                 <div>Name</div>
-                <div>Amount</div>
                 <div>Price</div>
                 <div>Discount</div>
                 <div>Status</div>
