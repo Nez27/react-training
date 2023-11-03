@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import toast from 'react-hot-toast';
+import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
 import Input from '../../commons/styles/Input';
@@ -9,27 +9,17 @@ import TextArea from '../../commons/styles/TextArea';
 // Components
 import Form from '../../components/Form';
 import FormRow from '../../components/LabelControl/index.tsx';
-import Button from '../../commons/styles/Button.ts';
 
 // Types
-import {
-  TKeyValue,
-  TStateSchema,
-  TUser,
-  TValidator,
-} from '../../globals/types';
-
-// Hooks
-import useForm from '../../hooks/useForm';
+import { TKeyValue, TUser } from '../../globals/types';
 
 // Utils
+import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
-  isValidString,
   isValidNumber,
   isValidPhoneNumber,
-} from '../../helpers/validators';
-import { addValidator, getValueFromObj } from '../../helpers/utils.ts';
-import { sendRequest } from '../../helpers/sendRequest.ts';
+  isValidString,
+} from '../../helpers/validators.ts';
 
 // Constants
 import { STATUS_CODE } from '../../constants/statusCode.ts';
@@ -40,17 +30,13 @@ import {
 } from '../../constants/messages.ts';
 import { USER_PATH } from '../../constants/path.ts';
 import Select, { ISelectOptions } from '../../components/Select';
+
+// Hooks
 import { useFetch } from '../../hooks/useFetch.ts';
 
-const FormBtn = styled(Button)`
-  width: 100%;
-
-  &:disabled,
-  &[disabled] {
-    background-color: var(--disabled-btn-color);
-    cursor: no-drop;
-  }
-`;
+// Styled
+import { FormBtn } from './styled.ts';
+import { INVALID_FIELD, INVALID_PHONE, REQUIRED_FIELD_ERROR } from '../../constants/formValidateMessage.ts';
 
 interface IUserFormProp {
   onClose: () => void;
@@ -67,9 +53,26 @@ const UserForm = ({
   user,
   isAdd,
 }: IUserFormProp) => {
-  const [reset, setReset] = useState(true);
+  const formMethods = useForm<TUser>({
+    defaultValues: {
+      roomId: 1,
+    },
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isDirty, isValid },
+    trigger,
+  } = formMethods;
   const [options, setOptions] = useState<ISelectOptions[]>();
   const { data, errorFetchMsg } = useFetch('rooms');
+
+  useEffect(() => {
+    if (user) {
+      reset(user);
+    }
+  }, [reset, user]);
 
   useEffect(() => {
     if (data) {
@@ -90,95 +93,15 @@ const UserForm = ({
     }
   }, [data, errorFetchMsg]);
 
-  if (isAdd) {
-    // If this is add form, reset value
-    user = null;
-  }
-
-  // prettier-ignore
-  const initialValue: string = isAdd 
-    ? '' 
-    : user! 
-    && user.id.toLocaleString();
-
-  const {
-    idValue,
-    nameValue,
-    identifiedCodeValue,
-    phoneValue,
-    roomIdValue,
-    addressValue,
-  } = getValueFromObj<TUser>(user);
-
-  // Define your state schema
-  // prettier-ignore
-  const stateSchema: TStateSchema = {
-    id: { value: idValue || '' },
-    name: { 
-      value: nameValue || '',
-      error: '' ,
-    },
-    identifiedCode: {
-      value: identifiedCodeValue || '',
-      error: '',
-    },
-    phone: { 
-      value: phoneValue || '',
-       error: '',
-    },
-    roomId: { 
-      value: roomIdValue || '' + (options && options[0].value),
-      error: '' ,
-    },
-    address: { 
-      value: addressValue || '',
-      error: ''
-    },
-  };
-
-  // prettier-ignore
-  const stateValidatorSchema: TValidator = {
-    name: addValidator({ 
-      validatorFunc: isValidString, 
-      prop: 'full name' 
-    }),
-    identifiedCode: addValidator({
-      validatorFunc: isValidNumber,
-      prop: 'identified code',
-    }),
-    phone: addValidator({
-      validatorFunc: isValidPhoneNumber,
-      prop: 'phone number',
-    }),
-    roomId: addValidator({ 
-      validatorFunc: isValidNumber, 
-      prop: 'room number' 
-    }),
-    address: addValidator({ 
-      validatorFunc: isValidString, 
-      prop: 'address' 
-    }),
-  };
-
   // Submit form
-  const onSubmitForm = async (state: TKeyValue) => {
-    // Convert to user type
-    const user: TUser = {
-      id: +state.id!,
-      name: '' + state.name,
-      identifiedCode: '' + state.identifiedCode,
-      phone: '' + state.phone,
-      roomId: +state.roomId!,
-      address: '' + state.address,
-    };
-
+  const onSubmit = async (user: TUser) => {
     try {
       if (isAdd) {
         // Add request
         const response = await sendRequest(
           USER_PATH,
           JSON.stringify(user),
-          'POST',
+          'POST'
         );
 
         if (response.statusCode === STATUS_CODE.CREATE) {
@@ -188,14 +111,12 @@ const UserForm = ({
         }
 
         // TODO Update status when user create
-
-        onResetForm();
       } else {
         // Edit request
         const response = await sendRequest(
           USER_PATH + `/${user!.id}`,
-          JSON.stringify(data),
-          'PUT',
+          JSON.stringify(user),
+          'PUT'
         );
 
         if (response.statusCode == STATUS_CODE.OK) {
@@ -212,153 +133,96 @@ const UserForm = ({
       }
     }
 
+    reset();
     onClose();
-  };
-
-  // Close and reset form
-  const closeAndReset = () => {
-    onClose();
-    onResetForm();
-  };
-
-  // prettier-ignore
-  const { 
-    values,
-    errors,
-    valid,
-    handleOnChange,
-    handleOnSubmit,
-    disable }  =
-    useForm(
-      stateSchema,
-      stateValidatorSchema,
-      onSubmitForm,
-      initialValue
-    );
-
-  // prettier-ignore
-  const {
-    id,
-    name, 
-    identifiedCode,
-    phone,
-    roomId, 
-    address 
-  } = values;
-
-  useEffect(() => {
-    if (isAdd) {
-      Object.keys(values).forEach((key) => (values[key] = ''));
-    }
-  }, [isAdd]); // eslint-disable-line
-
-  // Reset form
-  const onResetForm = () => {
-    setReset(!reset);
-    Object.keys(values).forEach((key) => (values[key] = ''));
   };
 
   return (
-    <Form onSubmit={handleOnSubmit}>
-      <Input type="hidden" name="id" value={id as string} />
-      <FormRow
-        label="Full Name"
-        error={
-          // prettier-ignore
-          errors.name && valid.name 
-            ? (errors.name as string) 
-            : ''
-        }
-      >
-        <Input
-          type="text"
-          name="name"
-          value={name as string}
-          onChange={handleOnChange}
-        />
-      </FormRow>
+    <FormProvider {...formMethods}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Input type="hidden" id="id" {...register('id')} />
+        <FormRow label="Full Name" error={errors?.name?.message}>
+          <Input
+            type="text"
+            id="name"
+            {...register('name', {
+              required: REQUIRED_FIELD_ERROR,
+              validate: {
+                checkValidName: (value) =>
+                  isValidString(value) || INVALID_FIELD,
+              },
+              onChange: () => trigger('name'),
+            })}
+          />
+        </FormRow>
 
-      <FormRow
-        label="Identified Code"
-        error={
-          errors.identifiedCode && valid.identifiedCode
-            ? (errors.identifiedCode as string)
-            : ''
-        }
-      >
-        <Input
-          type="text"
-          name="identifiedCode"
-          value={identifiedCode as string}
-          onChange={handleOnChange}
-        />
-      </FormRow>
+        <FormRow
+          label="Identified Code"
+          error={errors?.identifiedCode?.message}
+        >
+          <Input
+            type="text"
+            id="identifiedCode"
+            {...register('identifiedCode', {
+              required: REQUIRED_FIELD_ERROR,
+              validate: {
+                checkIdentifiedCode: (v) =>
+                  isValidNumber(v) || INVALID_FIELD,
+              },
+              onChange: () => trigger('identifiedCode'),
+            })}
+          />
+        </FormRow>
 
-      <FormRow
-        label="Phone"
-        error={
-          // prettier-ignore
-          errors.phone && valid.phone 
-            ? (errors.phone as string) 
-            : ''
-        }
-      >
-        <Input
-          type="text"
-          name="phone"
-          value={phone as string}
-          onChange={handleOnChange}
-        />
-      </FormRow>
+        <FormRow label="Phone" error={errors?.phone?.message}>
+          <Input
+            type="text"
+            id="phone"
+            {...register('phone', {
+              required: REQUIRED_FIELD_ERROR,
+              validate: {
+                checkPhoneNum: (v) =>
+                  isValidPhoneNumber(v) || INVALID_PHONE,
+              },
+              onChange: () => trigger('phone'),
+            })}
+          />
+        </FormRow>
 
-      <FormRow
-        label="Room"
-        error={
-          // prettier-ignore
-          errors.roomId && valid.roomId
-            ? (errors.roomId as string) 
-            : ''
-        }
-      >
-        <Select
-          name="roomId"
-          value={roomId as string}
-          onChange={handleOnChange}
-          options={options!}
-        />
-      </FormRow>
+        <FormRow label="Room">
+          <Select id="roomId" options={options!} />
+        </FormRow>
 
-      <FormRow
-        label="Address"
-        error={
-          // prettier-ignore
-          errors.address && valid.address 
-            ? (errors.address as string) 
-            : ''
-        }
-      >
-        <TextArea
-          name="address"
-          rows={3}
-          value={address as string}
-          onChange={handleOnChange}
-        />
-      </FormRow>
+        <FormRow label="Address" error={errors.address?.message}>
+          <TextArea
+            id="address"
+            rows={3}
+            {...register('address', {
+              required: REQUIRED_FIELD_ERROR,
+              validate: {
+                checkValidString: (v) =>
+                  isValidString(v) || INVALID_FIELD,
+              },
+              onChange: () => trigger('address'),
+            })}
+          />
+        </FormRow>
 
-      <Form.Action>
-        <FormBtn type="submit" name="submit" disabled={disable}>
-          {
-            // prettier-ignore
-            isAdd
+        <Form.Action>
+          <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid}>
+            {
+              // prettier-ignore
+              isAdd
               ? 'Add'
               : 'Save'
-          }
-        </FormBtn>
-        <FormBtn type="button" styled="secondary" onClick={closeAndReset}>
-          Close
-        </FormBtn>
-      </Form.Action>
-    </Form>
+            }
+          </FormBtn>
+          <FormBtn type="button" styled="secondary">
+            Close
+          </FormBtn>
+        </Form.Action>
+      </Form>
+    </FormProvider>
   );
 };
 

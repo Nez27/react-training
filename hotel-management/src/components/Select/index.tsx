@@ -1,3 +1,4 @@
+import { FieldValues, RegisterOptions, useFormContext } from 'react-hook-form';
 import { StyledSelect } from './styled';
 
 export interface ISelectOptions {
@@ -6,20 +7,25 @@ export interface ISelectOptions {
 }
 interface ISelect {
   options: ISelectOptions[];
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLSelectElement>;
-  name?: string;
+  optionsConfigForm?: RegisterOptions<FieldValues, string> | undefined;
+  value?: number;
+  id: string;
 }
 
-const Select = ({ options, value, onChange, name }: ISelect) => {
+const Select = ({ options, id, optionsConfigForm }: ISelect) => {
+  const { register } = useFormContext() ?? {};
+
+  if(!register) {
+    return null;
+  }
+
   if (!options) return;
 
   return (
     <StyledSelect
-      value={value}
-      onChange={onChange}
       aria-label="Sort"
-      name={name}
+      id={id}
+      {...register(id, optionsConfigForm)}
     >
       {options.map((option) => (
         <option value={option.value} key={option.value}>

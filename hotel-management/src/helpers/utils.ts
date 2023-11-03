@@ -1,5 +1,5 @@
 // Constants
-import { REQUIRED_FIELD_ERROR, invalidFormatMsg } from '../constants/messages';
+import { REQUIRED_FIELD_ERROR } from '../constants/formValidateMessage';
 
 // Types
 import {
@@ -52,36 +52,6 @@ const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
 
     return field;
   }, {} as TKeyValue);
-};
-
-type TValidator = {
-  validatorFunc: (value: string) => boolean;
-  prop?: string;
-  customErrorMsg?: string;
-  required?: boolean;
-};
-
-/**
- * Create validator object
- * @param param0 Pass TValidator object
- * @returns An object contains condition validator
- */
-const addValidator = ({
-  validatorFunc,
-  prop = '',
-  customErrorMsg = '',
-  required = true,
-}: TValidator) => {
-  return {
-    required,
-    validator: {
-      func: validatorFunc,
-      // prettier-ignore
-      error: customErrorMsg
-        ? customErrorMsg
-        : invalidFormatMsg(prop),
-    },
-  };
 };
 
 /**
@@ -163,7 +133,6 @@ export {
   isRequired,
   getPropValues,
   getValueFromObj,
-  addValidator,
   searchQuery,
   REQUIRED_FIELD_ERROR,
 };

@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+// Components
+import Button from '../../commons/styles/Button';
+
 const StyledUser = styled.main`
   padding: 20px;
   padding-bottom: 100px;
@@ -21,4 +24,14 @@ const StyledOperationTable = styled.div`
   justify-content: flex-end;
 `;
 
-export { StyledUser, Title, StyledOperationTable };
+const FormBtn = styled(Button)`
+  width: 100%;
+
+  &:disabled,
+  &[disabled] {
+    background-color: var(--disabled-btn-color);
+    cursor: no-drop;
+  }
+`;
+
+export { StyledUser, Title, StyledOperationTable, FormBtn };
