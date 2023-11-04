@@ -34,18 +34,19 @@ const USER_PAGE = {
   ],
 };
 
+const ORDERBY_OPTIONS = [
+  {
+    value: 'asc',
+    label: 'Ascending',
+  },
+  {
+    value: 'desc',
+    label: 'Descending',
+  },
+];
+
 // prettier-ignore
 const ROOM_PAGE = {
-  ORDERBY_OPTIONS: [
-    {
-      value: 'asc',
-      label: 'Ascending',
-    },
-    {
-      value: 'desc',
-      label: 'Descending',
-    },
-  ],
   SORTBY_OPTIONS: [
     { 
       value: 'id',
@@ -82,4 +83,20 @@ const INITIAL_STATE_SCHEMA = {
 const VALUE = 'value';
 const ERROR = 'error';
 
-export { USER_PAGE, ROOM_PAGE, VALUE, ERROR, INITIAL_STATE_SCHEMA };
+const INIT_VALUE_USER_FORM = {
+  name: '',
+  id: 0,
+  identifiedCode: '',
+  address: '',
+  phone: '',
+};
+
+export {
+  USER_PAGE,
+  ROOM_PAGE,
+  VALUE,
+  ERROR,
+  INITIAL_STATE_SCHEMA,
+  ORDERBY_OPTIONS,
+  INIT_VALUE_USER_FORM
+};

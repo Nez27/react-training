@@ -10,19 +10,17 @@ import TextArea from '../../commons/styles/TextArea';
 import Form from '../../components/Form';
 import FormRow from '../../components/LabelControl/index.tsx';
 
-// Types
-import { TKeyValue, TUser } from '../../globals/types';
-
 // Utils
 import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
+  isEmptyObj,
   isValidNumber,
   isValidPhoneNumber,
   isValidString,
 } from '../../helpers/validators.ts';
 
 // Constants
-import { STATUS_CODE } from '../../constants/statusCode.ts';
+import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
@@ -32,11 +30,17 @@ import { USER_PATH } from '../../constants/path.ts';
 import Select, { ISelectOptions } from '../../components/Select';
 
 // Hooks
-import { useFetch } from '../../hooks/useFetch.ts';
 
 // Styled
 import { FormBtn } from './styled.ts';
-import { INVALID_FIELD, INVALID_PHONE, REQUIRED_FIELD_ERROR } from '../../constants/formValidateMessage.ts';
+import {
+  INVALID_FIELD,
+  INVALID_PHONE,
+  REQUIRED_FIELD_ERROR,
+} from '../../constants/formValidateMessage.ts';
+import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
+import { TUser } from '../../globals/types.ts';
+import { INIT_VALUE_USER_FORM } from '../../constants/variables.ts';
 
 interface IUserFormProp {
   onClose: () => void;
@@ -53,11 +57,7 @@ const UserForm = ({
   user,
   isAdd,
 }: IUserFormProp) => {
-  const formMethods = useForm<TUser>({
-    defaultValues: {
-      roomId: 1,
-    },
-  });
+  const formMethods = useForm<TUser>();
   const {
     register,
     handleSubmit,
@@ -66,42 +66,55 @@ const UserForm = ({
     trigger,
   } = formMethods;
   const [options, setOptions] = useState<ISelectOptions[]>();
-  const { data, errorFetchMsg } = useFetch('rooms');
 
+  // Init value when edit form and load options
   useEffect(() => {
-    if (user) {
-      reset(user);
-    }
-  }, [reset, user]);
+    const load = async () => {
+      const rooms = await getAllRoom();
+      const options: ISelectOptions[] = [];
+      const tempUser = isAdd 
+        ? {}
+        : {...user};
 
-  useEffect(() => {
-    if (data) {
-      const tempData = data as TKeyValue[];
-      const tempOptions: ISelectOptions[] = [];
-      tempData.forEach((item) => {
-        tempOptions.push({
-          label: item.name! as string,
-          value: item.id! as string,
+      // Load and set default options room
+      if (rooms) {
+        rooms.forEach((item) => {
+          if (!item.status || tempUser?.roomId === item.id)
+            options.push({
+              label: item.name! as string,
+              value: item.id!.toString(),
+            });
         });
-      });
 
-      setOptions(tempOptions);
-    }
+        setOptions(options);
+        reset({ roomId: +options[0].value });
+      }
 
-    if (errorFetchMsg) {
-      toast.error(errorFetchMsg);
-    }
-  }, [data, errorFetchMsg]);
+      if (!isEmptyObj(tempUser)) {
+        // Init value
+        // Set default value when user not have room yet.
+        if (!tempUser.roomId) {
+          tempUser.roomId = +options[0].value;
+        }
+
+        reset(tempUser);
+      } else {
+        reset(INIT_VALUE_USER_FORM);
+      }
+    };
+
+    load();
+  }, [reset, user, isAdd]);
 
   // Submit form
-  const onSubmit = async (user: TUser) => {
+  const onSubmit = async (newUser: TUser) => {
     try {
       if (isAdd) {
         // Add request
         const response = await sendRequest(
           USER_PATH,
-          JSON.stringify(user),
-          'POST'
+          'POST',
+          JSON.stringify(newUser)
         );
 
         if (response.statusCode === STATUS_CODE.CREATE) {
@@ -110,14 +123,14 @@ const UserForm = ({
           throw new Error(errorMsg(response.statusCode, response.msg));
         }
 
-        // TODO Update status when user create
-        
+        // Update room status
+        updateRoomStatus(newUser.roomId, true);
       } else {
         // Edit request
         const response = await sendRequest(
-          USER_PATH + `/${user!.id}`,
-          JSON.stringify(user),
-          'PUT'
+          USER_PATH + `/${newUser.id}`,
+          'PUT',
+          JSON.stringify(newUser)
         );
 
         if (response.statusCode == STATUS_CODE.OK) {
@@ -125,6 +138,9 @@ const UserForm = ({
         } else {
           throw new Error(errorMsg(response.statusCode, response.msg));
         }
+
+        // Update room status
+        updateRoomStatus(user!.roomId, true, newUser.roomId);
       }
       // Reload table data
       setReload(!reload);
@@ -167,8 +183,7 @@ const UserForm = ({
             {...register('identifiedCode', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkIdentifiedCode: (v) =>
-                  isValidNumber(v) || INVALID_FIELD,
+                checkIdentifiedCode: (v) => isValidNumber(v) || INVALID_FIELD,
               },
               onChange: () => trigger('identifiedCode'),
             })}
@@ -182,8 +197,7 @@ const UserForm = ({
             {...register('phone', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkPhoneNum: (v) =>
-                  isValidPhoneNumber(v) || INVALID_PHONE,
+                checkPhoneNum: (v) => isValidPhoneNumber(v) || INVALID_PHONE,
               },
               onChange: () => trigger('phone'),
             })}
@@ -191,7 +205,15 @@ const UserForm = ({
         </FormRow>
 
         <FormRow label="Room">
-          <Select id="roomId" options={options!} ariaLabel='RoomId'/>
+          <Select
+            id="roomId"
+            options={options!}
+            ariaLabel="RoomId"
+            optionsConfigForm={{
+              valueAsNumber: true,
+              onChange: () => trigger('roomId'),
+            }}
+          />
         </FormRow>
 
         <FormRow label="Address" error={errors.address?.message}>
@@ -201,8 +223,7 @@ const UserForm = ({
             {...register('address', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkValidString: (v) =>
-                  isValidString(v) || INVALID_FIELD,
+                checkValidString: (v) => isValidString(v) || INVALID_FIELD,
               },
               onChange: () => trigger('address'),
             })}

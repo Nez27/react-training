@@ -1,0 +1,12 @@
+const STATUS_CODE = {
+  OK: 200,
+  CREATE: 201,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500,
+};
+
+const RESPONSE_MESSAGE = {
+  UPDATE_SUCCESS: 'Update success',
+};
+
+export { STATUS_CODE, RESPONSE_MESSAGE };

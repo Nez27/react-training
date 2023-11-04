@@ -20,9 +20,9 @@ import { TRoom } from '../../globals/types';
 // Constants
 import { useFetch } from '../../hooks/useFetch';
 import { ROOM_PATH } from '../../constants/path';
-import { STATUS_CODE } from '../../constants/statusCode';
+import { STATUS_CODE } from '../../constants/responseStatus';
 import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
-import { ROOM_PAGE } from '../../constants/variables';
+import { ORDERBY_OPTIONS, ROOM_PAGE } from '../../constants/variables';
 
 // Styled
 import Spinner from '../../commons/styles/Spinner';
@@ -54,8 +54,7 @@ const RoomRow = ({
     if (confirm(CONFIRM_DELETE)) {
       const response = await sendRequest(
         ROOM_PATH + `/${room.id}`,
-        null,
-        'DELETE',
+        'DELETE'
       );
 
       if (response.statusCode === STATUS_CODE.OK) {
@@ -148,7 +147,7 @@ const RoomTable = ({
     <>
       <Direction>
         <StyledOperationTable>
-          <OrderBy options={ROOM_PAGE.ORDERBY_OPTIONS} />
+          <OrderBy options={ORDERBY_OPTIONS} />
 
           <SortBy options={ROOM_PAGE.SORTBY_OPTIONS} />
           <Search

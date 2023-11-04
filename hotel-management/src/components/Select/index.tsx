@@ -54,7 +54,6 @@ const RenderSelect = ({
       id={id}
       value={value}
       {...register(id!, optionsConfigForm)}
-      onChange={onChange}
     >
       {children}
     </StyledSelect>

@@ -4,7 +4,7 @@ import { BASE_URL } from '../constants/path';
 // Types
 import { TResponse } from '../globals/types';
 
-type TMethodRequest = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type TMethodRequest = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 /**
  * The send request method to the server
@@ -13,11 +13,11 @@ type TMethodRequest = 'GET' | 'POST' | 'PUT' | 'DELETE';
  * @param method HTTP method
  * @returns The status code and message from server
  */
-export const sendRequest = async (
+export const sendRequest = async <T,>(
   path: string,
-  body: BodyInit | null | undefined,
   method: TMethodRequest = 'GET',
-): Promise<TResponse> => {
+  body?: BodyInit,
+): Promise<TResponse<T>> => {
   const response = await fetch(BASE_URL + path, {
     method,
     body,
@@ -28,8 +28,11 @@ export const sendRequest = async (
     },
   });
 
+  const data = await response.json() as T;
+
   return {
     statusCode: response.status,
     msg: response.statusText,
+    data
   };
 };

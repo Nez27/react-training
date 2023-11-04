@@ -5,7 +5,7 @@ import Button from '../../commons/styles/Button.ts';
 import { TRoom } from '../../globals/types.ts';
 import { useForm } from 'react-hook-form';
 import { ROOM_PATH } from '../../constants/path.ts';
-import { STATUS_CODE } from '../../constants/statusCode.ts';
+import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import toast from 'react-hot-toast';
 import { ADD_SUCCESS, EDIT_SUCCESS, errorMsg } from '../../constants/messages.ts';
 import { sendRequest } from '../../helpers/sendRequest.ts';
@@ -63,8 +63,8 @@ const RoomForm = ({
         // Add request
         const response = await sendRequest(
           ROOM_PATH,
+          'POST',
           JSON.stringify(room),
-          'POST'
         );
 
         if (response.statusCode === STATUS_CODE.CREATE) {
@@ -76,8 +76,8 @@ const RoomForm = ({
         // Edit request
         const response = await sendRequest(
           ROOM_PATH + `/${room!.id}`,
+          'PUT',
           JSON.stringify(room),
-          'PUT'
         );
 
         if (response.statusCode == STATUS_CODE.OK) {

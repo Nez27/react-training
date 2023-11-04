@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 // Components
-import { HiSquare2Stack } from 'react-icons/hi2';
-import { HiTrash } from 'react-icons/hi';
+import { RiEditBoxFill } from 'react-icons/ri';
+import { IoExit } from 'react-icons/io5';
 import { StyledOperationTable } from './styled';
 import Menus from '../../components/Menus';
 import Table from '../../components/Table';
@@ -19,16 +19,16 @@ import { TUser } from '../../globals/types';
 
 // Constants
 import { useFetch } from '../../hooks/useFetch';
-import { USER_PATH } from '../../constants/path';
-import { STATUS_CODE } from '../../constants/statusCode';
-import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
-import { USER_PAGE } from '../../constants/variables';
+import { STATUS_CODE } from '../../constants/responseStatus';
+import { ORDERBY_OPTIONS, USER_PAGE } from '../../constants/variables';
 
 // Styled
 import Spinner from '../../commons/styles/Spinner';
 
 // Utils
-import { sendRequest } from '../../helpers/sendRequest';
+import { updateRoomStatus } from '../../services/roomServices';
+import { checkOutUser } from '../../services/userServices';
+import { CONFIRM_MESSAGE } from '../../constants/messages';
 
 interface IUserRow {
   user: TUser;
@@ -50,16 +50,16 @@ const UserRow = ({
     openFormDialog();
   };
 
-  const handleOnDelete = async (user: TUser) => {
-    if (confirm(CONFIRM_DELETE)) {
-      const response = await sendRequest(
-        USER_PATH + `/${user.id}`,
-        null,
-        'DELETE',
-      );
+  const handleOnCheckOut = async (user: TUser) => {
+    if (confirm(CONFIRM_MESSAGE)) {
+      const resUpdateStatus = await updateRoomStatus(user.roomId, false);
+      const resCheckoutUser = await checkOutUser(user);
 
-      if (response.statusCode === STATUS_CODE.OK) {
-        toast.success(DELETE_SUCCESS);
+      if (
+        resCheckoutUser?.statusCode === STATUS_CODE.OK &&
+        resUpdateStatus?.statusCode === STATUS_CODE.OK
+      ) {
+        toast.success('Check out complete!');
 
         // Reload table
         setReload(!reload);
@@ -75,20 +75,27 @@ const UserRow = ({
       <div>{name}</div>
       <div>{identifiedCode}</div>
       <div>{phone}</div>
-      <div>{roomId}</div>
+      <div>{
+        roomId
+          ? roomId
+          : 'None'
+      }</div>
 
       <Menus.Menu>
         <Menus.Toggle id={id.toString()} />
 
         <Menus.List id={id.toString()}>
           <Menus.Button
-            icon={<HiSquare2Stack />}
+            icon={<RiEditBoxFill />}
             onClick={() => handleOnEdit(user)}
           >
             Edit
           </Menus.Button>
-          <Menus.Button icon={<HiTrash />} onClick={() => handleOnDelete(user)}>
-            Delete
+          <Menus.Button
+            icon={<IoExit />}
+            onClick={() => handleOnCheckOut(user)}
+          >
+            Check out
           </Menus.Button>
         </Menus.List>
       </Menus.Menu>
@@ -125,7 +132,7 @@ const UserTable = ({
     phoneSearch,
     sortByValue,
     orderByValue,
-    reload,
+    reload
   );
 
   useEffect(() => {
@@ -140,11 +147,12 @@ const UserTable = ({
     }
   }, [data, errorFetchMsg]);
 
+
   return (
     <>
       <Direction>
         <StyledOperationTable>
-          <OrderBy options={USER_PAGE.ORDERBY_OPTIONS} />
+          <OrderBy options={ORDERBY_OPTIONS} />
 
           <SortBy options={USER_PAGE.SORTBY_OPTIONS} />
           <Search

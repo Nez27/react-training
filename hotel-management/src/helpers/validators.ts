@@ -40,10 +40,15 @@ const isValidString = (value: string): boolean => {
  */
 const skipCheck = () => true;
 
+const isEmptyObj = (obj: object) => {
+  return Object.keys(obj).length === 0;
+}
+
 export {
   isValidNumber,
   isValidPhoneNumber,
   isValidString,
   skipCheck,
   isValidDiscount,
+  isEmptyObj
 };
