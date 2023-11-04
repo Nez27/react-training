@@ -1,5 +1,5 @@
 // Constants
-import { REQUIRED_FIELD_ERROR, invalidFormatMsg } from '../constants/messages';
+import { REQUIRED_FIELD_ERROR } from '../constants/formValidateMessage';
 
 // Types
 import {
@@ -16,15 +16,6 @@ import {
  */
 const isBool = (value: unknown) => {
   return typeof value === 'boolean';
-};
-
-/**
- * The function check value has type object or not
- * @param value The value need to checked
- * @returns A boolean indicating whether or not the argument has type object.
- */
-const isObject = (value: unknown) => {
-  return typeof value === 'object' && value !== null;
 };
 
 /**
@@ -52,36 +43,6 @@ const getPropValues = (stateSchema: TStateSchema, prop?: TPropValues) => {
 
     return field;
   }, {} as TKeyValue);
-};
-
-type TValidator = {
-  validatorFunc: (value: string) => boolean;
-  prop?: string;
-  customErrorMsg?: string;
-  required?: boolean;
-};
-
-/**
- * Create validator object
- * @param param0 Pass TValidator object
- * @returns An object contains condition validator
- */
-const addValidator = ({
-  validatorFunc,
-  prop = '',
-  customErrorMsg = '',
-  required = true,
-}: TValidator) => {
-  return {
-    required,
-    validator: {
-      func: validatorFunc,
-      // prettier-ignore
-      error: customErrorMsg
-        ? customErrorMsg
-        : invalidFormatMsg(prop),
-    },
-  };
 };
 
 /**
@@ -124,19 +85,16 @@ const searchQuery = (
   columnSearch: string,
   keySearch: string,
   sort: string,
-  order: string,
+  order: string
 ) => {
-  // prettier-ignore
-  const phoneParams = keySearch
-    ? `${columnSearch}_like=` + keySearch
+  const phoneParams = keySearch 
+    ? `${columnSearch}_like=` + keySearch 
     : '';
 
-  // prettier-ignore
-  const sortParams = sort
-    ? '_sort=' + sort
+  const sortParams = sort 
+    ? '_sort=' + sort 
     : '';
 
-  // prettier-ignore
   const orderParams = order 
     ? '_order=' + order 
     : '';
@@ -159,11 +117,9 @@ const searchQuery = (
 };
 
 export {
-  isObject,
   isRequired,
   getPropValues,
   getValueFromObj,
-  addValidator,
   searchQuery,
-  REQUIRED_FIELD_ERROR,
+  REQUIRED_FIELD_ERROR
 };

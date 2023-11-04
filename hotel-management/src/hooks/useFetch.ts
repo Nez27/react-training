@@ -54,10 +54,11 @@ const useFetch = (
         const response = await fetch(BASE_URL + path + '?' + query);
         const json = await response.json();
 
-        if (!response.ok)
+        if (!response.ok) {
           throw new Error(
-            `Error code: ${response.status} \n Messages: ${response.statusText}`,
+            `Error code: ${response.status} \n Messages: ${response.text}`,
           );
+        }
 
         setIsPending(false);
         setData(json);

@@ -3,8 +3,8 @@
  * @param value Value need to be checked
  * @returns A boolean indicating whether or not the argument has valid
  */
-const isValidNumber = (value: string): boolean => {
-  return /^[0-9]*$/.test(value);
+const isValidNumber = (value: unknown): boolean => {
+  return /^[0-9]*$/.test(value as string);
 };
 
 /**
