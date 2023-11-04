@@ -20,12 +20,12 @@ const SortBy = memo(({ options }: ISortByProps) => {
     setSearchParams(searchParams);
   };
 
-  // prettier-ignore
   return (
     <Select 
       options={options} 
       value={sortBy} 
       onChange={handleChange} 
+      ariaLabel='Sort'
     />
   );
 });

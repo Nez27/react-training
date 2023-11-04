@@ -67,7 +67,7 @@ const RoomRow = ({
     }
   };
 
-  const { id, name, price, discount, status } = room;
+  const { id, name, price, status } = room;
 
   // prettier-ignore
   const statusText = status
@@ -79,7 +79,6 @@ const RoomRow = ({
       <div>{id}</div>
       <div>{name}</div>
       <div>{price}</div>
-      <div>{discount}</div>
       <div>{statusText}</div>
 
       <Menus.Menu>
@@ -162,12 +161,11 @@ const RoomTable = ({
 
         {rooms.length ? (
           <Menus>
-            <Table columns="10% 30% 20% 10% 20% 5%">
+            <Table columns="10% 40% 20% 20% 5%">
               <Table.Header>
                 <div>Id</div>
                 <div>Name</div>
                 <div>Price</div>
-                <div>Discount</div>
                 <div>Status</div>
               </Table.Header>
               <Table.Body<TRoom>

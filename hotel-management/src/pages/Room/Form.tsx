@@ -1,11 +1,20 @@
-
 import styled from 'styled-components';
 import Button from '../../commons/styles/Button.ts';
 
 // Types
-import {
-  TRoom,
-} from '../../globals/types.ts';
+import { TRoom } from '../../globals/types.ts';
+import { useForm } from 'react-hook-form';
+import { ROOM_PATH } from '../../constants/path.ts';
+import { STATUS_CODE } from '../../constants/statusCode.ts';
+import toast from 'react-hot-toast';
+import { ADD_SUCCESS, EDIT_SUCCESS, errorMsg } from '../../constants/messages.ts';
+import { sendRequest } from '../../helpers/sendRequest.ts';
+import Input from '../../commons/styles/Input.ts';
+import FormRow from '../../components/LabelControl/index.tsx';
+import { INVALID_DISCOUNT, INVALID_FIELD, REQUIRED_FIELD_ERROR } from '../../constants/formValidateMessage.ts';
+import { isValidNumber, isValidString } from '../../helpers/validators.ts';
+import Form from '../../components/Form/index.tsx';
+import { useEffect } from 'react';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -32,272 +41,126 @@ const RoomForm = ({
   room,
   isAdd,
 }: IRoomFormProp) => {
-  // const [reset, setReset] = useState(true);
+  const formMethods = useForm<TRoom>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isDirty, isValid },
+    trigger,
+  } = formMethods;
 
-  // if (isAdd) {
-  //   // If this is add form, reset value
-  //   room = null;
-  // }
+  useEffect(() => {
+    if(room) {
+      reset(room);
+    }
+  }, [room, reset]);
 
-  // // prettier-ignore
-  // const initialValue: string = isAdd 
-  //   ? '' 
-  //   : room! 
-  //   && room.id.toString();
+  // Submit form
+  const onSubmit = async (room: TRoom) => {
+    try {
+      if (isAdd) {
+        // Add request
+        const response = await sendRequest(
+          ROOM_PATH,
+          JSON.stringify(room),
+          'POST'
+        );
 
-  // const {
-  //   idValue,
-  //   nameValue,
-  //   priceValue,
-  //   discountValue,
-  //   statusValue,
-  //   descriptionValue,
-  // } = getValueFromObj<TRoom>(room);
+        if (response.statusCode === STATUS_CODE.CREATE) {
+          toast.success(ADD_SUCCESS);
+        } else {
+          throw new Error(errorMsg(response.statusCode, response.msg));
+        }
+      } else {
+        // Edit request
+        const response = await sendRequest(
+          ROOM_PATH + `/${room!.id}`,
+          JSON.stringify(room),
+          'PUT'
+        );
 
-  // // Define your state schema
-  // // prettier-ignore
-  // const stateSchema: TStateSchema = {
-  //   id: { 
-  //     value: idValue || '' 
-  //   },
-  //   name: { 
-  //     value: nameValue || '',
-  //     error: '' 
-  //   },
-  //   price: { 
-  //     value: priceValue || '',
-  //     error: '' 
-  //   },
-  //   discount: { 
-  //     value: discountValue || '',
-  //     error: '' 
-  //   },
-  //   status: { 
-  //     value: statusValue || '',
-  //     error: '' 
-  //   },
-  //   description: { 
-  //     value: descriptionValue || '',
-  //     error: '' 
-  //   },
-  // };
+        if (response.statusCode == STATUS_CODE.OK) {
+          toast.success(EDIT_SUCCESS);
+        } else {
+          throw new Error(errorMsg(response.statusCode, response.msg));
+        }
+      }
+      // Reload table data
+      setReload(!reload);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
 
-  // // prettier-ignore
-  // const stateValidatorSchema: TValidator = {
-  //   name: addValidator({ 
-  //     validatorFunc: isValidString, 
-  //     prop: 'name' 
-  //   }),
-  //   price: addValidator({
-  //     validatorFunc: isValidNumber,
-  //     prop: 'price',
-  //   }),
-  //   discount: addValidator({ 
-  //     validatorFunc: isValidDiscount, 
-  //     customErrorMsg: DISCOUNT_FIELD_ERROR
-  //   }),
-  //   status: addValidator({
-  //     validatorFunc: skipCheck,
-  //     prop: 'status',
-  //     required: false,
-  //   }),
-  //   description: addValidator({ 
-  //     validatorFunc: isValidString, 
-  //     prop: 'description' 
-  //   }),
-  // };
-
-  // // Submit form
-  // const onSubmitForm = async (state: TKeyValue) => {
-  //   // Convert to room type
-  //   const data: TRoom = {
-  //     id: +state.id!,
-  //     name: '' + state.name,
-  //     discount: +state.discount!,
-  //     price: +state.price!,
-  //     status: !!state.status,
-  //     description: '' + state.description,
-  //   };
-
-  //   try {
-  //     if (isAdd) {
-  //       // Add request
-  //       const response = await sendRequest(
-  //         ROOM_PATH,
-  //         JSON.stringify(data),
-  //         'POST',
-  //       );
-
-  //       if (response.statusCode === STATUS_CODE.CREATE) {
-  //         toast.success(ADD_SUCCESS);
-
-  //         onResetForm();
-  //       } else {
-  //         throw new Error(errorMsg(response.statusCode, response.msg));
-  //       }
-  //     } else {
-  //       // Edit request
-  //       const response = await sendRequest(
-  //         ROOM_PATH + `/${room!.id}`,
-  //         JSON.stringify(data),
-  //         'PUT',
-  //       );
-
-  //       if (response.statusCode == STATUS_CODE.OK) {
-  //         toast.success(EDIT_SUCCESS);
-  //       } else {
-  //         throw new Error(errorMsg(response.statusCode, response.msg));
-  //       }
-  //     }
-  //     // Reload table data
-  //     setReload(!reload);
-  //   } catch (error: unknown) {
-  //     if (error instanceof Error) {
-  //       toast.error(error.message);
-  //     }
-  //   }
-
-  //   onClose();
-  // };
-
-  // // Close and reset form
-  // const closeAndReset = () => {
-  //   onClose();
-  //   onResetForm();
-  // };
-
-  // // prettier-ignore
-  // const { 
-  //   values,
-  //   errors,
-  //   valid,
-  //   handleOnChange,
-  //   handleOnSubmit,
-  //   disable }  =
-  //   useForm(
-  //     stateSchema,
-  //     stateValidatorSchema,
-  //     onSubmitForm,
-  //     initialValue
-  //   );
-
-  // // prettier-ignore
-  // const {
-  //   id,
-  //   name,
-  //   price,
-  //   discount, 
-  //   status,
-  //   description 
-  // } = values;
-
-  // // Clear form value when this is a add form
-  // useEffect(() => {
-  //   if (isAdd) {
-  //     Object.keys(values).forEach((key) => (values[key] = ''));
-  //   }
-  // }, [isAdd]); // eslint-disable-line
-
-  // // Reset form
-  // const onResetForm = () => {
-  //   setReset(!reset);
-  //   Object.keys(values).forEach((key) => (values[key] = ''));
-  // };
+    reset();
+    onClose();
+  };
 
   return (
-    // <Form onSubmit={handleOnSubmit}>
-    //   <Input type="hidden" name="id" value={id as string} />
-    //   <FormRow
-    //     label="Name"
-    //     error={
-    //       // prettier-ignore
-    //       errors.name && valid.name 
-    //         ? (errors.name as string) 
-    //         : ''
-    //     }
-    //   >
-    //     <Input
-    //       type="text"
-    //       name="name"
-    //       value={name as string}
-    //       onChange={handleOnChange}
-    //     />
-    //   </FormRow>
-    //   <FormRow
-    //     label="Price"
-    //     error={
-    //       // prettier-ignore
-    //       errors.price && valid.price 
-    //         ? (errors.price as string) 
-    //         : ''
-    //     }
-    //   >
-    //     <Input
-    //       type="text"
-    //       name="price"
-    //       value={price as string}
-    //       onChange={handleOnChange}
-    //     />
-    //   </FormRow>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Input type="hidden" id="id" {...register('id')} />
+        <FormRow label="Name" error={errors?.name?.message}>
+          <Input
+            type="text"
+            id="name"
+            {...register('name', {
+              required: REQUIRED_FIELD_ERROR,
+              validate: {
+                checkValidName: (value) =>
+                  isValidString(value) || INVALID_FIELD,
+              },
+              onChange: () => trigger('name'),
+            })}
+          />
+        </FormRow>
 
-    //   <FormRow
-    //     label="Discount"
-    //     error={
-    //       // prettier-ignore
-    //       errors.discount && valid.discount
-    //         ? (errors.discount as string) 
-    //         : ''
-    //     }
-    //   >
-    //     <Input
-    //       type="text"
-    //       name="discount"
-    //       value={discount as string}
-    //       onChange={handleOnChange}
-    //     />
-    //   </FormRow>
+        <FormRow
+          label="Price"
+          error={errors?.price?.message}
+        >
+          <Input
+            type="text"
+            id="price"
+            {...register('price', {
+              required: REQUIRED_FIELD_ERROR,
+              validate: {
+                checkIdentifiedCode: (v) => isValidNumber(v) || INVALID_FIELD,
+              },
+              onChange: () => trigger('price'),
+            })}
+          />
+        </FormRow>
 
-    //   <FormRow label="Status">
-    //     <Input
-    //       type="checkbox"
-    //       name="status"
-    //       checked={status as boolean}
-    //       onChange={handleOnChange}
-    //     />
-    //   </FormRow>
+        <FormRow label="discount" error={errors?.discount?.message}>
+          <Input
+            type="text"
+            id="phone"
+            {...register('discount', {
+              required: REQUIRED_FIELD_ERROR,
+              validate: {
+                checkPhoneNum: (v) => isValidNumber(v) || INVALID_DISCOUNT,
+              },
+              onChange: () => trigger('discount'),
+            })}
+          />
+        </FormRow>
 
-    //   <FormRow
-    //     label="Description"
-    //     error={
-    //       // prettier-ignore
-    //       errors.description && valid.description 
-    //         ? (errors.description as string) 
-    //         : ''
-    //     }
-    //   >
-    //     <TextArea
-    //       name="description"
-    //       rows={3}
-    //       value={description as string}
-    //       onChange={handleOnChange}
-    //     />
-    //   </FormRow>
-
-    //   <Form.Action>
-    //     <FormBtn type="submit" name="submit" disabled={disable}>
-    //       {
-    //         // prettier-ignore
-    //         isAdd
-    //           ? 'Add'
-    //           : 'Save'
-    //       }
-    //     </FormBtn>
-    //     <FormBtn type="button" styled="secondary" onClick={closeAndReset}>
-    //       Close
-    //     </FormBtn>
-    //   </Form.Action>
-    // </Form>
-    <p></p>
+        <Form.Action>
+          <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid}>
+            {
+              // prettier-ignore
+              isAdd
+            ? 'Add'
+            : 'Save'
+            }
+          </FormBtn>
+          <FormBtn type="button" styled="secondary" onClick={onClose}>
+            Close
+          </FormBtn>
+        </Form.Action>
+      </Form>
   );
 };
 

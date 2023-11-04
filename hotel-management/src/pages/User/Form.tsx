@@ -111,6 +111,7 @@ const UserForm = ({
         }
 
         // TODO Update status when user create
+        
       } else {
         // Edit request
         const response = await sendRequest(
@@ -190,7 +191,7 @@ const UserForm = ({
         </FormRow>
 
         <FormRow label="Room">
-          <Select id="roomId" options={options!} />
+          <Select id="roomId" options={options!} ariaLabel='RoomId'/>
         </FormRow>
 
         <FormRow label="Address" error={errors.address?.message}>
@@ -217,7 +218,7 @@ const UserForm = ({
               : 'Save'
             }
           </FormBtn>
-          <FormBtn type="button" styled="secondary">
+          <FormBtn type="button" styled="secondary" onClick={onClose}>
             Close
           </FormBtn>
         </Form.Action>

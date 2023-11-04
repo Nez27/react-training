@@ -12,7 +12,6 @@ type TRoom = {
   name: string;
   price: number;
   discount: number;
-  description: string;
   status: boolean;
 };
 

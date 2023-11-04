@@ -19,15 +19,6 @@ const isBool = (value: unknown) => {
 };
 
 /**
- * The function check value has type object or not
- * @param value The value need to checked
- * @returns A boolean indicating whether or not the argument has type object.
- */
-const isObject = (value: unknown) => {
-  return typeof value === 'object' && value !== null;
-};
-
-/**
  * Set required error for value
  * @param value The value set required or not
  * @param isRequired Set required for value
@@ -94,19 +85,16 @@ const searchQuery = (
   columnSearch: string,
   keySearch: string,
   sort: string,
-  order: string,
+  order: string
 ) => {
-  // prettier-ignore
-  const phoneParams = keySearch
-    ? `${columnSearch}_like=` + keySearch
+  const phoneParams = keySearch 
+    ? `${columnSearch}_like=` + keySearch 
     : '';
 
-  // prettier-ignore
-  const sortParams = sort
-    ? '_sort=' + sort
+  const sortParams = sort 
+    ? '_sort=' + sort 
     : '';
 
-  // prettier-ignore
   const orderParams = order 
     ? '_order=' + order 
     : '';
@@ -129,10 +117,9 @@ const searchQuery = (
 };
 
 export {
-  isObject,
   isRequired,
   getPropValues,
   getValueFromObj,
   searchQuery,
-  REQUIRED_FIELD_ERROR,
+  REQUIRED_FIELD_ERROR
 };
