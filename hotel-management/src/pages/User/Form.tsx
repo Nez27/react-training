@@ -19,7 +19,6 @@ import FormRow from '../../components/LabelControl/index.tsx';
 import Select, { ISelectOptions } from '../../components/Select';
 
 // Helpers
-import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
   isEmptyObj,
   isValidName,
@@ -32,9 +31,7 @@ import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
-  errorMsg,
 } from '../../constants/messages.ts';
-import { USER_PATH } from '../../constants/path.ts';
 import {
   INVALID_FIELD,
   INVALID_PHONE,
@@ -50,6 +47,7 @@ import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
 
 // Types
 import { Nullable, TRoom, TUser } from '../../globals/types.ts';
+import { createUser, updateUser } from '../../services/userServices.ts';
 
 interface IUserFormProp {
   onClose: () => void;
@@ -121,32 +119,20 @@ const UserForm = ({
       try {
         if (isAdd) {
           // Add request
-          const response = await sendRequest(
-            USER_PATH,
-            'POST',
-            JSON.stringify(newUser)
-          );
+          const response = await createUser(newUser);
 
-          if (response.statusCode === STATUS_CODE.CREATE) {
+          if (response?.statusCode === STATUS_CODE.CREATE) {
             toast.success(ADD_SUCCESS);
-          } else {
-            throw new Error(errorMsg(response.statusCode, response.msg));
           }
 
           // Update room status
           updateRoomStatus(newUser.roomId, true);
         } else {
           // Edit request
-          const response = await sendRequest(
-            USER_PATH + `/${newUser.id}`,
-            'PUT',
-            JSON.stringify(newUser)
-          );
+          const response = await updateUser(newUser);
 
-          if (response.statusCode == STATUS_CODE.OK) {
+          if (response?.statusCode == STATUS_CODE.OK) {
             toast.success(EDIT_SUCCESS);
-          } else {
-            throw new Error(errorMsg(response.statusCode, response.msg));
           }
 
           // Update room status

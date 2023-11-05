@@ -11,6 +11,38 @@ import { Nullable, TResponse, TUser } from '../globals/types';
 // Helpers
 import { sendRequest } from '../helpers/sendRequest';
 
+/**
+ * Create user to the server
+ * @param user The user object need to be created
+ * @returns The TResponse object if success or null
+ */
+const createUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
+  try {
+    const response = await sendRequest<TUser>(
+      USER_PATH,
+      'POST',
+      JSON.stringify(user)
+    );
+
+    if (response.statusCode !== STATUS_CODE.CREATE) {
+      throw new Error(errorMsg(response.statusCode, response.msg));
+    }
+
+    return response;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.error(error.message);
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Update the user to the server
+ * @param user The user object need to be updated
+ * @returns The TResponse object if update success or null
+ */
 const updateUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
   try {
     const response = await sendRequest<TUser>(
@@ -33,6 +65,11 @@ const updateUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
   return null;
 };
 
+/**
+ * Checkout user
+ * @param user The user need to be checkout
+ * @returns The TResponse object if checkout success or not
+ */
 const checkOutUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
   const tempUser = user;
 
@@ -46,4 +83,4 @@ const checkOutUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> =>
   return null;
 };
 
-export { updateUser, checkOutUser };
+export { updateUser, checkOutUser, createUser };
