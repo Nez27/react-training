@@ -1,13 +1,21 @@
 import { forwardRef, useEffect } from 'react';
 
 // Components
-import Dialog, { IDialogProps } from '../../components/Dialog';
+import Dialog from '../../components/Dialog';
 import RoomForm from './Form';
-
-// Types
 import { TRoom } from '../../globals/types';
 
-const RoomDialog = forwardRef((props, ref) => {
+
+interface IRoomDialog {
+  onClose?: () => void;
+  reload?: boolean;
+  setReload?: React.Dispatch<React.SetStateAction<boolean>>;
+  ref?: React.MutableRefObject<HTMLDialogElement | null>;
+  room?: TRoom | null;
+  isAdd?: boolean;
+}
+
+const RoomDialog = forwardRef((props: IRoomDialog, ref) => {
   const dialogRef = ref as React.MutableRefObject<
     HTMLDialogElement | undefined
   >;
@@ -16,7 +24,7 @@ const RoomDialog = forwardRef((props, ref) => {
     onClose,
     setReload,
     reload,
-    data,
+    room,
     isAdd 
   } = props;
 
@@ -42,11 +50,11 @@ const RoomDialog = forwardRef((props, ref) => {
         onClose={onClose!}
         reload={reload!}
         setReload={setReload!}
-        room={data}
+        room={room}
         isAdd={isAdd!}
       />
     </Dialog>
   );
-}) as React.FC<IDialogProps<TRoom>>;
+});
 
 export default RoomDialog;

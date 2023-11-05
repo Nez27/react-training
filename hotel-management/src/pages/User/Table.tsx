@@ -75,11 +75,7 @@ const UserRow = ({
       <div>{name}</div>
       <div>{identifiedCode}</div>
       <div>{phone}</div>
-      <div>{
-        roomId
-          ? roomId
-          : 'None'
-      }</div>
+      <div>{roomId ? roomId : 'None'}</div>
 
       <Menus.Menu>
         <Menus.Toggle id={id.toString()} />
@@ -116,9 +112,9 @@ const UserTable = ({
   openFormDialog,
   setUser,
 }: IUserTable) => {
+  const [users, setUsers] = useState<TUser[]>([]);
   const [phoneSearch, setPhoneSearch] = useState('');
   const [searchParams] = useSearchParams();
-  const [users, setUsers] = useState<TUser[]>([]);
   const sortByValue = searchParams.get('sortBy')
     ? searchParams.get('sortBy')!
     : '';
@@ -145,8 +141,7 @@ const UserTable = ({
     if (errorFetchMsg) {
       console.error(errorFetchMsg);
     }
-  }, [data, errorFetchMsg]);
-
+  }, [data, errorFetchMsg, setUsers]);
 
   return (
     <>

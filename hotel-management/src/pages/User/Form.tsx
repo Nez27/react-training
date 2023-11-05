@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -38,14 +38,14 @@ import {
   REQUIRED_FIELD_ERROR,
 } from '../../constants/formValidateMessage.ts';
 import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
-import { TUser } from '../../globals/types.ts';
+import { TRoom, TUser } from '../../globals/types.ts';
 import { INIT_VALUE_USER_FORM } from '../../constants/variables.ts';
 
 interface IUserFormProp {
   onClose: () => void;
   reload: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
-  user?: TUser | null;
+  user: TUser | null;
   isAdd: boolean;
 }
 
@@ -64,19 +64,17 @@ const UserForm = ({
     formState: { errors, isDirty, isValid },
     trigger,
   } = formMethods;
+  const [rooms, setRooms] = useState<TRoom[]>([]);
   const [options, setOptions] = useState<ISelectOptions[]>();
 
   // Init value when edit form and load options
   useEffect(() => {
     const load = async () => {
-      const rooms = await getAllRoom();
       const options: ISelectOptions[] = [];
-      const tempUser = isAdd 
-        ? {}
-        : {...user};
+      const tempUser = isAdd ? {} : { ...user };
 
       // Load and set default options room
-      if (rooms) {
+      if (rooms.length > 0) {
         rooms.forEach((item) => {
           if (!item.status || tempUser?.roomId === item.id)
             options.push({
@@ -103,55 +101,71 @@ const UserForm = ({
     };
 
     load();
-  }, [reset, user, isAdd]);
+  }, [reset, user, isAdd, rooms]);
 
   // Submit form
-  const onSubmit = async (newUser: TUser) => {
-    try {
-      if (isAdd) {
-        // Add request
-        const response = await sendRequest(
-          USER_PATH,
-          'POST',
-          JSON.stringify(newUser)
-        );
+  const onSubmit = useCallback(
+    async (newUser: TUser) => {
+      try {
+        if (isAdd) {
+          // Add request
+          const response = await sendRequest(
+            USER_PATH,
+            'POST',
+            JSON.stringify(newUser)
+          );
 
-        if (response.statusCode === STATUS_CODE.CREATE) {
-          toast.success(ADD_SUCCESS);
+          if (response.statusCode === STATUS_CODE.CREATE) {
+            toast.success(ADD_SUCCESS);
+          } else {
+            throw new Error(errorMsg(response.statusCode, response.msg));
+          }
+
+          // Update room status
+          updateRoomStatus(newUser.roomId, true);
         } else {
-          throw new Error(errorMsg(response.statusCode, response.msg));
+          // Edit request
+          const response = await sendRequest(
+            USER_PATH + `/${newUser.id}`,
+            'PUT',
+            JSON.stringify(newUser)
+          );
+
+          if (response.statusCode == STATUS_CODE.OK) {
+            toast.success(EDIT_SUCCESS);
+          } else {
+            throw new Error(errorMsg(response.statusCode, response.msg));
+          }
+
+          // Update room status
+          updateRoomStatus(user!.roomId, true, newUser.roomId);
         }
-
-        // Update room status
-        updateRoomStatus(newUser.roomId, true);
-      } else {
-        // Edit request
-        const response = await sendRequest(
-          USER_PATH + `/${newUser.id}`,
-          'PUT',
-          JSON.stringify(newUser)
-        );
-
-        if (response.statusCode == STATUS_CODE.OK) {
-          toast.success(EDIT_SUCCESS);
-        } else {
-          throw new Error(errorMsg(response.statusCode, response.msg));
+        // Reload table data
+        setReload(!reload);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          toast.error(error.message);
         }
-
-        // Update room status
-        updateRoomStatus(user!.roomId, true, newUser.roomId);
       }
-      // Reload table data
-      setReload(!reload);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
-    }
 
-    reset();
-    onClose();
-  };
+      reset();
+      onClose();
+    },
+    [isAdd, onClose, reload, reset, setReload, user]
+  );
+
+  // Load all rooms
+  useEffect(() => {
+    const loadRoom = async () => {
+      const rooms = await getAllRoom();
+
+      if (rooms) {
+        setRooms(rooms);
+      }
+    };
+
+    loadRoom();
+  }, [onSubmit]);
 
   return (
     <FormProvider {...formMethods}>

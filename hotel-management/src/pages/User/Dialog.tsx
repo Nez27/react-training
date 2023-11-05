@@ -1,24 +1,32 @@
 import { forwardRef, useEffect } from 'react';
 
 // Components
-import Dialog, { IDialogProps } from '../../components/Dialog';
+import Dialog from '../../components/Dialog';
 import UserForm from './Form';
 
 // Types
 import { TUser } from '../../globals/types';
+import { useForwardRef } from '../../hooks/useForwardRef';
+
+interface IUserDialog {
+  onClose: () => void;
+  reload: boolean;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  ref: React.MutableRefObject<HTMLDialogElement | null>;
+  user: TUser | null;
+  isAdd: boolean;
+}
 
 const UserDialog = forwardRef((props, ref) => {
-  const dialogRef = ref as React.MutableRefObject<
-    HTMLDialogElement | undefined
-  >;
+  const dialogRef = useForwardRef(ref);
 
   // prettier-ignore
   const { 
     onClose,
     setReload,
     reload,
-    data,
-    isAdd 
+    user,
+    isAdd,
   } = props;
 
   useEffect(() => {
@@ -43,11 +51,11 @@ const UserDialog = forwardRef((props, ref) => {
         onClose={onClose!}
         reload={reload!}
         setReload={setReload!}
-        user={data}
+        user={user}
         isAdd={isAdd!}
       />
     </Dialog>
   );
-}) as React.FC<IDialogProps<TUser>>;
+}) as React.FC<IUserDialog>;
 
 export default UserDialog;

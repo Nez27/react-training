@@ -13,7 +13,7 @@ import UserDialog from './Dialog';
 import { TUser } from '../../globals/types';
 
 const User = () => {
-  const dialogRef = useRef<HTMLDialogElement>();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [reload, setReload] = useState(true);
   const [user, setUser] = useState<TUser | null>(null);
   const [isAdd, setIsAdd] = useState(false);
@@ -48,7 +48,7 @@ const User = () => {
         ref={dialogRef}
         setReload={setReload}
         reload={reload}
-        data={user}
+        user={user}
         isAdd={isAdd}
       />
     </>

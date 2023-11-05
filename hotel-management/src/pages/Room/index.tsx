@@ -48,7 +48,7 @@ const Room = () => {
         ref={dialogRef}
         setReload={setReload}
         reload={reload}
-        data={room}
+        room={room}
         isAdd={isAdd}
       />
     </>
