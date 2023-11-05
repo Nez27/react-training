@@ -12,8 +12,8 @@ const isValidNumber = (value: unknown): boolean => {
  * @param value Value need to be checked
  * @returns A boolean indicating whether or not the argument has valid
  */
-const isValidDiscount = (value: string): boolean => {
-  return +value >= 0 && +value <= 100;
+const isValidDiscount = (value: number): boolean => {
+  return value >= 0 && value <= 100;
 };
 
 /**

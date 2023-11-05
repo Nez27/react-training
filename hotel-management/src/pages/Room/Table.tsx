@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 // Components
-import { HiSquare2Stack } from 'react-icons/hi2';
+import { RiEditBoxFill } from 'react-icons/ri';
 import { HiTrash } from 'react-icons/hi';
 import { StyledOperationTable } from './styled';
 import Menus from '../../components/Menus';
@@ -29,6 +29,7 @@ import Spinner from '../../commons/styles/Spinner';
 
 // Utils
 import { sendRequest } from '../../helpers/sendRequest';
+import { formatCurrency } from '../../helpers/utils';
 
 interface IRoomRow {
   room: TRoom;
@@ -52,10 +53,7 @@ const RoomRow = ({
 
   const handleOnDelete = async (room: TRoom) => {
     if (confirm(CONFIRM_DELETE)) {
-      const response = await sendRequest(
-        ROOM_PATH + `/${room.id}`,
-        'DELETE'
-      );
+      const response = await sendRequest(ROOM_PATH + `/${room.id}`, 'DELETE');
 
       if (response.statusCode === STATUS_CODE.OK) {
         toast.success(DELETE_SUCCESS);
@@ -66,7 +64,10 @@ const RoomRow = ({
     }
   };
 
-  const { id, name, price, status } = room;
+  const { id, name, price, discount, status } = room;
+
+  // Calculate final price
+  const finalPrice = price - (price * discount / 100);
 
   // prettier-ignore
   const statusText = status
@@ -77,7 +78,7 @@ const RoomRow = ({
     <Table.Row>
       <div>{id}</div>
       <div>{name}</div>
-      <div>{price}</div>
+      <div>{formatCurrency(finalPrice)}</div>
       <div>{statusText}</div>
 
       <Menus.Menu>
@@ -85,7 +86,7 @@ const RoomRow = ({
 
         <Menus.List id={id.toString()}>
           <Menus.Button
-            icon={<HiSquare2Stack />}
+            icon={<RiEditBoxFill />}
             onClick={() => handleOnEdit(room)}
           >
             Edit
@@ -128,7 +129,7 @@ const RoomTable = ({
     nameSearch,
     sortByValue,
     orderByValue,
-    reload,
+    reload
   );
 
   useEffect(() => {

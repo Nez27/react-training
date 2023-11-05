@@ -87,17 +87,11 @@ const searchQuery = (
   sort: string,
   order: string
 ) => {
-  const phoneParams = keySearch 
-    ? `${columnSearch}_like=` + keySearch 
-    : '';
+  const phoneParams = keySearch ? `${columnSearch}_like=` + keySearch : '';
 
-  const sortParams = sort 
-    ? '_sort=' + sort 
-    : '';
+  const sortParams = sort ? '_sort=' + sort : '';
 
-  const orderParams = order 
-    ? '_order=' + order 
-    : '';
+  const orderParams = order ? '_order=' + order : '';
   const finalParam = [phoneParams, sortParams, orderParams];
   let query = '';
   let isFirstParam = true;
@@ -116,12 +110,18 @@ const searchQuery = (
   return query;
 };
 
-
+const formatCurrency = (value: number): string => {
+  return Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(value);
+};
 
 export {
   isRequired,
   getPropValues,
   getValueFromObj,
   searchQuery,
-  REQUIRED_FIELD_ERROR
+  formatCurrency,
+  REQUIRED_FIELD_ERROR,
 };

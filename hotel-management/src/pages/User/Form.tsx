@@ -4,7 +4,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
 import Input from '../../commons/styles/Input';
-import TextArea from '../../commons/styles/TextArea';
 
 // Components
 import Form from '../../components/Form';
@@ -213,20 +212,6 @@ const UserForm = ({
               valueAsNumber: true,
               onChange: () => trigger('roomId'),
             }}
-          />
-        </FormRow>
-
-        <FormRow label="Address" error={errors.address?.message}>
-          <TextArea
-            id="address"
-            rows={3}
-            {...register('address', {
-              required: REQUIRED_FIELD_ERROR,
-              validate: {
-                checkValidString: (v) => isValidString(v) || INVALID_FIELD,
-              },
-              onChange: () => trigger('address'),
-            })}
           />
         </FormRow>
 

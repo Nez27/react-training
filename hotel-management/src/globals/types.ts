@@ -2,7 +2,6 @@ type TUser = {
   id: number;
   name: string;
   identifiedCode: string;
-  address: string;
   phone: string;
   roomId: number;
 };

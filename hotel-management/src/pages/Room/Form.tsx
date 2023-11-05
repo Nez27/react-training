@@ -12,7 +12,7 @@ import { sendRequest } from '../../helpers/sendRequest.ts';
 import Input from '../../commons/styles/Input.ts';
 import FormRow from '../../components/LabelControl/index.tsx';
 import { INVALID_DISCOUNT, INVALID_FIELD, REQUIRED_FIELD_ERROR } from '../../constants/formValidateMessage.ts';
-import { isValidNumber, isValidString } from '../../helpers/validators.ts';
+import { isValidDiscount, isValidNumber, isValidString } from '../../helpers/validators.ts';
 import Form from '../../components/Form/index.tsx';
 import { useEffect } from 'react';
 
@@ -140,7 +140,7 @@ const RoomForm = ({
             {...register('discount', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkPhoneNum: (v) => isValidNumber(v) || INVALID_DISCOUNT,
+                checkPhoneNum: (v) => isValidDiscount(v) || INVALID_DISCOUNT,
               },
               onChange: () => trigger('discount'),
             })}
