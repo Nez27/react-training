@@ -11,7 +11,7 @@ const Button = styled.button<IButtonStyle>`
   font-weight: 600;
 
   cursor: pointer;
-
+  
   border-radius: var(--radius-md);
 
   ${(props) =>

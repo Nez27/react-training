@@ -1,11 +1,17 @@
 import toast from 'react-hot-toast';
+
+// Constants
 import { errorMsg } from '../constants/messages';
 import { USER_PATH } from '../constants/path';
 import { STATUS_CODE } from '../constants/responseStatus';
-import { TResponse, TUser } from '../globals/types';
+
+// Types
+import { Nullable, TResponse, TUser } from '../globals/types';
+
+// Helpers
 import { sendRequest } from '../helpers/sendRequest';
 
-const updateUser = async (user: TUser): Promise<TResponse<TUser> | null> => {
+const updateUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
   try {
     const response = await sendRequest<TUser>(
       USER_PATH + '/' + user.id,
@@ -27,7 +33,7 @@ const updateUser = async (user: TUser): Promise<TResponse<TUser> | null> => {
   return null;
 };
 
-const checkOutUser = async (user: TUser): Promise<TResponse<TUser> | null> => {
+const checkOutUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
   const tempUser = user;
 
   if (tempUser) {

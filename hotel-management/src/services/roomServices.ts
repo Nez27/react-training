@@ -1,11 +1,21 @@
 import toast from 'react-hot-toast';
-import { TResponse, TRoom } from '../globals/types';
+
+// Types
+import { Nullable, TResponse, TRoom } from '../globals/types';
+
+// Helpers
 import { sendRequest } from '../helpers/sendRequest';
+
+// Constants
 import { STATUS_CODE, RESPONSE_MESSAGE } from '../constants/responseStatus';
 import { errorMsg } from '../constants/messages';
 import { ROOM_PATH } from '../constants/path';
 
-const getAllRoom = async (): Promise<TRoom[] | null> => {
+/**
+ * Get all rooms from server
+ * @returns Return all rooms in server
+ */
+const getAllRoom = async (): Promise<Nullable<TRoom[]>> => {
   try {
     const response = await sendRequest<TRoom[]>(ROOM_PATH);
 
@@ -25,7 +35,12 @@ const getAllRoom = async (): Promise<TRoom[] | null> => {
   return null;
 };
 
-const getRoom = async (roomId: number): Promise<TRoom | null> => {
+/**
+ * Get room by id
+ * @param roomId The id room need to be get
+ * @returns Return the room object depend on room id
+ */
+const getRoom = async (roomId: number): Promise<Nullable<TRoom>> => {
   try {
     const response = await sendRequest<TRoom>(ROOM_PATH + '/' + roomId);
 
@@ -45,7 +60,12 @@ const getRoom = async (roomId: number): Promise<TRoom | null> => {
   return null;
 };
 
-const updateRoom = async (room: TRoom): Promise<TResponse<TRoom> | null> => {
+/**
+ * Update room into server
+ * @param room Room object need to be updated
+ * @returns The response object
+ */
+const updateRoom = async (room: TRoom): Promise<Nullable<TResponse<TRoom>>> => {
   try {
     const response = await sendRequest<TRoom>(
       ROOM_PATH + '/' + room.id,
@@ -67,11 +87,18 @@ const updateRoom = async (room: TRoom): Promise<TResponse<TRoom> | null> => {
   return null;
 };
 
+/**
+ * Update room status
+ * @param roomId The id room need to be updated
+ * @param status Status of room
+ * @param roomIdNew The new id room need to be updated
+ * @returns Return the response object
+ */
 const updateRoomStatus = async (
   roomId: number,
   status: boolean,
   roomIdNew?: number
-): Promise<TResponse<TRoom> | null> => {
+): Promise<Nullable<TResponse<TRoom>>> => {
   if (!roomIdNew) {
     const response = await sendRequest<TRoom>(
       ROOM_PATH + '/' + roomId,
@@ -80,52 +107,36 @@ const updateRoomStatus = async (
     );
 
     return response;
-  } else {
-    // Update new room status
-    const resNewRoom = await sendRequest<TRoom>(
-      ROOM_PATH + '/' + roomIdNew,
-      'PATCH',
-      JSON.stringify({ status: status })
-    );
+  }
+  
+  // Update new room status
+  const resNewRoom = await sendRequest<TRoom>(
+    ROOM_PATH + '/' + roomIdNew,
+    'PATCH',
+    JSON.stringify({ status: status })
+  );
 
-    // Update old room status;
-    const resOldRoom = await sendRequest<TRoom>(
-      ROOM_PATH + '/' + roomId,
-      'PATCH',
-      JSON.stringify({ status: !status })
-    );
+  // Update old room status;
+  const resOldRoom = await sendRequest<TRoom>(
+    ROOM_PATH + '/' + roomId,
+    'PATCH',
+    JSON.stringify({ status: !status })
+  );
 
-    if (
-      resNewRoom.statusCode === STATUS_CODE.OK &&
-      resOldRoom.statusCode === STATUS_CODE.OK
-    ) {
-      return {
-        statusCode: STATUS_CODE.OK,
-        msg: RESPONSE_MESSAGE.UPDATE_SUCCESS,
-      };
-    }
-
+  if (
+    resNewRoom.statusCode === STATUS_CODE.OK &&
+    resOldRoom.statusCode === STATUS_CODE.OK
+  ) {
     return {
-      statusCode: STATUS_CODE.INTERNAL_SERVER_ERROR,
-      msg: 'Something went wrong!',
+      statusCode: STATUS_CODE.OK,
+      msg: RESPONSE_MESSAGE.UPDATE_SUCCESS,
     };
   }
 
-  // if (rooms?.length) {
-  //   const oldRoom = rooms.find((room) => room.id === roomId);
-  //   const newRoom = rooms.find((room) => room.id === roomIdNew);
-
-  //   if(newRoom) {
-
-  //   }
-
-  //   oldRoom!.status = status;
-  //   const response = await updateRoom(oldRoom!);
-
-  //   return response;
-  // }
-
-  return null;
+  return {
+    statusCode: STATUS_CODE.INTERNAL_SERVER_ERROR,
+    msg: 'Something went wrong!',
+  };
 };
 
 export { getRoom, updateRoom, updateRoomStatus, getAllRoom };

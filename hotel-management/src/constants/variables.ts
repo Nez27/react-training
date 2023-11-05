@@ -1,11 +1,10 @@
-// prettier-ignore
 const USER_PAGE = {
   SORTBY_OPTIONS: [
-    { 
+    {
       value: 'id',
       label: 'Sort by id',
     },
-    { 
+    {
       value: 'name',
       label: 'Sort by name',
     },
@@ -13,11 +12,11 @@ const USER_PAGE = {
       value: 'identifiedCode',
       label: 'Sort by identified code',
     },
-    { 
+    {
       value: 'phone',
       label: 'Sort by phone',
     },
-    { 
+    {
       value: 'roomId',
       label: 'Sort by room',
     },
@@ -35,24 +34,22 @@ const ORDERBY_OPTIONS = [
   },
 ];
 
-// prettier-ignore
 const ROOM_PAGE = {
   SORTBY_OPTIONS: [
-    { 
+    {
       value: 'id',
       label: 'Sort by id',
     },
-    { 
+    {
       value: 'name',
       label: 'Sort by name',
     },
-    { 
-      value: 'price',
+    {
+      value: 'finalPrice',
       label: 'Sort by price',
     },
   ],
-}
-
+};
 
 const VALUE = 'value';
 const ERROR = 'error';
@@ -70,5 +67,5 @@ export {
   VALUE,
   ERROR,
   ORDERBY_OPTIONS,
-  INIT_VALUE_USER_FORM
+  INIT_VALUE_USER_FORM,
 };

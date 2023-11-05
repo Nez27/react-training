@@ -1,11 +1,10 @@
 import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 // Components
 import { RiEditBoxFill } from 'react-icons/ri';
 import { IoExit } from 'react-icons/io5';
-import { StyledOperationTable } from './styled';
 import Menus from '../../components/Menus';
 import Table from '../../components/Table';
 import Direction from '../../commons/styles/Direction';
@@ -15,27 +14,30 @@ import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 
 // Types
-import { TUser } from '../../globals/types';
+import { Nullable, TUser } from '../../globals/types';
+
+// Hooks
+import { useFetch } from '../../hooks/useFetch';
 
 // Constants
-import { useFetch } from '../../hooks/useFetch';
 import { STATUS_CODE } from '../../constants/responseStatus';
 import { ORDERBY_OPTIONS, USER_PAGE } from '../../constants/variables';
+import { CONFIRM_MESSAGE } from '../../constants/messages';
 
 // Styled
+import { StyledOperationTable } from './styled';
 import Spinner from '../../commons/styles/Spinner';
 
-// Utils
+// Services
 import { updateRoomStatus } from '../../services/roomServices';
 import { checkOutUser } from '../../services/userServices';
-import { CONFIRM_MESSAGE } from '../../constants/messages';
 
 interface IUserRow {
   user: TUser;
   openFormDialog: () => void;
-  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
+  setUser: Dispatch<SetStateAction<Nullable<TUser>>>;
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserRow = ({
@@ -45,12 +47,12 @@ const UserRow = ({
   reload,
   setReload,
 }: IUserRow) => {
-  const handleOnEdit = (user: TUser) => {
+  const handleEdit = (user: TUser) => {
     setUser(user);
     openFormDialog();
   };
 
-  const handleOnCheckOut = async (user: TUser) => {
+  const handleCheckOut = async (user: TUser) => {
     if (confirm(CONFIRM_MESSAGE)) {
       const resUpdateStatus = await updateRoomStatus(user.roomId, false);
       const resCheckoutUser = await checkOutUser(user);
@@ -75,7 +77,11 @@ const UserRow = ({
       <div>{name}</div>
       <div>{identifiedCode}</div>
       <div>{phone}</div>
-      <div>{roomId ? roomId : 'None'}</div>
+      <div>{
+        roomId 
+          ? roomId 
+          : 'None'
+      }</div>
 
       <Menus.Menu>
         <Menus.Toggle id={id.toString()} />
@@ -83,14 +89,11 @@ const UserRow = ({
         <Menus.List id={id.toString()}>
           <Menus.Button
             icon={<RiEditBoxFill />}
-            onClick={() => handleOnEdit(user)}
+            onClick={() => handleEdit(user)}
           >
             Edit
           </Menus.Button>
-          <Menus.Button
-            icon={<IoExit />}
-            onClick={() => handleOnCheckOut(user)}
-          >
+          <Menus.Button icon={<IoExit />} onClick={() => handleCheckOut(user)}>
             Check out
           </Menus.Button>
         </Menus.List>
@@ -101,9 +104,9 @@ const UserRow = ({
 
 interface IUserTable {
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: Dispatch<SetStateAction<boolean>>;
   openFormDialog: () => void;
-  setUser?: React.Dispatch<React.SetStateAction<TUser | null>>;
+  setUser?: Dispatch<SetStateAction<Nullable<TUser>>>;
 }
 
 const UserTable = ({

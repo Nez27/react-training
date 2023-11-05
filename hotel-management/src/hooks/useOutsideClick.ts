@@ -1,4 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { MutableRefObject, useEffect, useRef } from 'react';
+
+// Types
+import { Nullable } from '../globals/types';
 
 /**
  * Custom hook to call handler when click outside element
@@ -9,7 +12,7 @@ import { useEffect, useRef } from 'react';
 export const useOutsideClick = (
   handler: () => void,
   listeningCapturing = true,
-): React.MutableRefObject<HTMLUListElement | null> => {
+): MutableRefObject<Nullable<HTMLUListElement>> => {
   const ref = useRef<HTMLUListElement>(null);
 
   useEffect(() => {

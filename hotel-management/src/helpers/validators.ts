@@ -1,10 +1,19 @@
 /**
+ * Check value is valid name or not
+ * @param value Values need to be checked
+ * @returns A boolean indicating whether or not the argument has valid
+ */
+const isValidName = (value: string): boolean => {
+  return /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/gm.test(value);
+};
+
+/**
  * Check value is valid number or not
  * @param value Value need to be checked
  * @returns A boolean indicating whether or not the argument has valid
  */
-const isValidNumber = (value: unknown): boolean => {
-  return /^[0-9]*$/.test(value as string);
+const isValidNumber = (value: string): boolean => {
+  return /^[0-9]*$/.test(value);
 };
 
 /**
@@ -40,15 +49,21 @@ const isValidString = (value: string): boolean => {
  */
 const skipCheck = () => true;
 
+/**
+ * Check object is empty or not
+ * @param obj Object need to be check
+ * @returns A boolean indicating whether or not the argument has valid
+ */
 const isEmptyObj = (obj: object) => {
   return Object.keys(obj).length === 0;
-}
+};
 
 export {
+  isValidName,
   isValidNumber,
   isValidPhoneNumber,
   isValidString,
   skipCheck,
   isValidDiscount,
-  isEmptyObj
+  isEmptyObj,
 };

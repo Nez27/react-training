@@ -13,26 +13,25 @@ type TMethodRequest = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
  * @param method HTTP method
  * @returns The status code and message from server
  */
-export const sendRequest = async <T,>(
+export const sendRequest = async <T>(
   path: string,
   method: TMethodRequest = 'GET',
-  body?: BodyInit,
+  body?: BodyInit
 ): Promise<TResponse<T>> => {
   const response = await fetch(BASE_URL + path, {
     method,
     body,
     headers: {
-      // prettier-ignore
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   });
 
-  const data = await response.json() as T;
+  const data = (await response.json()) as T;
 
   return {
     statusCode: response.status,
     msg: response.statusText,
-    data
+    data,
   };
 };

@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { memo } from 'react';
+import { ChangeEvent, memo } from 'react';
 
 // Components
 import Select from '../Select';
@@ -14,8 +14,7 @@ interface ISortByProps {
 const SortBy = memo(({ options }: ISortByProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get('sortBy') || '';
-
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     searchParams.set('sortBy', event.target.value);
     setSearchParams(searchParams);
   };

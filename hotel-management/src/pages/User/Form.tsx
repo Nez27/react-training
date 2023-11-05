@@ -1,5 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import toast from 'react-hot-toast';
+
+// Hooks
 import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
@@ -8,14 +16,15 @@ import Input from '../../commons/styles/Input';
 // Components
 import Form from '../../components/Form';
 import FormRow from '../../components/LabelControl/index.tsx';
+import Select, { ISelectOptions } from '../../components/Select';
 
-// Utils
+// Helpers
 import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
   isEmptyObj,
+  isValidName,
   isValidNumber,
   isValidPhoneNumber,
-  isValidString,
 } from '../../helpers/validators.ts';
 
 // Constants
@@ -26,26 +35,27 @@ import {
   errorMsg,
 } from '../../constants/messages.ts';
 import { USER_PATH } from '../../constants/path.ts';
-import Select, { ISelectOptions } from '../../components/Select';
-
-// Hooks
-
-// Styled
-import { FormBtn } from './styled.ts';
 import {
   INVALID_FIELD,
   INVALID_PHONE,
   REQUIRED_FIELD_ERROR,
 } from '../../constants/formValidateMessage.ts';
-import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
-import { TRoom, TUser } from '../../globals/types.ts';
 import { INIT_VALUE_USER_FORM } from '../../constants/variables.ts';
+
+// Styled
+import { FormBtn } from './styled.ts';
+
+// Services
+import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
+
+// Types
+import { Nullable, TRoom, TUser } from '../../globals/types.ts';
 
 interface IUserFormProp {
   onClose: () => void;
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
-  user: TUser | null;
+  setReload: Dispatch<SetStateAction<boolean>>;
+  user: Nullable<TUser>;
   isAdd: boolean;
 }
 
@@ -78,11 +88,13 @@ const UserForm = ({
         rooms.forEach((item) => {
           if (!item.status || tempUser?.roomId === item.id)
             options.push({
-              label: item.name! as string,
+              label: item.name!,
               value: item.id!.toString(),
             });
         });
+      }
 
+      if (options.length > 0) {
         setOptions(options);
         reset({ roomId: +options[0].value });
       }
@@ -178,8 +190,7 @@ const UserForm = ({
             {...register('name', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkValidName: (value) =>
-                  isValidString(value) || INVALID_FIELD,
+                checkValidName: (value) => isValidName(value) || INVALID_FIELD,
               },
               onChange: () => trigger('name'),
             })}
@@ -196,7 +207,8 @@ const UserForm = ({
             {...register('identifiedCode', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkIdentifiedCode: (v) => isValidNumber(v) || INVALID_FIELD,
+                checkIdentifiedCode: (v) =>
+                  isValidNumber(v.toString()) || INVALID_FIELD,
               },
               onChange: () => trigger('identifiedCode'),
             })}
@@ -218,25 +230,24 @@ const UserForm = ({
         </FormRow>
 
         <FormRow label="Room">
-          <Select
-            id="roomId"
-            options={options!}
-            ariaLabel="RoomId"
-            optionsConfigForm={{
-              valueAsNumber: true,
-              onChange: () => trigger('roomId'),
-            }}
-          />
+          {options && options.length > 0 ? (
+            <Select
+              id="roomId"
+              options={options!}
+              ariaLabel="RoomId"
+              optionsConfigForm={{
+                valueAsNumber: true,
+                onChange: () => trigger('roomId'),
+              }}
+            />
+          ) : (
+            <p>No room available!</p>
+          )}
         </FormRow>
 
         <Form.Action>
           <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid}>
-            {
-              // prettier-ignore
-              isAdd
-              ? 'Add'
-              : 'Save'
-            }
+            {isAdd ? 'Add' : 'Save'}
           </FormBtn>
           <FormBtn type="button" styled="secondary" onClick={onClose}>
             Close

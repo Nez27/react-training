@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 // Components
@@ -15,7 +15,7 @@ import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 
 // Types
-import { TRoom } from '../../globals/types';
+import { Nullable, TRoom } from '../../globals/types';
 
 // Constants
 import { useFetch } from '../../hooks/useFetch';
@@ -27,16 +27,16 @@ import { ORDERBY_OPTIONS, ROOM_PAGE } from '../../constants/variables';
 // Styled
 import Spinner from '../../commons/styles/Spinner';
 
-// Utils
+// Helpers
 import { sendRequest } from '../../helpers/sendRequest';
 import { formatCurrency } from '../../helpers/utils';
 
 interface IRoomRow {
   room: TRoom;
   openFormDialog: () => void;
-  setRoom: React.Dispatch<React.SetStateAction<TRoom | null>>;
+  setRoom: Dispatch<SetStateAction<Nullable<TRoom>>>;
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: Dispatch<SetStateAction<boolean>>;
 }
 
 const RoomRow = ({
@@ -46,12 +46,12 @@ const RoomRow = ({
   reload,
   setReload,
 }: IRoomRow) => {
-  const handleOnEdit = (room: TRoom) => {
+  const handleEdit = (room: TRoom) => {
     setRoom(room);
     openFormDialog();
   };
 
-  const handleOnDelete = async (room: TRoom) => {
+  const handleDelete = async (room: TRoom) => {
     if (confirm(CONFIRM_DELETE)) {
       const response = await sendRequest(ROOM_PATH + `/${room.id}`, 'DELETE');
 
@@ -64,12 +64,8 @@ const RoomRow = ({
     }
   };
 
-  const { id, name, price, discount, status } = room;
+  const { id, name, finalPrice, status } = room;
 
-  // Calculate final price
-  const finalPrice = price - (price * discount / 100);
-
-  // prettier-ignore
   const statusText = status
     ? 'Unavailable' 
     : 'Available';
@@ -87,11 +83,11 @@ const RoomRow = ({
         <Menus.List id={id.toString()}>
           <Menus.Button
             icon={<RiEditBoxFill />}
-            onClick={() => handleOnEdit(room)}
+            onClick={() => handleEdit(room)}
           >
             Edit
           </Menus.Button>
-          <Menus.Button icon={<HiTrash />} onClick={() => handleOnDelete(room)}>
+          <Menus.Button icon={<HiTrash />} onClick={() => handleDelete(room)}>
             Delete
           </Menus.Button>
         </Menus.List>
@@ -102,9 +98,9 @@ const RoomRow = ({
 
 interface IRoomTable {
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: Dispatch<SetStateAction<boolean>>;
   openFormDialog: () => void;
-  setRoom?: React.Dispatch<React.SetStateAction<TRoom | null>>;
+  setRoom?: Dispatch<SetStateAction<Nullable<TRoom>>>;
 }
 
 const RoomTable = ({

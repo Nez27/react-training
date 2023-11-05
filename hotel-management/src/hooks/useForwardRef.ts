@@ -1,8 +1,11 @@
 import { ForwardedRef, useEffect, useRef } from 'react';
 
+// Types
+import { Nullable } from '../globals/types';
+
 const useForwardRef = <T>(
   ref: ForwardedRef<T>,
-  initialValue: T | null = null
+  initialValue: Nullable<T> = null
 ) => {
   const targetRef = useRef<T>(initialValue);
 

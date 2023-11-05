@@ -1,10 +1,12 @@
+import { ReactNode } from 'react';
+
 // Styled
 import { Error, Label, StyledFormRow } from './styled';
 
 interface IFormRow {
   label: string;
   error?: string;
-  children: JSX.Element | JSX.Element[];
+  children: ReactNode;
 }
 
 const FormRow = ({ label, error, children }: IFormRow) => {

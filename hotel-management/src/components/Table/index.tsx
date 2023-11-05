@@ -8,12 +8,12 @@ import TableContext from '../../contexts/TableContext';
 
 export interface ITable {
   columns?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface ITableBody<T> {
   data?: T[];
-  render?: (value: T) => JSX.Element;
+  render?: CallbackMapFunc<T>;
 }
 
 type CallbackMapFunc<T> = (value: T, index: number, array: T[]) => ReactNode;
@@ -28,6 +28,7 @@ const Table = ({ columns, children }: ITable) => {
 
 const Header = ({ children }: ITable) => {
   const { columns } = useContext(TableContext);
+
   return <StyledHeader columns={columns}>{children}</StyledHeader>;
 };
 
@@ -41,6 +42,7 @@ const Body = <T,>({ data, render }: ITableBody<T>) => {
 
 const Row = ({ children }: ITable) => {
   const { columns } = useContext(TableContext);
+  
   return <StyledRow columns={columns}>{children}</StyledRow>;
 };
 

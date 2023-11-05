@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 import { BASE_URL } from '../constants/path';
 import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '../constants/config';
 
-// Utils
+// Helpers
 import { searchQuery } from '../helpers/utils';
+
+// Types
+import { Nullable } from '../globals/types';
 
 /**
  * The function use to fetch data on server API.
@@ -23,11 +26,11 @@ const useFetch = (
   keyWord: string = '',
   tempSortBy?: string,
   tempOrderBy?: string,
-  reload?: boolean,
+  reload?: boolean
 ) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const [errorFetchMsg, setErrorFetchMsg] = useState<string | null>(null);
+  const [errorFetchMsg, setErrorFetchMsg] = useState<Nullable<string>>(null);
 
   useEffect(() => {
     // Clear data
@@ -37,12 +40,9 @@ const useFetch = (
       setIsPending(true);
 
       // Set default value
-      // prettier-ignore
       const sortBy = tempSortBy
         ? tempSortBy
         : DEFAULT_SORT_BY;
-
-      // prettier-ignore
       const orderBy = tempOrderBy
         ? tempOrderBy
         : DEFAULT_ORDER_BY;
@@ -56,7 +56,7 @@ const useFetch = (
 
         if (!response.ok) {
           throw new Error(
-            `Error code: ${response.status} \n Messages: ${response.text}`,
+            `Error code: ${response.status} \n Messages: ${response.text}`
           );
         }
 

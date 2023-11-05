@@ -1,9 +1,11 @@
+import { FormEvent, ReactNode } from 'react';
+
 // Styled
 import { StyledActionBtn, StyledForm } from './styled';
 
 interface IFormProps {
-  children: JSX.Element | JSX.Element[];
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  children: ReactNode;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   id?: string;
 }
 
