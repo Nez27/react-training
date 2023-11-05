@@ -27,7 +27,6 @@ import {
 } from '../../helpers/validators.ts';
 
 // Constants
-import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
@@ -83,6 +82,12 @@ const UserForm = ({
 
       // Load and set default options room
       if (rooms.length > 0) {
+        // Init first options
+        options.push({
+          label: '---Select---',
+          value: '0'
+        })
+
         rooms.forEach((item) => {
           if (!item.status || tempUser?.roomId === item.id)
             options.push({
@@ -94,16 +99,11 @@ const UserForm = ({
 
       if (options.length > 0) {
         setOptions(options);
-        reset({ roomId: +options[0].value });
       }
 
       if (!isEmptyObj(tempUser)) {
+        
         // Init value
-        // Set default value when user not have room yet.
-        if (!tempUser.roomId) {
-          tempUser.roomId = +options[0].value;
-        }
-
         reset(tempUser);
       } else {
         reset(INIT_VALUE_USER_FORM);
@@ -121,7 +121,7 @@ const UserForm = ({
           // Add request
           const response = await createUser(newUser);
 
-          if (response?.statusCode === STATUS_CODE.CREATE) {
+          if (response) {
             toast.success(ADD_SUCCESS);
           }
 
@@ -131,7 +131,7 @@ const UserForm = ({
           // Edit request
           const response = await updateUser(newUser);
 
-          if (response?.statusCode == STATUS_CODE.OK) {
+          if (response) {
             toast.success(EDIT_SUCCESS);
           }
 
@@ -224,6 +224,7 @@ const UserForm = ({
               optionsConfigForm={{
                 valueAsNumber: true,
                 onChange: () => trigger('roomId'),
+                validate: (v) => v !== 0
               }}
             />
           ) : (

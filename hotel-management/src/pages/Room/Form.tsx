@@ -13,7 +13,6 @@ import Input from '../../commons/styles/Input.ts';
 import { Nullable, TRoom } from '../../globals/types.ts';
 
 // Constants
-import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
@@ -86,14 +85,14 @@ const RoomForm = ({
         // Add request
         const response = await addRoom(room);
         
-        if(response?.statusCode == STATUS_CODE.CREATE) {
+        if(response) {
           toast.success(ADD_SUCCESS);
         }
       } else {
         // Edit request
         const response = await updateRoom(room);
 
-        if (response?.statusCode == STATUS_CODE.OK) {
+        if (response) {
           toast.success(EDIT_SUCCESS);
         }
       }

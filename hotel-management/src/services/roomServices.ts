@@ -154,7 +154,7 @@ const addRoom = async (room: TRoom): Promise<Nullable<TResponse<TRoom>>> => {
       JSON.stringify(room)
     );
 
-    if (response.statusCode !== STATUS_CODE.OK) {
+    if (response.statusCode !== STATUS_CODE.CREATE) {
       throw new Error(errorMsg(response.statusCode, response.msg));
     }
 
