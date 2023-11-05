@@ -8,13 +8,13 @@ const StyledMenu = styled.div`
 `;
 
 const StyledButton = styled.button`
-  width: 100%;
   text-align: left;
   background: none;
   border: none;
   padding: 10px 20px;
   font-size: var(--fs-sm-x);
   transition: all 0.2s;
+  width: 100%;
 
   display: flex;
   align-items: center;
@@ -60,6 +60,7 @@ const StyledList = styled.ul`
 
   right: -10px;
   top: 40px;
+  width: max-content;
 `;
 
 export { StyledMenu, StyledButton, StyledList, StyledToggle };

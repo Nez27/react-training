@@ -1,48 +1,61 @@
-import { useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import toast from 'react-hot-toast';
+
+// Hooks
 import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
 import Input from '../../commons/styles/Input';
-import TextArea from '../../commons/styles/TextArea';
 
 // Components
 import Form from '../../components/Form';
 import FormRow from '../../components/LabelControl/index.tsx';
+import Select, { ISelectOptions } from '../../components/Select';
 
-// Types
-import { TKeyValue, TUser } from '../../globals/types';
-
-// Utils
+// Helpers
 import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
+  isEmptyObj,
+  isValidName,
   isValidNumber,
   isValidPhoneNumber,
-  isValidString,
 } from '../../helpers/validators.ts';
 
 // Constants
-import { STATUS_CODE } from '../../constants/statusCode.ts';
+import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
   errorMsg,
 } from '../../constants/messages.ts';
 import { USER_PATH } from '../../constants/path.ts';
-import Select, { ISelectOptions } from '../../components/Select';
-
-// Hooks
-import { useFetch } from '../../hooks/useFetch.ts';
+import {
+  INVALID_FIELD,
+  INVALID_PHONE,
+  REQUIRED_FIELD_ERROR,
+} from '../../constants/formValidateMessage.ts';
+import { INIT_VALUE_USER_FORM } from '../../constants/variables.ts';
 
 // Styled
 import { FormBtn } from './styled.ts';
-import { INVALID_FIELD, INVALID_PHONE, REQUIRED_FIELD_ERROR } from '../../constants/formValidateMessage.ts';
+
+// Services
+import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
+
+// Types
+import { Nullable, TRoom, TUser } from '../../globals/types.ts';
 
 interface IUserFormProp {
   onClose: () => void;
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
-  user?: TUser | null;
+  setReload: Dispatch<SetStateAction<boolean>>;
+  user: Nullable<TUser>;
   isAdd: boolean;
 }
 
@@ -53,11 +66,7 @@ const UserForm = ({
   user,
   isAdd,
 }: IUserFormProp) => {
-  const formMethods = useForm<TUser>({
-    defaultValues: {
-      roomId: 1,
-    },
-  });
+  const formMethods = useForm<TUser>();
   const {
     register,
     handleSubmit,
@@ -65,78 +74,110 @@ const UserForm = ({
     formState: { errors, isDirty, isValid },
     trigger,
   } = formMethods;
+  const [rooms, setRooms] = useState<TRoom[]>([]);
   const [options, setOptions] = useState<ISelectOptions[]>();
-  const { data, errorFetchMsg } = useFetch('rooms');
 
+  // Init value when edit form and load options
   useEffect(() => {
-    if (user) {
-      reset(user);
-    }
-  }, [reset, user]);
+    const load = async () => {
+      const options: ISelectOptions[] = [];
+      const tempUser = isAdd ? {} : { ...user };
 
-  useEffect(() => {
-    if (data) {
-      const tempData = data as TKeyValue[];
-      const tempOptions: ISelectOptions[] = [];
-      tempData.forEach((item) => {
-        tempOptions.push({
-          label: item.name! as string,
-          value: item.id! as string,
+      // Load and set default options room
+      if (rooms.length > 0) {
+        rooms.forEach((item) => {
+          if (!item.status || tempUser?.roomId === item.id)
+            options.push({
+              label: item.name!,
+              value: item.id!.toString(),
+            });
         });
-      });
+      }
 
-      setOptions(tempOptions);
-    }
+      if (options.length > 0) {
+        setOptions(options);
+        reset({ roomId: +options[0].value });
+      }
 
-    if (errorFetchMsg) {
-      toast.error(errorFetchMsg);
-    }
-  }, [data, errorFetchMsg]);
+      if (!isEmptyObj(tempUser)) {
+        // Init value
+        // Set default value when user not have room yet.
+        if (!tempUser.roomId) {
+          tempUser.roomId = +options[0].value;
+        }
+
+        reset(tempUser);
+      } else {
+        reset(INIT_VALUE_USER_FORM);
+      }
+    };
+
+    load();
+  }, [reset, user, isAdd, rooms]);
 
   // Submit form
-  const onSubmit = async (user: TUser) => {
-    try {
-      if (isAdd) {
-        // Add request
-        const response = await sendRequest(
-          USER_PATH,
-          JSON.stringify(user),
-          'POST'
-        );
+  const onSubmit = useCallback(
+    async (newUser: TUser) => {
+      try {
+        if (isAdd) {
+          // Add request
+          const response = await sendRequest(
+            USER_PATH,
+            'POST',
+            JSON.stringify(newUser)
+          );
 
-        if (response.statusCode === STATUS_CODE.CREATE) {
-          toast.success(ADD_SUCCESS);
+          if (response.statusCode === STATUS_CODE.CREATE) {
+            toast.success(ADD_SUCCESS);
+          } else {
+            throw new Error(errorMsg(response.statusCode, response.msg));
+          }
+
+          // Update room status
+          updateRoomStatus(newUser.roomId, true);
         } else {
-          throw new Error(errorMsg(response.statusCode, response.msg));
+          // Edit request
+          const response = await sendRequest(
+            USER_PATH + `/${newUser.id}`,
+            'PUT',
+            JSON.stringify(newUser)
+          );
+
+          if (response.statusCode == STATUS_CODE.OK) {
+            toast.success(EDIT_SUCCESS);
+          } else {
+            throw new Error(errorMsg(response.statusCode, response.msg));
+          }
+
+          // Update room status
+          updateRoomStatus(user!.roomId, true, newUser.roomId);
         }
-
-        // TODO Update status when user create
-        
-      } else {
-        // Edit request
-        const response = await sendRequest(
-          USER_PATH + `/${user!.id}`,
-          JSON.stringify(user),
-          'PUT'
-        );
-
-        if (response.statusCode == STATUS_CODE.OK) {
-          toast.success(EDIT_SUCCESS);
-        } else {
-          throw new Error(errorMsg(response.statusCode, response.msg));
+        // Reload table data
+        setReload(!reload);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          toast.error(error.message);
         }
       }
-      // Reload table data
-      setReload(!reload);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
-    }
 
-    reset();
-    onClose();
-  };
+      reset();
+      onClose();
+    },
+    [isAdd, onClose, reload, reset, setReload, user]
+  );
+
+  // Load all rooms
+  useEffect(() => {
+    const loadRoom = async () => {
+      const rooms = await getAllRoom();
+
+      if (rooms) {
+        setRooms(rooms);
+      }
+    };
+
+    loadRoom();
+  }, [onSubmit]);
 
   return (
     <FormProvider {...formMethods}>
@@ -149,8 +190,7 @@ const UserForm = ({
             {...register('name', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkValidName: (value) =>
-                  isValidString(value) || INVALID_FIELD,
+                checkValidName: (value) => isValidName(value) || INVALID_FIELD,
               },
               onChange: () => trigger('name'),
             })}
@@ -168,7 +208,7 @@ const UserForm = ({
               required: REQUIRED_FIELD_ERROR,
               validate: {
                 checkIdentifiedCode: (v) =>
-                  isValidNumber(v) || INVALID_FIELD,
+                  isValidNumber(v.toString()) || INVALID_FIELD,
               },
               onChange: () => trigger('identifiedCode'),
             })}
@@ -182,8 +222,7 @@ const UserForm = ({
             {...register('phone', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkPhoneNum: (v) =>
-                  isValidPhoneNumber(v) || INVALID_PHONE,
+                checkPhoneNum: (v) => isValidPhoneNumber(v) || INVALID_PHONE,
               },
               onChange: () => trigger('phone'),
             })}
@@ -191,32 +230,24 @@ const UserForm = ({
         </FormRow>
 
         <FormRow label="Room">
-          <Select id="roomId" options={options!} ariaLabel='RoomId'/>
-        </FormRow>
-
-        <FormRow label="Address" error={errors.address?.message}>
-          <TextArea
-            id="address"
-            rows={3}
-            {...register('address', {
-              required: REQUIRED_FIELD_ERROR,
-              validate: {
-                checkValidString: (v) =>
-                  isValidString(v) || INVALID_FIELD,
-              },
-              onChange: () => trigger('address'),
-            })}
-          />
+          {options && options.length > 0 ? (
+            <Select
+              id="roomId"
+              options={options!}
+              ariaLabel="RoomId"
+              optionsConfigForm={{
+                valueAsNumber: true,
+                onChange: () => trigger('roomId'),
+              }}
+            />
+          ) : (
+            <p>No room available!</p>
+          )}
         </FormRow>
 
         <Form.Action>
           <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid}>
-            {
-              // prettier-ignore
-              isAdd
-              ? 'Add'
-              : 'Save'
-            }
+            {isAdd ? 'Add' : 'Save'}
           </FormBtn>
           <FormBtn type="button" styled="secondary" onClick={onClose}>
             Close

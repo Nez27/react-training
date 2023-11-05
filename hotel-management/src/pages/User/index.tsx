@@ -1,21 +1,21 @@
 import { useRef, useState } from 'react';
 
 // Components
-import Direction from '../../commons/styles/Direction';
-import Button from '../../commons/styles/Button';
 import UserTable from './Table';
 
 // Styled
+import Button from '../../commons/styles/Button';
+import Direction from '../../commons/styles/Direction';
 import { StyledUser, Title } from './styled';
 import UserDialog from './Dialog';
 
 // Types
-import { TUser } from '../../globals/types';
+import { Nullable, TUser } from '../../globals/types';
 
 const User = () => {
-  const dialogRef = useRef<HTMLDialogElement>();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [reload, setReload] = useState(true);
-  const [user, setUser] = useState<TUser | null>(null);
+  const [user, setUser] = useState<Nullable<TUser>>(null);
   const [isAdd, setIsAdd] = useState(false);
 
   const openFormDialog = (isAddForm: boolean = false) => {
@@ -48,7 +48,7 @@ const User = () => {
         ref={dialogRef}
         setReload={setReload}
         reload={reload}
-        data={user}
+        user={user}
         isAdd={isAdd}
       />
     </>

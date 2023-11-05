@@ -1,22 +1,28 @@
-import { useContext, useState } from 'react';
+import { MouseEvent, ReactNode, useContext, useState } from 'react';
 
 // Components
 import { HiEllipsisVertical } from 'react-icons/hi2';
+
+// Hooks
 import { useOutsideClick } from '../../hooks/useOutsideClick';
+
+// Styled
 import { StyledMenu, StyledButton, StyledList, StyledToggle } from './styled';
 
 // Contexts
 import MenusContext from '../../contexts/MenuContext';
 
+// Types
+import { Nullable } from '../../globals/types';
+
 interface IButton {
   children?: string;
-  icon?: JSX.Element;
+  icon?: ReactNode;
   onClick?: () => void;
 }
 
-const Menus = ({ children }: { children: JSX.Element }) => {
+const Menus = ({ children }: { children: ReactNode }) => {
   const [openId, setOpenId] = useState('');
-
   const close = () => setOpenId('');
   const open = setOpenId;
 
@@ -27,13 +33,14 @@ const Menus = ({ children }: { children: JSX.Element }) => {
   );
 };
 
-const Toggle = ({ id }: { id: string }): React.JSX.Element => {
+const Toggle = ({ id }: { id: string }): ReactNode => {
   const { openId, close, open } = useContext(MenusContext);
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    openId === '' || openId !== id ? open!(id) : close!();
+    openId === '' || openId !== id 
+      ? open!(id) 
+      : close!();
   };
 
   return (
@@ -48,8 +55,8 @@ const List = ({
   children,
 }: {
   id: string;
-  children: JSX.Element[];
-}): React.JSX.Element | null => {
+  children: ReactNode;
+}): Nullable<ReactNode> => {
   const { openId, close } = useContext(MenusContext);
   const ref = useOutsideClick(close!, false);
 
@@ -58,9 +65,8 @@ const List = ({
   return <StyledList ref={ref}>{children}</StyledList>;
 };
 
-const Button = ({ children, icon, onClick }: IButton): React.JSX.Element => {
+const Button = ({ children, icon, onClick }: IButton): ReactNode => {
   const { close } = useContext(MenusContext);
-
   const handleClick = () => {
     onClick?.();
     close!();

@@ -1,5 +1,10 @@
 import { memo, useEffect, useState } from 'react';
+
+// Styled
 import { StyledSearch } from './styled';
+
+// Hooks
+import { useDebounce } from '../../hooks/useDebounce';
 
 interface ISearch {
   setPlaceHolder: string;
@@ -8,14 +13,11 @@ interface ISearch {
 
 const Search = memo(({ setValueSearch, setPlaceHolder }: ISearch) => {
   const [query, setQuery] = useState('');
+  const debounceValue = useDebounce<string>(query, 700);
 
   useEffect(() => {
-    const timeOut = setTimeout(() => {
-      setValueSearch(query);
-    }, 500);
-
-    return () => clearTimeout(timeOut);
-  }, [setValueSearch, query]);
+    setValueSearch(debounceValue);
+  }, [debounceValue, setValueSearch]);
 
   return (
     <StyledSearch

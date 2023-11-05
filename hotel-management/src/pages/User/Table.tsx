@@ -1,11 +1,10 @@
 import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 // Components
-import { HiSquare2Stack } from 'react-icons/hi2';
-import { HiTrash } from 'react-icons/hi';
-import { StyledOperationTable } from './styled';
+import { RiEditBoxFill } from 'react-icons/ri';
+import { IoExit } from 'react-icons/io5';
 import Menus from '../../components/Menus';
 import Table from '../../components/Table';
 import Direction from '../../commons/styles/Direction';
@@ -15,27 +14,30 @@ import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 
 // Types
-import { TUser } from '../../globals/types';
+import { Nullable, TUser } from '../../globals/types';
+
+// Hooks
+import { useFetch } from '../../hooks/useFetch';
 
 // Constants
-import { useFetch } from '../../hooks/useFetch';
-import { USER_PATH } from '../../constants/path';
-import { STATUS_CODE } from '../../constants/statusCode';
-import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
-import { USER_PAGE } from '../../constants/variables';
+import { STATUS_CODE } from '../../constants/responseStatus';
+import { ORDERBY_OPTIONS, USER_PAGE } from '../../constants/variables';
+import { CONFIRM_MESSAGE } from '../../constants/messages';
 
 // Styled
+import { StyledOperationTable } from './styled';
 import Spinner from '../../commons/styles/Spinner';
 
-// Utils
-import { sendRequest } from '../../helpers/sendRequest';
+// Services
+import { updateRoomStatus } from '../../services/roomServices';
+import { checkOutUser } from '../../services/userServices';
 
 interface IUserRow {
   user: TUser;
   openFormDialog: () => void;
-  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
+  setUser: Dispatch<SetStateAction<Nullable<TUser>>>;
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserRow = ({
@@ -45,21 +47,21 @@ const UserRow = ({
   reload,
   setReload,
 }: IUserRow) => {
-  const handleOnEdit = (user: TUser) => {
+  const handleEdit = (user: TUser) => {
     setUser(user);
     openFormDialog();
   };
 
-  const handleOnDelete = async (user: TUser) => {
-    if (confirm(CONFIRM_DELETE)) {
-      const response = await sendRequest(
-        USER_PATH + `/${user.id}`,
-        null,
-        'DELETE',
-      );
+  const handleCheckOut = async (user: TUser) => {
+    if (confirm(CONFIRM_MESSAGE)) {
+      const resUpdateStatus = await updateRoomStatus(user.roomId, false);
+      const resCheckoutUser = await checkOutUser(user);
 
-      if (response.statusCode === STATUS_CODE.OK) {
-        toast.success(DELETE_SUCCESS);
+      if (
+        resCheckoutUser?.statusCode === STATUS_CODE.OK &&
+        resUpdateStatus?.statusCode === STATUS_CODE.OK
+      ) {
+        toast.success('Check out complete!');
 
         // Reload table
         setReload(!reload);
@@ -75,20 +77,24 @@ const UserRow = ({
       <div>{name}</div>
       <div>{identifiedCode}</div>
       <div>{phone}</div>
-      <div>{roomId}</div>
+      <div>{
+        roomId 
+          ? roomId 
+          : 'None'
+      }</div>
 
       <Menus.Menu>
         <Menus.Toggle id={id.toString()} />
 
         <Menus.List id={id.toString()}>
           <Menus.Button
-            icon={<HiSquare2Stack />}
-            onClick={() => handleOnEdit(user)}
+            icon={<RiEditBoxFill />}
+            onClick={() => handleEdit(user)}
           >
             Edit
           </Menus.Button>
-          <Menus.Button icon={<HiTrash />} onClick={() => handleOnDelete(user)}>
-            Delete
+          <Menus.Button icon={<IoExit />} onClick={() => handleCheckOut(user)}>
+            Check out
           </Menus.Button>
         </Menus.List>
       </Menus.Menu>
@@ -98,9 +104,9 @@ const UserRow = ({
 
 interface IUserTable {
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: Dispatch<SetStateAction<boolean>>;
   openFormDialog: () => void;
-  setUser?: React.Dispatch<React.SetStateAction<TUser | null>>;
+  setUser?: Dispatch<SetStateAction<Nullable<TUser>>>;
 }
 
 const UserTable = ({
@@ -109,9 +115,9 @@ const UserTable = ({
   openFormDialog,
   setUser,
 }: IUserTable) => {
+  const [users, setUsers] = useState<TUser[]>([]);
   const [phoneSearch, setPhoneSearch] = useState('');
   const [searchParams] = useSearchParams();
-  const [users, setUsers] = useState<TUser[]>([]);
   const sortByValue = searchParams.get('sortBy')
     ? searchParams.get('sortBy')!
     : '';
@@ -125,7 +131,7 @@ const UserTable = ({
     phoneSearch,
     sortByValue,
     orderByValue,
-    reload,
+    reload
   );
 
   useEffect(() => {
@@ -138,13 +144,13 @@ const UserTable = ({
     if (errorFetchMsg) {
       console.error(errorFetchMsg);
     }
-  }, [data, errorFetchMsg]);
+  }, [data, errorFetchMsg, setUsers]);
 
   return (
     <>
       <Direction>
         <StyledOperationTable>
-          <OrderBy options={USER_PAGE.ORDERBY_OPTIONS} />
+          <OrderBy options={ORDERBY_OPTIONS} />
 
           <SortBy options={USER_PAGE.SORTBY_OPTIONS} />
           <Search

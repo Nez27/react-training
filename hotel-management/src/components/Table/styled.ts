@@ -1,11 +1,13 @@
 import styled from 'styled-components';
+
+// Interfaces
 import { ITable } from '.';
 
 const StyledTable = styled.div`
   border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
 
   font-size: 20px;
-  border-radius: var(--radius-md);
 `;
 
 const CommonRow = styled.div<ITable>`

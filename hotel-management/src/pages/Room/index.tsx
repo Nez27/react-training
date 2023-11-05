@@ -1,21 +1,21 @@
 import { useRef, useState } from 'react';
 
 // Components
-import Direction from '../../commons/styles/Direction';
-import Button from '../../commons/styles/Button';
 import RoomTable from './Table';
 
 // Styled
 import { StyledRoom, Title } from './styled';
+import Direction from '../../commons/styles/Direction';
+import Button from '../../commons/styles/Button';
 import RoomDialog from './Dialog';
 
 // Types
-import { TRoom } from '../../globals/types';
+import { Nullable, TRoom } from '../../globals/types';
 
 const Room = () => {
-  const dialogRef = useRef<HTMLDialogElement>();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [reload, setReload] = useState(true);
-  const [room, setRoom] = useState<TRoom | null>(null);
+  const [room, setRoom] = useState<Nullable<TRoom>>(null);
   const [isAdd, setIsAdd] = useState(false);
 
   const openFormDialog = (isAddForm: boolean = false) => {
@@ -48,7 +48,7 @@ const Room = () => {
         ref={dialogRef}
         setReload={setReload}
         reload={reload}
-        data={room}
+        room={room}
         isAdd={isAdd}
       />
     </>

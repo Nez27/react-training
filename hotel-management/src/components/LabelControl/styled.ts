@@ -15,8 +15,10 @@ const Label = styled.label`
 const Error = styled.p`
   color: var(--error-text);
   font-size: var(--fs-sm-2x);
+
   margin-top: 5px;
   padding-inline: 5px;
+  
   width: 220px;
 `;
 

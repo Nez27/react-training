@@ -1,30 +1,29 @@
-import { forwardRef } from 'react';
+import { MutableRefObject, ReactNode, forwardRef } from 'react';
 
 // Styled
 import { StyledBody, StyledDialog, StyledTitle } from './styled';
 
-export interface IDialogProps<T> {
+// Type
+import { Nullable } from '../../globals/types';
+
+export interface IDialogProps {
   title?: string;
-  children?: JSX.Element[] | JSX.Element;
+  children?: ReactNode;
   onClose?: () => void;
-  reload?: boolean;
-  setReload?: React.Dispatch<React.SetStateAction<boolean>>;
-  ref?: React.MutableRefObject<HTMLDialogElement | undefined>;
-  data?: T | null;
-  isAdd?: boolean;
+  ref?: MutableRefObject<Nullable<HTMLDialogElement>>;
 }
 
-const Dialog = forwardRef((props, ref) => {
-  const { title, children, onClose } = props as IDialogProps<unknown>;
-  return (
-    <StyledDialog
-      ref={ref as React.LegacyRef<HTMLDialogElement> | undefined}
-      onClose={onClose}
-    >
-      <StyledTitle>{title}</StyledTitle>
-      <StyledBody>{children}</StyledBody>
-    </StyledDialog>
-  );
-}) as React.FC<IDialogProps<unknown>>;
+const Dialog = forwardRef<HTMLDialogElement, IDialogProps>(
+  (props: IDialogProps, ref) => {
+    const { title, children, onClose } = props;
+    
+    return (
+      <StyledDialog ref={ref} onClose={onClose}>
+        <StyledTitle>{title}</StyledTitle>
+        <StyledBody>{children}</StyledBody>
+      </StyledDialog>
+    );
+  }
+);
 
 export default Dialog;

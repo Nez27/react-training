@@ -13,10 +13,8 @@ interface IOrderProps {
 
 const OrderBy = memo(({ options }: IOrderProps) => {
   const field = 'orderBy';
-
   const [searchParams, setSearchParams] = useSearchParams();
   const currentOrder = searchParams.get(field) || options[0].value;
-
   const handleClick = (value: string) => {
     searchParams.set(field, value);
 

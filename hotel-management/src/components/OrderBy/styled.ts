@@ -14,8 +14,16 @@ interface IOrderBtn {
 
 const OrderButton = styled.button<IOrderBtn>`
   border: none;
-  cursor: pointer;
+  border-radius: var(--radius-sm);
 
+  cursor: pointer;
+  transition: all 0.3s;
+
+  font-weight: 500;
+  font-size: var(--fs-sm-x);
+  
+  padding: 5px 10px;
+  
   ${(props) =>
     props.active &&
     css`
@@ -23,12 +31,6 @@ const OrderButton = styled.button<IOrderBtn>`
       color: var(--light-text);
       cursor: no-drop;
     `}
-
-  border-radius: var(--radius-sm);
-  font-weight: 500;
-  font-size: var(--fs-sm-x);
-  padding: 5px 10px;
-  transition: all 0.3s;
 
   &:hover:not(:disabled) {
     background-color: var(--hover-dark-background-color);

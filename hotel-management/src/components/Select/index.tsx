@@ -4,8 +4,10 @@ import {
   UseFormRegister,
   useFormContext,
 } from 'react-hook-form';
+import { ChangeEventHandler, ReactNode } from 'react';
+
+// Styled
 import { StyledSelect } from './styled';
-import React, { ReactNode } from 'react';
 
 export interface ISelectOptions {
   value: string;
@@ -15,7 +17,7 @@ interface ISelect {
   options: ISelectOptions[];
   optionsConfigForm?: RegisterOptions<FieldValues, string> | undefined;
   value?: string;
-  onChange?: React.ChangeEventHandler<HTMLSelectElement> | undefined;
+  onChange?: ChangeEventHandler<HTMLSelectElement> | undefined;
   id?: string;
   ariaLabel: string;
 }
@@ -54,7 +56,6 @@ const RenderSelect = ({
       id={id}
       value={value}
       {...register(id!, optionsConfigForm)}
-      onChange={onChange}
     >
       {children}
     </StyledSelect>

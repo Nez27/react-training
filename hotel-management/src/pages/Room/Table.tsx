@@ -1,9 +1,9 @@
 import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 // Components
-import { HiSquare2Stack } from 'react-icons/hi2';
+import { RiEditBoxFill } from 'react-icons/ri';
 import { HiTrash } from 'react-icons/hi';
 import { StyledOperationTable } from './styled';
 import Menus from '../../components/Menus';
@@ -15,27 +15,28 @@ import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 
 // Types
-import { TRoom } from '../../globals/types';
+import { Nullable, TRoom } from '../../globals/types';
 
 // Constants
 import { useFetch } from '../../hooks/useFetch';
 import { ROOM_PATH } from '../../constants/path';
-import { STATUS_CODE } from '../../constants/statusCode';
+import { STATUS_CODE } from '../../constants/responseStatus';
 import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
-import { ROOM_PAGE } from '../../constants/variables';
+import { ORDERBY_OPTIONS, ROOM_PAGE } from '../../constants/variables';
 
 // Styled
 import Spinner from '../../commons/styles/Spinner';
 
-// Utils
+// Helpers
 import { sendRequest } from '../../helpers/sendRequest';
+import { formatCurrency } from '../../helpers/utils';
 
 interface IRoomRow {
   room: TRoom;
   openFormDialog: () => void;
-  setRoom: React.Dispatch<React.SetStateAction<TRoom | null>>;
+  setRoom: Dispatch<SetStateAction<Nullable<TRoom>>>;
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: Dispatch<SetStateAction<boolean>>;
 }
 
 const RoomRow = ({
@@ -45,18 +46,14 @@ const RoomRow = ({
   reload,
   setReload,
 }: IRoomRow) => {
-  const handleOnEdit = (room: TRoom) => {
+  const handleEdit = (room: TRoom) => {
     setRoom(room);
     openFormDialog();
   };
 
-  const handleOnDelete = async (room: TRoom) => {
+  const handleDelete = async (room: TRoom) => {
     if (confirm(CONFIRM_DELETE)) {
-      const response = await sendRequest(
-        ROOM_PATH + `/${room.id}`,
-        null,
-        'DELETE',
-      );
+      const response = await sendRequest(ROOM_PATH + `/${room.id}`, 'DELETE');
 
       if (response.statusCode === STATUS_CODE.OK) {
         toast.success(DELETE_SUCCESS);
@@ -67,9 +64,8 @@ const RoomRow = ({
     }
   };
 
-  const { id, name, price, status } = room;
+  const { id, name, finalPrice, status } = room;
 
-  // prettier-ignore
   const statusText = status
     ? 'Unavailable' 
     : 'Available';
@@ -78,7 +74,7 @@ const RoomRow = ({
     <Table.Row>
       <div>{id}</div>
       <div>{name}</div>
-      <div>{price}</div>
+      <div>{formatCurrency(finalPrice)}</div>
       <div>{statusText}</div>
 
       <Menus.Menu>
@@ -86,12 +82,12 @@ const RoomRow = ({
 
         <Menus.List id={id.toString()}>
           <Menus.Button
-            icon={<HiSquare2Stack />}
-            onClick={() => handleOnEdit(room)}
+            icon={<RiEditBoxFill />}
+            onClick={() => handleEdit(room)}
           >
             Edit
           </Menus.Button>
-          <Menus.Button icon={<HiTrash />} onClick={() => handleOnDelete(room)}>
+          <Menus.Button icon={<HiTrash />} onClick={() => handleDelete(room)}>
             Delete
           </Menus.Button>
         </Menus.List>
@@ -102,9 +98,9 @@ const RoomRow = ({
 
 interface IRoomTable {
   reload: boolean;
-  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  setReload: Dispatch<SetStateAction<boolean>>;
   openFormDialog: () => void;
-  setRoom?: React.Dispatch<React.SetStateAction<TRoom | null>>;
+  setRoom?: Dispatch<SetStateAction<Nullable<TRoom>>>;
 }
 
 const RoomTable = ({
@@ -129,7 +125,7 @@ const RoomTable = ({
     nameSearch,
     sortByValue,
     orderByValue,
-    reload,
+    reload
   );
 
   useEffect(() => {
@@ -148,7 +144,7 @@ const RoomTable = ({
     <>
       <Direction>
         <StyledOperationTable>
-          <OrderBy options={ROOM_PAGE.ORDERBY_OPTIONS} />
+          <OrderBy options={ORDERBY_OPTIONS} />
 
           <SortBy options={ROOM_PAGE.SORTBY_OPTIONS} />
           <Search

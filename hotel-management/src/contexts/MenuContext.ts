@@ -1,9 +1,9 @@
-import { createContext } from 'react';
+import { Dispatch, SetStateAction, createContext } from 'react';
 
 interface IMenusContext {
   openId?: string;
   close?: () => void;
-  open?: React.Dispatch<React.SetStateAction<string>>;
+  open?: Dispatch<SetStateAction<string>>;
 }
 
 const MenusContext = createContext<IMenusContext>({});
