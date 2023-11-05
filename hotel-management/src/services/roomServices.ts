@@ -1,7 +1,9 @@
 import toast from 'react-hot-toast';
 
 // Types
-import { Nullable, TResponse, TRoom } from '../globals/types';
+import { Nullable } from '../types/common';
+import { TRoom } from '../types/rooms';
+import { TResponse } from '../types/response';
 
 // Helpers
 import { sendRequest } from '../helpers/sendRequest';
@@ -44,13 +46,13 @@ const getRoom = async (roomId: number): Promise<Nullable<TRoom>> => {
   try {
     const response = await sendRequest<TRoom>(ROOM_PATH + '/' + roomId);
 
-    if (response.statusCode !== STATUS_CODE.OK) {
+    if (response.statusCode === STATUS_CODE.OK) {
+      const rooms = response.data!;
+
+      return rooms;
+    } else {
       throw new Error(errorMsg(response.statusCode, response.msg));
     }
-
-    const rooms = response.data!;
-
-    return rooms;
   } catch (error) {
     if (error instanceof Error) {
       toast.error(error.message);
@@ -72,6 +74,10 @@ const updateRoom = async (room: TRoom): Promise<Nullable<TResponse<TRoom>>> => {
       'PUT',
       JSON.stringify(room)
     );
+
+    if (response.statusCode !== STATUS_CODE.OK) {
+      throw new Error(errorMsg(response.statusCode, response.msg));
+    }
 
     return response;
   } catch (error: unknown) {
@@ -95,77 +101,44 @@ const updateRoomStatus = async (
   status: boolean,
   roomIdNew?: number
 ): Promise<Nullable<TResponse<TRoom>>> => {
-  try {
-    if (!roomIdNew) {
-      const response = await sendRequest<TRoom>(
-        ROOM_PATH + '/' + roomId,
-        'PATCH',
-        JSON.stringify({ status: status })
-      );
-
-      return response;
-    }
-
-    // Update new room status
-    const resNewRoom = await sendRequest<TRoom>(
-      ROOM_PATH + '/' + roomIdNew,
+  if (!roomIdNew) {
+    const response = await sendRequest<TRoom>(
+      ROOM_PATH + '/' + roomId,
       'PATCH',
       JSON.stringify({ status: status })
     );
 
-    // Update old room status;
-    const resOldRoom = await sendRequest<TRoom>(
-      ROOM_PATH + '/' + roomId,
-      'PATCH',
-      JSON.stringify({ status: !status })
-    );
-
-    if (
-      resNewRoom.statusCode === STATUS_CODE.OK &&
-      resOldRoom.statusCode === STATUS_CODE.OK
-    ) {
-      return {
-        statusCode: STATUS_CODE.OK,
-        msg: RESPONSE_MESSAGE.UPDATE_SUCCESS,
-      };
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
-  }
-
-  return null;
-};
-
-/**
- * Add room to server
- * @param room The room object need to be add
- * @returns The response object if complete or null
- */
-const addRoom = async (room: TRoom): Promise<Nullable<TResponse<TRoom>>> => {
-  try {
-    // Set default status room
-    room.status = false;
-
-    const response = await sendRequest<TRoom>(
-      ROOM_PATH,
-      'POST',
-      JSON.stringify(room)
-    );
-
-    if (response.statusCode !== STATUS_CODE.CREATE) {
-      throw new Error(errorMsg(response.statusCode, response.msg));
-    }
-
     return response;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
+  }
+  
+  // Update new room status
+  const resNewRoom = await sendRequest<TRoom>(
+    ROOM_PATH + '/' + roomIdNew,
+    'PATCH',
+    JSON.stringify({ status: status })
+  );
+
+  // Update old room status;
+  const resOldRoom = await sendRequest<TRoom>(
+    ROOM_PATH + '/' + roomId,
+    'PATCH',
+    JSON.stringify({ status: !status })
+  );
+
+  if (
+    resNewRoom.statusCode === STATUS_CODE.OK &&
+    resOldRoom.statusCode === STATUS_CODE.OK
+  ) {
+    return {
+      statusCode: STATUS_CODE.OK,
+      msg: RESPONSE_MESSAGE.UPDATE_SUCCESS,
+    };
   }
 
-  return null;
+  return {
+    statusCode: STATUS_CODE.INTERNAL_SERVER_ERROR,
+    msg: 'Something went wrong!',
+  };
 };
 
-export { getRoom, updateRoom, updateRoomStatus, getAllRoom, addRoom };
+export { getRoom, updateRoom, updateRoomStatus, getAllRoom };

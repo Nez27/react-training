@@ -10,7 +10,8 @@ import { StyledUser, Title } from './styled';
 import UserDialog from './Dialog';
 
 // Types
-import { Nullable, TUser } from '../../globals/types';
+import { Nullable } from '../../types/common';
+import { TUser } from '../../types/user';
 
 const User = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);

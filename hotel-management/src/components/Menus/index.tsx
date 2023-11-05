@@ -13,7 +13,7 @@ import { StyledMenu, StyledButton, StyledList, StyledToggle } from './styled';
 import MenusContext from '../../contexts/MenuContext';
 
 // Types
-import { Nullable } from '../../globals/types';
+import { Nullable } from '../../types/common';
 
 interface IButton {
   children?: string;

@@ -11,7 +11,8 @@ import Dialog from '../../components/Dialog';
 import RoomForm from './Form';
 
 // Types
-import { Nullable, TRoom } from '../../globals/types';
+import { Nullable } from '../../types/common';
+import { TRoom } from '../../types/rooms';
 
 // Hooks
 import { useForwardRef } from '../../hooks/useForwardRef';

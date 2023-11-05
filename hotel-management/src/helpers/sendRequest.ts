@@ -2,7 +2,7 @@
 import { BASE_URL } from '../constants/path';
 
 // Types
-import { TResponse } from '../globals/types';
+import { TResponse } from '../types/types';
 
 type TMethodRequest = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 

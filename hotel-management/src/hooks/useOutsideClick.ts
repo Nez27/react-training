@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 
 // Types
-import { Nullable } from '../globals/types';
+import { Nullable } from '../types/common';
 
 /**
  * Custom hook to call handler when click outside element

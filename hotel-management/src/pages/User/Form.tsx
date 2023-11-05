@@ -19,6 +19,7 @@ import FormRow from '../../components/LabelControl/index.tsx';
 import Select, { ISelectOptions } from '../../components/Select';
 
 // Helpers
+import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
   isEmptyObj,
   isValidName,
@@ -27,10 +28,13 @@ import {
 } from '../../helpers/validators.ts';
 
 // Constants
+import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
+  errorMsg,
 } from '../../constants/messages.ts';
+import { USER_PATH } from '../../constants/path.ts';
 import {
   INVALID_FIELD,
   INVALID_PHONE,
@@ -45,8 +49,9 @@ import { FormBtn } from './styled.ts';
 import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
 
 // Types
-import { Nullable, TRoom, TUser } from '../../globals/types.ts';
-import { createUser, updateUser } from '../../services/userServices.ts';
+import { Nullable } from '../../types/common';
+import { TUser } from '../../types/user.ts';
+import { TRoom } from '../../types/rooms.ts';
 
 interface IUserFormProp {
   onClose: () => void;
@@ -82,12 +87,6 @@ const UserForm = ({
 
       // Load and set default options room
       if (rooms.length > 0) {
-        // Init first options
-        options.push({
-          label: '---Select---',
-          value: '0'
-        })
-
         rooms.forEach((item) => {
           if (!item.status || tempUser?.roomId === item.id)
             options.push({
@@ -99,11 +98,16 @@ const UserForm = ({
 
       if (options.length > 0) {
         setOptions(options);
+        reset({ roomId: +options[0].value });
       }
 
       if (!isEmptyObj(tempUser)) {
-        
         // Init value
+        // Set default value when user not have room yet.
+        if (!tempUser.roomId) {
+          tempUser.roomId = +options[0].value;
+        }
+
         reset(tempUser);
       } else {
         reset(INIT_VALUE_USER_FORM);
@@ -119,20 +123,32 @@ const UserForm = ({
       try {
         if (isAdd) {
           // Add request
-          const response = await createUser(newUser);
+          const response = await sendRequest(
+            USER_PATH,
+            'POST',
+            JSON.stringify(newUser)
+          );
 
-          if (response) {
+          if (response.statusCode === STATUS_CODE.CREATE) {
             toast.success(ADD_SUCCESS);
+          } else {
+            throw new Error(errorMsg(response.statusCode, response.msg));
           }
 
           // Update room status
           updateRoomStatus(newUser.roomId, true);
         } else {
           // Edit request
-          const response = await updateUser(newUser);
+          const response = await sendRequest(
+            USER_PATH + `/${newUser.id}`,
+            'PUT',
+            JSON.stringify(newUser)
+          );
 
-          if (response) {
+          if (response.statusCode == STATUS_CODE.OK) {
             toast.success(EDIT_SUCCESS);
+          } else {
+            throw new Error(errorMsg(response.statusCode, response.msg));
           }
 
           // Update room status
@@ -224,7 +240,6 @@ const UserForm = ({
               optionsConfigForm={{
                 valueAsNumber: true,
                 onChange: () => trigger('roomId'),
-                validate: (v) => v !== 0
               }}
             />
           ) : (

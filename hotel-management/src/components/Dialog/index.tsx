@@ -4,7 +4,7 @@ import { MutableRefObject, ReactNode, forwardRef } from 'react';
 import { StyledBody, StyledDialog, StyledTitle } from './styled';
 
 // Type
-import { Nullable } from '../../globals/types';
+import { Nullable } from '../../types/common';
 
 export interface IDialogProps {
   title?: string;

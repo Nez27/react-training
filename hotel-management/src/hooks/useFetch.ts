@@ -8,7 +8,7 @@ import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '../constants/config';
 import { searchQuery } from '../helpers/utils';
 
 // Types
-import { Nullable } from '../globals/types';
+import { Nullable } from '../types/common';
 
 /**
  * The function use to fetch data on server API.

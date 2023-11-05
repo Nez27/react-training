@@ -10,7 +10,8 @@ import Button from '../../commons/styles/Button';
 import RoomDialog from './Dialog';
 
 // Types
-import { Nullable, TRoom } from '../../globals/types';
+import { Nullable } from '../../types/common';
+import { TRoom } from '../../types/rooms';
 
 const Room = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);

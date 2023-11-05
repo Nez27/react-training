@@ -11,7 +11,8 @@ import Dialog from '../../components/Dialog';
 import UserForm from './Form';
 
 // Types
-import { Nullable, TUser } from '../../globals/types';
+import { Nullable } from '../../types/common';
+import { TUser } from '../../types/user';
 
 // Hooks
 import { useForwardRef } from '../../hooks/useForwardRef';

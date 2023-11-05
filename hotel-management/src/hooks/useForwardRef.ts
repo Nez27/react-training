@@ -1,7 +1,7 @@
 import { ForwardedRef, useEffect, useRef } from 'react';
 
 // Types
-import { Nullable } from '../globals/types';
+import { Nullable } from '../types/common';
 
 const useForwardRef = <T>(
   ref: ForwardedRef<T>,

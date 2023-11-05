@@ -14,7 +14,8 @@ import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 
 // Types
-import { Nullable, TUser } from '../../globals/types';
+import { Nullable } from '../../types/common';
+import { TUser } from '../../types/user';
 
 // Hooks
 import { useFetch } from '../../hooks/useFetch';

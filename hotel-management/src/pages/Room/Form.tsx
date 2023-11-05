@@ -10,12 +10,16 @@ import Button from '../../commons/styles/Button.ts';
 import Input from '../../commons/styles/Input.ts';
 
 // Types
-import { Nullable, TRoom } from '../../globals/types.ts';
+import { Nullable } from '../../types/common';
+import { TRoom } from '../../types/rooms.ts';
 
 // Constants
+import { ROOM_PATH } from '../../constants/path.ts';
+import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
+  errorMsg,
 } from '../../constants/messages.ts';
 import {
   INVALID_DISCOUNT,
@@ -24,6 +28,7 @@ import {
 } from '../../constants/formValidateMessage.ts';
 
 // Helpers
+import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
   isValidDiscount,
   isValidNumber,
@@ -33,7 +38,6 @@ import {
 // Components
 import FormRow from '../../components/LabelControl/index.tsx';
 import Form from '../../components/Form/index.tsx';
-import { addRoom, updateRoom } from '../../services/roomServices.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -83,17 +87,30 @@ const RoomForm = ({
     try {
       if (isAdd) {
         // Add request
-        const response = await addRoom(room);
-        
-        if(response) {
+
+        const response = await sendRequest(
+          ROOM_PATH,
+          'POST',
+          JSON.stringify(room)
+        );
+
+        if (response.statusCode === STATUS_CODE.CREATE) {
           toast.success(ADD_SUCCESS);
+        } else {
+          throw new Error(errorMsg(response.statusCode, response.msg));
         }
       } else {
         // Edit request
-        const response = await updateRoom(room);
+        const response = await sendRequest(
+          ROOM_PATH + `/${room!.id}`,
+          'PUT',
+          JSON.stringify(room)
+        );
 
-        if (response) {
+        if (response.statusCode == STATUS_CODE.OK) {
           toast.success(EDIT_SUCCESS);
+        } else {
+          throw new Error(errorMsg(response.statusCode, response.msg));
         }
       }
       // Reload table data

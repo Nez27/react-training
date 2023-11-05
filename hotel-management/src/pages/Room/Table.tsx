@@ -15,7 +15,8 @@ import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 
 // Types
-import { Nullable, TRoom } from '../../globals/types';
+import { Nullable } from '../../types/common';
+import { TRoom } from '../../types/rooms';
 
 // Constants
 import { useFetch } from '../../hooks/useFetch';
