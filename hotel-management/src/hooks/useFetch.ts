@@ -5,7 +5,7 @@ import { BASE_URL } from '../constants/path';
 import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '../constants/config';
 
 // Helpers
-import { searchQuery } from '../helpers/utils';
+import { searchQuery } from '../helpers/helper';
 
 // Types
 import { Nullable } from '../types/common';
@@ -40,11 +40,11 @@ const useFetch = (
       setIsPending(true);
 
       // Set default value
-      const sortBy = tempSortBy
-        ? tempSortBy
+      const sortBy = tempSortBy 
+        ? tempSortBy 
         : DEFAULT_SORT_BY;
-      const orderBy = tempOrderBy
-        ? tempOrderBy
+      const orderBy = tempOrderBy 
+        ? tempOrderBy 
         : DEFAULT_ORDER_BY;
 
       // Query search

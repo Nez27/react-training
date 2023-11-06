@@ -2,7 +2,7 @@
 import { BASE_URL } from '../constants/path';
 
 // Types
-import { TResponse } from '../types/response';
+import { IResponse } from '../types/responses';
 
 type TMethodRequest = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
@@ -17,7 +17,7 @@ export const sendRequest = async <T>(
   path: string,
   method: TMethodRequest = 'GET',
   body?: BodyInit
-): Promise<TResponse<T>> => {
+): Promise<IResponse<T>> => {
   const response = await fetch(BASE_URL + path, {
     method,
     body,

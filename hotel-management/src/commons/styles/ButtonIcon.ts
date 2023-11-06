@@ -5,7 +5,7 @@ const ButtonIcon = styled.button`
 
   padding: 8px;
   transition: all 0.2s;
-  
+
   border: none;
   border-radius: var(--radius-md);
 

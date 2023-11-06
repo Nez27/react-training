@@ -11,12 +11,12 @@ import UserDialog from './Dialog';
 
 // Types
 import { Nullable } from '../../types/common';
-import { TUser } from '../../types/user';
+import { IUser } from '../../types/users';
 
 const User = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [reload, setReload] = useState(true);
-  const [user, setUser] = useState<Nullable<TUser>>(null);
+  const [user, setUser] = useState<Nullable<IUser>>(null);
   const [isAdd, setIsAdd] = useState(false);
 
   const openFormDialog = (isAddForm: boolean = false) => {

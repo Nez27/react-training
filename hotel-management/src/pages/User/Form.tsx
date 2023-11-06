@@ -19,7 +19,6 @@ import FormRow from '../../components/LabelControl/index.tsx';
 import Select, { ISelectOptions } from '../../components/Select';
 
 // Helpers
-import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
   isEmptyObj,
   isValidName,
@@ -28,13 +27,7 @@ import {
 } from '../../helpers/validators.ts';
 
 // Constants
-import { STATUS_CODE } from '../../constants/responseStatus.ts';
-import {
-  ADD_SUCCESS,
-  EDIT_SUCCESS,
-  errorMsg,
-} from '../../constants/messages.ts';
-import { USER_PATH } from '../../constants/path.ts';
+import { ADD_SUCCESS, EDIT_SUCCESS } from '../../constants/messages.ts';
 import {
   INVALID_FIELD,
   INVALID_PHONE,
@@ -49,15 +42,16 @@ import { FormBtn } from './styled.ts';
 import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
 
 // Types
-import { Nullable } from '../../types/common';
-import { TUser } from '../../types/user.ts';
-import { TRoom } from '../../types/rooms.ts';
+import { Nullable } from '../../types/common.ts';
+import { IUser } from '../../types/users.ts';
+import { IRoom } from '../../types/rooms.ts';
+import { createUser, updateUser } from '../../services/userServices.ts';
 
 interface IUserFormProp {
   onClose: () => void;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
-  user: Nullable<TUser>;
+  user: Nullable<IUser>;
   isAdd: boolean;
 }
 
@@ -68,7 +62,7 @@ const UserForm = ({
   user,
   isAdd,
 }: IUserFormProp) => {
-  const formMethods = useForm<TUser>();
+  const formMethods = useForm<IUser>();
   const {
     register,
     handleSubmit,
@@ -76,17 +70,25 @@ const UserForm = ({
     formState: { errors, isDirty, isValid },
     trigger,
   } = formMethods;
-  const [rooms, setRooms] = useState<TRoom[]>([]);
+  const [rooms, setRooms] = useState<IRoom[]>([]);
   const [options, setOptions] = useState<ISelectOptions[]>();
 
   // Init value when edit form and load options
   useEffect(() => {
     const load = async () => {
       const options: ISelectOptions[] = [];
-      const tempUser = isAdd ? {} : { ...user };
+      const tempUser = isAdd 
+        ? {} 
+        : { ...user };
 
       // Load and set default options room
       if (rooms.length > 0) {
+        // Init first options
+        options.push({
+          label: '---Select---',
+          value: '0',
+        });
+
         rooms.forEach((item) => {
           if (!item.status || tempUser?.roomId === item.id)
             options.push({
@@ -98,16 +100,10 @@ const UserForm = ({
 
       if (options.length > 0) {
         setOptions(options);
-        reset({ roomId: +options[0].value });
       }
 
       if (!isEmptyObj(tempUser)) {
         // Init value
-        // Set default value when user not have room yet.
-        if (!tempUser.roomId) {
-          tempUser.roomId = +options[0].value;
-        }
-
         reset(tempUser);
       } else {
         reset(INIT_VALUE_USER_FORM);
@@ -119,36 +115,24 @@ const UserForm = ({
 
   // Submit form
   const onSubmit = useCallback(
-    async (newUser: TUser) => {
+    async (newUser: IUser) => {
       try {
         if (isAdd) {
           // Add request
-          const response = await sendRequest(
-            USER_PATH,
-            'POST',
-            JSON.stringify(newUser)
-          );
+          const response = await createUser(newUser);
 
-          if (response.statusCode === STATUS_CODE.CREATE) {
+          if (response) {
             toast.success(ADD_SUCCESS);
-          } else {
-            throw new Error(errorMsg(response.statusCode, response.msg));
           }
 
           // Update room status
           updateRoomStatus(newUser.roomId, true);
         } else {
           // Edit request
-          const response = await sendRequest(
-            USER_PATH + `/${newUser.id}`,
-            'PUT',
-            JSON.stringify(newUser)
-          );
+          const response = await updateUser(newUser);
 
-          if (response.statusCode == STATUS_CODE.OK) {
+          if (response) {
             toast.success(EDIT_SUCCESS);
-          } else {
-            throw new Error(errorMsg(response.statusCode, response.msg));
           }
 
           // Update room status
@@ -232,7 +216,7 @@ const UserForm = ({
         </FormRow>
 
         <FormRow label="Room">
-          {options && options.length > 0 ? (
+          {options && options.length > 1 ? (
             <Select
               id="roomId"
               options={options!}
@@ -240,6 +224,7 @@ const UserForm = ({
               optionsConfigForm={{
                 valueAsNumber: true,
                 onChange: () => trigger('roomId'),
+                validate: (v) => v !== 0,
               }}
             />
           ) : (
@@ -249,7 +234,11 @@ const UserForm = ({
 
         <Form.Action>
           <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid}>
-            {isAdd ? 'Add' : 'Save'}
+            {
+              isAdd 
+                ? 'Add' 
+                : 'Save'
+            }
           </FormBtn>
           <FormBtn type="button" styled="secondary" onClick={onClose}>
             Close

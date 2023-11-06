@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Styled
 import { StyledSearch } from './styled';
@@ -11,7 +11,7 @@ interface ISearch {
   setValueSearch: (phone: string) => void;
 }
 
-const Search = memo(({ setValueSearch, setPlaceHolder }: ISearch) => {
+const Search = ({ setValueSearch, setPlaceHolder }: ISearch) => {
   const [query, setQuery] = useState('');
   const debounceValue = useDebounce<string>(query, 700);
 
@@ -25,6 +25,6 @@ const Search = memo(({ setValueSearch, setPlaceHolder }: ISearch) => {
       placeholder={setPlaceHolder}
     />
   );
-});
+};
 
 export default Search;

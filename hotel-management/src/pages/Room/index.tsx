@@ -11,12 +11,12 @@ import RoomDialog from './Dialog';
 
 // Types
 import { Nullable } from '../../types/common';
-import { TRoom } from '../../types/rooms';
+import { IRoom } from '../../types/rooms';
 
 const Room = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [reload, setReload] = useState(true);
-  const [room, setRoom] = useState<Nullable<TRoom>>(null);
+  const [room, setRoom] = useState<Nullable<IRoom>>(null);
   const [isAdd, setIsAdd] = useState(false);
 
   const openFormDialog = (isAddForm: boolean = false) => {

@@ -16,7 +16,7 @@ export interface IDialogProps {
 const Dialog = forwardRef<HTMLDialogElement, IDialogProps>(
   (props: IDialogProps, ref) => {
     const { title, children, onClose } = props;
-    
+
     return (
       <StyledDialog ref={ref} onClose={onClose}>
         <StyledTitle>{title}</StyledTitle>

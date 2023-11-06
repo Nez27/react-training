@@ -12,7 +12,7 @@ import UserForm from './Form';
 
 // Types
 import { Nullable } from '../../types/common';
-import { TUser } from '../../types/user';
+import { IUser } from '../../types/users';
 
 // Hooks
 import { useForwardRef } from '../../hooks/useForwardRef';
@@ -22,7 +22,7 @@ interface IUserDialog {
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
   ref: MutableRefObject<Nullable<HTMLDialogElement>>;
-  user: Nullable<TUser>;
+  user: Nullable<IUser>;
   isAdd: boolean;
 }
 

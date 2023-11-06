@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 
+type TDirection = 'vertical' | 'horizontal';
+
 interface IDirection {
-  type?: 'vertical' | 'horizontal';
+  type?: TDirection;
 }
 
 const Direction = styled.div<IDirection>`

@@ -12,7 +12,7 @@ import RoomForm from './Form';
 
 // Types
 import { Nullable } from '../../types/common';
-import { TRoom } from '../../types/rooms';
+import { IRoom } from '../../types/rooms';
 
 // Hooks
 import { useForwardRef } from '../../hooks/useForwardRef';
@@ -22,7 +22,7 @@ interface IRoomDialog {
   reload?: boolean;
   setReload?: Dispatch<SetStateAction<boolean>>;
   ref?: MutableRefObject<Nullable<HTMLDialogElement>>;
-  room?: Nullable<TRoom>;
+  room?: Nullable<IRoom>;
   isAdd?: boolean;
 }
 

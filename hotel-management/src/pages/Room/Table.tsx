@@ -16,7 +16,7 @@ import OrderBy from '../../components/OrderBy';
 
 // Types
 import { Nullable } from '../../types/common';
-import { TRoom } from '../../types/rooms';
+import { IRoom } from '../../types/rooms';
 
 // Constants
 import { useFetch } from '../../hooks/useFetch';
@@ -30,12 +30,12 @@ import Spinner from '../../commons/styles/Spinner';
 
 // Helpers
 import { sendRequest } from '../../helpers/sendRequest';
-import { formatCurrency } from '../../helpers/utils';
+import { formatCurrency } from '../../helpers/helper';
 
 interface IRoomRow {
-  room: TRoom;
+  room: IRoom;
   openFormDialog: () => void;
-  setRoom: Dispatch<SetStateAction<Nullable<TRoom>>>;
+  setRoom: Dispatch<SetStateAction<Nullable<IRoom>>>;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
@@ -47,12 +47,12 @@ const RoomRow = ({
   reload,
   setReload,
 }: IRoomRow) => {
-  const handleEdit = (room: TRoom) => {
+  const handleEdit = (room: IRoom) => {
     setRoom(room);
     openFormDialog();
   };
 
-  const handleDelete = async (room: TRoom) => {
+  const handleDelete = async (room: IRoom) => {
     if (confirm(CONFIRM_DELETE)) {
       const response = await sendRequest(ROOM_PATH + `/${room.id}`, 'DELETE');
 
@@ -101,7 +101,7 @@ interface IRoomTable {
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
   openFormDialog: () => void;
-  setRoom?: Dispatch<SetStateAction<Nullable<TRoom>>>;
+  setRoom?: Dispatch<SetStateAction<Nullable<IRoom>>>;
 }
 
 const RoomTable = ({
@@ -112,7 +112,7 @@ const RoomTable = ({
 }: IRoomTable) => {
   const [nameSearch, setNameSearch] = useState('');
   const [searchParams] = useSearchParams();
-  const [rooms, setRooms] = useState<TRoom[]>([]);
+  const [rooms, setRooms] = useState<IRoom[]>([]);
   const sortByValue = searchParams.get('sortBy')
     ? searchParams.get('sortBy')!
     : '';
@@ -165,9 +165,9 @@ const RoomTable = ({
                 <div>Price</div>
                 <div>Status</div>
               </Table.Header>
-              <Table.Body<TRoom>
+              <Table.Body<IRoom>
                 data={rooms}
-                render={(room: TRoom) => (
+                render={(room: IRoom) => (
                   <RoomRow
                     room={room}
                     key={room.id}

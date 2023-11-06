@@ -42,7 +42,7 @@ const Body = <T,>({ data, render }: ITableBody<T>) => {
 
 const Row = ({ children }: ITable) => {
   const { columns } = useContext(TableContext);
-  
+
   return <StyledRow columns={columns}>{children}</StyledRow>;
 };
 

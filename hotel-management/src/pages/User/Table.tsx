@@ -15,7 +15,7 @@ import OrderBy from '../../components/OrderBy';
 
 // Types
 import { Nullable } from '../../types/common';
-import { TUser } from '../../types/user';
+import { IUser } from '../../types/users';
 
 // Hooks
 import { useFetch } from '../../hooks/useFetch';
@@ -23,7 +23,7 @@ import { useFetch } from '../../hooks/useFetch';
 // Constants
 import { STATUS_CODE } from '../../constants/responseStatus';
 import { ORDERBY_OPTIONS, USER_PAGE } from '../../constants/variables';
-import { CONFIRM_MESSAGE } from '../../constants/messages';
+import { CONFIRM_MESSAGE, DENIED_ACTION } from '../../constants/messages';
 
 // Styled
 import { StyledOperationTable } from './styled';
@@ -34,9 +34,9 @@ import { updateRoomStatus } from '../../services/roomServices';
 import { checkOutUser } from '../../services/userServices';
 
 interface IUserRow {
-  user: TUser;
+  user: IUser;
   openFormDialog: () => void;
-  setUser: Dispatch<SetStateAction<Nullable<TUser>>>;
+  setUser: Dispatch<SetStateAction<Nullable<IUser>>>;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
@@ -48,26 +48,31 @@ const UserRow = ({
   reload,
   setReload,
 }: IUserRow) => {
-  const handleEdit = (user: TUser) => {
+  const handleEdit = (user: IUser) => {
     setUser(user);
     openFormDialog();
   };
 
-  const handleCheckOut = async (user: TUser) => {
-    if (confirm(CONFIRM_MESSAGE)) {
-      const resUpdateStatus = await updateRoomStatus(user.roomId, false);
-      const resCheckoutUser = await checkOutUser(user);
-
-      if (
-        resCheckoutUser?.statusCode === STATUS_CODE.OK &&
-        resUpdateStatus?.statusCode === STATUS_CODE.OK
-      ) {
-        toast.success('Check out complete!');
-
-        // Reload table
-        setReload(!reload);
+  const handleCheckOut = async (user: IUser) => {
+    if(user.roomId !== 0) {
+      if (confirm(CONFIRM_MESSAGE)) {
+        const resUpdateStatus = await updateRoomStatus(user.roomId, false);
+        const resCheckoutUser = await checkOutUser(user);
+  
+        if (
+          resCheckoutUser?.statusCode === STATUS_CODE.OK &&
+          resUpdateStatus?.statusCode === STATUS_CODE.OK
+        ) {
+          toast.success('Check out complete!');
+  
+          // Reload table
+          setReload(!reload);
+        }
       }
+    } else {
+      toast.error(DENIED_ACTION);
     }
+    
   };
 
   const { id, name, identifiedCode, phone, roomId } = user;
@@ -107,7 +112,7 @@ interface IUserTable {
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
   openFormDialog: () => void;
-  setUser?: Dispatch<SetStateAction<Nullable<TUser>>>;
+  setUser?: Dispatch<SetStateAction<Nullable<IUser>>>;
 }
 
 const UserTable = ({
@@ -116,7 +121,7 @@ const UserTable = ({
   openFormDialog,
   setUser,
 }: IUserTable) => {
-  const [users, setUsers] = useState<TUser[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [phoneSearch, setPhoneSearch] = useState('');
   const [searchParams] = useSearchParams();
   const sortByValue = searchParams.get('sortBy')
@@ -172,9 +177,9 @@ const UserTable = ({
                 <div>Phone</div>
                 <div>Room Id</div>
               </Table.Header>
-              <Table.Body<TUser>
+              <Table.Body<IUser>
                 data={users}
-                render={(user: TUser) => (
+                render={(user: IUser) => (
                   <UserRow
                     user={user}
                     key={user.id}

@@ -5,9 +5,9 @@ const CommonInput = css`
   border-radius: var(--radius-sm);
 
   padding: 10px 20px;
-  
+
   font-size: var(--fs-sm-x);
-  
+
   width: 200px;
 `;
 

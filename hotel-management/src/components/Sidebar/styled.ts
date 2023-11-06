@@ -12,7 +12,7 @@ const Heading = styled.h1`
   font-size: var(--fs-md);
   text-transform: uppercase;
   text-align: center;
-  
+
   color: var(--primary-color);
 `;
 

@@ -20,11 +20,11 @@ const SortBy = memo(({ options }: ISortByProps) => {
   };
 
   return (
-    <Select 
-      options={options} 
-      value={sortBy} 
-      onChange={handleChange} 
-      ariaLabel='Sort'
+    <Select
+      options={options}
+      value={sortBy}
+      onChange={handleChange}
+      ariaLabel="Sort"
     />
   );
 });

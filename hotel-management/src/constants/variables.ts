@@ -61,6 +61,13 @@ const INIT_VALUE_USER_FORM = {
   phone: '',
 };
 
+const INIT_VALUE_ROOM_FORM = {
+  name: '',
+  id: 0,
+  price: 0,
+  discount: 0,
+};
+
 export {
   USER_PAGE,
   ROOM_PAGE,
@@ -68,4 +75,5 @@ export {
   ERROR,
   ORDERBY_OPTIONS,
   INIT_VALUE_USER_FORM,
+  INIT_VALUE_ROOM_FORM,
 };

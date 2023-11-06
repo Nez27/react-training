@@ -1,21 +1,53 @@
 import toast from 'react-hot-toast';
 
 // Constants
-import { errorMsg } from '../constants/messages';
 import { USER_PATH } from '../constants/path';
 import { STATUS_CODE } from '../constants/responseStatus';
 
 // Types
 import { Nullable } from '../types/common';
-import { TUser } from '../types/user';
-import { TResponse } from '../types/response';
+import { IResponse } from '../types/responses';
+import { IUser } from '../types/users';
 
 // Helpers
 import { sendRequest } from '../helpers/sendRequest';
+import { errorMsg } from '../helpers/helper';
 
-const updateUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
+/**
+ * Create user to the server
+ * @param user The user object need to be created
+ * @returns The IResponse object if success or null
+ */
+const createUser = async (user: IUser): Promise<Nullable<IResponse<IUser>>> => {
   try {
-    const response = await sendRequest<TUser>(
+    const response = await sendRequest<IUser>(
+      USER_PATH,
+      'POST',
+      JSON.stringify(user)
+    );
+
+    if (response.statusCode !== STATUS_CODE.CREATE) {
+      throw new Error(errorMsg(response.statusCode, response.msg));
+    }
+
+    return response;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      toast.error(error.message);
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Update the user to the server
+ * @param user The user object need to be updated
+ * @returns The IResponse object if update success or null
+ */
+const updateUser = async (user: IUser): Promise<Nullable<IResponse<IUser>>> => {
+  try {
+    const response = await sendRequest<IUser>(
       USER_PATH + '/' + user.id,
       'PUT',
       JSON.stringify(user)
@@ -35,7 +67,12 @@ const updateUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
   return null;
 };
 
-const checkOutUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> => {
+/**
+ * Checkout user
+ * @param user The user need to be checkout
+ * @returns The IResponse object if checkout success or not
+ */
+const checkOutUser = async (user: IUser): Promise<Nullable<IResponse<IUser>>> => {
   const tempUser = user;
 
   if (tempUser) {
@@ -48,4 +85,4 @@ const checkOutUser = async (user: TUser): Promise<Nullable<TResponse<TUser>>> =>
   return null;
 };
 
-export { updateUser, checkOutUser };
+export { updateUser, checkOutUser, createUser };

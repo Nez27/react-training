@@ -3,8 +3,10 @@ import styled, { css } from 'styled-components';
 // Styled
 import CommonInput from './CommonInput';
 
+type TInput = 'text' | 'checkbox' | 'hidden';
+
 interface IInputTyped {
-  type?: 'text' | 'checkbox' | 'hidden';
+  type?: TInput;
 }
 
 const Input = styled.input<IInputTyped>`

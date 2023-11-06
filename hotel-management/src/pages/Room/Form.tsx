@@ -11,15 +11,12 @@ import Input from '../../commons/styles/Input.ts';
 
 // Types
 import { Nullable } from '../../types/common';
-import { TRoom } from '../../types/rooms.ts';
+import { IRoom } from '../../types/rooms';
 
 // Constants
-import { ROOM_PATH } from '../../constants/path.ts';
-import { STATUS_CODE } from '../../constants/responseStatus.ts';
 import {
   ADD_SUCCESS,
   EDIT_SUCCESS,
-  errorMsg,
 } from '../../constants/messages.ts';
 import {
   INVALID_DISCOUNT,
@@ -28,7 +25,6 @@ import {
 } from '../../constants/formValidateMessage.ts';
 
 // Helpers
-import { sendRequest } from '../../helpers/sendRequest.ts';
 import {
   isValidDiscount,
   isValidNumber,
@@ -38,6 +34,8 @@ import {
 // Components
 import FormRow from '../../components/LabelControl/index.tsx';
 import Form from '../../components/Form/index.tsx';
+import { addRoom, updateRoom } from '../../services/roomServices.ts';
+import { INIT_VALUE_ROOM_FORM } from '../../constants/variables.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -53,7 +51,7 @@ interface IRoomFormProp {
   onClose: () => void;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
-  room?: Nullable<TRoom>;
+  room?: Nullable<IRoom>;
   isAdd: boolean;
 }
 
@@ -64,7 +62,7 @@ const RoomForm = ({
   room,
   isAdd,
 }: IRoomFormProp) => {
-  const formMethods = useForm<TRoom>();
+  const formMethods = useForm<IRoom>();
   const {
     register,
     handleSubmit,
@@ -74,43 +72,32 @@ const RoomForm = ({
   } = formMethods;
 
   useEffect(() => {
-    if (room) {
+    if (room && !isAdd) {
       reset(room);
+    } else {
+      reset(INIT_VALUE_ROOM_FORM);
     }
-  }, [room, reset]);
+  }, [room, reset, isAdd]);
 
   // Submit form
-  const onSubmit = async (room: TRoom) => {
+  const onSubmit = async (room: IRoom) => {
     // Calculate final price
     room.finalPrice = room.price - (room.price * room.discount) / 100;
 
     try {
       if (isAdd) {
         // Add request
-
-        const response = await sendRequest(
-          ROOM_PATH,
-          'POST',
-          JSON.stringify(room)
-        );
-
-        if (response.statusCode === STATUS_CODE.CREATE) {
+        const response = await addRoom(room);
+        
+        if(response) {
           toast.success(ADD_SUCCESS);
-        } else {
-          throw new Error(errorMsg(response.statusCode, response.msg));
         }
       } else {
         // Edit request
-        const response = await sendRequest(
-          ROOM_PATH + `/${room!.id}`,
-          'PUT',
-          JSON.stringify(room)
-        );
+        const response = await updateRoom(room);
 
-        if (response.statusCode == STATUS_CODE.OK) {
+        if (response) {
           toast.success(EDIT_SUCCESS);
-        } else {
-          throw new Error(errorMsg(response.statusCode, response.msg));
         }
       }
       // Reload table data

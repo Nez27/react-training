@@ -11,7 +11,7 @@ import { Nullable } from '../types/common';
  */
 export const useOutsideClick = (
   handler: () => void,
-  listeningCapturing = true,
+  listeningCapturing = true
 ): MutableRefObject<Nullable<HTMLUListElement>> => {
   const ref = useRef<HTMLUListElement>(null);
 

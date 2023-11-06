@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 
+type TButtonStyle = 'primary' | 'secondary';
+
 interface IButtonStyle {
-  styled?: 'primary' | 'secondary';
+  styled?: TButtonStyle;
 }
 
 const Button = styled.button<IButtonStyle>`
@@ -11,7 +13,7 @@ const Button = styled.button<IButtonStyle>`
   font-weight: 600;
 
   cursor: pointer;
-  
+
   border-radius: var(--radius-md);
 
   ${(props) =>

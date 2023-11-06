@@ -2,17 +2,6 @@
 import { REQUIRED_FIELD_ERROR } from '../constants/formValidateMessage';
 
 /**
- * Set required error for value
- * @param value The value set required or not
- * @param isRequired Set required for value
- * @returns Return error text if value has required
- */
-const isRequired = (value: string | number, isRequired: unknown) => {
-  if (!value && isRequired) return REQUIRED_FIELD_ERROR;
-  return '';
-};
-
-/**
  * Create query url for search
  * @param columnSearch Column want to search
  * @param keySearch Keyword search
@@ -53,6 +42,11 @@ const searchQuery = (
   return query;
 };
 
+/**
+ * Convert value to currency format with value
+ * @param value Value need to be converted
+ * @returns Return the string value with currency
+ */
 const formatCurrency = (value: number): string => {
   return Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -60,4 +54,14 @@ const formatCurrency = (value: number): string => {
   }).format(value);
 };
 
-export { isRequired, searchQuery, formatCurrency, REQUIRED_FIELD_ERROR };
+/**
+ * Create error string
+ * @param errorCode Error code
+ * @param msg Message error
+ * @returns Return the full error string
+ */
+const errorMsg = (errorCode: number, msg: string) => {
+  return `Error code: ${errorCode}. Message: ${msg}`;
+};
+
+export { errorMsg, searchQuery, formatCurrency, REQUIRED_FIELD_ERROR };

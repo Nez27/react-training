@@ -68,7 +68,7 @@ const Select = ({
   optionsConfigForm,
   value,
   onChange,
-  ariaLabel
+  ariaLabel,
 }: ISelect) => {
   const { register } = useFormContext() ?? {};
 
