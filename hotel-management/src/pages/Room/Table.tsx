@@ -15,7 +15,6 @@ import SortBy from '../../components/SortBy';
 import OrderBy from '../../components/OrderBy';
 
 // Types
-import { Nullable } from '../../types/common';
 import { IRoom } from '../../types/rooms';
 
 // Constants
@@ -31,27 +30,16 @@ import Spinner from '../../commons/styles/Spinner';
 // Helpers
 import { sendRequest } from '../../helpers/sendRequest';
 import { formatCurrency } from '../../helpers/helper';
+import Modal from '../../components/Modal';
+import RoomForm from './Form';
 
 interface IRoomRow {
   room: IRoom;
-  openFormDialog: () => void;
-  setRoom: Dispatch<SetStateAction<Nullable<IRoom>>>;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
 
-const RoomRow = ({
-  room,
-  openFormDialog,
-  setRoom,
-  reload,
-  setReload,
-}: IRoomRow) => {
-  const handleEdit = (room: IRoom) => {
-    setRoom(room);
-    openFormDialog();
-  };
-
+const RoomRow = ({ room, reload, setReload }: IRoomRow) => {
   const handleDelete = async (room: IRoom) => {
     if (confirm(CONFIRM_DELETE)) {
       const response = await sendRequest(ROOM_PATH + `/${room.id}`, 'DELETE');
@@ -67,9 +55,7 @@ const RoomRow = ({
 
   const { id, name, finalPrice, status } = room;
 
-  const statusText = status
-    ? 'Unavailable' 
-    : 'Available';
+  const statusText = status ? 'Unavailable' : 'Available';
 
   return (
     <Table.Row>
@@ -78,21 +64,30 @@ const RoomRow = ({
       <div>{formatCurrency(finalPrice)}</div>
       <div>{statusText}</div>
 
-      <Menus.Menu>
-        <Menus.Toggle id={id.toString()} />
+      <div>
+        <Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={id.toString()} />
 
-        <Menus.List id={id.toString()}>
-          <Menus.Button
-            icon={<RiEditBoxFill />}
-            onClick={() => handleEdit(room)}
-          >
-            Edit
-          </Menus.Button>
-          <Menus.Button icon={<HiTrash />} onClick={() => handleDelete(room)}>
-            Delete
-          </Menus.Button>
-        </Menus.List>
-      </Menus.Menu>
+            <Menus.List id={id.toString()}>
+              <Modal.Open modalName="edit">
+                <Menus.Button icon={<RiEditBoxFill />}>Edit</Menus.Button>
+              </Modal.Open>
+
+              <Menus.Button
+                icon={<HiTrash />}
+                onClick={() => handleDelete(room)}
+              >
+                Delete
+              </Menus.Button>
+            </Menus.List>
+
+            <Modal.Window name="edit" title="Edit Room">
+              <RoomForm room={room} />
+            </Modal.Window>
+          </Menus.Menu>
+        </Modal>
+      </div>
     </Table.Row>
   );
 };
@@ -100,16 +95,9 @@ const RoomRow = ({
 interface IRoomTable {
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
-  openFormDialog: () => void;
-  setRoom?: Dispatch<SetStateAction<Nullable<IRoom>>>;
 }
 
-const RoomTable = ({
-  reload,
-  setReload,
-  openFormDialog,
-  setRoom,
-}: IRoomTable) => {
+const RoomTable = ({ reload, setReload }: IRoomTable) => {
   const [nameSearch, setNameSearch] = useState('');
   const [searchParams] = useSearchParams();
   const [rooms, setRooms] = useState<IRoom[]>([]);
@@ -173,8 +161,6 @@ const RoomTable = ({
                     key={room.id}
                     reload={reload}
                     setReload={setReload}
-                    openFormDialog={openFormDialog}
-                    setRoom={setRoom!}
                   />
                 )}
               />

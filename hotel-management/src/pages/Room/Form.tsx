@@ -48,15 +48,15 @@ const FormBtn = styled(Button)`
 `;
 
 interface IRoomFormProp {
-  onClose: () => void;
-  reload: boolean;
-  setReload: Dispatch<SetStateAction<boolean>>;
+  onCloseModal?: () => void;
+  reload?: boolean;
+  setReload?: Dispatch<SetStateAction<boolean>>;
   room?: Nullable<IRoom>;
-  isAdd: boolean;
+  isAdd?: boolean;
 }
 
 const RoomForm = ({
-  onClose,
+  onCloseModal,
   reload,
   setReload,
   room,
@@ -101,7 +101,7 @@ const RoomForm = ({
         }
       }
       // Reload table data
-      setReload(!reload);
+      // setReload(!reload);
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -109,7 +109,7 @@ const RoomForm = ({
     }
 
     reset();
-    onClose();
+    // onClose();
   };
 
   return (
@@ -168,7 +168,7 @@ const RoomForm = ({
             : 'Save'
           }
         </FormBtn>
-        <FormBtn type="button" styled="secondary" onClick={onClose}>
+        <FormBtn type="button" styled="secondary" onClick={onCloseModal}>
           Close
         </FormBtn>
       </Form.Action>

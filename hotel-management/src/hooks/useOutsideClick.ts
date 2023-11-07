@@ -9,11 +9,11 @@ import { Nullable } from '../types/common';
  * @param listeningCapturing A boolean value indicating that events of this type will be dispatched to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree. If not specified, defaults to false.
  * @returns Return a mutable ref object
  */
-export const useOutsideClick = (
+export const useOutsideClick = <T extends Node>(
   handler: () => void,
   listeningCapturing = true
-): MutableRefObject<Nullable<HTMLUListElement>> => {
-  const ref = useRef<HTMLUListElement>(null);
+): MutableRefObject<Nullable<T>> => {
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const handleClick = (e: Event) => {

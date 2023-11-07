@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 // Components
 import RoomTable from './Table';
@@ -7,51 +7,35 @@ import RoomTable from './Table';
 import { StyledRoom, Title } from './styled';
 import Direction from '../../commons/styles/Direction';
 import Button from '../../commons/styles/Button';
-import RoomDialog from './Dialog';
 
 // Types
-import { Nullable } from '../../types/common';
-import { IRoom } from '../../types/rooms';
+import Modal from '../../components/Modal';
+import RoomForm from './Form';
 
 const Room = () => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
   const [reload, setReload] = useState(true);
-  const [room, setRoom] = useState<Nullable<IRoom>>(null);
-  const [isAdd, setIsAdd] = useState(false);
-
-  const openFormDialog = (isAddForm: boolean = false) => {
-    setIsAdd(isAddForm);
-    dialogRef.current?.showModal();
-  };
-
-  const closeFormDialog = () => {
-    dialogRef.current?.close();
-  };
 
   return (
     <>
       <StyledRoom>
         <Direction type="horizontal">
           <Title>List Room</Title>
-          <Button onClick={() => openFormDialog(true)}>Add room</Button>
+
+          <Modal>
+            <Modal.Open modalName="cabin-form">
+              <Button>Add room</Button>
+            </Modal.Open>
+            <Modal.Window name="cabin-form" title="Add form">
+              <RoomForm setReload={setReload} reload={reload} />
+            </Modal.Window>
+          </Modal>
         </Direction>
 
         <RoomTable
           reload={reload}
           setReload={setReload}
-          openFormDialog={() => openFormDialog()}
-          setRoom={setRoom}
         />
       </StyledRoom>
-
-      <RoomDialog
-        onClose={closeFormDialog}
-        ref={dialogRef}
-        setReload={setReload}
-        reload={reload}
-        room={room}
-        isAdd={isAdd}
-      />
     </>
   );
 };

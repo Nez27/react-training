@@ -58,7 +58,7 @@ const List = ({
   children: ReactNode;
 }): Nullable<ReactNode> => {
   const { openId, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close!, false);
+  const ref = useOutsideClick<HTMLUListElement>(close!, false);
 
   if (openId !== id) return null;
 
