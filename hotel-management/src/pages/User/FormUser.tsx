@@ -11,12 +11,12 @@ import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
-import Input from '../../commons/styles/Input';
+import Input from '../../commons/styles/Input.ts';
 
 // Components
-import Form from '../../components/Form';
+import Form from '../../components/Form/index.tsx';
 import FormRow from '../../components/LabelControl/index.tsx';
-import Select, { ISelectOptions } from '../../components/Select';
+import Select, { ISelectOptions } from '../../components/Select/index.tsx';
 
 // Helpers
 import {
@@ -48,26 +48,19 @@ import { IRoom } from '../../types/rooms.ts';
 import { createUser, updateUser } from '../../services/userServices.ts';
 
 interface IUserFormProp {
-  onClose: () => void;
+  onCloseModal?: () => void;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
-  user: Nullable<IUser>;
-  isAdd: boolean;
+  user?: Nullable<IUser>;
 }
 
-const UserForm = ({
-  onClose,
-  reload,
-  setReload,
-  user,
-  isAdd,
-}: IUserFormProp) => {
+const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
   const formMethods = useForm<IUser>();
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, isSubmitting },
     trigger,
   } = formMethods;
   const [rooms, setRooms] = useState<IRoom[]>([]);
@@ -77,8 +70,8 @@ const UserForm = ({
   useEffect(() => {
     const load = async () => {
       const options: ISelectOptions[] = [];
-      const tempUser = isAdd 
-        ? {} 
+      const tempUser = !user 
+        ? { roomId: 0 } 
         : { ...user };
 
       // Load and set default options room
@@ -111,13 +104,13 @@ const UserForm = ({
     };
 
     load();
-  }, [reset, user, isAdd, rooms]);
+  }, [reset, user, rooms]);
 
   // Submit form
   const onSubmit = useCallback(
     async (newUser: IUser) => {
       try {
-        if (isAdd) {
+        if (!user) {
           // Add request
           const response = await createUser(newUser);
 
@@ -147,9 +140,9 @@ const UserForm = ({
       }
 
       reset();
-      onClose();
+      onCloseModal!();
     },
-    [isAdd, onClose, reload, reset, setReload, user]
+    [onCloseModal, reload, reset, setReload, user]
   );
 
   // Load all rooms
@@ -233,14 +226,14 @@ const UserForm = ({
         </FormRow>
 
         <Form.Action>
-          <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid}>
+          <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid || isSubmitting}>
             {
-              isAdd 
+              !user 
                 ? 'Add' 
                 : 'Save'
             }
           </FormBtn>
-          <FormBtn type="button" styled="secondary" onClick={onClose}>
+          <FormBtn type="button" styled="secondary" onClick={onCloseModal}>
             Close
           </FormBtn>
         </Form.Action>

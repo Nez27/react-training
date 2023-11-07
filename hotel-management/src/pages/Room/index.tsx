@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // Components
-import RoomTable from './Table';
+import RoomTable from './RomTable';
 
 // Styled
 import { StyledRoom, Title } from './styled';
@@ -10,7 +10,7 @@ import Button from '../../commons/styles/Button';
 
 // Types
 import Modal from '../../components/Modal';
-import RoomForm from './Form';
+import RoomForm from './RoomForm';
 
 const Room = () => {
   const [reload, setReload] = useState(true);
@@ -22,10 +22,10 @@ const Room = () => {
           <Title>List Room</Title>
 
           <Modal>
-            <Modal.Open modalName="cabin-form">
+            <Modal.Open modalName="room-form">
               <Button>Add room</Button>
             </Modal.Open>
-            <Modal.Window name="cabin-form" title="Add form">
+            <Modal.Window name="room-form" title="Add form">
               <RoomForm setReload={setReload} reload={reload} />
             </Modal.Window>
           </Modal>

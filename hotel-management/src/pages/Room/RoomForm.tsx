@@ -10,8 +10,8 @@ import Button from '../../commons/styles/Button.ts';
 import Input from '../../commons/styles/Input.ts';
 
 // Types
-import { Nullable } from '../../types/common';
-import { IRoom } from '../../types/rooms';
+import { Nullable } from '../../types/common.ts';
+import { IRoom } from '../../types/rooms.ts';
 
 // Constants
 import {
@@ -51,33 +51,31 @@ interface IRoomFormProp {
   onCloseModal?: () => void;
   reload?: boolean;
   setReload?: Dispatch<SetStateAction<boolean>>;
-  room?: Nullable<IRoom>;
-  isAdd?: boolean;
+  roomEdit?: Nullable<IRoom>;
 }
 
 const RoomForm = ({
   onCloseModal,
   reload,
   setReload,
-  room,
-  isAdd,
+  roomEdit,
 }: IRoomFormProp) => {
   const formMethods = useForm<IRoom>();
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, isSubmitting },
     trigger,
   } = formMethods;
 
   useEffect(() => {
-    if (room && !isAdd) {
-      reset(room);
+    if (roomEdit) {
+      reset(roomEdit);
     } else {
       reset(INIT_VALUE_ROOM_FORM);
     }
-  }, [room, reset, isAdd]);
+  }, [roomEdit, reset]);
 
   // Submit form
   const onSubmit = async (room: IRoom) => {
@@ -85,7 +83,7 @@ const RoomForm = ({
     room.finalPrice = room.price - (room.price * room.discount) / 100;
 
     try {
-      if (isAdd) {
+      if (!roomEdit) {
         // Add request
         const response = await addRoom(room);
         
@@ -101,7 +99,7 @@ const RoomForm = ({
         }
       }
       // Reload table data
-      // setReload(!reload);
+      setReload!(!reload);
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -109,7 +107,7 @@ const RoomForm = ({
     }
 
     reset();
-    // onClose();
+    onCloseModal!();
   };
 
   return (
@@ -161,11 +159,11 @@ const RoomForm = ({
       </FormRow>
 
       <Form.Action>
-        <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid}>
+        <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid || isSubmitting}>
           {
-            isAdd 
-            ? 'Add' 
-            : 'Save'
+            !roomEdit 
+              ? 'Add' 
+              : 'Save'
           }
         </FormBtn>
         <FormBtn type="button" styled="secondary" onClick={onCloseModal}>
