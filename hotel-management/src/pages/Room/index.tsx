@@ -2,15 +2,15 @@ import { useState } from 'react';
 
 // Components
 import RoomTable from './RomTable';
+import RoomForm from './RoomForm';
 
 // Styled
 import { StyledRoom, Title } from './styled';
-import Direction from '../../commons/styles/Direction';
-import Button from '../../commons/styles/Button';
+import Direction from '@commonStyle/Direction.ts';
+import Button from '@commonStyle/Button';
 
 // Types
-import Modal from '../../components/Modal';
-import RoomForm from './RoomForm';
+import Modal from '@component/Modal';
 
 const Room = () => {
   const [reload, setReload] = useState(true);
@@ -22,19 +22,19 @@ const Room = () => {
           <Title>List Room</Title>
 
           <Modal>
-            <Modal.Open modalName="room-form">
-              <Button>Add room</Button>
-            </Modal.Open>
+            <Modal.Open
+              modalName="room-form"
+              renderChildren={(onCloseModal) => (
+                <Button onClick={onCloseModal}>Add room</Button>
+              )}
+            />
             <Modal.Window name="room-form" title="Add form">
               <RoomForm setReload={setReload} reload={reload} />
             </Modal.Window>
           </Modal>
         </Direction>
 
-        <RoomTable
-          reload={reload}
-          setReload={setReload}
-        />
+        <RoomTable reload={reload} setReload={setReload} />
       </StyledRoom>
     </>
   );

@@ -4,16 +4,18 @@ import { MouseEvent, ReactNode, useContext, useState } from 'react';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 
 // Hooks
-import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { useOutsideClick } from '@hook/useOutsideClick';
 
 // Styled
-import { StyledMenu, StyledButton, StyledList, StyledToggle } from './styled';
+import { StyledMenu, StyledList, StyledToggle } from './styled';
 
 // Contexts
-import MenusContext from '../../contexts/MenuContext';
+import MenusContext from '@context/MenuContext';
 
 // Types
-import { Nullable } from '../../types/common';
+import { Nullable } from '@type/common';
+import ButtonIcon from '@component/ButtonIcon/ButtonIcon';
+import { COLOR } from '@constant/styles';
 
 interface IButton {
   children?: string;
@@ -74,9 +76,14 @@ const Button = ({ children, icon, onClick }: IButton): ReactNode => {
 
   return (
     <li>
-      <StyledButton onClick={handleClick}>
-        {icon} <span>{children}</span>
-      </StyledButton>
+      <ButtonIcon
+        icon={icon}
+        onClick={handleClick}
+        iconStyle={{ color: COLOR.PRIMARY, size: '19px' }}
+        style={{ fontSize: '16px' }}
+      >
+        {children}
+      </ButtonIcon>
     </li>
   );
 };

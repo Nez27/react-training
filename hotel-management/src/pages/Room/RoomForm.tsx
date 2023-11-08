@@ -6,36 +6,35 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 
 // Styled
-import Button from '../../commons/styles/Button.ts';
-import Input from '../../commons/styles/Input.ts';
+import Button from '@commonStyle/Button.ts';
+import Input from '@commonStyle/Input.ts';
 
 // Types
-import { Nullable } from '../../types/common.ts';
-import { IRoom } from '../../types/rooms.ts';
+import { Nullable } from '@type/common.ts';
+import { IRoom } from '@type/rooms.ts';
 
 // Constants
-import {
-  ADD_SUCCESS,
-  EDIT_SUCCESS,
-} from '../../constants/messages.ts';
+import { ADD_SUCCESS, EDIT_SUCCESS } from '@constant/messages.ts';
 import {
   INVALID_DISCOUNT,
   INVALID_FIELD,
   REQUIRED_FIELD_ERROR,
-} from '../../constants/formValidateMessage.ts';
+} from '@constant/formValidateMessage.ts';
+import { INIT_VALUE_ROOM_FORM, REGEX } from '../../constants/commons.ts';
 
 // Helpers
 import {
   isValidDiscount,
-  isValidNumber,
+  isValidRegex,
   isValidString,
-} from '../../helpers/validators.ts';
+} from '@helper/validators.ts';
 
 // Components
-import FormRow from '../../components/LabelControl/index.tsx';
-import Form from '../../components/Form/index.tsx';
-import { addRoom, updateRoom } from '../../services/roomServices.ts';
-import { INIT_VALUE_ROOM_FORM } from '../../constants/variables.ts';
+import FormRow from '@component/LabelControl/index.tsx';
+import Form from '@component/Form/index.tsx';
+
+// Services
+import { addRoom, updateRoom } from '@service/roomServices.ts';
 
 const FormBtn = styled(Button)`
   width: 100%;
@@ -82,29 +81,24 @@ const RoomForm = ({
     // Calculate final price
     room.finalPrice = room.price - (room.price * room.discount) / 100;
 
-    try {
-      if (!roomEdit) {
-        // Add request
-        const response = await addRoom(room);
-        
-        if(response) {
-          toast.success(ADD_SUCCESS);
-        }
-      } else {
-        // Edit request
-        const response = await updateRoom(room);
+    if (!roomEdit) {
+      // Add request
+      const response = await addRoom(room);
 
-        if (response) {
-          toast.success(EDIT_SUCCESS);
-        }
+      if (response) {
+        toast.success(ADD_SUCCESS);
       }
-      // Reload table data
-      setReload!(!reload);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
+    } else {
+      // Edit request
+      const response = await updateRoom(room);
+
+      if (response) {
+        toast.success(EDIT_SUCCESS);
       }
     }
+
+    // Reload table data
+    setReload!(!reload);
 
     reset();
     onCloseModal!();
@@ -136,7 +130,7 @@ const RoomForm = ({
             required: REQUIRED_FIELD_ERROR,
             validate: {
               checkIdentifiedCode: (v) =>
-                isValidNumber(v.toString()) || INVALID_FIELD,
+                isValidRegex(REGEX.NUMBER, v.toString()) || INVALID_FIELD,
             },
             onChange: () => trigger('price'),
           })}
@@ -159,7 +153,11 @@ const RoomForm = ({
       </FormRow>
 
       <Form.Action>
-        <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid || isSubmitting}>
+        <FormBtn
+          type="submit"
+          name="submit"
+          disabled={!isDirty || !isValid || isSubmitting}
+        >
           {
             !roomEdit 
               ? 'Add' 

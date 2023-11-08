@@ -1,10 +1,9 @@
 import {
   FieldValues,
   RegisterOptions,
-  UseFormRegister,
   useFormContext,
 } from 'react-hook-form';
-import { ChangeEventHandler, ReactNode } from 'react';
+import { ChangeEventHandler } from 'react';
 
 // Styled
 import { StyledSelect } from './styled';
@@ -22,46 +21,6 @@ interface ISelect {
   ariaLabel: string;
 }
 
-interface IRender extends ISelect {
-  register: UseFormRegister<FieldValues>;
-  children: ReactNode[];
-}
-
-const RenderSelect = ({
-  options,
-  id,
-  value,
-  optionsConfigForm,
-  onChange,
-  register,
-  children,
-  ariaLabel,
-}: IRender) => {
-  if (options && !register) {
-    return (
-      <StyledSelect
-        aria-label={ariaLabel}
-        id={id}
-        value={value}
-        onChange={onChange}
-      >
-        {children}
-      </StyledSelect>
-    );
-  }
-
-  return (
-    <StyledSelect
-      aria-label={ariaLabel}
-      id={id}
-      value={value}
-      {...register(id!, optionsConfigForm)}
-    >
-      {children}
-    </StyledSelect>
-  );
-};
-
 const Select = ({
   options,
   id,
@@ -75,21 +34,20 @@ const Select = ({
   if (!options) return;
 
   return (
-    <RenderSelect
-      register={register}
-      options={options}
-      optionsConfigForm={optionsConfigForm}
+    <StyledSelect
+      aria-label={ariaLabel}
       id={id}
       value={value}
-      onChange={onChange}
-      ariaLabel={ariaLabel}
+      {...(register
+        ? { ...register(id!, optionsConfigForm) }
+        : { onChange: onChange })}
     >
       {options.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}
         </option>
       ))}
-    </RenderSelect>
+    </StyledSelect>
   );
 };
 

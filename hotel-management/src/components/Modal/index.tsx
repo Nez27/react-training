@@ -8,10 +8,10 @@ import {
 import { createPortal } from 'react-dom';
 
 // Hooks
-import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { useOutsideClick } from '@hook/useOutsideClick';
 
 // Contexts
-import { ModalContext } from '../../contexts/ModalContext';
+import { ModalContext } from '@context/ModalContext';
 
 // Styled
 import { Overlay, StyledModal, StyledModalContent, TitleModal } from './styled';
@@ -34,14 +34,14 @@ const Modal = ({ children }: IModal) => {
 };
 
 interface IOpen {
-  children: ReactElement;
+  renderChildren: (onCloseModal: () => void) => ReactNode;
   modalName: string;
 }
 
-const Open = ({ children, modalName }: IOpen) => {
+const Open = ({ renderChildren, modalName }: IOpen) => {
   const { open } = useContext(ModalContext);
 
-  return cloneElement(children, { onClick: () => open!(modalName) });
+  return renderChildren(() => open!(modalName));
 };
 
 interface IWindow {
@@ -53,9 +53,6 @@ interface IWindow {
 const Window = ({ children, name, title }: IWindow) => {
   const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick<HTMLDivElement>(close!);
-
-  console.log('name: ', name);
-  console.log('openName: ', openName);
 
   if (name !== openName) return null;
 

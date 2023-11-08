@@ -1,17 +1,17 @@
 import toast from 'react-hot-toast';
 
 // Constants
-import { USER_PATH } from '../constants/path';
-import { STATUS_CODE } from '../constants/responseStatus';
+import { USER_PATH } from '@constant/path';
+import { STATUS_CODE } from '@constant/responseStatus';
 
 // Types
-import { Nullable } from '../types/common';
-import { IResponse } from '../types/responses';
-import { IUser } from '../types/users';
+import { Nullable } from '@type/common';
+import { IResponse } from '@type/responses';
+import { IUser } from '@type/users';
 
 // Helpers
-import { sendRequest } from '../helpers/sendRequest';
-import { errorMsg } from '../helpers/helper';
+import { sendRequest } from '@helper/sendRequest';
+import { errorMsg } from '@helper/helper';
 
 /**
  * Create user to the server

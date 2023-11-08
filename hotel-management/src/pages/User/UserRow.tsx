@@ -4,21 +4,21 @@ import { Dispatch, SetStateAction } from 'react';
 // Components
 import { RiEditBoxFill } from 'react-icons/ri';
 import { IoExit } from 'react-icons/io5';
-import Modal from '../../components/Modal';
+import Modal from '@component/Modal';
+import Table from '@component/Table';
+import Menus from '@component/Menus';
 import UserForm from './FormUser';
-import Table from '../../components/Table';
-import Menus from '../../components/Menus';
 
 // Constants
-import { STATUS_CODE } from '../../constants/responseStatus';
-import { CONFIRM_MESSAGE, DENIED_ACTION } from '../../constants/messages';
+import { STATUS_CODE } from '@constant/responseStatus';
+import { CONFIRM_MESSAGE, DENIED_ACTION } from '@constant/messages';
 
 // Services
-import { updateRoomStatus } from '../../services/roomServices';
-import { checkOutUser } from '../../services/userServices';
+import { updateRoomStatus } from '@service/roomServices';
+import { checkOutUser } from '@service/userServices';
 
 // Types
-import { IUser } from '../../types/users';
+import { IUser } from '@type/users';
 
 interface IUserRow {
   user: IUser;
@@ -56,17 +56,27 @@ const UserRow = ({ user, reload, setReload }: IUserRow) => {
       <div>{name}</div>
       <div>{identifiedCode}</div>
       <div>{phone}</div>
-      <div>{roomId ? roomId : 'None'}</div>
-
+      <div>
+        {
+          roomId 
+            ? roomId 
+            : 'None'
+        }
+      </div>
       <div>
         <Modal>
           <Menus.Menu>
             <Menus.Toggle id={id.toString()} />
 
             <Menus.List id={id.toString()}>
-              <Modal.Open modalName="edit">
-                <Menus.Button icon={<RiEditBoxFill />}>Edit</Menus.Button>
-              </Modal.Open>
+              <Modal.Open
+                modalName="edit"
+                renderChildren={(onCloseModal) => (
+                  <Menus.Button onClick={onCloseModal} icon={<RiEditBoxFill />}>
+                    Edit
+                  </Menus.Button>
+                )}
+              />
               <Menus.Button
                 icon={<IoExit />}
                 onClick={() => handleCheckOut(user)}

@@ -2,22 +2,22 @@ import { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
 
 // Constants
-import { ROOM_PATH } from '../../constants/path';
-import { STATUS_CODE } from '../../constants/responseStatus';
-import { CONFIRM_DELETE, DELETE_SUCCESS } from '../../constants/messages';
+import { ROOM_PATH } from '@constant/path';
+import { STATUS_CODE } from '@constant/responseStatus';
+import { CONFIRM_DELETE, DELETE_SUCCESS } from '@constant/messages';
 
 // Helpers
-import { sendRequest } from '../../helpers/sendRequest';
-import { formatCurrency } from '../../helpers/helper';
-import Modal from '../../components/Modal';
-import RoomForm from './RoomForm';
+import { sendRequest } from '@helper/sendRequest';
+import { formatCurrency } from '@helper/helper';
 
 // Types
-import { IRoom } from '../../types/rooms';
+import { IRoom } from '@type/rooms';
 
 // Components
-import Table from '../../components/Table';
-import Menus from '../../components/Menus';
+import RoomForm from './RoomForm';
+import Modal from '@component/Modal';
+import Table from '@component/Table';
+import Menus from '@component/Menus';
 import { RiEditBoxFill } from 'react-icons/ri';
 import { HiTrash } from 'react-icons/hi';
 
@@ -43,7 +43,9 @@ const RoomRow = ({ room, reload, setReload }: IRoomRow) => {
 
   const { id, name, finalPrice, status } = room;
 
-  const statusText = status ? 'Unavailable' : 'Available';
+  const statusText = status 
+    ? 'Unavailable' 
+    : 'Available';
 
   return (
     <Table.Row>
@@ -58,9 +60,14 @@ const RoomRow = ({ room, reload, setReload }: IRoomRow) => {
             <Menus.Toggle id={id.toString()} />
 
             <Menus.List id={id.toString()}>
-              <Modal.Open modalName="edit">
-                <Menus.Button icon={<RiEditBoxFill />}>Edit</Menus.Button>
-              </Modal.Open>
+              <Modal.Open
+                modalName="edit"
+                renderChildren={(onCloseModal) => (
+                  <Menus.Button onClick={onCloseModal} icon={<RiEditBoxFill />}>
+                    Edit
+                  </Menus.Button>
+                )}
+              />
 
               <Menus.Button
                 icon={<HiTrash />}

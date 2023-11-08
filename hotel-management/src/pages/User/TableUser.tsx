@@ -2,31 +2,27 @@ import { useSearchParams } from 'react-router-dom';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 // Components
-import Menus from '../../components/Menus';
-import Table from '../../components/Table';
-import Direction from '../../commons/styles/Direction';
-import Message from '../../components/Message';
-import Search from '../../components/Search';
-import SortBy from '../../components/SortBy';
-import OrderBy from '../../components/OrderBy';
-
-// Types
-import { IUser } from '../../types/users';
-
-// Hooks
-import { useFetch } from '../../hooks/useFetch';
-
-// Constants
-import { ORDERBY_OPTIONS, USER_PAGE } from '../../constants/variables';
-
-// Styled
-import { StyledOperationTable } from './styled';
-import Spinner from '../../commons/styles/Spinner';
+import Menus from '@component/Menus';
+import Table from '@component/Table';
+import Message from '@component/Message';
+import Search from '@component/Search';
+import SortBy from '@component/SortBy';
+import OrderBy from '@component/OrderBy';
 import UserRow from './UserRow';
 
+// Types
+import { IUser } from '@type/users';
 
+// Hooks
+import { useFetch } from '@hook/useFetch';
 
+// Constants
+import { ORDERBY_OPTIONS, USER_PAGE } from '@constant/commons';
 
+// Styled
+import Direction from '@commonStyle/Direction';
+import { StyledOperationTable } from './styled';
+import Spinner from '@commonStyle/Spinner';
 
 interface IUserTable {
   reload: boolean;
@@ -34,6 +30,7 @@ interface IUserTable {
 }
 
 const UserTable = ({ reload, setReload }: IUserTable) => {
+  const columnName = ['Id', 'Name', 'Identified Code', 'Phone', 'Room Id'];
   const [users, setUsers] = useState<IUser[]>([]);
   const [phoneSearch, setPhoneSearch] = useState('');
   const [searchParams] = useSearchParams();
@@ -83,13 +80,7 @@ const UserTable = ({ reload, setReload }: IUserTable) => {
         {users.length ? (
           <Menus>
             <Table columns="10% 30% 20% 20% 10% 5%">
-              <Table.Header>
-                <div>Id</div>
-                <div>Name</div>
-                <div>Identified Code</div>
-                <div>Phone</div>
-                <div>Room Id</div>
-              </Table.Header>
+              <Table.Header headerColumn={columnName} />
               <Table.Body<IUser>
                 data={users}
                 render={(user: IUser) => (

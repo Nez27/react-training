@@ -4,15 +4,19 @@ import { useState } from 'react';
 import UserTable from './TableUser';
 
 // Styled
-import Button from '../../commons/styles/Button';
-import Direction from '../../commons/styles/Direction';
+import Button from '@commonStyle/Button';
+import Direction from '@commonStyle/Direction.ts';
 import { StyledUser, Title } from './styled';
 
 // Types
-import Modal from '../../components/Modal';
+import Modal from '@component/Modal';
 import UserForm from './FormUser';
 
+// Constants
+import { FORM } from '@constant/commons';
+
 const User = () => {
+  const ADD_ROOM = 'Add room';
   const [reload, setReload] = useState(true);
 
   return (
@@ -22,10 +26,13 @@ const User = () => {
           <Title>List User</Title>
 
           <Modal>
-            <Modal.Open modalName="user-form">
-              <Button>Add user</Button>
-            </Modal.Open>
-            <Modal.Window name="user-form" title="Add form">
+            <Modal.Open
+              modalName={FORM.USER}
+              renderChildren={(onCloseModal) => (
+                <Button onClick={onCloseModal}>Add user</Button>
+              )}
+            />
+            <Modal.Window name={FORM.USER} title={ADD_ROOM}>
               <UserForm setReload={setReload} reload={reload} />
             </Modal.Window>
           </Modal>

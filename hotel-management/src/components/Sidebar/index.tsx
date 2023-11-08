@@ -1,5 +1,5 @@
 // Components
-import Nav from '../Nav';
+import Nav from '@component/Nav';
 
 // Styled
 import { Heading, StyledSidebar } from './styled';

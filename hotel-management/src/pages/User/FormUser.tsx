@@ -11,41 +11,38 @@ import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
-import Input from '../../commons/styles/Input.ts';
+import Input from '@commonStyle/Input.ts';
 
 // Components
-import Form from '../../components/Form/index.tsx';
-import FormRow from '../../components/LabelControl/index.tsx';
-import Select, { ISelectOptions } from '../../components/Select/index.tsx';
+import Form from '@component/Form/index.tsx';
+import FormRow from '@component/LabelControl/index.tsx';
+import Select, { ISelectOptions } from '@component/Select/index.tsx';
 
 // Helpers
 import {
-  isEmptyObj,
-  isValidName,
-  isValidNumber,
-  isValidPhoneNumber,
-} from '../../helpers/validators.ts';
+  isEmptyObj, isValidRegex,
+} from '@helper/validators.ts';
 
 // Constants
-import { ADD_SUCCESS, EDIT_SUCCESS } from '../../constants/messages.ts';
+import { ADD_SUCCESS, EDIT_SUCCESS } from '@constant/messages.ts';
 import {
   INVALID_FIELD,
   INVALID_PHONE,
   REQUIRED_FIELD_ERROR,
-} from '../../constants/formValidateMessage.ts';
-import { INIT_VALUE_USER_FORM } from '../../constants/variables.ts';
+} from '@constant/formValidateMessage.ts';
+import { INIT_VALUE_USER_FORM, REGEX } from '@constant/commons.ts';
 
 // Styled
 import { FormBtn } from './styled.ts';
 
 // Services
-import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
+import { getAllRoom, updateRoomStatus } from '@service/roomServices.ts';
+import { createUser, updateUser } from '@service/userServices.ts';
 
 // Types
-import { Nullable } from '../../types/common.ts';
-import { IUser } from '../../types/users.ts';
-import { IRoom } from '../../types/rooms.ts';
-import { createUser, updateUser } from '../../services/userServices.ts';
+import { Nullable } from '@type/common.ts';
+import { IUser } from '@type/users.ts';
+import { IRoom } from '@type/rooms.ts';
 
 interface IUserFormProp {
   onCloseModal?: () => void;
@@ -109,35 +106,29 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
   // Submit form
   const onSubmit = useCallback(
     async (newUser: IUser) => {
-      try {
-        if (!user) {
-          // Add request
-          const response = await createUser(newUser);
+      if (!user) {
+        // Add request
+        const response = await createUser(newUser);
 
-          if (response) {
-            toast.success(ADD_SUCCESS);
-          }
-
-          // Update room status
-          updateRoomStatus(newUser.roomId, true);
-        } else {
-          // Edit request
-          const response = await updateUser(newUser);
-
-          if (response) {
-            toast.success(EDIT_SUCCESS);
-          }
-
-          // Update room status
-          updateRoomStatus(user!.roomId, true, newUser.roomId);
+        if (response) {
+          toast.success(ADD_SUCCESS);
         }
-        // Reload table data
-        setReload(!reload);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          toast.error(error.message);
+
+        // Update room status
+        updateRoomStatus(newUser.roomId, true);
+      } else {
+        // Edit request
+        const response = await updateUser(newUser);
+
+        if (response) {
+          toast.success(EDIT_SUCCESS);
         }
+
+        // Update room status
+        updateRoomStatus(user!.roomId, true, newUser.roomId);
       }
+      // Reload table data
+      setReload(!reload);
 
       reset();
       onCloseModal!();
@@ -169,7 +160,7 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
             {...register('name', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkValidName: (value) => isValidName(value) || INVALID_FIELD,
+                checkValidName: (value) => isValidRegex(REGEX.NAME, value) || INVALID_FIELD,
               },
               onChange: () => trigger('name'),
             })}
@@ -187,7 +178,7 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
               required: REQUIRED_FIELD_ERROR,
               validate: {
                 checkIdentifiedCode: (v) =>
-                  isValidNumber(v.toString()) || INVALID_FIELD,
+                  isValidRegex(REGEX.NUMBER, v.toString()) || INVALID_FIELD,
               },
               onChange: () => trigger('identifiedCode'),
             })}
@@ -201,7 +192,7 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
             {...register('phone', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkPhoneNum: (v) => isValidPhoneNumber(v) || INVALID_PHONE,
+                checkPhoneNum: (v) => isValidRegex(REGEX.PHONE, v) || INVALID_PHONE,
               },
               onChange: () => trigger('phone'),
             })}

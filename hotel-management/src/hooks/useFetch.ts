@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
 // Constants
-import { BASE_URL } from '../constants/path';
-import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '../constants/config';
+import { BASE_URL } from '@constant/path';
+import { DEFAULT_ORDER_BY, DEFAULT_SORT_BY } from '@constant/config';
 
 // Helpers
-import { searchQuery } from '../helpers/helper';
+import { searchQuery } from '@helper/helper';
 
 // Types
-import { Nullable } from '../types/common';
+import { Nullable } from '@type/common';
 
 /**
  * The function use to fetch data on server API.
