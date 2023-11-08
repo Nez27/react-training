@@ -1,8 +1,8 @@
 // Constants
-import { BASE_URL } from '../constants/path';
+import { BASE_URL } from '@constant/path';
 
 // Types
-import { IResponse } from '../types/responses';
+import { IResponse } from '@type/responses';
 
 type TMethodRequest = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 

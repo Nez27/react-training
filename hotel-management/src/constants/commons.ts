@@ -51,9 +51,6 @@ const ROOM_PAGE = {
   ],
 };
 
-const VALUE = 'value';
-const ERROR = 'error';
-
 const INIT_VALUE_USER_FORM = {
   name: '',
   id: 0,
@@ -68,11 +65,23 @@ const INIT_VALUE_ROOM_FORM = {
   discount: 0,
 };
 
+const FORM = {
+  EDIT: 'edit',
+  USER: 'user-form',
+  ROOM: 'room-form',
+};
+
+const REGEX = {
+  PHONE: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+  NAME: /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/gm,
+  NUMBER: /^[0-9]*$/,
+};
+
 export {
   USER_PAGE,
   ROOM_PAGE,
-  VALUE,
-  ERROR,
+  FORM,
+  REGEX,
   ORDERBY_OPTIONS,
   INIT_VALUE_USER_FORM,
   INIT_VALUE_ROOM_FORM,

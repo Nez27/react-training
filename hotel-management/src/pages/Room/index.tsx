@@ -1,57 +1,41 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 // Components
-import RoomTable from './Table';
+import RoomTable from './RomTable';
+import RoomForm from './RoomForm';
 
 // Styled
 import { StyledRoom, Title } from './styled';
-import Direction from '../../commons/styles/Direction';
-import Button from '../../commons/styles/Button';
-import RoomDialog from './Dialog';
+import Direction from '@commonStyle/Direction.ts';
+import Button from '@commonStyle/Button';
 
 // Types
-import { Nullable } from '../../types/common';
-import { IRoom } from '../../types/rooms';
+import Modal from '@component/Modal';
 
 const Room = () => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
   const [reload, setReload] = useState(true);
-  const [room, setRoom] = useState<Nullable<IRoom>>(null);
-  const [isAdd, setIsAdd] = useState(false);
-
-  const openFormDialog = (isAddForm: boolean = false) => {
-    setIsAdd(isAddForm);
-    dialogRef.current?.showModal();
-  };
-
-  const closeFormDialog = () => {
-    dialogRef.current?.close();
-  };
 
   return (
     <>
       <StyledRoom>
         <Direction type="horizontal">
           <Title>List Room</Title>
-          <Button onClick={() => openFormDialog(true)}>Add room</Button>
+
+          <Modal>
+            <Modal.Open
+              modalName="room-form"
+              renderChildren={(onCloseModal) => (
+                <Button onClick={onCloseModal}>Add room</Button>
+              )}
+            />
+            <Modal.Window name="room-form" title="Add form">
+              <RoomForm setReload={setReload} reload={reload} />
+            </Modal.Window>
+          </Modal>
         </Direction>
 
-        <RoomTable
-          reload={reload}
-          setReload={setReload}
-          openFormDialog={() => openFormDialog()}
-          setRoom={setRoom}
-        />
+        <RoomTable reload={reload} setReload={setReload} />
       </StyledRoom>
-
-      <RoomDialog
-        onClose={closeFormDialog}
-        ref={dialogRef}
-        setReload={setReload}
-        reload={reload}
-        room={room}
-        isAdd={isAdd}
-      />
     </>
   );
 };

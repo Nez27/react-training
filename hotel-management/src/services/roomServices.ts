@@ -1,17 +1,17 @@
 import toast from 'react-hot-toast';
 
 // Types
-import { Nullable } from '../types/common';
-import { IResponse } from '../types/responses';
-import { IRoom } from '../types/rooms';
+import { Nullable } from '@type/common';
+import { IResponse } from '@type/responses';
+import { IRoom } from '@type/rooms';
 
 // Helpers
-import { sendRequest } from '../helpers/sendRequest';
-import { errorMsg } from '../helpers/helper';
+import { sendRequest } from '@helper/sendRequest';
+import { errorMsg } from '@helper/helper';
 
 // Constants
-import { STATUS_CODE, RESPONSE_MESSAGE } from '../constants/responseStatus';
-import { ROOM_PATH } from '../constants/path';
+import { STATUS_CODE, RESPONSE_MESSAGE } from '@constant/responseStatus';
+import { ROOM_PATH } from '@constant/path';
 
 /**
  * Get all rooms from server

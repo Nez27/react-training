@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { StyledSearch } from './styled';
 
 // Hooks
-import { useDebounce } from '../../hooks/useDebounce';
+import { useDebounce } from '@hook/useDebounce';
 
 interface ISearch {
   setPlaceHolder: string;

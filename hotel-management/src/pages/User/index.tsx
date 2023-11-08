@@ -1,57 +1,45 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 // Components
-import UserTable from './Table';
+import UserTable from './UserTable';
 
 // Styled
-import Button from '../../commons/styles/Button';
-import Direction from '../../commons/styles/Direction';
+import Button from '@commonStyle/Button';
+import Direction from '@commonStyle/Direction.ts';
 import { StyledUser, Title } from './styled';
-import UserDialog from './Dialog';
 
 // Types
-import { Nullable } from '../../types/common';
-import { IUser } from '../../types/users';
+import Modal from '@component/Modal';
+import UserForm from './UserForm';
+
+// Constants
+import { FORM } from '@constant/commons';
 
 const User = () => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const TITLE = 'Add user';
   const [reload, setReload] = useState(true);
-  const [user, setUser] = useState<Nullable<IUser>>(null);
-  const [isAdd, setIsAdd] = useState(false);
-
-  const openFormDialog = (isAddForm: boolean = false) => {
-    setIsAdd(isAddForm);
-    dialogRef.current?.showModal();
-  };
-
-  const closeFormDialog = () => {
-    dialogRef.current?.close();
-  };
 
   return (
     <>
       <StyledUser>
         <Direction type="horizontal">
           <Title>List User</Title>
-          <Button onClick={() => openFormDialog(true)}>Add user</Button>
+
+          <Modal>
+            <Modal.Open
+              modalName={FORM.USER}
+              renderChildren={(onCloseModal) => (
+                <Button onClick={onCloseModal}>Add user</Button>
+              )}
+            />
+            <Modal.Window name={FORM.USER} title={TITLE}>
+              <UserForm setReload={setReload} reload={reload} />
+            </Modal.Window>
+          </Modal>
         </Direction>
 
-        <UserTable
-          reload={reload}
-          setReload={setReload}
-          openFormDialog={() => openFormDialog()}
-          setUser={setUser}
-        />
+        <UserTable reload={reload} setReload={setReload} />
       </StyledUser>
-
-      <UserDialog
-        onClose={closeFormDialog}
-        ref={dialogRef}
-        setReload={setReload}
-        reload={reload}
-        user={user}
-        isAdd={isAdd}
-      />
     </>
   );
 };

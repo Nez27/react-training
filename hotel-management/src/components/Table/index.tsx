@@ -4,11 +4,15 @@ import { ReactNode, useContext } from 'react';
 import { StyledBody, StyledHeader, StyledRow, StyledTable } from './styled';
 
 // Contexts
-import TableContext from '../../contexts/TableContext';
+import TableContext from '@context/TableContext';
 
 export interface ITable {
   columns?: string;
   children: ReactNode;
+}
+
+export interface IHeader {
+  headerColumn: string[];
 }
 
 interface ITableBody<T> {
@@ -26,10 +30,12 @@ const Table = ({ columns, children }: ITable) => {
   );
 };
 
-const Header = ({ children }: ITable) => {
+const Header = ({ headerColumn }: IHeader) => {
   const { columns } = useContext(TableContext);
 
-  return <StyledHeader columns={columns}>{children}</StyledHeader>;
+  return <StyledHeader columns={columns}>
+    {headerColumn.map((item) => <div key={item}>{item}</div>)}
+  </StyledHeader>;
 };
 
 const Body = <T,>({ data, render }: ITableBody<T>) => {

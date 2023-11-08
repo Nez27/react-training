@@ -11,63 +11,51 @@ import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
-import Input from '../../commons/styles/Input';
+import Input from '@commonStyle/Input.ts';
 
 // Components
-import Form from '../../components/Form';
-import FormRow from '../../components/LabelControl/index.tsx';
-import Select, { ISelectOptions } from '../../components/Select';
+import Form from '@component/Form/index.tsx';
+import FormRow from '@component/LabelControl/index.tsx';
+import Select, { ISelectOptions } from '@component/Select/index.tsx';
 
 // Helpers
-import {
-  isEmptyObj,
-  isValidName,
-  isValidNumber,
-  isValidPhoneNumber,
-} from '../../helpers/validators.ts';
+import { isEmptyObj, isValidRegex } from '@helper/validators.ts';
 
 // Constants
-import { ADD_SUCCESS, EDIT_SUCCESS } from '../../constants/messages.ts';
+import { ADD_SUCCESS, EDIT_SUCCESS } from '@constant/messages.ts';
 import {
   INVALID_FIELD,
   INVALID_PHONE,
   REQUIRED_FIELD_ERROR,
-} from '../../constants/formValidateMessage.ts';
-import { INIT_VALUE_USER_FORM } from '../../constants/variables.ts';
+} from '@constant/formValidateMessage.ts';
+import { INIT_VALUE_USER_FORM, REGEX } from '@constant/commons.ts';
 
 // Styled
 import { FormBtn } from './styled.ts';
 
 // Services
-import { getAllRoom, updateRoomStatus } from '../../services/roomServices.ts';
+import { getAllRoom, updateRoomStatus } from '@service/roomServices.ts';
+import { createUser, updateUser } from '@service/userServices.ts';
 
 // Types
-import { Nullable } from '../../types/common.ts';
-import { IUser } from '../../types/users.ts';
-import { IRoom } from '../../types/rooms.ts';
-import { createUser, updateUser } from '../../services/userServices.ts';
+import { Nullable } from '@type/common.ts';
+import { IUser } from '@type/users.ts';
+import { IRoom } from '@type/rooms.ts';
 
 interface IUserFormProp {
-  onClose: () => void;
+  onCloseModal?: () => void;
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
-  user: Nullable<IUser>;
-  isAdd: boolean;
+  user?: Nullable<IUser>;
 }
 
-const UserForm = ({
-  onClose,
-  reload,
-  setReload,
-  user,
-  isAdd,
-}: IUserFormProp) => {
+const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
   const formMethods = useForm<IUser>();
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, isSubmitting },
     trigger,
   } = formMethods;
   const [rooms, setRooms] = useState<IRoom[]>([]);
@@ -77,9 +65,7 @@ const UserForm = ({
   useEffect(() => {
     const load = async () => {
       const options: ISelectOptions[] = [];
-      const tempUser = isAdd 
-        ? {} 
-        : { ...user };
+      const tempUser = !user ? { roomId: 0 } : { ...user };
 
       // Load and set default options room
       if (rooms.length > 0) {
@@ -111,45 +97,39 @@ const UserForm = ({
     };
 
     load();
-  }, [reset, user, isAdd, rooms]);
+  }, [reset, user, rooms]);
 
   // Submit form
   const onSubmit = useCallback(
     async (newUser: IUser) => {
-      try {
-        if (isAdd) {
-          // Add request
-          const response = await createUser(newUser);
+      if (!user) {
+        // Add request
+        const response = await createUser(newUser);
 
-          if (response) {
-            toast.success(ADD_SUCCESS);
-          }
-
-          // Update room status
-          updateRoomStatus(newUser.roomId, true);
-        } else {
-          // Edit request
-          const response = await updateUser(newUser);
-
-          if (response) {
-            toast.success(EDIT_SUCCESS);
-          }
-
-          // Update room status
-          updateRoomStatus(user!.roomId, true, newUser.roomId);
+        if (response) {
+          toast.success(ADD_SUCCESS);
         }
-        // Reload table data
-        setReload(!reload);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          toast.error(error.message);
+
+        // Update room status
+        updateRoomStatus(newUser.roomId, true);
+      } else {
+        // Edit request
+        const response = await updateUser(newUser);
+
+        if (response) {
+          toast.success(EDIT_SUCCESS);
         }
+
+        // Update room status
+        updateRoomStatus(user!.roomId, true, newUser.roomId);
       }
+      // Reload table data
+      setReload(!reload);
 
       reset();
-      onClose();
+      onCloseModal!();
     },
-    [isAdd, onClose, reload, reset, setReload, user]
+    [onCloseModal, reload, reset, setReload, user]
   );
 
   // Load all rooms
@@ -176,7 +156,8 @@ const UserForm = ({
             {...register('name', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkValidName: (value) => isValidName(value) || INVALID_FIELD,
+                checkValidName: (value) =>
+                  isValidRegex(new RegExp(REGEX.NAME), value) || INVALID_FIELD,
               },
               onChange: () => trigger('name'),
             })}
@@ -194,7 +175,8 @@ const UserForm = ({
               required: REQUIRED_FIELD_ERROR,
               validate: {
                 checkIdentifiedCode: (v) =>
-                  isValidNumber(v.toString()) || INVALID_FIELD,
+                  isValidRegex(new RegExp(REGEX.NUMBER), v.toString()) ||
+                  INVALID_FIELD,
               },
               onChange: () => trigger('identifiedCode'),
             })}
@@ -208,7 +190,8 @@ const UserForm = ({
             {...register('phone', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkPhoneNum: (v) => isValidPhoneNumber(v) || INVALID_PHONE,
+                checkPhoneNum: (v) =>
+                  isValidRegex(new RegExp(REGEX.PHONE), v) || INVALID_PHONE,
               },
               onChange: () => trigger('phone'),
             })}
@@ -233,14 +216,14 @@ const UserForm = ({
         </FormRow>
 
         <Form.Action>
-          <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid}>
-            {
-              isAdd 
-                ? 'Add' 
-                : 'Save'
-            }
+          <FormBtn
+            type="submit"
+            name="submit"
+            disabled={!isDirty || !isValid || isSubmitting}
+          >
+            {!user ? 'Add' : 'Save'}
           </FormBtn>
-          <FormBtn type="button" styled="secondary" onClick={onClose}>
+          <FormBtn type="button" styled="secondary" onClick={onCloseModal}>
             Close
           </FormBtn>
         </Form.Action>

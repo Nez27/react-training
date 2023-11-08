@@ -17,6 +17,10 @@
   --radius-sm: 5px;
   --radius-md: 10px;
 
+  --overlay-color: #0000004d;
+
+  --form-color: #fff;
+
   --shadow-sm: 0px 10px 20px rgba(0, 0, 0, 0.2);
 
   --fs-md: 30px;

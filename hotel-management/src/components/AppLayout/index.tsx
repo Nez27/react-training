@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
 
 // Components
-import Header from '../Header';
-import Sidebar from '../Sidebar';
+import Header from '@component/Header';
+import Sidebar from '@component/Sidebar';
 
 // Styled
 import { Main, StyledAppLayout } from './styled';

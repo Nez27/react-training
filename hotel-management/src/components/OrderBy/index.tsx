@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 // Styled
@@ -11,7 +10,7 @@ interface IOrderProps {
   }[];
 }
 
-const OrderBy = memo(({ options }: IOrderProps) => {
+const OrderBy = ({ options }: IOrderProps) => {
   const field = 'orderBy';
   const [searchParams, setSearchParams] = useSearchParams();
   const currentOrder = searchParams.get(field) || options[0].value;
@@ -35,6 +34,6 @@ const OrderBy = memo(({ options }: IOrderProps) => {
       ))}
     </StyledOrder>
   );
-});
+};
 
 export default OrderBy;
