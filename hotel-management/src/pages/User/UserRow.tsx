@@ -7,7 +7,7 @@ import { IoExit } from 'react-icons/io5';
 import Modal from '@component/Modal';
 import Table from '@component/Table';
 import Menus from '@component/Menus';
-import UserForm from './FormUser';
+import UserForm from './UserForm';
 
 // Constants
 import { STATUS_CODE } from '@constant/responseStatus';

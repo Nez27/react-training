@@ -114,7 +114,7 @@ const RoomForm = ({
           {...register('name', {
             required: REQUIRED_FIELD_ERROR,
             validate: {
-              checkValidName: (value) => isValidString(value) || INVALID_FIELD,
+              checkValidRoomName: (value) => isValidString(value) || INVALID_FIELD,
             },
             onChange: () => trigger('name'),
           })}
@@ -129,8 +129,8 @@ const RoomForm = ({
             valueAsNumber: true,
             required: REQUIRED_FIELD_ERROR,
             validate: {
-              checkIdentifiedCode: (v) =>
-                isValidRegex(REGEX.NUMBER, v.toString()) || INVALID_FIELD,
+              checkPrice: (v) =>
+                isValidRegex(new RegExp(REGEX.NUMBER), v.toString()) || INVALID_FIELD,
             },
             onChange: () => trigger('price'),
           })}
@@ -145,7 +145,7 @@ const RoomForm = ({
             valueAsNumber: true,
             required: REQUIRED_FIELD_ERROR,
             validate: {
-              checkPhoneNum: (v) => isValidDiscount(v) || INVALID_DISCOUNT,
+              checkDiscount: (v) => isValidDiscount(v) || INVALID_DISCOUNT,
             },
             onChange: () => trigger('discount'),
           })}

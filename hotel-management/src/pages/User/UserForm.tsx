@@ -19,9 +19,7 @@ import FormRow from '@component/LabelControl/index.tsx';
 import Select, { ISelectOptions } from '@component/Select/index.tsx';
 
 // Helpers
-import {
-  isEmptyObj, isValidRegex,
-} from '@helper/validators.ts';
+import { isEmptyObj, isValidRegex } from '@helper/validators.ts';
 
 // Constants
 import { ADD_SUCCESS, EDIT_SUCCESS } from '@constant/messages.ts';
@@ -67,9 +65,7 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
   useEffect(() => {
     const load = async () => {
       const options: ISelectOptions[] = [];
-      const tempUser = !user 
-        ? { roomId: 0 } 
-        : { ...user };
+      const tempUser = !user ? { roomId: 0 } : { ...user };
 
       // Load and set default options room
       if (rooms.length > 0) {
@@ -160,7 +156,8 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
             {...register('name', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkValidName: (value) => isValidRegex(REGEX.NAME, value) || INVALID_FIELD,
+                checkValidName: (value) =>
+                  isValidRegex(new RegExp(REGEX.NAME), value) || INVALID_FIELD,
               },
               onChange: () => trigger('name'),
             })}
@@ -178,7 +175,8 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
               required: REQUIRED_FIELD_ERROR,
               validate: {
                 checkIdentifiedCode: (v) =>
-                  isValidRegex(REGEX.NUMBER, v.toString()) || INVALID_FIELD,
+                  isValidRegex(new RegExp(REGEX.NUMBER), v.toString()) ||
+                  INVALID_FIELD,
               },
               onChange: () => trigger('identifiedCode'),
             })}
@@ -192,7 +190,8 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
             {...register('phone', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkPhoneNum: (v) => isValidRegex(REGEX.PHONE, v) || INVALID_PHONE,
+                checkPhoneNum: (v) =>
+                  isValidRegex(new RegExp(REGEX.PHONE), v) || INVALID_PHONE,
               },
               onChange: () => trigger('phone'),
             })}
@@ -217,12 +216,12 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
         </FormRow>
 
         <Form.Action>
-          <FormBtn type="submit" name="submit" disabled={!isDirty || !isValid || isSubmitting}>
-            {
-              !user 
-                ? 'Add' 
-                : 'Save'
-            }
+          <FormBtn
+            type="submit"
+            name="submit"
+            disabled={!isDirty || !isValid || isSubmitting}
+          >
+            {!user ? 'Add' : 'Save'}
           </FormBtn>
           <FormBtn type="button" styled="secondary" onClick={onCloseModal}>
             Close

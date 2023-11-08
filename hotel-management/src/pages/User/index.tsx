@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // Components
-import UserTable from './TableUser';
+import UserTable from './UserTable';
 
 // Styled
 import Button from '@commonStyle/Button';
@@ -10,13 +10,13 @@ import { StyledUser, Title } from './styled';
 
 // Types
 import Modal from '@component/Modal';
-import UserForm from './FormUser';
+import UserForm from './UserForm';
 
 // Constants
 import { FORM } from '@constant/commons';
 
 const User = () => {
-  const ADD_ROOM = 'Add room';
+  const TITLE = 'Add user';
   const [reload, setReload] = useState(true);
 
   return (
@@ -32,7 +32,7 @@ const User = () => {
                 <Button onClick={onCloseModal}>Add user</Button>
               )}
             />
-            <Modal.Window name={FORM.USER} title={ADD_ROOM}>
+            <Modal.Window name={FORM.USER} title={TITLE}>
               <UserForm setReload={setReload} reload={reload} />
             </Modal.Window>
           </Modal>
