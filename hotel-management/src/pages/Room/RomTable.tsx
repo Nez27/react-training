@@ -14,7 +14,6 @@ import RoomRow from './RoomRow';
 import { IRoom } from '@type/rooms';
 
 // Constants
-import { useFetch } from '@hook/useFetch';
 import { ORDERBY_OPTIONS, ROOM_PAGE } from '@constant/commons';
 
 // Styled
@@ -39,28 +38,7 @@ const RoomTable = ({ reload, setReload }: IRoomTable) => {
   const orderByValue = searchParams.get('orderBy')
     ? searchParams.get('orderBy')!
     : '';
-
-  const { data, isPending, errorFetchMsg } = useFetch(
-    'rooms',
-    'name',
-    nameSearch,
-    sortByValue,
-    orderByValue,
-    reload
-  );
-
-  useEffect(() => {
-    if (data) {
-      setRooms(data);
-    } else {
-      setRooms([]);
-    }
-
-    if (errorFetchMsg) {
-      console.error(errorFetchMsg);
-    }
-  }, [data, errorFetchMsg]);
-
+    
   return (
     <>
       <Direction>

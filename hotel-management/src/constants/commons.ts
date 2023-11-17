@@ -9,16 +9,8 @@ const USER_PAGE = {
       label: 'Sort by name',
     },
     {
-      value: 'identifiedCode',
-      label: 'Sort by identified code',
-    },
-    {
       value: 'phone',
       label: 'Sort by phone',
-    },
-    {
-      value: 'roomId',
-      label: 'Sort by room',
     },
   ],
 };

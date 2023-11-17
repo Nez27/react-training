@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 // Components
 import Menus from '@component/Menus';
@@ -13,9 +13,6 @@ import UserRow from './UserRow';
 // Types
 import { IUser } from '@type/users';
 
-// Hooks
-import { useFetch } from '@hook/useFetch';
-
 // Constants
 import { ORDERBY_OPTIONS, USER_PAGE } from '@constant/commons';
 
@@ -24,43 +21,51 @@ import Direction from '@commonStyle/Direction';
 import { StyledOperationTable } from './styled';
 import Spinner from '@commonStyle/Spinner';
 
+import { useQuery } from '@tanstack/react-query';
+import { getAllUsers } from '@service/userServices';
+import toast from 'react-hot-toast';
+
 interface IUserTable {
   reload: boolean;
   setReload: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserTable = ({ reload, setReload }: IUserTable) => {
-  const columnName = ['Id', 'Name', 'Identified Code', 'Phone', 'Room Id'];
-  const [users, setUsers] = useState<IUser[]>([]);
+  const columnName = ['Id', 'Name', 'Phone'];
+
   const [phoneSearch, setPhoneSearch] = useState('');
   const [searchParams] = useSearchParams();
   const sortByValue = searchParams.get('sortBy')
     ? searchParams.get('sortBy')!
-    : '';
+    : 'id';
   const orderByValue = searchParams.get('orderBy')
     ? searchParams.get('orderBy')!
-    : '';
+    : 'asc';
 
-  const { data, isPending, errorFetchMsg } = useFetch(
-    'users',
-    'phone',
-    phoneSearch,
-    sortByValue,
-    orderByValue,
-    reload
+  const {
+    isLoading,
+    data: users,
+    error,
+  } = useQuery({
+    queryKey: ['cabins', sortByValue, orderByValue, phoneSearch],
+    queryFn: () => getAllUsers(sortByValue, orderByValue, phoneSearch),
+  });
+
+  if(error) {
+    toast.error(error.message);
+  }
+
+  const renderUserRow = useCallback(
+    (user: IUser) => (
+      <UserRow
+        user={user}
+        key={user.id}
+        reload={reload}
+        setReload={setReload}
+      />
+    ),
+    [reload, setReload]
   );
-
-  useEffect(() => {
-    if (data) {
-      setUsers(data);
-    } else {
-      setUsers([]);
-    }
-
-    if (errorFetchMsg) {
-      console.error(errorFetchMsg);
-    }
-  }, [data, errorFetchMsg, setUsers]);
 
   return (
     <>
@@ -75,27 +80,17 @@ const UserTable = ({ reload, setReload }: IUserTable) => {
           />
         </StyledOperationTable>
 
-        {isPending && <Spinner />}
+        {isLoading && <Spinner />}
 
-        {users.length ? (
+        {users && users.length ? (
           <Menus>
-            <Table columns="10% 30% 20% 20% 10% 5%">
+            <Table columns="10% 40% 35% 15%">
               <Table.Header headerColumn={columnName} />
-              <Table.Body<IUser>
-                data={users}
-                render={(user: IUser) => (
-                  <UserRow
-                    user={user}
-                    key={user.id}
-                    reload={reload}
-                    setReload={setReload}
-                  />
-                )}
-              />
+              <Table.Body<IUser> data={users} render={renderUserRow} />
             </Table>
           </Menus>
         ) : (
-          !isPending && <Message>No data to show here!</Message>
+          !isLoading && <Message>No data to show here!</Message>
         )}
       </Direction>
     </>
