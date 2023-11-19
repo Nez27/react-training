@@ -37,7 +37,7 @@ const ROOM_PAGE = {
       label: 'Sort by name',
     },
     {
-      value: 'finalPrice',
+      value: 'price',
       label: 'Sort by price',
     },
   ],
@@ -59,6 +59,7 @@ const INIT_VALUE_ROOM_FORM = {
 
 const FORM = {
   EDIT: 'edit',
+  DELETE: 'delete',
   USER: 'user-form',
   ROOM: 'room-form',
 };

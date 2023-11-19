@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 // Components
 import { RiEditBoxFill } from 'react-icons/ri';
 import Modal from '@component/Modal';
@@ -13,11 +11,9 @@ import { IUser } from '@type/users';
 
 interface IUserRow {
   user: IUser;
-  reload: boolean;
-  setReload: Dispatch<SetStateAction<boolean>>;
 }
 
-const UserRow = ({ user, reload, setReload }: IUserRow) => {
+const UserRow = ({ user }: IUserRow) => {
   const { id, name, phone } = user;
 
   return (
@@ -42,7 +38,7 @@ const UserRow = ({ user, reload, setReload }: IUserRow) => {
             </Menus.List>
 
             <Modal.Window name="edit" title="Edit user">
-              <UserForm user={user} setReload={setReload} reload={reload} />
+              <UserForm user={user} />
             </Modal.Window>
           </Menus.Menu>
         </Modal>

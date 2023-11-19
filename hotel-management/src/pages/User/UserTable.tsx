@@ -1,5 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 // Components
 import Menus from '@component/Menus';
@@ -21,50 +20,21 @@ import Direction from '@commonStyle/Direction';
 import { StyledOperationTable } from './styled';
 import Spinner from '@commonStyle/Spinner';
 
-import { useQuery } from '@tanstack/react-query';
-import { getAllUsers } from '@service/userServices';
-import toast from 'react-hot-toast';
+// Hooks
+import { useUsers } from '@hook/users/useUsers';
 
-interface IUserTable {
-  reload: boolean;
-  setReload: Dispatch<SetStateAction<boolean>>;
-}
-
-const UserTable = ({ reload, setReload }: IUserTable) => {
+const UserTable = () => {
   const columnName = ['Id', 'Name', 'Phone'];
-
-  const [phoneSearch, setPhoneSearch] = useState('');
-  const [searchParams] = useSearchParams();
-  const sortByValue = searchParams.get('sortBy')
-    ? searchParams.get('sortBy')!
-    : 'id';
-  const orderByValue = searchParams.get('orderBy')
-    ? searchParams.get('orderBy')!
-    : 'asc';
-
-  const {
-    isLoading,
-    data: users,
-    error,
-  } = useQuery({
-    queryKey: ['cabins', sortByValue, orderByValue, phoneSearch],
-    queryFn: () => getAllUsers(sortByValue, orderByValue, phoneSearch),
-  });
-
-  if(error) {
-    toast.error(error.message);
-  }
+  const { isLoading, users } = useUsers();
 
   const renderUserRow = useCallback(
     (user: IUser) => (
       <UserRow
         user={user}
         key={user.id}
-        reload={reload}
-        setReload={setReload}
       />
     ),
-    [reload, setReload]
+    []
   );
 
   return (
@@ -74,10 +44,7 @@ const UserTable = ({ reload, setReload }: IUserTable) => {
           <OrderBy options={ORDERBY_OPTIONS} />
 
           <SortBy options={USER_PAGE.SORTBY_OPTIONS} />
-          <Search
-            setValueSearch={setPhoneSearch}
-            setPlaceHolder="Search by phone..."
-          />
+          <Search setPlaceHolder="Search by phone..." />
         </StyledOperationTable>
 
         {isLoading && <Spinner />}

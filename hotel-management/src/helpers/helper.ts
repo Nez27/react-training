@@ -1,6 +1,3 @@
-// Constants
-import { REQUIRED_FIELD_ERROR } from '../constants/formValidateMessage';
-
 /**
  * Convert value to currency format with value
  * @param value Value need to be converted
@@ -13,14 +10,4 @@ const formatCurrency = (value: number): string => {
   }).format(value);
 };
 
-/**
- * Create error string
- * @param errorCode Error code
- * @param msg Message error
- * @returns Return the full error string
- */
-const errorMsg = (errorCode: number, msg: string) => {
-  return `Error code: ${errorCode}. Message: ${msg}`;
-};
-
-export { errorMsg, formatCurrency, REQUIRED_FIELD_ERROR };
+export { formatCurrency };

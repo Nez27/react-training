@@ -1,173 +1,80 @@
-import toast from 'react-hot-toast';
-
 // Types
-import { Nullable } from '@type/common';
-import { IResponse } from '@type/responses';
 import { IRoom } from '@type/rooms';
 
-// Helpers
-import { sendRequest } from '@helper/sendRequest';
-import { errorMsg } from '@helper/helper';
+// Services
+import supabase from './supabaseService';
 
 // Constants
-import { STATUS_CODE, RESPONSE_MESSAGE } from '@constant/responseStatus';
-import { ROOM_PATH } from '@constant/path';
+const ROOMS_TABLE = 'rooms';
+const ERROR_FETCHING = "Can't fetch room data!";
+const ERROR_UPDATE_ROOM = "Can't update room!";
+const ERROR_CREATE_ROOM = "Can't create room!";
+const ERROR_DELETE_ROOM = "Can't delete room!";
 
 /**
- * Get all rooms from server
- * @returns Return all rooms in server
+ * Get all rooms from database
+ * @returns Return all rooms in database
  */
-const getAllRoom = async (): Promise<Nullable<IRoom[]>> => {
-  try {
-    const response = await sendRequest<IRoom[]>(ROOM_PATH);
+const getAllRooms = async (
+  sortBy: string,
+  orderBy: string,
+  roomName: string
+): Promise<IRoom[]> => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .select('*')
+    .order(sortBy, { ascending: orderBy === 'asc' })
+    .like('name', `%${roomName}%`);
 
-    if (response.statusCode === STATUS_CODE.OK) {
-      const rooms = response.data!;
-
-      return rooms;
-    } else {
-      throw new Error(errorMsg(response.statusCode, response.msg));
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_FETCHING);
   }
 
-  return null;
+  return data;
 };
 
-/**
- * Get room by id
- * @param roomId The id room need to be get
- * @returns Return the room object depend on room id
- */
-const getRoom = async (roomId: number): Promise<Nullable<IRoom>> => {
-  try {
-    const response = await sendRequest<IRoom>(ROOM_PATH + '/' + roomId);
-
-    if (response.statusCode !== STATUS_CODE.OK) {
-      throw new Error(errorMsg(response.statusCode, response.msg));
-    }
-
-    const rooms = response.data!;
-
-    return rooms;
-  } catch (error) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
-  }
-
-  return null;
-};
 
 /**
- * Update room into server
+ * Update room into database
  * @param room Room object need to be updated
- * @returns The response object
  */
-const updateRoom = async (room: IRoom): Promise<Nullable<IResponse<IRoom>>> => {
-  try {
-    const response = await sendRequest<IRoom>(
-      ROOM_PATH + '/' + room.id,
-      'PUT',
-      JSON.stringify(room)
-    );
+const updateRoom = async (room: IRoom): Promise<void> => {
+  const { error } = await supabase.from(ROOMS_TABLE).update(room).eq("id", room.id);
 
-    return response;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
+  if(error) {
+    console.error(error.message);
+    throw new Error(ERROR_UPDATE_ROOM);
   }
-
-  return null;
 };
 
 /**
- * Update room status
- * @param roomId The id room need to be updated
- * @param status Status of room
- * @param roomIdNew The new id room need to be updated
- * @returns Return the response object
- */
-const updateRoomStatus = async (
-  roomId: number,
-  status: boolean,
-  roomIdNew?: number
-): Promise<Nullable<IResponse<IRoom>>> => {
-  try {
-    if (!roomIdNew) {
-      const response = await sendRequest<IRoom>(
-        ROOM_PATH + '/' + roomId,
-        'PATCH',
-        JSON.stringify({ status: status })
-      );
-
-      return response;
-    }
-
-    // Update new room status
-    const resNewRoom = await sendRequest<IRoom>(
-      ROOM_PATH + '/' + roomIdNew,
-      'PATCH',
-      JSON.stringify({ status: status })
-    );
-
-    // Update old room status;
-    const resOldRoom = await sendRequest<IRoom>(
-      ROOM_PATH + '/' + roomId,
-      'PATCH',
-      JSON.stringify({ status: !status })
-    );
-
-    if (
-      resNewRoom.statusCode === STATUS_CODE.OK &&
-      resOldRoom.statusCode === STATUS_CODE.OK
-    ) {
-      return {
-        statusCode: STATUS_CODE.OK,
-        msg: RESPONSE_MESSAGE.UPDATE_SUCCESS,
-      };
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
-  }
-
-  return null;
-};
-
-/**
- * Add room to server
+ * Add room to database
  * @param room The room object need to be add
- * @returns The response object if complete or null
  */
-const addRoom = async (room: IRoom): Promise<Nullable<IResponse<IRoom>>> => {
-  try {
-    // Set default status room
-    room.status = false;
+const createRoom = async (room: IRoom): Promise<void> => {
+  // Set default status
+  room.status = false;
 
-    const response = await sendRequest<IRoom>(
-      ROOM_PATH,
-      'POST',
-      JSON.stringify(room)
-    );
+  const { error } = await supabase.from(ROOMS_TABLE).insert([room]);
 
-    if (response.statusCode !== STATUS_CODE.CREATE) {
-      throw new Error(errorMsg(response.statusCode, response.msg));
-    }
-
-    return response;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
+  if(error) {
+    console.error(error.message);
+    throw new Error(ERROR_CREATE_ROOM);
   }
-
-  return null;
 };
 
-export { getRoom, updateRoom, updateRoomStatus, getAllRoom, addRoom };
+/**
+ * Delete room in database
+ * @param idRoom The id of room need to delete
+ */
+const deleteRoom = async(idRoom: number) => {
+  const { error } = await supabase.from(ROOMS_TABLE).delete().eq('id', idRoom);
+
+  if(error) {
+    console.error(error.message);
+    throw new Error(ERROR_DELETE_ROOM);
+  }
+}
+
+export { getAllRooms, updateRoom, createRoom, deleteRoom };
