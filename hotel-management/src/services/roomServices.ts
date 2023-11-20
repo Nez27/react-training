@@ -3,6 +3,7 @@ import { IRoom } from '@type/rooms';
 
 // Services
 import supabase from './supabaseService';
+import { IDataState } from '@type/common';
 
 // Constants
 const ROOMS_TABLE = 'rooms';
@@ -34,47 +35,70 @@ const getAllRooms = async (
   return data;
 };
 
-
 /**
  * Update room into database
  * @param room Room object need to be updated
  */
-const updateRoom = async (room: IRoom): Promise<void> => {
-  const { error } = await supabase.from(ROOMS_TABLE).update(room).eq("id", room.id);
+const updateRoom = async (room: IRoom): Promise<IRoom> => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .update(room)
+    .eq('id', room.id)
+    .select()
+    .single();
 
-  if(error) {
+  if (error) {
     console.error(error.message);
     throw new Error(ERROR_UPDATE_ROOM);
   }
+
+  return data;
 };
 
 /**
  * Add room to database
  * @param room The room object need to be add
  */
-const createRoom = async (room: IRoom): Promise<void> => {
-  // Set default status
-  room.status = false;
+const createRoom = async (room: IRoom): Promise<IRoom> => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .insert(room)
+    .select()
+    .single();
 
-  const { error } = await supabase.from(ROOMS_TABLE).insert([room]);
-
-  if(error) {
+  if (error) {
     console.error(error.message);
     throw new Error(ERROR_CREATE_ROOM);
   }
+
+  return data;
 };
 
 /**
  * Delete room in database
  * @param idRoom The id of room need to delete
  */
-const deleteRoom = async(idRoom: number) => {
+const deleteRoom = async (idRoom: number) => {
   const { error } = await supabase.from(ROOMS_TABLE).delete().eq('id', idRoom);
 
-  if(error) {
+  if (error) {
     console.error(error.message);
     throw new Error(ERROR_DELETE_ROOM);
   }
-}
+};
 
-export { getAllRooms, updateRoom, createRoom, deleteRoom };
+const getRoomsAvailable = async (): Promise<IDataState[]> => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .select('id, name')
+    .eq('status', false);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_FETCHING);
+  }
+
+  return data;
+};
+
+export { getAllRooms, updateRoom, createRoom, deleteRoom, getRoomsAvailable };

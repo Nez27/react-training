@@ -1,3 +1,8 @@
 type Nullable<T> = T | null;
 
-export type { Nullable };
+interface IDataState {
+  id: number;
+  name: string;
+}
+
+export type { Nullable, IDataState };

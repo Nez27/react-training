@@ -6,6 +6,7 @@ import { createUser as createUserFn } from '@service/userServices';
 
 // Constants
 import { ADD_SUCCESS } from '@constant/messages';
+import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
 
 /**
  * Create user in database
@@ -13,12 +14,19 @@ import { ADD_SUCCESS } from '@constant/messages';
  */
 const useCreateUser = () => {
   const queryClient = useQueryClient();
+  const { dispatch } = useUserRoomAvailable();
 
   const { mutate: createUser, isPending: isCreating } = useMutation({
     mutationFn: createUserFn,
-    onSuccess: () => {
+    onSuccess: (user) => {
       toast.success(ADD_SUCCESS);
       queryClient.invalidateQueries({ queryKey: ['users'] });
+
+      // Add user to global statement
+      dispatch!({
+        type: 'addUser',
+        payload: [{ id: user.id, name: user.name }],
+      });
     },
     onError: (err) => toast.error(err.message),
   });

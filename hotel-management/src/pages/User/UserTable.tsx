@@ -24,7 +24,7 @@ import Spinner from '@commonStyle/Spinner';
 import { useUsers } from '@hook/users/useUsers';
 
 const UserTable = () => {
-  const columnName = ['Id', 'Name', 'Phone'];
+  const columnName = ['Id', 'Name', 'Phone', 'Is Booked'];
   const { isLoading, users } = useUsers();
 
   const renderUserRow = useCallback(
@@ -51,7 +51,7 @@ const UserTable = () => {
 
         {users && users.length ? (
           <Menus>
-            <Table columns="10% 40% 35% 15%">
+            <Table columns="10% 35% 30% 15% 10%">
               <Table.Header headerColumn={columnName} />
               <Table.Body<IUser> data={users} render={renderUserRow} />
             </Table>

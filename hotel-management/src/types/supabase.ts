@@ -65,7 +65,7 @@ export interface Database {
           id?: number
           name: string
           price: number
-          status: boolean
+          status?: boolean
         }
         Update: {
           id?: number
@@ -78,16 +78,19 @@ export interface Database {
       users: {
         Row: {
           id: number
+          isBooked: boolean
           name: string
           phone: string
         }
         Insert: {
           id?: number
+          isBooked?: boolean
           name: string
           phone: string
         }
         Update: {
           id?: number
+          isBooked?: boolean
           name?: string
           phone?: string
         }

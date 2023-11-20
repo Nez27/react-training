@@ -14,13 +14,18 @@ interface IUserRow {
 }
 
 const UserRow = ({ user }: IUserRow) => {
-  const { id, name, phone } = user;
+  const { id, name, phone, isBooked } = user;
 
   return (
     <Table.Row>
       <div>{id}</div>
       <div>{name}</div>
       <div>{phone}</div>
+      <div>{
+        isBooked
+          ? 'Yes'
+          : 'No'
+      }</div>
       <div>
         <Modal>
           <Menus.Menu>
