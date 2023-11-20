@@ -1,9 +1,25 @@
-import styled, { css } from 'styled-components';
+import styled, { RuleSet, css } from 'styled-components';
 
-type TButtonStyle = 'primary' | 'secondary';
+interface IVariations {
+  [key: string]: RuleSet<object>;
+}
+
+const variations: IVariations = {
+  primary: css`
+    background-color: var(--primary-color);
+    color: var(--light-text);
+  `,
+  secondary: css`
+    background-color: var(--secondary-btn-color);
+  `,
+  danger: css`
+    background-color: var(--danger-btn-color);
+    color: var(--light-text);
+  `,
+} as const;
 
 interface IButtonStyle {
-  styled?: TButtonStyle;
+  variations?: keyof typeof variations;
 }
 
 const Button = styled.button<IButtonStyle>`
@@ -16,22 +32,16 @@ const Button = styled.button<IButtonStyle>`
 
   border-radius: var(--radius-md);
 
-  ${(props) =>
-    props.styled === 'primary' &&
-    css`
-      background-color: var(--primary-color);
-      color: var(--light-text);
-    `}
+  ${(props) => variations[props.variations!]}
 
-  ${(props) =>
-    props.styled === 'secondary' &&
-    css`
-      background-color: var(--secondary-btn-color);
-    `}
+  &:disabled,
+  &[disabled] {
+    cursor: no-drop;
+  }
 `;
 
 Button.defaultProps = {
-  styled: 'primary',
+  variations: 'primary',
 };
 
 export default Button;

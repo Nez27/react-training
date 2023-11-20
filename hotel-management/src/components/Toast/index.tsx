@@ -41,7 +41,7 @@ const Toast = ({
 Toast.defaultProps = {
   position: 'top-center',
   gutter: 12,
-  containerStyle: { margin: '8px', zIndex: 1 },
+  containerStyle: { margin: '8px', zIndex: 2000 },
   success: {
     duration: 3000,
   },

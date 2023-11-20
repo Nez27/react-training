@@ -1,5 +1,6 @@
-const TIME_OUT_SEC = 1;
 const DEFAULT_SORT_BY = 'id';
 const DEFAULT_ORDER_BY = 'asc';
+const supabaseUrl = 'https://pjqujsjzzdrlrgqbxepe.supabase.co'
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
 
-export { TIME_OUT_SEC, DEFAULT_SORT_BY, DEFAULT_ORDER_BY };
+export { DEFAULT_SORT_BY, DEFAULT_ORDER_BY, supabaseKey, supabaseUrl };
