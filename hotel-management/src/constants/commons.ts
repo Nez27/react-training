@@ -9,16 +9,8 @@ const USER_PAGE = {
       label: 'Sort by name',
     },
     {
-      value: 'identifiedCode',
-      label: 'Sort by identified code',
-    },
-    {
       value: 'phone',
       label: 'Sort by phone',
-    },
-    {
-      value: 'roomId',
-      label: 'Sort by room',
     },
   ],
 };
@@ -45,28 +37,15 @@ const ROOM_PAGE = {
       label: 'Sort by name',
     },
     {
-      value: 'finalPrice',
+      value: 'price',
       label: 'Sort by price',
     },
   ],
 };
 
-const INIT_VALUE_USER_FORM = {
-  name: '',
-  id: 0,
-  identifiedCode: '',
-  phone: '',
-};
-
-const INIT_VALUE_ROOM_FORM = {
-  name: '',
-  id: 0,
-  price: 0,
-  discount: 0,
-};
-
 const FORM = {
   EDIT: 'edit',
+  DELETE: 'delete',
   USER: 'user-form',
   ROOM: 'room-form',
 };
@@ -83,6 +62,4 @@ export {
   FORM,
   REGEX,
   ORDERBY_OPTIONS,
-  INIT_VALUE_USER_FORM,
-  INIT_VALUE_ROOM_FORM,
 };

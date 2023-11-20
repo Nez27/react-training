@@ -5,19 +5,26 @@ import { StyledSearch } from './styled';
 
 // Hooks
 import { useDebounce } from '@hook/useDebounce';
+import { useSearchParams } from 'react-router-dom';
+import { Nullable } from '@type/common';
 
 interface ISearch {
   setPlaceHolder: string;
-  setValueSearch: (phone: string) => void;
 }
 
-const Search = ({ setValueSearch, setPlaceHolder }: ISearch) => {
-  const [query, setQuery] = useState('');
-  const debounceValue = useDebounce<string>(query, 700);
+const Search = ({ setPlaceHolder }: ISearch) => {
+  const field = 'search';
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [query, setQuery] = useState<Nullable<string>>(null);
+  const debounceValue = useDebounce<Nullable<string>>(query, 700);
 
   useEffect(() => {
-    setValueSearch(debounceValue);
-  }, [debounceValue, setValueSearch]);
+    if (debounceValue !== null) {
+      searchParams.set(field, debounceValue);
+
+      setSearchParams(searchParams);
+    }
+  }, [debounceValue, searchParams, setSearchParams]);
 
   return (
     <StyledSearch
