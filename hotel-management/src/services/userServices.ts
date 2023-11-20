@@ -1,88 +1,67 @@
-import toast from 'react-hot-toast';
-
-// Constants
-import { USER_PATH } from '@constant/path';
-import { STATUS_CODE } from '@constant/responseStatus';
-
 // Types
-import { Nullable } from '@type/common';
-import { IResponse } from '@type/responses';
 import { IUser } from '@type/users';
 
-// Helpers
-import { sendRequest } from '@helper/sendRequest';
-import { errorMsg } from '@helper/helper';
+// Services
+import supabase from './supabaseService';
+
+const USERS_TABLE = 'users';
+const ERROR_FETCHING = "Users can't be loaded!";
+const ERROR_CREATE_USER = "Can't create user!";
+const ERROR_UPDATE_USER = "Can't update user!";
 
 /**
- * Create user to the server
+ * Create user to the database
  * @param user The user object need to be created
- * @returns The IResponse object if success or null
  */
-const createUser = async (user: IUser): Promise<Nullable<IResponse<IUser>>> => {
-  try {
-    const response = await sendRequest<IUser>(
-      USER_PATH,
-      'POST',
-      JSON.stringify(user)
-    );
+const createUser = async (user: IUser): Promise<void> => {
+  const { error } = await supabase.from(USERS_TABLE).insert([user]);
 
-    if (response.statusCode !== STATUS_CODE.CREATE) {
-      throw new Error(errorMsg(response.statusCode, response.msg));
-    }
-
-    return response;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_CREATE_USER);
   }
-
-  return null;
-}
+};
 
 /**
- * Update the user to the server
+ * Update the user to the database
  * @param user The user object need to be updated
- * @returns The IResponse object if update success or null
  */
-const updateUser = async (user: IUser): Promise<Nullable<IResponse<IUser>>> => {
-  try {
-    const response = await sendRequest<IUser>(
-      USER_PATH + '/' + user.id,
-      'PUT',
-      JSON.stringify(user)
-    );
+const updateUser = async (user: IUser): Promise<void> => {
+  const { error } = await supabase
+    .from(USERS_TABLE)
+    .update(user)
+    .eq('id', user.id);
 
-    if (response.statusCode !== STATUS_CODE.OK) {
-      throw new Error(errorMsg(response.statusCode, response.msg));
-    }
-
-    return response;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    }
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_UPDATE_USER);
   }
-
-  return null;
 };
 
 /**
- * Checkout user
- * @param user The user need to be checkout
- * @returns The IResponse object if checkout success or not
+ * Return data of users from database
+ * @param sortBy Sort by column
+ * @param orderBy Order by ascending or descending
+ * @param phoneSearch The phone need to be search
+ * @returns The data of users from database
  */
-const checkOutUser = async (user: IUser): Promise<Nullable<IResponse<IUser>>> => {
-  const tempUser = user;
+const getAllUsers = async (
+  sortBy: string,
+  orderBy: string,
+  phoneSearch: string
+): Promise<IUser[]> => {
+  const { data, error } = await supabase
+    .from(USERS_TABLE)
+    .select('*')
+    .order(sortBy, { ascending: orderBy === 'asc' })
+    .like('phone', `%${phoneSearch}%`);
 
-  if (tempUser) {
-    tempUser.roomId = 0;
-    const resUpdateUser = await updateUser(tempUser);
-
-    return resUpdateUser;
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_FETCHING);
   }
 
-  return null;
+  return data;
 };
 
-export { updateUser, checkOutUser, createUser };
+export { updateUser, createUser, getAllUsers };
