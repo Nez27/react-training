@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menus snapshot testing render 1`] = `
+<div
+  className="sc-bdnyFh cumhtC"
+>
+  <button
+    aria-label="Menu item 123"
+    className="sc-dlniIP jergss"
+    onClick={[Function]}
+  >
+    <svg
+      aria-hidden="true"
+      fill="currentColor"
+      height="1em"
+      stroke="currentColor"
+      strokeWidth="0"
+      style={
+        {
+          "color": undefined,
+        }
+      }
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        clipRule="evenodd"
+        d="M10.5 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
+        fillRule="evenodd"
+      />
+    </svg>
+  </button>
+</div>
+`;

@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form testing snapshot render 1`] = `
+<form
+  className="sc-bdnyFh bzxSLR"
+  onSubmit={[Function]}
+>
+  <div
+    className="sc-dlniIP gZHESL"
+  >
+    <label
+      className="sc-hKFymg ddFGOI"
+    >
+      Name
+    </label>
+    <div>
+      <input
+        className="sc-jSFipO enjwJE"
+        id="name"
+        type="text"
+      />
+      <p
+        className="sc-eCAqax bvOWPP"
+      >
+        This is error message
+      </p>
+    </div>
+  </div>
+  <div
+    className="sc-dlniIP gZHESL"
+  >
+    <label
+      className="sc-hKFymg ddFGOI"
+    >
+      Price
+    </label>
+    <div>
+      <input
+        className="sc-jSFipO enjwJE"
+        id="price"
+        type="text"
+      />
+      <p
+        className="sc-eCAqax bvOWPP"
+      >
+        This is error message
+      </p>
+    </div>
+  </div>
+  <div
+    className="sc-gtsqUy idhRSV"
+  >
+    <button
+      className="sc-gKAaef sc-jrsKJM gifCOZ KLoQf"
+      disabled={true}
+      name="submit"
+      type="submit"
+      variations="primary"
+    >
+      Confirm
+    </button>
+    <button
+      className="sc-gKAaef sc-jrsKJM gbgZUe KLoQf"
+      onClick={[Function]}
+      type="button"
+      variations="secondary"
+    >
+      Close
+    </button>
+  </div>
+</form>
+`;
