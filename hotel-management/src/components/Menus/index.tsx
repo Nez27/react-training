@@ -14,7 +14,7 @@ import MenusContext from '@context/MenuContext';
 
 // Types
 import { Nullable } from '@type/common';
-import ButtonIcon from '@component/ButtonIcon/ButtonIcon';
+import ButtonIcon from '@component/ButtonIcon';
 import { COLOR } from '@constant/styles';
 
 interface IButton {

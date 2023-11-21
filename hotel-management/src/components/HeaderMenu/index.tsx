@@ -1,7 +1,7 @@
 // Components
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { HiOutlineLogout } from 'react-icons/hi';
-import ButtonIcon from '@component/ButtonIcon/ButtonIcon';
+import ButtonIcon from '@component/ButtonIcon';
 
 // Styled
 import { StyledHeaderMenu } from './styled';
