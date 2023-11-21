@@ -14,7 +14,11 @@ import * as messages from '@constant/messages';
 const useDeleteRoom = () => {
   const queryClient = useQueryClient();
 
-  const { isPending: isDeleting, mutate: deleteRoom } = useMutation({
+  const {
+    isPending: isDeleting,
+    mutate: deleteRoom,
+    isSuccess,
+  } = useMutation({
     mutationFn: deleteRoomFn,
     onSuccess: () => {
       toast.success(messages.DELETE_SUCCESS);
@@ -25,7 +29,7 @@ const useDeleteRoom = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isDeleting, deleteRoom };
+  return { isDeleting, deleteRoom, isSuccess };
 };
 
 export { useDeleteRoom };

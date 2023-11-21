@@ -18,7 +18,7 @@ const useRooms = () => {
   const {
     isLoading,
     data: rooms,
-    error,
+    error
   } = useQuery({
     queryKey: ['rooms', sortByValue, orderByValue, phoneSearch],
     queryFn: () => getAllRooms(sortByValue, orderByValue, phoneSearch),
