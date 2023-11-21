@@ -18,7 +18,6 @@ import { REGEX } from '../../constants/commons.ts';
 import { isValidRegex, isValidString } from '@helper/validators.ts';
 
 // Components
-import FormRow from '@component/LabelControl/index.tsx';
 import Form from '@component/Form/index.tsx';
 
 // Hooks
@@ -83,7 +82,7 @@ const RoomForm = ({ onCloseModal, room }: IRoomFormProp) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow label="Name" error={errors?.name?.message}>
+      <Form.Row label="Name" error={errors?.name?.message}>
         <Input
           type="text"
           id="name"
@@ -96,9 +95,9 @@ const RoomForm = ({ onCloseModal, room }: IRoomFormProp) => {
             onChange: () => trigger('name'),
           })}
         />
-      </FormRow>
+      </Form.Row>
 
-      <FormRow label="Price" error={errors?.price?.message}>
+      <Form.Row label="Price" error={errors?.price?.message}>
         <Input
           type="text"
           id="price"
@@ -113,7 +112,7 @@ const RoomForm = ({ onCloseModal, room }: IRoomFormProp) => {
             onChange: () => trigger('price'),
           })}
         />
-      </FormRow>
+      </Form.Row>
 
       <Form.Action>
         <FormBtn

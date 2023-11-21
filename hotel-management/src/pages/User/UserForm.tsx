@@ -8,7 +8,6 @@ import Input from '@commonStyle/Input.ts';
 
 // Components
 import Form from '@component/Form/index.tsx';
-import FormRow from '@component/LabelControl/index.tsx';
 
 // Helpers
 import { isValidRegex } from '@helper/validators.ts';
@@ -76,7 +75,7 @@ const UserForm = ({ onCloseModal, user }: IUserFormProp) => {
   return (
     <FormProvider {...formMethods}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormRow label="Full Name" error={errors?.name?.message}>
+        <Form.Row label="Full Name" error={errors?.name?.message}>
           <Input
             type="text"
             id="name"
@@ -89,9 +88,9 @@ const UserForm = ({ onCloseModal, user }: IUserFormProp) => {
               onChange: () => trigger('name'),
             })}
           />
-        </FormRow>
+        </Form.Row>
 
-        <FormRow label="Phone" error={errors?.phone?.message}>
+        <Form.Row label="Phone" error={errors?.phone?.message}>
           <Input
             type="text"
             id="phone"
@@ -104,7 +103,7 @@ const UserForm = ({ onCloseModal, user }: IUserFormProp) => {
               onChange: () => trigger('phone'),
             })}
           />
-        </FormRow>
+        </Form.Row>
 
         <Form.Action>
           <FormBtn
