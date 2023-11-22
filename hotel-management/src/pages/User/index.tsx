@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 // Components
 import UserTable from './UserTable';
 
@@ -17,7 +15,6 @@ import { FORM } from '@constant/commons';
 
 const User = () => {
   const TITLE = 'Add user';
-  const [reload, setReload] = useState(true);
 
   return (
     <>
@@ -33,12 +30,12 @@ const User = () => {
               )}
             />
             <Modal.Window name={FORM.USER} title={TITLE}>
-              <UserForm setReload={setReload} reload={reload} />
+              <UserForm />
             </Modal.Window>
           </Modal>
         </Direction>
 
-        <UserTable reload={reload} setReload={setReload} />
+        <UserTable />
       </StyledUser>
     </>
   );
