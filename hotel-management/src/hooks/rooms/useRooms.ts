@@ -1,9 +1,9 @@
-import toast from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 
 // Services
-import { getAllRooms } from "@service/roomServices";
+import { getAllRooms } from '@service/roomServices';
 
 /**
  * Fetch room from database
@@ -13,12 +13,12 @@ const useRooms = () => {
   const [searchParams] = useSearchParams();
   const sortByValue = searchParams.get('sortBy') || 'id';
   const orderByValue = searchParams.get('orderBy') || 'asc';
-  const phoneSearch = searchParams.get('search') || ''
+  const phoneSearch = searchParams.get('search') || '';
 
   const {
     isLoading,
     data: rooms,
-    error
+    error,
   } = useQuery({
     queryKey: ['rooms', sortByValue, orderByValue, phoneSearch],
     queryFn: () => getAllRooms(sortByValue, orderByValue, phoneSearch),

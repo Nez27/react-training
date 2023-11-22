@@ -18,8 +18,7 @@ const useUpdateRoom = () => {
 
   const {
     mutate: updateRoom,
-    isPending: isUpdating,
-    isSuccess,
+    isPending: isUpdating
   } = useMutation({
     mutationFn: updateRoomFn,
     onSuccess: (room) => {
@@ -35,7 +34,7 @@ const useUpdateRoom = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isUpdating, updateRoom, isSuccess };
+  return { isUpdating, updateRoom };
 };
 
 export { useUpdateRoom };

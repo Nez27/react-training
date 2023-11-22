@@ -20,7 +20,10 @@ const config: Config = {
     '@page/(.*)': ['<rootDir>/src/pages/$1'],
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  setupFiles: ['<rootDir>/.jest/setEnvVar.ts']
+  setupFiles: ['<rootDir>/.jest/setEnvVar.ts'],
+  testEnvironmentOptions: {
+    customExportConditions: [''],
+  },
 };
 
 export default config;

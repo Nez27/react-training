@@ -17,7 +17,6 @@ const useDeleteRoom = () => {
   const {
     isPending: isDeleting,
     mutate: deleteRoom,
-    isSuccess,
   } = useMutation({
     mutationFn: deleteRoomFn,
     onSuccess: () => {
@@ -29,7 +28,7 @@ const useDeleteRoom = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isDeleting, deleteRoom, isSuccess };
+  return { isDeleting, deleteRoom };
 };
 
 export { useDeleteRoom };

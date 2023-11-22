@@ -16,7 +16,11 @@ const useUpdateUser = () => {
   const queryClient = useQueryClient();
   const { dispatch } = useUserRoomAvailable();
 
-  const { mutate: updateUser, isPending: isUpdating } = useMutation({
+  const {
+    mutate: updateUser,
+    isPending: isUpdating,
+    isSuccess,
+  } = useMutation({
     mutationFn: updateUserFn,
     onSuccess: (user) => {
       toast.success(UPDATE_SUCCESS);
@@ -31,7 +35,7 @@ const useUpdateUser = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isUpdating, updateUser };
+  return { isUpdating, updateUser, isSuccess };
 };
 
 export { useUpdateUser };
