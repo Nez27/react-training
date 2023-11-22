@@ -54,7 +54,7 @@ const getAllUsers = async (
     .from(USERS_TABLE)
     .select('*')
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .like('phone', `%${phoneSearch}%`);
+    .ilike('phone', `%${phoneSearch}%`);
 
   if (error) {
     console.error(error.message);

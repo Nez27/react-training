@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import isPropValid from '@emotion/is-prop-valid';
 import { StyleSheetManager } from 'styled-components';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Components
 import AppLayout from './components/AppLayout';
@@ -13,9 +14,17 @@ import NotFound from './pages/NotFound';
 import * as PATH from './constants/path';
 import Toast from './components/Toast';
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    }
+  }
+});
+
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
         <BrowserRouter>
           <Routes>
@@ -31,7 +40,7 @@ function App() {
       </StyleSheetManager>
 
       <Toast />
-    </>
+    </QueryClientProvider>
   );
 }
 

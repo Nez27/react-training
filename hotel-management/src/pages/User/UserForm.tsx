@@ -1,14 +1,7 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-import toast from 'react-hot-toast';
-
 // Hooks
 import { FormProvider, useForm } from 'react-hook-form';
+import { useCreateUser } from '@hook/users/useCreateUser.ts';
+import { useUpdateUser } from '@hook/users/useUpdateUser.ts';
 
 // Styled
 import Input from '@commonStyle/Input.ts';
@@ -16,139 +9,73 @@ import Input from '@commonStyle/Input.ts';
 // Components
 import Form from '@component/Form/index.tsx';
 import FormRow from '@component/LabelControl/index.tsx';
-import Select, { ISelectOptions } from '@component/Select/index.tsx';
 
 // Helpers
-import { isEmptyObj, isValidRegex } from '@helper/validators.ts';
+import { isValidRegex } from '@helper/validators.ts';
 
-// Constants
-import { ADD_SUCCESS, EDIT_SUCCESS } from '@constant/messages.ts';
 import {
   INVALID_FIELD,
   INVALID_PHONE,
   REQUIRED_FIELD_ERROR,
 } from '@constant/formValidateMessage.ts';
-import { INIT_VALUE_USER_FORM, REGEX } from '@constant/commons.ts';
+import { REGEX } from '@constant/commons.ts';
 
 // Styled
 import { FormBtn } from './styled.ts';
 
-// Services
-import { getAllRoom, updateRoomStatus } from '@service/roomServices.ts';
-import { createUser, updateUser } from '@service/userServices.ts';
-
 // Types
-import { Nullable } from '@type/common.ts';
 import { IUser } from '@type/users.ts';
-import { IRoom } from '@type/rooms.ts';
 
 interface IUserFormProp {
   onCloseModal?: () => void;
-  reload: boolean;
-  setReload: Dispatch<SetStateAction<boolean>>;
-  user?: Nullable<IUser>;
+  user?: IUser;
 }
 
-const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
-  const formMethods = useForm<IUser>();
+const UserForm = ({ onCloseModal, user }: IUserFormProp) => {
+  const { isCreating, createUser } = useCreateUser();
+  const { isUpdating, updateUser } = useUpdateUser();
+  const isLoading = isCreating || isUpdating;
+  const {id: editId, ...editValues} = {...user};
+  
+  const formMethods = useForm<IUser>({
+    defaultValues: editId 
+      ? editValues 
+      : {}
+  });
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, isValid, isSubmitting },
+    formState: { errors, isDirty, isValid },
     trigger,
   } = formMethods;
-  const [rooms, setRooms] = useState<IRoom[]>([]);
-  const [options, setOptions] = useState<ISelectOptions[]>();
-
-  // Init value when edit form and load options
-  useEffect(() => {
-    const load = async () => {
-      const options: ISelectOptions[] = [];
-      const tempUser = !user ? { roomId: 0 } : { ...user };
-
-      // Load and set default options room
-      if (rooms.length > 0) {
-        // Init first options
-        options.push({
-          label: '---Select---',
-          value: '0',
-        });
-
-        rooms.forEach((item) => {
-          if (!item.status || tempUser?.roomId === item.id)
-            options.push({
-              label: item.name!,
-              value: item.id!.toString(),
-            });
-        });
-      }
-
-      if (options.length > 0) {
-        setOptions(options);
-      }
-
-      if (!isEmptyObj(tempUser)) {
-        // Init value
-        reset(tempUser);
-      } else {
-        reset(INIT_VALUE_USER_FORM);
-      }
-    };
-
-    load();
-  }, [reset, user, rooms]);
 
   // Submit form
-  const onSubmit = useCallback(
-    async (newUser: IUser) => {
+  const onSubmit = 
+    (newUser: IUser) => {
       if (!user) {
         // Add request
-        const response = await createUser(newUser);
-
-        if (response) {
-          toast.success(ADD_SUCCESS);
-        }
-
-        // Update room status
-        updateRoomStatus(newUser.roomId, true);
+        createUser(newUser, {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        });
       } else {
         // Edit request
-        const response = await updateUser(newUser);
-
-        if (response) {
-          toast.success(EDIT_SUCCESS);
-        }
-
-        // Update room status
-        updateRoomStatus(user!.roomId, true, newUser.roomId);
-      }
-      // Reload table data
-      setReload(!reload);
-
-      reset();
-      onCloseModal!();
-    },
-    [onCloseModal, reload, reset, setReload, user]
-  );
-
-  // Load all rooms
-  useEffect(() => {
-    const loadRoom = async () => {
-      const rooms = await getAllRoom();
-
-      if (rooms) {
-        setRooms(rooms);
+        newUser.id = editId!;
+        updateUser(newUser, {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          }
+        });
       }
     };
-
-    loadRoom();
-  }, [onSubmit]);
 
   return (
     <FormProvider {...formMethods}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Input type="hidden" id="id" {...register('id')} />
         <FormRow label="Full Name" error={errors?.name?.message}>
           <Input
             type="text"
@@ -160,25 +87,6 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
                   isValidRegex(new RegExp(REGEX.NAME), value) || INVALID_FIELD,
               },
               onChange: () => trigger('name'),
-            })}
-          />
-        </FormRow>
-
-        <FormRow
-          label="Identified Code"
-          error={errors?.identifiedCode?.message}
-        >
-          <Input
-            type="text"
-            id="identifiedCode"
-            {...register('identifiedCode', {
-              required: REQUIRED_FIELD_ERROR,
-              validate: {
-                checkIdentifiedCode: (v) =>
-                  isValidRegex(new RegExp(REGEX.NUMBER), v.toString()) ||
-                  INVALID_FIELD,
-              },
-              onChange: () => trigger('identifiedCode'),
             })}
           />
         </FormRow>
@@ -198,32 +106,19 @@ const UserForm = ({ onCloseModal, reload, setReload, user }: IUserFormProp) => {
           />
         </FormRow>
 
-        <FormRow label="Room">
-          {options && options.length > 1 ? (
-            <Select
-              id="roomId"
-              options={options!}
-              ariaLabel="RoomId"
-              optionsConfigForm={{
-                valueAsNumber: true,
-                onChange: () => trigger('roomId'),
-                validate: (v) => v !== 0,
-              }}
-            />
-          ) : (
-            <p>No room available!</p>
-          )}
-        </FormRow>
-
         <Form.Action>
           <FormBtn
             type="submit"
             name="submit"
-            disabled={!isDirty || !isValid || isSubmitting}
+            disabled={!isDirty || !isValid || isLoading}
           >
-            {!user ? 'Add' : 'Save'}
+            {
+              !user 
+                ? 'Add' 
+                : 'Save'
+            }
           </FormBtn>
-          <FormBtn type="button" styled="secondary" onClick={onCloseModal}>
+          <FormBtn type="button" variations="secondary" onClick={onCloseModal}>
             Close
           </FormBtn>
         </Form.Action>

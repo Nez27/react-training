@@ -24,7 +24,7 @@ const getAllRooms = async (
     .from(ROOMS_TABLE)
     .select('*')
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .like('name', `%${roomName}%`);
+    .ilike('name', `%${roomName}%`);
 
   if (error) {
     console.error(error.message);
