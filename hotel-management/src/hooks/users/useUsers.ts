@@ -1,9 +1,9 @@
-import toast from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 
 // Services
-import { getAllUsers } from "@service/userServices";
+import { getAllUsers } from '@service/userServices';
 
 /**
  * Fetch data of users from database
@@ -13,7 +13,7 @@ const useUsers = () => {
   const [searchParams] = useSearchParams();
   const sortByValue = searchParams.get('sortBy') || 'id';
   const orderByValue = searchParams.get('orderBy') || 'asc';
-  const phoneSearch = searchParams.get('search') || ''
+  const phoneSearch = searchParams.get('search') || '';
 
   const {
     isLoading,

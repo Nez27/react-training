@@ -1,9 +1,9 @@
 // Types
 import { IRoom } from '@type/rooms';
+import { IDataState } from '@type/common';
 
 // Services
 import supabase from './supabaseService';
-import { IDataState } from '@type/common';
 
 // Constants
 const ROOMS_TABLE = 'rooms';
@@ -25,7 +25,7 @@ const getAllRooms = async (
     .from(ROOMS_TABLE)
     .select('*')
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .like('name', `%${roomName}%`);
+    .ilike('name', `%${roomName}%`);
 
   if (error) {
     console.error(error.message);

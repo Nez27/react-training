@@ -1,9 +1,9 @@
 // Types
 import { IUser } from '@type/users';
+import { IDataState } from '@type/common';
 
 // Services
 import supabase from './supabaseService';
-import { IDataState } from '@type/common';
 
 const USERS_TABLE = 'users';
 const ERROR_FETCHING = "Users can't be loaded!";
@@ -65,7 +65,7 @@ const getAllUsers = async (
     .from(USERS_TABLE)
     .select('*')
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .like('phone', `%${phoneSearch}%`);
+    .ilike('phone', `%${phoneSearch}%`);
 
   if (error) {
     console.error(error.message);

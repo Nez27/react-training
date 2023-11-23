@@ -15,7 +15,6 @@ interface IConfirmMessage {
 
 const ConfirmMessage = memo(
   ({ message, disabled, onConfirm, onCloseModal }: IConfirmMessage) => {
-
     return (
       <StyledConfirmDelete>
         <p>{message}</p>

@@ -1,5 +1,7 @@
-import { IDataState } from '@type/common';
 import { Dispatch, createContext } from 'react';
+
+// Types
+import { IDataState } from '@type/common';
 
 interface IUserRoomState {
   usersAvailable: IDataState[];
@@ -36,16 +38,19 @@ const initialState: IUserRoomState = {
 
 const reducer = (state: IUserRoomState, action: IAction) => {
   switch (action.type) {
+
     case 'initRoom':
       return {
         ...state,
         roomsAvailable: action.payload,
       };
+
     case 'initUser':
       return {
         ...state,
         usersAvailable: action.payload,
       };
+
     case 'addUser': {
       const tempArr = state.usersAvailable;
       const itemExist = state.usersAvailable.find(
@@ -61,6 +66,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         usersAvailable: tempArr,
       };
     }
+
     case 'updateUserName': {
       const tempArr = state.usersAvailable;
 
@@ -77,6 +83,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         usersAvailable: tempArr,
       };
     }
+
     case 'removeUser':
       return {
         ...state,
@@ -84,6 +91,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
           (item) => item.id !== action.payload[0].id
         ),
       };
+
     case 'addRoom': {
       const tempArr = state.roomsAvailable;
       const itemExist = state.roomsAvailable.find(
@@ -99,6 +107,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
+
     case 'updateRoomName': {
       const tempArr = state.roomsAvailable;
 
@@ -115,6 +124,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
+
     case 'removeRoom':
       return {
         ...state,
@@ -122,6 +132,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
           (item) => item.id !== action.payload[0].id
         ),
       };
+      
     default:
       throw new Error('Action unknown');
   }
