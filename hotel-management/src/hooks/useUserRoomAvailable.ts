@@ -1,5 +1,7 @@
-import { UserRoomAvailableContext } from '@context/UserRoomAvailableContext';
 import { useContext } from 'react';
+
+// Contexts
+import { UserRoomAvailableContext } from '@context/UserRoomAvailableContext';
 
 const useUserRoomAvailable = () => {
   const context = useContext(UserRoomAvailableContext);

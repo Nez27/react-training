@@ -43,20 +43,6 @@ const ROOM_PAGE = {
   ],
 };
 
-const INIT_VALUE_USER_FORM = {
-  name: '',
-  id: 0,
-  identifiedCode: '',
-  phone: '',
-};
-
-const INIT_VALUE_ROOM_FORM = {
-  name: '',
-  id: 0,
-  price: 0,
-  discount: 0,
-};
-
 const FORM = {
   EDIT: 'edit',
   DELETE: 'delete',
@@ -76,6 +62,4 @@ export {
   FORM,
   REGEX,
   ORDERBY_OPTIONS,
-  INIT_VALUE_USER_FORM,
-  INIT_VALUE_ROOM_FORM,
 };

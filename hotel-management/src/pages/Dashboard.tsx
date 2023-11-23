@@ -1,5 +1,7 @@
-import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
 import styled from 'styled-components';
+
+// Hooks
+import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
 
 const StyledDashboard = styled.main`
   padding: 20px;
