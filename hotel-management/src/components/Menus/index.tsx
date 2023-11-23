@@ -5,6 +5,7 @@ import { HiEllipsisVertical } from 'react-icons/hi2';
 
 // Hooks
 import { useOutsideClick } from '@hook/useOutsideClick';
+import ButtonIcon from '@component/ButtonIcon';
 
 // Styled
 import { StyledMenu, StyledList, StyledToggle } from './styled';
@@ -14,7 +15,8 @@ import MenusContext from '@context/MenuContext';
 
 // Types
 import { Nullable } from '@type/common';
-import ButtonIcon from '@component/ButtonIcon';
+
+// Constants
 import { COLOR } from '@constant/styles';
 
 interface IButton {

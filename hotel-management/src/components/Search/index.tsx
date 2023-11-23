@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 // Styled
 import { StyledSearch } from './styled';
 
 // Hooks
 import { useDebounce } from '@hook/useDebounce';
-import { useSearchParams } from 'react-router-dom';
+
+// Types
 import { Nullable } from '@type/common';
 
 interface ISearch {
