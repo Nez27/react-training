@@ -1,20 +1,16 @@
 import { useRooms } from '@hook/rooms/useRooms';
-// import { useCreateRoom } from '@hook/rooms/useCreateRoom';
-import { setupServer } from 'msw/node';
-import { http } from 'msw';
+import { useCreateRoom } from '@hook/rooms/useCreateRoom';
 import {
-  QueryCache,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import { renderHook, waitFor } from '@testing-library/react';
-// import { IRoom } from '@type/rooms';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { IRoom } from '@type/rooms';
 import { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { supabaseUrl } from '@constant/config';
 
 const mockUseRooms = jest.fn(useRooms);
-// const mockUseCreateRoom = jest.fn(useCreateRoom);
+const mockUseCreateRoom = jest.fn(useCreateRoom);
 // const mockUseUpdateRoom = useUpdateRoom;
 // const mockUseDeleteRoom = useDeleteRoom;
 
@@ -26,12 +22,12 @@ interface IWrapper {
   children: ReactNode;
 }
 
-// const sampleData: IRoom = {
-//   id: 999,
-//   name: 'Room name test',
-//   price: 9999,
-//   status: true,
-// };
+const sampleData: IRoom = {
+  id: 999,
+  name: 'Room name test',
+  price: 9999,
+  status: true,
+};
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -39,7 +35,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-const queryCache = new QueryCache();
 const wrapper = ({ children }: IWrapper) => {
   return (
     <QueryClientProvider client={queryClient}>
@@ -47,21 +42,6 @@ const wrapper = ({ children }: IWrapper) => {
     </QueryClientProvider>
   );
 };
-
-const server = setupServer(
-  http.post(supabaseUrl, async ({ request }) => {
-    const data = await request.formData();
-
-    console.log(data);
-  })
-);
-
-beforeAll(() => server.listen());
-afterEach(() => {
-  server.resetHandlers();
-  queryCache.clear();
-});
-afterAll(() => server.close());
 
 describe('CRUD Room testing', () => {
   test('Fetch room data', async () => {
@@ -89,17 +69,39 @@ describe('CRUD Room testing', () => {
     );
   });
 
-  // test('Create room', async () => {
-  //   const { result } = renderHook(() => useCreateRoom(), { wrapper });
+  test('Create room', async () => {
+    mockUseCreateRoom.mockImplementation(() => ({
+      createRoom: () => {sampleData},
+      isCreating: false,
+      isSuccess: true
+    }));
+    const { result } = renderHook(() => mockUseCreateRoom(), { wrapper });
 
-  //   act(() => {
-  //     result.current.createRoom(sampleData);
-  //   });
+    act(() => {
+      result.current.createRoom(sampleData);
+    });
 
-  //   await waitFor(() => result.current.isSuccess);
+    await waitFor(() => result.current.isSuccess);
 
-  //   expect(result.current.isSuccess).toBeTruthy();
-  // });
+    expect(result.current.isSuccess).toBeTruthy();
+  });
+
+  test('Create failed room', async () => {
+    mockUseCreateRoom.mockImplementation(() => ({
+      createRoom: () => {sampleData},
+      isCreating: false,
+      isSuccess: false
+    }));
+    const { result } = renderHook(() => mockUseCreateRoom(), { wrapper });
+
+    act(() => {
+      result.current.createRoom(sampleData);
+    });
+
+    await waitFor(() => result.current.isSuccess);
+
+    expect(result.current.isSuccess).toBeFalsy();
+  });
 
   // test('Edit room', async () => {
   //   const { result } = renderHook(() => useUpdateRoom(), { wrapper });
