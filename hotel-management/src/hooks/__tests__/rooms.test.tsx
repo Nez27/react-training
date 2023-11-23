@@ -61,6 +61,7 @@ describe('CRUD Room testing', () => {
         },
       ],
       isLoading: false,
+      count: 1,
     }));
     const { result } = renderHook(() => mockUseRooms(), { wrapper });
 
