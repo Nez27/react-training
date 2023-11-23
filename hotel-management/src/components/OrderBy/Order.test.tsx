@@ -1,7 +1,8 @@
 import renderer from 'react-test-renderer';
-
-import Order from '.';
 import { BrowserRouter } from 'react-router-dom';
+
+// Components
+import Order from '.';
 
 describe('<Order.test />', () => {
   const options = [

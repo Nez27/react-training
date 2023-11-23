@@ -1,5 +1,6 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Select from '.';
 
 describe('Select testing snapshot', () => {

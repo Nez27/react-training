@@ -1,5 +1,6 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Message from '.';
 
 describe('Message testing snapshot', () => {

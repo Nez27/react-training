@@ -1,7 +1,8 @@
 import renderer from 'react-test-renderer';
-
-import SortBy from '.';
 import { BrowserRouter } from 'react-router-dom';
+
+// Components
+import SortBy from '.';
 
 describe('<SortBy.test />', () => {
   const options = [

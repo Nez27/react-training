@@ -1,5 +1,6 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Menus from '.';
 import { RiEditBoxFill, RiDeleteBin2Line } from 'react-icons/ri';
 

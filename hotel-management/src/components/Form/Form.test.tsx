@@ -1,7 +1,10 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Form from '.';
 import Input from '@commonStyle/Input';
+
+// Styled
 import { FormBtn } from '@page/User/styled';
 
 describe('Form testing snapshot', () => {

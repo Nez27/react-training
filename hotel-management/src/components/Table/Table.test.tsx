@@ -1,6 +1,9 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Table from '.';
+
+// Types
 import { IUser } from '@type/users';
 
 interface ITableRow {
@@ -23,7 +26,7 @@ describe('Table testing snapshot', () => {
       isBooked: false,
     },
   ];
-  const TableRow = ({user}: ITableRow) => {
+  const TableRow = ({ user }: ITableRow) => {
     const { id, name, phone, isBooked } = user;
 
     return (
@@ -35,7 +38,7 @@ describe('Table testing snapshot', () => {
       </Table.Row>
     );
   };
-  const renderRow = (user: IUser) => <TableRow user={user} key={user.id}/>
+  const renderRow = (user: IUser) => <TableRow user={user} key={user.id} />;
 
   const wrapper = renderer.create(
     <Table columns="10% 35% 30% 15% 10%">

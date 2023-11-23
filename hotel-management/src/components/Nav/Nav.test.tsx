@@ -1,8 +1,8 @@
 import renderer from 'react-test-renderer';
+import { BrowserRouter } from 'react-router-dom';
 
 // Components
 import Nav from '.';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('Nav testing snapshot', () => {
   const wrapper = renderer.create(

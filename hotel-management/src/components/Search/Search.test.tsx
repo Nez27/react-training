@@ -1,7 +1,8 @@
 import renderer from 'react-test-renderer';
-
-import Search from '.';
 import { BrowserRouter } from 'react-router-dom';
+
+// Components
+import Search from '.';
 
 describe('Search testing snapshot', () => {
   const placeHolder = 'Search placeholder...';

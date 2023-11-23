@@ -1,5 +1,6 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Toast from '.';
 
 describe('Toast testing snapshot', () => {
