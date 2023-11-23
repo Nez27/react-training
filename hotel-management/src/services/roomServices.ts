@@ -1,9 +1,9 @@
 // Types
 import { IRoom } from '@type/rooms';
+import { IDataState } from '@type/common';
 
 // Services
 import supabase from './supabaseService';
-import { IDataState } from '@type/common';
 
 // Constants
 const ROOMS_TABLE = 'rooms';

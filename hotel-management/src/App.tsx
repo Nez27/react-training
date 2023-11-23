@@ -19,6 +19,8 @@ import {
   reducer,
 } from '@context/UserRoomAvailableContext';
 import { useEffect, useReducer } from 'react';
+
+// Services
 import { getUserNotBooked } from '@service/userServices';
 import { getRoomsAvailable } from '@service/roomServices';
 
@@ -26,8 +28,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 60 * 1000,
-    }
-  }
+    },
+  },
 });
 
 function App() {
@@ -64,7 +66,10 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route element={<AppLayout />}>
-                <Route index element={<Navigate replace to={PATH.DASHBOARD} />} />
+                <Route
+                  index
+                  element={<Navigate replace to={PATH.DASHBOARD} />}
+                />
                 <Route path={PATH.DASHBOARD} element={<Dashboard />} />
                 <Route path={PATH.USER} element={<User />} />
                 <Route path={PATH.ROOM} element={<Room />} />
