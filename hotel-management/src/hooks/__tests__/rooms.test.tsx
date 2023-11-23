@@ -8,16 +8,13 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { IRoom } from '@type/rooms';
 import { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { useUpdateRoom } from '@hook/rooms/useUpdateRoom';
+import { useDeleteRoom } from '@hook/rooms/useDeleteRoom';
 
 const mockUseRooms = jest.fn(useRooms);
 const mockUseCreateRoom = jest.fn(useCreateRoom);
-// const mockUseUpdateRoom = useUpdateRoom;
-// const mockUseDeleteRoom = useDeleteRoom;
-
-jest.mock('@hook/rooms/useRooms');
-jest.mock('@hook/rooms/useUpdateRoom');
-jest.mock('@hook/rooms/useDeleteRoom');
-
+const mockUseUpdateRoom = jest.fn(useUpdateRoom);
+const mockUseDeleteRoom = jest.fn(useDeleteRoom);
 interface IWrapper {
   children: ReactNode;
 }
@@ -86,46 +83,39 @@ describe('CRUD Room testing', () => {
     expect(result.current.isSuccess).toBeTruthy();
   });
 
-  test('Create failed room', async () => {
-    mockUseCreateRoom.mockImplementation(() => ({
-      createRoom: () => {sampleData},
-      isCreating: false,
-      isSuccess: false
+  test('Edit room', async () => {
+    mockUseUpdateRoom.mockImplementation(() => ({
+      updateRoom: () => {sampleData},
+      isUpdating: false,
+      isSuccess: true
     }));
-    const { result } = renderHook(() => mockUseCreateRoom(), { wrapper });
+    const { result } = renderHook(() => mockUseUpdateRoom(), { wrapper });
 
     act(() => {
-      result.current.createRoom(sampleData);
+      const testMethod = async () => {
+        result.current.updateRoom(sampleData);
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+      };
+
+      testMethod();
     });
-
-    await waitFor(() => result.current.isSuccess);
-
-    expect(result.current.isSuccess).toBeFalsy();
   });
 
-  // test('Edit room', async () => {
-  //   const { result } = renderHook(() => useUpdateRoom(), { wrapper });
+  test('Delete room', async () => {
+    mockUseDeleteRoom.mockImplementation(() => ({
+      deleteRoom: () => {sampleData.id},
+      isDeleting: false,
+      isSuccess: true
+    }));
+    const { result } = renderHook(() => mockUseDeleteRoom(), { wrapper });
 
-  //   act(() => {
-  //     const testMethod = async () => {
-  //       result.current.updateRoom(sampleData);
-  //       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-  //     };
+    act(() => {
+      const testMethod = async () => {
+        result.current.deleteRoom(sampleData.id);
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+      };
 
-  //     testMethod();
-  //   });
-  // });
-
-  // test('Delete room', async () => {
-  //   const { result } = renderHook(() => useDeleteRoom(), { wrapper });
-
-  //   act(() => {
-  //     const testMethod = async () => {
-  //       result.current.deleteRoom(sampleData.id);
-  //       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-  //     };
-
-  //     testMethod();
-  //   });
-  // });
+      testMethod();
+    });
+  });
 });

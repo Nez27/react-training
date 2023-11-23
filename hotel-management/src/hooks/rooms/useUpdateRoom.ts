@@ -18,7 +18,8 @@ const useUpdateRoom = () => {
 
   const {
     mutate: updateRoom,
-    isPending: isUpdating
+    isPending: isUpdating,
+    isSuccess
   } = useMutation({
     mutationFn: updateRoomFn,
     onSuccess: (room) => {
@@ -26,7 +27,7 @@ const useUpdateRoom = () => {
       queryClient.invalidateQueries({ queryKey: ['rooms'] });
 
       // Update name room in global state
-      dispatch!({
+      dispatch?.({
         type: 'updateRoomName',
         payload: [{ id: room.id, name: room.name }],
       });
@@ -34,7 +35,7 @@ const useUpdateRoom = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isUpdating, updateRoom };
+  return { isUpdating, updateRoom, isSuccess };
 };
 
 export { useUpdateRoom };
