@@ -4,6 +4,7 @@ import { IUser } from '@type/users';
 // Services
 import supabase from './supabaseService';
 import { IDataState } from '@type/common';
+import { DEFAULT_PAGE_SIZE } from '@constant/config';
 
 const USERS_TABLE = 'users';
 const ERROR_FETCHING = "Users can't be loaded!";
@@ -59,11 +60,16 @@ const updateUser = async (user: IUser): Promise<IUser> => {
 const getAllUsers = async (
   sortBy: string,
   orderBy: string,
-  phoneSearch: string
-): Promise<IUser[]> => {
-  const { data, error } = await supabase
+  phoneSearch: string,
+  page: number
+): Promise<{ data: IUser[]; count: number | null }> => {
+  const from = (page - 1) * DEFAULT_PAGE_SIZE;
+  const to = from + DEFAULT_PAGE_SIZE - 1;
+
+  const { data, error, count } = await supabase
     .from(USERS_TABLE)
-    .select('*')
+    .select('*', { count: 'exact' })
+    .range(from, to)
     .order(sortBy, { ascending: orderBy === 'asc' })
     .like('phone', `%${phoneSearch}%`);
 
@@ -72,7 +78,7 @@ const getAllUsers = async (
     throw new Error(ERROR_FETCHING);
   }
 
-  return data;
+  return { data, count };
 };
 
 const getUserNotBooked = async (): Promise<IDataState[]> => {

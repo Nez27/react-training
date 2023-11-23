@@ -30,7 +30,6 @@ const FormBtn = styled(Button)`
   &:disabled,
   &[disabled] {
     background-color: var(--disabled-btn-color);
-    cursor: no-drop;
   }
 `;
 

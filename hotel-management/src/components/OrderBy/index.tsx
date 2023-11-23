@@ -26,7 +26,6 @@ const OrderBy = ({ options }: IOrderProps) => {
         <OrderButton
           key={option.value}
           onClick={() => handleClick(option.value)}
-          active={option.value === currentOrder}
           disabled={option.value === currentOrder}
         >
           {option.label}

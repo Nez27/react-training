@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import isPropValid from '@emotion/is-prop-valid';
 import { StyleSheetManager } from 'styled-components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // Components
 import AppLayout from './components/AppLayout';
@@ -57,6 +58,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
         <UserRoomAvailableContext.Provider
           value={{ roomsAvailable, usersAvailable, dispatch }}

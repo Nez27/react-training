@@ -43,4 +43,25 @@ const StyledHeader = styled(CommonRow)`
   font-weight: 600;
 `;
 
-export { StyledBody, StyledHeader, StyledRow, StyledTable };
+const StyledFooter = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  background-color: var(--footer-table-color);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+
+  border-top: 1px solid var(--border-color);
+
+  &:not(:has(*)) {
+    display: none;
+  }
+`;
+
+export { 
+  StyledBody,
+  StyledHeader,
+  StyledRow,
+  StyledTable,
+  StyledFooter
+};

@@ -36,7 +36,7 @@ const Button = styled.button<IButtonStyle>`
 
   &:disabled,
   &[disabled] {
-    cursor: no-drop;
+    cursor: not-allowed;
   }
 `;
 

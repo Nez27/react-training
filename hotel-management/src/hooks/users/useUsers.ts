@@ -1,9 +1,12 @@
-import toast from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import toast from 'react-hot-toast';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 
 // Services
-import { getAllUsers } from "@service/userServices";
+import { getAllUsers } from '@service/userServices';
+
+// Constants
+import { DEFAULT_PAGE_SIZE } from '@constant/config';
 
 /**
  * Fetch data of users from database
@@ -11,24 +14,49 @@ import { getAllUsers } from "@service/userServices";
  */
 const useUsers = () => {
   const [searchParams] = useSearchParams();
+  const queryClient = useQueryClient();
   const sortByValue = searchParams.get('sortBy') || 'id';
   const orderByValue = searchParams.get('orderBy') || 'asc';
-  const phoneSearch = searchParams.get('search') || ''
+  const phoneSearch = searchParams.get('search') || '';
+  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
 
   const {
     isLoading,
-    data: users,
+    data: { data: users, count } = {},
     error,
   } = useQuery({
-    queryKey: ['users', sortByValue, orderByValue, phoneSearch],
-    queryFn: () => getAllUsers(sortByValue, orderByValue, phoneSearch),
+    queryKey: ['users', sortByValue, orderByValue, phoneSearch, page],
+    queryFn: () => getAllUsers(sortByValue, orderByValue, phoneSearch, page),
   });
 
   if (error) {
     toast.error(error.message);
   }
 
-  return { isLoading, users };
+  // Pre-fetching
+  const totalPage = Math.ceil(count! / DEFAULT_PAGE_SIZE);
+
+  if (page < totalPage) {
+    const nextPage = page + 1;
+
+    queryClient.prefetchQuery({
+      queryKey: ['users', sortByValue, orderByValue, phoneSearch, nextPage],
+      queryFn: () =>
+        getAllUsers(sortByValue, orderByValue, phoneSearch, nextPage),
+    });
+  }
+
+  if (page > 1) {
+    const previousPage = page - 1;
+
+    queryClient.prefetchQuery({
+      queryKey: ['users', sortByValue, orderByValue, phoneSearch, previousPage],
+      queryFn: () =>
+        getAllUsers(sortByValue, orderByValue, phoneSearch, previousPage),
+    });
+  }
+
+  return { isLoading, users, count };
 };
 
 export { useUsers };
