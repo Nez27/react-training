@@ -13,30 +13,73 @@ import NotFound from './pages/NotFound';
 // Constants
 import * as PATH from './constants/path';
 import Toast from './components/Toast';
+import {
+  UserRoomAvailableContext,
+  initialState,
+  reducer,
+} from '@context/UserRoomAvailableContext';
+import { useEffect, useMemo, useReducer } from 'react';
+
+// Services
+import { getUserNotBooked } from '@service/userServices';
+import { getRoomsAvailable } from '@service/roomServices';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 60 * 1000,
-    }
-  }
+    },
+  },
 });
 
 function App() {
+  const [{ usersAvailable, roomsAvailable }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
+
+  // Init list user and room available
+  useEffect(() => {
+    const load = async () => {
+      const tempUser = await getUserNotBooked();
+
+      if (tempUser) {
+        dispatch({ type: 'initUser', payload: tempUser });
+      }
+
+      const tempRoom = await getRoomsAvailable();
+
+      if (tempRoom) {
+        dispatch({ type: 'initRoom', payload: tempRoom });
+      }
+    };
+
+    load();
+  }, []);
+
+  const store = useMemo(() => {
+    return { roomsAvailable, usersAvailable, dispatch };
+  }, [roomsAvailable, usersAvailable]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<AppLayout />}>
-              <Route index element={<Navigate replace to={PATH.USER} />} />
-              <Route path={PATH.DASHBOARD} element={<Dashboard />} />
-              <Route path={PATH.USER} element={<User />} />
-              <Route path={PATH.ROOM} element={<Room />} />
-            </Route>
-            <Route path={PATH.OTHER_PATH} element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <UserRoomAvailableContext.Provider value={store}>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<AppLayout />}>
+                <Route
+                  index
+                  element={<Navigate replace to={PATH.DASHBOARD} />}
+                />
+                <Route path={PATH.DASHBOARD} element={<Dashboard />} />
+                <Route path={PATH.USER} element={<User />} />
+                <Route path={PATH.ROOM} element={<Room />} />
+              </Route>
+              <Route path={PATH.OTHER_PATH} element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </UserRoomAvailableContext.Provider>
       </StyleSheetManager>
 
       <Toast />

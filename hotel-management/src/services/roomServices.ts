@@ -1,5 +1,6 @@
 // Types
 import { IRoom } from '@type/rooms';
+import { IDataState } from '@type/common';
 
 // Services
 import supabase from './supabaseService';
@@ -38,32 +39,39 @@ const getAllRooms = async (
  * Update room into database
  * @param room Room object need to be updated
  */
-const updateRoom = async (room: IRoom): Promise<void> => {
-  const { error } = await supabase
+const updateRoom = async (room: IRoom): Promise<IRoom> => {
+  const { data, error } = await supabase
     .from(ROOMS_TABLE)
     .update(room)
-    .eq('id', room.id);
+    .eq('id', room.id)
+    .select()
+    .single();
 
   if (error) {
     console.error(error.message);
     throw new Error(ERROR_UPDATE_ROOM);
   }
+
+  return data;
 };
 
 /**
  * Add room to database
  * @param room The room object need to be add
  */
-const createRoom = async (room: IRoom): Promise<void> => {
-  // Set default status
-  room.status = false;
-
-  const { error } = await supabase.from(ROOMS_TABLE).insert([room]);
+const createRoom = async (room: IRoom): Promise<IRoom> => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .insert(room)
+    .select()
+    .single();
 
   if (error) {
     console.error(error.message);
     throw new Error(ERROR_CREATE_ROOM);
   }
+
+  return data;
 };
 
 /**
@@ -79,4 +87,18 @@ const deleteRoom = async (idRoom: number) => {
   }
 };
 
-export { getAllRooms, updateRoom, createRoom, deleteRoom };
+const getRoomsAvailable = async (): Promise<IDataState[]> => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .select('id, name')
+    .eq('status', false);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_FETCHING);
+  }
+
+  return data;
+};
+
+export { getAllRooms, updateRoom, createRoom, deleteRoom, getRoomsAvailable };

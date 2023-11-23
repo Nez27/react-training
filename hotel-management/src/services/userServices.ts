@@ -1,5 +1,6 @@
 // Types
 import { IUser } from '@type/users';
+import { IDataState } from '@type/common';
 
 // Services
 import supabase from './supabaseService';
@@ -13,29 +14,39 @@ const ERROR_UPDATE_USER = "Can't update user!";
  * Create user to the database
  * @param user The user object need to be created
  */
-const createUser = async (user: IUser): Promise<void> => {
-  const { error } = await supabase.from(USERS_TABLE).insert([user]);
+const createUser = async (user: IUser): Promise<IUser> => {
+  const { data, error } = await supabase
+    .from(USERS_TABLE)
+    .insert(user)
+    .select()
+    .single();
 
   if (error) {
     console.error(error.message);
     throw new Error(ERROR_CREATE_USER);
   }
+
+  return data;
 };
 
 /**
  * Update the user to the database
  * @param user The user object need to be updated
  */
-const updateUser = async (user: IUser): Promise<void> => {
-  const { error } = await supabase
+const updateUser = async (user: IUser): Promise<IUser> => {
+  const { data, error } = await supabase
     .from(USERS_TABLE)
     .update(user)
-    .eq('id', user.id);
+    .eq('id', user.id)
+    .select()
+    .single();
 
   if (error) {
     console.error(error.message);
     throw new Error(ERROR_UPDATE_USER);
   }
+
+  return data;
 };
 
 /**
@@ -64,4 +75,18 @@ const getAllUsers = async (
   return data;
 };
 
-export { updateUser, createUser, getAllUsers };
+const getUserNotBooked = async (): Promise<IDataState[]> => {
+  const { data, error } = await supabase
+    .from(USERS_TABLE)
+    .select('id, name')
+    .eq('isBooked', false);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_FETCHING);
+  }
+
+  return data;
+};
+
+export { updateUser, createUser, getAllUsers, getUserNotBooked };

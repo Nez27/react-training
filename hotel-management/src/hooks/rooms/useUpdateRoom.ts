@@ -7,18 +7,28 @@ import { updateRoom as updateRoomFn } from '@service/roomServices';
 // Constants
 import { UPDATE_SUCCESS } from '@constant/messages';
 
+// Hooks
+import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
+
 /**
  * Update room from database
  * @returns The status of updating and updateRoom function
  */
 const useUpdateRoom = () => {
   const queryClient = useQueryClient();
+  const { dispatch } = useUserRoomAvailable();
 
   const { mutate: updateRoom, isPending: isUpdating } = useMutation({
     mutationFn: updateRoomFn,
-    onSuccess: () => {
+    onSuccess: (room) => {
       toast.success(UPDATE_SUCCESS);
       queryClient.invalidateQueries({ queryKey: ['rooms'] });
+
+      // Update name room in global state
+      dispatch!({
+        type: 'updateRoomName',
+        payload: [{ id: room.id, name: room.name }],
+      });
     },
     onError: (err) => toast.error(err.message),
   });
