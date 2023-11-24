@@ -55,6 +55,7 @@ describe('CRUD User testing', () => {
         },
       ],
       isLoading: false,
+      count: 2
     }))
     const { result } = renderHook(() => mockUseUsers(), { wrapper });
 
