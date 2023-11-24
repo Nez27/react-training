@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // Components
 import AppLayout from './components/AppLayout';
 import User from './pages/User';
-import Dashboard from './pages/Dashboard';
+import Booking from './pages/Booking';
 import Room from './pages/Room';
 import NotFound from './pages/NotFound';
 
@@ -66,8 +66,8 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route element={<AppLayout />}>
-                <Route index element={<Navigate replace to={PATH.DASHBOARD} />} />
-                <Route path={PATH.DASHBOARD} element={<Dashboard />} />
+                <Route index element={<Navigate replace to={PATH.BOOKING} />} />
+                <Route path={PATH.BOOKING} element={<Booking />} />
                 <Route path={PATH.USER} element={<User />} />
                 <Route path={PATH.ROOM} element={<Room />} />
               </Route>

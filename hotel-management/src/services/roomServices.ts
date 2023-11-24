@@ -93,6 +93,21 @@ const deleteRoom = async (idRoom: number) => {
   }
 };
 
+const getRoomById = async (idRoom: string): Promise<IRoom> => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .select('*')
+    .eq('id', idRoom)
+    .single();
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_FETCHING);
+  }
+
+  return data;
+};
+
 const getRoomsAvailable = async (): Promise<IDataState[]> => {
   const { data, error } = await supabase
     .from(ROOMS_TABLE)
@@ -107,4 +122,11 @@ const getRoomsAvailable = async (): Promise<IDataState[]> => {
   return data;
 };
 
-export { getAllRooms, updateRoom, createRoom, deleteRoom, getRoomsAvailable };
+export {
+  getAllRooms,
+  updateRoom,
+  createRoom,
+  deleteRoom,
+  getRoomsAvailable,
+  getRoomById,
+};

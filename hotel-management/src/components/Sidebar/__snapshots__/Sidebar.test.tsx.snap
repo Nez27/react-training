@@ -14,7 +14,7 @@ exports[`Sidebar testing snapshot render 1`] = `
   >
     <a
       className="sc-gtsqUy gbSQWi"
-      href="/dashboard"
+      href="/booking"
       onClick={[Function]}
     >
       <svg
@@ -40,7 +40,7 @@ exports[`Sidebar testing snapshot render 1`] = `
         />
       </svg>
       <span>
-        Dashboard
+        Booking
       </span>
     </a>
     <a

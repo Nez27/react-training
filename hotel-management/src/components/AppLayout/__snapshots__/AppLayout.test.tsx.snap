@@ -114,7 +114,7 @@ exports[`AppLayout testing snapshot render 1`] = `
     >
       <a
         className="sc-eCAqax hQZHUY"
-        href="/dashboard"
+        href="/booking"
         onClick={[Function]}
       >
         <svg
@@ -140,7 +140,7 @@ exports[`AppLayout testing snapshot render 1`] = `
           />
         </svg>
         <span>
-          Dashboard
+          Booking
         </span>
       </a>
       <a

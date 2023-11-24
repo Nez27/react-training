@@ -31,8 +31,6 @@ const Error = styled.p`
 
   margin-top: 5px;
   padding-inline: 5px;
-
-  width: 220px;
 `;
 
 export { StyledForm, StyledActionBtn, StyledFormRow, Label, Error };
