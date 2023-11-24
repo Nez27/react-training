@@ -18,4 +18,8 @@ const getDayDiff = (startDate: Date, endDate: Date): number => {
   );
 }
 
-export { formatCurrency, getDayDiff };
+const convertCurrencyToNumber = (currency: string) => {
+  return Number(currency.replace(/[^0-9.-]+/g,""))
+}
+
+export { formatCurrency, getDayDiff, convertCurrencyToNumber };

@@ -20,8 +20,8 @@ import {
   reducer,
 } from '@context/UserRoomAvailableContext';
 import { useEffect, useReducer } from 'react';
-import { getUserNotBooked } from '@service/userServices';
-import { getRoomsAvailable } from '@service/roomServices';
+import { getAllUsers } from '@service/userServices';
+import { getAllRooms } from '@service/roomServices';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,16 +40,16 @@ function App() {
   // Init list user and room available
   useEffect(() => {
     const load = async () => {
-      const tempUser = await getUserNotBooked();
+      const tempUser = await getAllUsers();
 
       if (tempUser) {
-        dispatch({ type: 'initUser', payload: tempUser });
+        dispatch({ type: 'initUser', payload: tempUser.data });
       }
 
-      const tempRoom = await getRoomsAvailable();
+      const tempRoom = await getAllRooms();
 
       if (tempRoom) {
-        dispatch({ type: 'initRoom', payload: tempRoom });
+        dispatch({ type: 'initRoom', payload: tempRoom.data });
       }
     };
 

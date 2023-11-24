@@ -6,12 +6,15 @@ import supabase from './supabaseService';
 
 // Constants
 import { DEFAULT_PAGE_SIZE } from '@constant/config';
-
-const BOOKINGS_TABLE = 'bookings';
-const ERROR_FETCHING = "Can't fetch booking data!";
-const ERROR_UPDATE_BOOKING = "Can't update booking!";
-const ERROR_CREATE_BOOKING = "Can't create booking!";
-const ERROR_DELETE_BOOKING = "Can't delete booking!";
+import {
+  BOOKINGS_TABLE,
+  ERROR_CREATE_BOOKING,
+  ERROR_DELETE_BOOKING,
+  ERROR_FETCHING_BOOKING,
+  ERROR_UPDATE_BOOKING,
+} from '@constant/messages';
+import { updateRoomStatus } from './roomServices';
+import { updateUserBookedStatus } from './userServices';
 
 /**
  * Get all bookings from database
@@ -41,11 +44,11 @@ const getAllBookings = async (
     .range(from, to)
     .order(sortBy, { ascending: orderBy === 'asc' });
 
-    console.log(data);
+  console.log(data);
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_BOOKING);
   }
 
   return { data, count };
@@ -75,16 +78,26 @@ const updateBooking = async (booking: IBooking): Promise<IBooking> => {
  * Add room to database
  * @param room The room object need to be add
  */
-const createBooking = async (room: IBooking): Promise<IBooking> => {
-  const { data, error } = await supabase
+const createBooking = async (booking: IBooking): Promise<IBooking> => {
+  const { data, error: createBookingError } = await supabase
     .from(BOOKINGS_TABLE)
-    .insert(room)
+    .insert(booking)
     .select()
     .single();
 
-  if (error) {
-    console.error(error.message);
+  if (createBookingError) {
+    console.error(createBookingError.message);
     throw new Error(ERROR_CREATE_BOOKING);
+  }
+
+  // Update status rooms and users
+  const statusUpdateRoom = await updateRoomStatus(booking.roomId, true);
+  const statusUpdateUser = await updateUserBookedStatus(booking.userId, true);
+
+  if (statusUpdateRoom === 200 && statusUpdateUser === 200) {
+    console.error('Error code room: ', statusUpdateRoom);
+    console.error('Error code user: ', statusUpdateUser);
+    throw new Error("Can't update status room or user.");
   }
 
   return data;

@@ -1,5 +1,5 @@
 // Components
-import { LuCalendarRange } from 'react-icons/lu';
+import { BiSolidCalendarAlt } from 'react-icons/bi';
 import { HiUsers } from 'react-icons/hi2';
 import { BsHouseDoorFill } from 'react-icons/bs';
 
@@ -13,7 +13,7 @@ const Nav = () => {
   return (
     <StyledNav>
       <StyledNavLink to={BOOKING}>
-        <LuCalendarRange />
+        <BiSolidCalendarAlt />
         <span>Booking</span>
       </StyledNavLink>
       <StyledNavLink to={USER}>

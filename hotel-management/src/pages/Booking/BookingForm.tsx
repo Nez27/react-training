@@ -19,11 +19,19 @@ import { IBooking, TBookingResponse } from '@type/booking.ts';
 import Select, { ISelectOptions } from '@component/Select/index.tsx';
 import { useCallback, useMemo } from 'react';
 import { getRoomById } from '@service/roomServices.ts';
-import { getDayDiff } from '@helper/helper.ts';
+import {
+  convertCurrencyToNumber,
+  formatCurrency,
+  getDayDiff,
+} from '@helper/helper.ts';
 
 interface IBookingFormProp {
   onCloseModal?: () => void;
   booking?: TBookingResponse;
+}
+
+interface IBookingForm extends Omit<IBooking, 'amount'> {
+  amount: string;
 }
 
 const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
@@ -33,14 +41,14 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
   const { isUpdating, updateBooking } = useUpdateBooking();
   const isLoading = isCreating || isUpdating;
   const { id: editId, ...editValues } = { ...booking };
-  const formMethods = useForm<IBooking>({
+  const formMethods = useForm<IBookingForm>({
     defaultValues: editId
       ? {
-          roomId: editValues.rooms?.id,
-          userId: editValues.users?.id,
           startDate: editValues.startDate,
           endDate: editValues.endDate,
-          amount: editValues.amount,
+          roomId: editValues.rooms?.id,
+          userId: editValues.users?.id,
+          amount: formatCurrency(editValues.amount!),
         }
       : {},
   });
@@ -55,24 +63,30 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
   } = formMethods;
 
   // Submit form
-  const onSubmit = async (newBooking: IBooking) => {
+  const onSubmit = async (newBooking: IBookingForm) => {
     if (!editId) {
       // Add request
-      createBooking(newBooking, {
-        onSuccess: () => {
-          reset();
-          onCloseModal?.();
-        },
-      });
+      createBooking(
+        { ...newBooking, amount: convertCurrencyToNumber(newBooking.amount) },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
     } else {
       // Edit request
       newBooking.id = editId!;
-      updateBooking(newBooking, {
-        onSuccess: () => {
-          reset();
-          onCloseModal?.();
-        },
-      });
+      updateBooking(
+        { ...newBooking, amount: convertCurrencyToNumber(newBooking.amount) },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
     }
   };
 
@@ -80,27 +94,32 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
     const options: ISelectOptions[] = [];
 
     usersAvailable?.forEach((item) => {
-      options.push({
-        label: item.name,
-        value: item.id.toString(),
-      });
+      if (booking?.users?.id === item.id || !item.status) {
+        options.push({
+          label: item.name!,
+          value: item.id.toString(),
+        });
+      }
     });
 
     return options;
-  }, [usersAvailable]);
+  }, [usersAvailable, booking?.users?.id]);
 
   const roomOptions = useMemo(() => {
     const options: ISelectOptions[] = [];
 
     roomsAvailable?.forEach((item) => {
-      options.push({
-        label: item.name,
-        value: item.id.toString(),
-      });
+      console.log(booking?.rooms?.id, item.id);
+      if (booking?.rooms?.id === item.id || !item.status) {
+        options.push({
+          label: item.name!,
+          value: item.id.toString(),
+        });
+      }
     });
 
     return options;
-  }, [roomsAvailable]);
+  }, [roomsAvailable, booking?.rooms?.id]);
 
   const computePrice = useCallback(async () => {
     const startDateValue = getValues('startDate');
@@ -117,7 +136,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
       const room = await getRoomById(roomValue.toString());
       const amount = daysDiff * room.price;
 
-      setValue('amount', amount);
+      setValue('amount', formatCurrency(amount), { shouldValidate: true });
     }
   }, [getValues, setValue]);
 
@@ -191,6 +210,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
             type="text"
             id="amount"
             {...register('amount', {
+              required: REQUIRED_FIELD_ERROR,
               onChange: () => trigger('amount'),
             })}
             readOnly

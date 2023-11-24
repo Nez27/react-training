@@ -5,11 +5,12 @@ import { IUser } from '@type/users';
 import supabase from './supabaseService';
 import { IDataState } from '@type/common';
 import { DEFAULT_PAGE_SIZE } from '@constant/config';
-
-const USERS_TABLE = 'users';
-const ERROR_FETCHING = "Users can't be loaded!";
-const ERROR_CREATE_USER = "Can't create user!";
-const ERROR_UPDATE_USER = "Can't update user!";
+import {
+  ERROR_CREATE_USER,
+  ERROR_FETCHING_USER,
+  ERROR_UPDATE_USER,
+  USERS_TABLE,
+} from '@constant/messages';
 
 /**
  * Create user to the database
@@ -58,10 +59,10 @@ const updateUser = async (user: IUser): Promise<IUser> => {
  * @returns The data of users from database
  */
 const getAllUsers = async (
-  sortBy: string,
-  orderBy: string,
-  phoneSearch: string,
-  page: number
+  sortBy: string = '',
+  orderBy: string = '',
+  phoneSearch: string = '',
+  page: number = 1
 ): Promise<{ data: IUser[]; count: number | null }> => {
   const from = (page - 1) * DEFAULT_PAGE_SIZE;
   const to = from + DEFAULT_PAGE_SIZE - 1;
@@ -75,7 +76,7 @@ const getAllUsers = async (
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_USER);
   }
 
   return { data, count };
@@ -84,15 +85,39 @@ const getAllUsers = async (
 const getUserNotBooked = async (): Promise<IDataState[]> => {
   const { data, error } = await supabase
     .from(USERS_TABLE)
-    .select('id, name')
-    .eq('isBooked', false);
+    .select('id, name, isBooked');
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_USER);
   }
 
   return data;
 };
 
-export { updateUser, createUser, getAllUsers, getUserNotBooked };
+const updateUserBookedStatus = async (
+  id: number,
+  isBooked: boolean
+): Promise<number> => {
+  const { error, status } = await supabase
+    .from(USERS_TABLE)
+    .update({ isBooked })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_UPDATE_USER);
+  }
+
+  return status;
+};
+
+export {
+  updateUser,
+  createUser,
+  getAllUsers,
+  getUserNotBooked,
+  updateUserBookedStatus,
+};
