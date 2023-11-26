@@ -23,13 +23,7 @@ import { useEffect, useReducer } from 'react';
 import { getAllUsers } from '@service/userServices';
 import { getAllRooms } from '@service/roomServices';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 function App() {
   const [{ usersAvailable, roomsAvailable }, dispatch] = useReducer(
@@ -40,13 +34,13 @@ function App() {
   // Init list user and room available
   useEffect(() => {
     const load = async () => {
-      const tempUser = await getAllUsers();
+      const tempUser = await getAllUsers('id', 'asc', '', 0);
 
       if (tempUser) {
         dispatch({ type: 'initUser', payload: tempUser.data });
       }
 
-      const tempRoom = await getAllRooms();
+      const tempRoom = await getAllRooms('id', 'asc', '', 0);
 
       if (tempRoom) {
         dispatch({ type: 'initRoom', payload: tempRoom.data });

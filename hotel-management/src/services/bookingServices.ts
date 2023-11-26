@@ -8,6 +8,7 @@ import supabase from './supabaseService';
 import { DEFAULT_PAGE_SIZE } from '@constant/config';
 import {
   BOOKINGS_TABLE,
+  ERROR_CHECKOUT,
   ERROR_CREATE_BOOKING,
   ERROR_DELETE_BOOKING,
   ERROR_FETCHING_BOOKING,
@@ -15,6 +16,12 @@ import {
 } from '@constant/messages';
 import { updateRoomStatus } from './roomServices';
 import { updateUserBookedStatus } from './userServices';
+
+interface ICheckOutBooking {
+  idBooking: number;
+  roomId: number;
+  userId: number;
+}
 
 /**
  * Get all bookings from database
@@ -43,8 +50,6 @@ const getAllBookings = async (
     .ilike('users.name', `%${userNameSearch}%`)
     .range(from, to)
     .order(sortBy, { ascending: orderBy === 'asc' });
-
-  console.log(data);
 
   if (error) {
     console.error(error.message);
@@ -90,16 +95,6 @@ const createBooking = async (booking: IBooking): Promise<IBooking> => {
     throw new Error(ERROR_CREATE_BOOKING);
   }
 
-  // Update status rooms and users
-  const statusUpdateRoom = await updateRoomStatus(booking.roomId, true);
-  const statusUpdateUser = await updateUserBookedStatus(booking.userId, true);
-
-  if (statusUpdateRoom === 200 && statusUpdateUser === 200) {
-    console.error('Error code room: ', statusUpdateRoom);
-    console.error('Error code user: ', statusUpdateUser);
-    throw new Error("Can't update status room or user.");
-  }
-
   return data;
 };
 
@@ -119,4 +114,35 @@ const deleteBooking = async (idBooking: number) => {
   }
 };
 
-export { createBooking, getAllBookings, updateBooking, deleteBooking };
+const checkOutBooking = async ({
+  idBooking,
+  roomId,
+  userId,
+}: ICheckOutBooking) => {
+  // Update status booking
+  const { data, error } = await supabase
+    .from(BOOKINGS_TABLE)
+    .update({ status: false })
+    .eq('id', idBooking)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_CHECKOUT);
+  }
+
+  // Update status room, user
+  await updateRoomStatus(roomId, false);
+  await updateUserBookedStatus(userId, false);
+
+  return data;
+};
+
+export {
+  createBooking,
+  getAllBookings,
+  updateBooking,
+  deleteBooking,
+  checkOutBooking,
+};

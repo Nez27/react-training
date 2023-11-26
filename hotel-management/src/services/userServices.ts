@@ -7,6 +7,7 @@ import { IDataState } from '@type/common';
 import { DEFAULT_PAGE_SIZE } from '@constant/config';
 import {
   ERROR_CREATE_USER,
+  ERROR_DELETE_USER,
   ERROR_FETCHING_USER,
   ERROR_UPDATE_USER,
   USERS_TABLE,
@@ -22,6 +23,8 @@ const createUser = async (user: IUser): Promise<IUser> => {
     .insert(user)
     .select()
     .single();
+
+    console.log('Create');
 
   if (error) {
     console.error(error.message);
@@ -52,6 +55,19 @@ const updateUser = async (user: IUser): Promise<IUser> => {
 };
 
 /**
+ * Delete user in database
+ * @param idUser The id of user need to delete
+ */
+const deleteUser = async (idUser: number) => {
+  const { error } = await supabase.from('users').delete().eq('id', idUser);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_DELETE_USER);
+  }
+};
+
+/**
  * Return data of users from database
  * @param sortBy Sort by column
  * @param orderBy Order by ascending or descending
@@ -59,20 +75,25 @@ const updateUser = async (user: IUser): Promise<IUser> => {
  * @returns The data of users from database
  */
 const getAllUsers = async (
-  sortBy: string = '',
-  orderBy: string = '',
-  phoneSearch: string = '',
-  page: number = 1
+  sortBy: string,
+  orderBy: string,
+  phoneSearch: string,
+  page: number
 ): Promise<{ data: IUser[]; count: number | null }> => {
   const from = (page - 1) * DEFAULT_PAGE_SIZE;
   const to = from + DEFAULT_PAGE_SIZE - 1;
 
-  const { data, error, count } = await supabase
+  let query = supabase
     .from(USERS_TABLE)
     .select('*', { count: 'exact' })
-    .range(from, to)
     .order(sortBy, { ascending: orderBy === 'asc' })
     .like('phone', `%${phoneSearch}%`);
+
+  if (page) {
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error.message);
@@ -102,9 +123,7 @@ const updateUserBookedStatus = async (
   const { error, status } = await supabase
     .from(USERS_TABLE)
     .update({ isBooked })
-    .eq('id', id)
-    .select()
-    .single();
+    .eq('id', id);
 
   if (error) {
     console.error(error.message);
@@ -118,6 +137,7 @@ export {
   updateUser,
   createUser,
   getAllUsers,
+  deleteUser,
   getUserNotBooked,
   updateUserBookedStatus,
 };

@@ -12,20 +12,24 @@ import Table from '@component/Table';
 import Menus from '@component/Menus';
 import { RiEditBoxFill } from 'react-icons/ri';
 import { TbArrowNarrowRight } from 'react-icons/tb';
+import { ImExit } from "react-icons/im";
 
 // Hooks
 
 // Constants
 import { FORM } from '@constant/commons';
 import BookingForm from './BookingForm';
+import ConfirmMessage from '@component/ConfirmMessage';
+import useCheckOut from '@hook/bookings/useCheckout';
+import toast from 'react-hot-toast';
 
 interface IBookingRow {
   booking: TBookingResponse;
 }
 
 const BookingRow = ({ booking }: IBookingRow) => {
+  const { checkOutBooking } = useCheckOut();
   const { id, users, startDate, endDate, rooms, amount, status } = booking;
-  // const { isDeleting, deleteRoom } = useDeleteBooking();
   const statusText = status ? 'Check in' : 'Check out';
   const formattedPrice = useMemo(() => formatCurrency(amount), [amount]);
   const renderEditBtn = useCallback(
@@ -36,6 +40,27 @@ const BookingRow = ({ booking }: IBookingRow) => {
     ),
     []
   );
+
+  const renderCheckOutBtn = useCallback(
+    (onCloseModal: () => void) => (
+      <Menus.Button onClick={onCloseModal} icon={<ImExit />}>
+        Checkout
+      </Menus.Button>
+    ),
+    []
+  );
+
+  const handleClickCheckOutBtn = useCallback(() => {
+    if(booking.status) {
+      checkOutBooking({
+        idBooking: booking.id,
+        roomId: booking!.rooms!.id,
+        userId: booking!.users!.id,
+      })
+    } else {
+      toast.error("User already checkout!");
+    }
+  }, [booking, checkOutBooking]);
 
   return (
     <Table.Row>
@@ -58,10 +83,22 @@ const BookingRow = ({ booking }: IBookingRow) => {
                 modalName={FORM.EDIT}
                 renderChildren={renderEditBtn}
               />
+
+              <Modal.Open
+                modalName={FORM.CHECKOUT}
+                renderChildren={renderCheckOutBtn}
+              />
             </Menus.List>
 
             <Modal.Window name={FORM.EDIT} title="Edit Booking">
               <BookingForm booking={booking} key={booking.id} />
+            </Modal.Window>
+
+            <Modal.Window name={FORM.CHECKOUT} title="Checkout">
+              <ConfirmMessage
+                message={`Are you sure to checkout this user? ${booking.users?.name}`}
+                onConfirm={handleClickCheckOutBtn}
+              />
             </Modal.Window>
           </Menus.Menu>
         </Modal>

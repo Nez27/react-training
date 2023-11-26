@@ -13,7 +13,7 @@ const StyledConfirmDelete = styled.div`
     display: flex;
     justify-content: space-around;
 
-    padding-inline: 50px;
+    padding-inline: 100px;
   }
 `;
 

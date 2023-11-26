@@ -1,9 +1,8 @@
-const ADD_SUCCESS = 'Add success';
-const UPDATE_SUCCESS = 'Update success';
+const ADD_SUCCESS = 'Add success!';
+const UPDATE_SUCCESS = 'Update success!';
 const CONFIRM_MESSAGE = 'Do you want to checkout this user?';
 const CONFIRM_DELETE = 'Are you sure to delete it?';
-const DELETE_SUCCESS = 'Delete success';
-const CHECKOUT_SUCCESS = 'Check out success';
+const DELETE_SUCCESS = 'Delete success!';
 
 // Booking connection messages
 const BOOKINGS_TABLE = 'bookings';
@@ -11,6 +10,8 @@ const ERROR_FETCHING_BOOKING = "Can't fetch booking data!";
 const ERROR_UPDATE_BOOKING = "Can't update booking!";
 const ERROR_CREATE_BOOKING = "Can't create booking!";
 const ERROR_DELETE_BOOKING = "Can't delete booking!";
+const CHECKOUT_SUCCESS = 'Check out success!';
+const ERROR_CHECKOUT = "Can't checkout!";
 
 // Room connection messages
 const ROOMS_TABLE = 'rooms';
@@ -24,6 +25,7 @@ const USERS_TABLE = 'users';
 const ERROR_FETCHING_USER = "Users can't be loaded!";
 const ERROR_CREATE_USER = "Can't create user!";
 const ERROR_UPDATE_USER = "Can't update user!";
+const ERROR_DELETE_USER = "Can't delete user!";
 
 export {
   ADD_SUCCESS,
@@ -32,6 +34,7 @@ export {
   CONFIRM_DELETE,
   DELETE_SUCCESS,
   CHECKOUT_SUCCESS,
+  ERROR_CHECKOUT,
   BOOKINGS_TABLE,
   ERROR_FETCHING_BOOKING,
   ERROR_UPDATE_BOOKING,
@@ -45,5 +48,6 @@ export {
   USERS_TABLE,
   ERROR_FETCHING_USER,
   ERROR_CREATE_USER,
-  ERROR_UPDATE_USER
+  ERROR_UPDATE_USER,
+  ERROR_DELETE_USER,
 };

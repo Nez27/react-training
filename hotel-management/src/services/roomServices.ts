@@ -20,20 +20,25 @@ import {
  * @returns Return all rooms in database
  */
 const getAllRooms = async (
-  sortBy: string = '',
-  orderBy: string = 'asc',
-  roomName: string = '',
-  page: number = 1,
+  sortBy: string,
+  orderBy: string,
+  roomName: string,
+  page: number
 ): Promise<{ data: IRoom[]; count: number | null }> => {
   const from = (page - 1) * DEFAULT_PAGE_SIZE;
   const to = from + DEFAULT_PAGE_SIZE - 1;
 
-  const { data, error, count } = await supabase
+  let query = supabase
     .from(ROOMS_TABLE)
     .select('*', { count: 'exact' })
-    .range(from, to)
     .order(sortBy, { ascending: orderBy === 'asc' })
     .like('name', `%${roomName}%`);
+
+  if(page) {
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error.message);

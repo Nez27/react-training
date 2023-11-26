@@ -4,7 +4,6 @@ import renderer from 'react-test-renderer';
 import ConfirmMessage from '.';
 
 describe('ConfirmMessage testing snapshot', () => {
-  const isDisable = true;
   const message = 'Hello World!';
   const handleOnConfirm = () => {
     console.log('Confirm');
@@ -12,7 +11,6 @@ describe('ConfirmMessage testing snapshot', () => {
 
   const wrapper = renderer.create(
     <ConfirmMessage
-      disabled={isDisable}
       message={message}
       onConfirm={handleOnConfirm}
     />

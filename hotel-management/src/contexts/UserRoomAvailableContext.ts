@@ -82,7 +82,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       const indexItemUpdate = tempArr.findIndex(
         (item) => item.id === action.payload[0].id
       );
-      tempArr[indexItemUpdate].status = action.payload[0].status;
+      tempArr[indexItemUpdate].isBooked = action.payload[0].isBooked;
 
       return {
         ...state,
@@ -121,7 +121,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       };
     }
     case 'updateStatusRoom': {
-      const tempArr = state.usersAvailable;
+      const tempArr = state.roomsAvailable;
       const indexItemUpdate = tempArr.findIndex(
         (item) => item.id === action.payload[0].id
       );

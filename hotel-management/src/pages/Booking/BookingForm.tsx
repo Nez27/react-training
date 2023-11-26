@@ -18,12 +18,13 @@ import { useUserRoomAvailable } from '@hook/useUserRoomAvailable.ts';
 import { IBooking, TBookingResponse } from '@type/booking.ts';
 import Select, { ISelectOptions } from '@component/Select/index.tsx';
 import { useCallback, useMemo } from 'react';
-import { getRoomById } from '@service/roomServices.ts';
+import { getRoomById, updateRoomStatus } from '@service/roomServices.ts';
 import {
   convertCurrencyToNumber,
   formatCurrency,
   getDayDiff,
 } from '@helper/helper.ts';
+import { updateUserBookedStatus } from '@service/userServices.ts';
 
 interface IBookingFormProp {
   onCloseModal?: () => void;
@@ -35,8 +36,7 @@ interface IBookingForm extends Omit<IBooking, 'amount'> {
 }
 
 const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
-  const { roomsAvailable, usersAvailable } = useUserRoomAvailable();
-
+  const { roomsAvailable, usersAvailable, dispatch } = useUserRoomAvailable();
   const { isCreating, createBooking } = useCreateBooking();
   const { isUpdating, updateBooking } = useUpdateBooking();
   const isLoading = isCreating || isUpdating;
@@ -69,9 +69,23 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
       createBooking(
         { ...newBooking, amount: convertCurrencyToNumber(newBooking.amount) },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
             reset();
             onCloseModal?.();
+
+            // Update room, user available in global state
+            dispatch!({
+              type: 'updateStatusUser',
+              payload: [{ id: newBooking.userId, isBooked: true }],
+            });
+            dispatch!({
+              type: 'updateStatusRoom',
+              payload: [{ id: newBooking.roomId, status: true }],
+            });
+
+            // Update room, user available in server
+            await updateRoomStatus(newBooking.roomId, true);
+            await updateUserBookedStatus(newBooking.userId, true);
           },
         }
       );
@@ -81,20 +95,41 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
       updateBooking(
         { ...newBooking, amount: convertCurrencyToNumber(newBooking.amount) },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
             reset();
             onCloseModal?.();
+
+            // Update room in global state
+            // Old room
+            dispatch!({
+              type: 'updateStatusRoom',
+              payload: [{ id: booking!.rooms!.id, status: false }],
+            });
+
+            // New room
+            dispatch!({
+              type: 'updateStatusRoom',
+              payload: [{ id: newBooking.roomId, status: true }],
+            });
+
+            // Update room available in server
+            // Old room
+            await updateRoomStatus(booking!.rooms!.id, false);
+
+            // New room
+            await updateRoomStatus(newBooking.roomId, true);
           },
         }
       );
     }
   };
 
+  // Init user, room available to options choice
   const userOptions = useMemo(() => {
     const options: ISelectOptions[] = [];
 
     usersAvailable?.forEach((item) => {
-      if (booking?.users?.id === item.id || !item.status) {
+      if (booking?.users?.id === item.id || !item.isBooked) {
         options.push({
           label: item.name!,
           value: item.id.toString(),
@@ -109,7 +144,6 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
     const options: ISelectOptions[] = [];
 
     roomsAvailable?.forEach((item) => {
-      console.log(booking?.rooms?.id, item.id);
       if (booking?.rooms?.id === item.id || !item.status) {
         options.push({
           label: item.name!,
@@ -121,6 +155,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
     return options;
   }, [roomsAvailable, booking?.rooms?.id]);
 
+  // Calculate the final price
   const computePrice = useCallback(async () => {
     const startDateValue = getValues('startDate');
     const endDateValue = getValues('endDate');
@@ -140,6 +175,22 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
     }
   }, [getValues, setValue]);
 
+  const startDateValidate = useMemo(
+    () => new Date().toISOString().split('T')[0],
+    []
+  );
+
+  const endDateValidate = () => {
+    if (getValues('startDate')) {
+      const date = new Date(getValues('startDate'));
+      date.setDate(date.getDate() + 1);
+
+      return date.toISOString().split('T')[0];
+    }
+
+    return;
+  };
+
   return (
     <FormProvider {...formMethods}>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -149,6 +200,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
               ariaLabel="user-select"
               options={userOptions}
               id="userId"
+              disable={Boolean(booking?.users)}
               optionsConfigForm={{
                 valueAsNumber: true,
                 onChange: () => trigger('userId'),
@@ -179,7 +231,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
           <Input
             type="date"
             id="startDate"
-            min={Date.now()}
+            min={startDateValidate}
             {...register('startDate', {
               required: REQUIRED_FIELD_ERROR,
               onChange: () => {
@@ -194,7 +246,8 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
           <Input
             type="date"
             id="endDate"
-            min={Date.now()}
+            min={endDateValidate()}
+            disabled={!getValues('startDate')}
             {...register('endDate', {
               required: REQUIRED_FIELD_ERROR,
               onChange: () => {

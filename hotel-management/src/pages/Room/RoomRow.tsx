@@ -27,7 +27,7 @@ interface IRoomRow {
 
 const RoomRow = ({ room }: IRoomRow) => {
   const { id, name, price, status } = room;
-  const { isDeleting, deleteRoom } = useDeleteRoom();
+  const { deleteRoom } = useDeleteRoom();
   const statusText = status 
     ? 'Unavailable' 
     : 'Available';
@@ -78,7 +78,6 @@ const RoomRow = ({ room }: IRoomRow) => {
 
             <Modal.Window name={FORM.DELETE} title="Delete Room">
               <ConfirmMessage
-                disabled={isDeleting}
                 message={`Are you sure to delete ${name}?`}
                 onConfirm={() => deleteRoom(id)}
               />
