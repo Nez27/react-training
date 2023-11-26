@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 // Components
 import Order from '.';
 
-describe('<Order.test />', () => {
+describe('Order', () => {
   const options = [
     {
       value: 'Value 1',
@@ -22,7 +22,7 @@ describe('<Order.test />', () => {
     </BrowserRouter>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

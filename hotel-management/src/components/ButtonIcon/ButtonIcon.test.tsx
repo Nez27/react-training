@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import ButtonIcon from '.';
 import { HiOutlineLogout } from 'react-icons/hi';
 
-describe('ButtonIcon testing snapshot', () => {
+describe('ButtonIcon', () => {
   const wrapper = renderer.create(
     <ButtonIcon
       aria-label="Logout"
@@ -13,7 +13,7 @@ describe('ButtonIcon testing snapshot', () => {
     />
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

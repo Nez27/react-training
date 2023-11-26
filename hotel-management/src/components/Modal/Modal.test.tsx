@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import Modal from '.';
 import Button from '@commonStyle/Button';
 
-describe('Modal testing snapshot', () => {
+describe('Modal', () => {
   const wrapper = renderer.create(
     <Modal>
       <Modal.Open
@@ -19,7 +19,7 @@ describe('Modal testing snapshot', () => {
     </Modal>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

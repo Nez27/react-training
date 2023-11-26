@@ -4,14 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 // Components
 import Nav from '.';
 
-describe('Nav testing snapshot', () => {
+describe('Nav', () => {
   const wrapper = renderer.create(
     <BrowserRouter>
       <Nav />
     </BrowserRouter>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

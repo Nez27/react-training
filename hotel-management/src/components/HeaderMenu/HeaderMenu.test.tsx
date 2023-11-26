@@ -3,10 +3,10 @@ import renderer from 'react-test-renderer';
 // Components
 import HeaderMenu from '.';
 
-describe('HeaderMenu testing snapshot', () => {
+describe('HeaderMenu', () => {
   const wrapper = renderer.create(<HeaderMenu />);
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

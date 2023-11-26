@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Message testing snapshot render 1`] = `
+exports[`Message Should render correctly 1`] = `
 <p
   className="sc-bdnyFh fIKUZt"
 >

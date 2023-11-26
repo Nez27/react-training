@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Form testing snapshot render 1`] = `
+exports[`Form  Should render correctly 1`] = `
 <form
   className="sc-bdnyFh bzxSLR"
-  onSubmit={[Function]}
+  onSubmit={[MockFunction]}
 >
   <div
     className="sc-dlniIP gZHESL"
@@ -61,7 +61,7 @@ exports[`Form testing snapshot render 1`] = `
     </button>
     <button
       className="sc-gKAaef sc-jrsKJM gbgZUe KLoQf"
-      onClick={[Function]}
+      onClick={[MockFunction]}
       type="button"
       variations="secondary"
     >

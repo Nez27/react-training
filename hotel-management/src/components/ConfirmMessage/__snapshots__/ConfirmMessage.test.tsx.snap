@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ConfirmMessage testing snapshot render 1`] = `
+exports[`ConfirmMessage Should render correctly 1`] = `
 <div
   className="sc-bdnyFh dukbvo"
 >
@@ -11,7 +11,7 @@ exports[`ConfirmMessage testing snapshot render 1`] = `
     <button
       className="sc-gtsqUy eZzwwl"
       disabled={true}
-      onClick={[Function]}
+      onClick={[MockFunction]}
       variations="danger"
     >
       Delete

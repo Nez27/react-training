@@ -10,7 +10,7 @@ interface ITableRow {
   user: IUser;
 }
 
-describe('Table testing snapshot', () => {
+describe('Table', () => {
   const columnName = ['Column 1', 'Column 2'];
   const tempUser: IUser[] = [
     {
@@ -47,7 +47,7 @@ describe('Table testing snapshot', () => {
     </Table>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

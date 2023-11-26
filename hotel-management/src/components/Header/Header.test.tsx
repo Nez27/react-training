@@ -3,10 +3,10 @@ import renderer from 'react-test-renderer';
 // Components
 import Header from '.';
 
-describe('Header testing snapshot', () => {
+describe('Header', () => {
   const wrapper = renderer.create(<Header accountName="Nezumi" />);
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

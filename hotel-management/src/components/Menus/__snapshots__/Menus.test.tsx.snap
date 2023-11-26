@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Menus snapshot testing render 1`] = `
+exports[`Menus Should render correctly 1`] = `
 <div
-  className="sc-bdnyFh cumhtC"
+  className="sc-gtsqUy lbsvcs"
 >
   <button
     aria-label="Menu item 123"
-    className="sc-dlniIP jergss"
+    className="sc-hKFymg cjUckY"
     onClick={[Function]}
   >
     <svg

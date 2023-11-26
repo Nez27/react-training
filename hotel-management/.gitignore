@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .vscode
+coverage
 
 src/db.json
 

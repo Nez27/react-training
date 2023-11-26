@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Sidebar testing snapshot render 1`] = `
+exports[`Sidebar Should render correctly 1`] = `
 <aside
   className="sc-dlniIP dfcuiS"
 >

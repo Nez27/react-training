@@ -3,12 +3,10 @@ import renderer from 'react-test-renderer';
 // Components
 import ConfirmMessage from '.';
 
-describe('ConfirmMessage testing snapshot', () => {
+describe('ConfirmMessage', () => {
   const isDisable = true;
   const message = 'Hello World!';
-  const handleOnConfirm = () => {
-    console.log('Confirm');
-  };
+  const handleOnConfirm = jest.fn();
 
   const wrapper = renderer.create(
     <ConfirmMessage
@@ -18,7 +16,7 @@ describe('ConfirmMessage testing snapshot', () => {
     />
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
