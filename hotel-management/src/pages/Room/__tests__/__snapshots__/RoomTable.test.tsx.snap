@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RoomTable Should render correctly 1`] = `
+<div
+  className="sc-iJCSeZ crZyCc"
+  type="vertical"
+>
+  <div
+    className="sc-lmgPJu cuMSiO"
+  >
+    <div
+      className="sc-crzpnZ iahNiP"
+    >
+      <button
+        active={true}
+        className="sc-dItHI guVVWw"
+        disabled={true}
+        onClick={[Function]}
+      >
+        Ascending
+      </button>
+      <button
+        active={false}
+        className="sc-dItHI fIRqtD"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Descending
+      </button>
+    </div>
+    <select
+      aria-label="Sort"
+      className="sc-iqAbyq czAJZn"
+      onChange={[Function]}
+      value=""
+    >
+      <option
+        value="id"
+      >
+        Sort by id
+      </option>
+      <option
+        value="name"
+      >
+        Sort by name
+      </option>
+      <option
+        value="price"
+      >
+        Sort by price
+      </option>
+    </select>
+    <input
+      className="sc-kEqXeH jMVPeG"
+      onChange={[Function]}
+      placeholder="Search by name..."
+    />
+  </div>
+  <div
+    className="sc-giAruI hMNXks"
+  />
+</div>
+`;
