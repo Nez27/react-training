@@ -1,4 +1,7 @@
-export default {
+import type { Config } from 'jest';
+
+const config: Config = {
+  verbose: true,
   testEnvironment: 'jsdom',
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
@@ -17,4 +20,10 @@ export default {
     '@page/(.*)': ['<rootDir>/src/pages/$1'],
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  setupFiles: ['<rootDir>/.jest/setEnvVar.ts'],
+  testEnvironmentOptions: {
+    customExportConditions: [''],
+  },
 };
+
+export default config;
