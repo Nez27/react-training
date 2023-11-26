@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select Should render correctly 1`] = `
+<select
+  aria-label="Sort"
+  className="sc-bdnyFh dqXTRP"
+  onChange={[MockFunction]}
+  value="Temp value"
+>
+  <option
+    value="Value 1"
+  >
+    Option 1
+  </option>
+  <option
+    value="Value 2"
+  >
+    Option 2
+  </option>
+</select>
+`;

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfirmMessage Should render correctly 1`] = `
+<div
+  className="sc-bdnyFh dukbvo"
+>
+  <p>
+    Hello World!
+  </p>
+  <div>
+    <button
+      className="sc-gtsqUy eZzwwl"
+      disabled={true}
+      onClick={[MockFunction]}
+      variations="danger"
+    >
+      Delete
+    </button>
+    <button
+      className="sc-gtsqUy JDRgw"
+      disabled={true}
+      variations="secondary"
+    >
+      Cancel
+    </button>
+  </div>
+</div>
+`;

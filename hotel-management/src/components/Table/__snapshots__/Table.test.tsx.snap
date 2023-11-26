@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table Should render correctly 1`] = `
+<div
+  className="sc-bdnyFh eEibLN"
+>
+  <div
+    className="sc-gtsqUy sc-eCAqax eucOOU hcIWQg"
+    columns="10% 35% 30% 15% 10%"
+  >
+    <div>
+      Column 1
+    </div>
+    <div>
+      Column 2
+    </div>
+  </div>
+  <div
+    className="sc-dlniIP EYkDq"
+  >
+    <div
+      className="sc-gtsqUy sc-hKFymg eucOOU jwwTFT"
+      columns="10% 35% 30% 15% 10%"
+    >
+      <div>
+        1
+      </div>
+      <div>
+        Nezumi
+      </div>
+      <div>
+        123
+      </div>
+      <div />
+    </div>
+    <div
+      className="sc-gtsqUy sc-hKFymg eucOOU jwwTFT"
+      columns="10% 35% 30% 15% 10%"
+    >
+      <div>
+        2
+      </div>
+      <div>
+        Loi Phan
+      </div>
+      <div>
+        453
+      </div>
+      <div />
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order Should render correctly 1`] = `
+<div
+  className="sc-bdnyFh aZFGz"
+>
+  <button
+    active={true}
+    className="sc-gtsqUy fohQqJ"
+    disabled={true}
+    onClick={[Function]}
+  >
+    Option 1
+  </button>
+  <button
+    active={false}
+    className="sc-gtsqUy bwnpRq"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Option 2
+  </button>
+</div>
+`;
