@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SortBy.test /> render 1`] = `
+exports[`SortBy Should render correctly 1`] = `
 <select
   aria-label="Sort"
   className="sc-bdnyFh dqXTRP"

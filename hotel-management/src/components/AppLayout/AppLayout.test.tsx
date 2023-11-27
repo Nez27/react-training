@@ -4,14 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 // Components
 import AppLayout from '.';
 
-describe('AppLayout testing snapshot', () => {
+describe('AppLayout', () => {
   const wrapper = renderer.create(
     <BrowserRouter>
       <AppLayout />
     </BrowserRouter>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

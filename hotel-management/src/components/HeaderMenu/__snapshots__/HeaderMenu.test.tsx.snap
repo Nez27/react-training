@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HeaderMenu testing snapshot render 1`] = `
+exports[`HeaderMenu Should render correctly 1`] = `
 <ul
   className="sc-gtsqUy gOWXQs"
 >

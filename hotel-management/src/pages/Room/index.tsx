@@ -1,5 +1,5 @@
 // Components
-import RoomTable from './RomTable';
+import RoomTable from './RoomTable';
 import RoomForm from './RoomForm';
 import Modal from '@component/Modal';
 

@@ -1,8 +1,9 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Select from '.';
 
-describe('Select testing snapshot', () => {
+describe('Select', () => {
   const options = [
     {
       label: 'Option 1',
@@ -14,9 +15,7 @@ describe('Select testing snapshot', () => {
     }
   ];
   const value = 'Temp value';
-  const handleOnChange = () => {
-    console.log('On change');
-  }
+  const handleOnChange = jest.fn();
 
   const wrapper = renderer.create(
     <Select
@@ -27,7 +26,7 @@ describe('Select testing snapshot', () => {
     />
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

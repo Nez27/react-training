@@ -1,9 +1,10 @@
 import renderer from 'react-test-renderer';
-
-import Order from '.';
 import { BrowserRouter } from 'react-router-dom';
 
-describe('<Order.test />', () => {
+// Components
+import Order from '.';
+
+describe('Order', () => {
   const options = [
     {
       value: 'Value 1',
@@ -21,7 +22,7 @@ describe('<Order.test />', () => {
     </BrowserRouter>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ButtonIcon testing snapshot render 1`] = `
+exports[`ButtonIcon Should render correctly 1`] = `
 <button
   className="sc-bdnyFh bxHnoO"
   iconStyle={

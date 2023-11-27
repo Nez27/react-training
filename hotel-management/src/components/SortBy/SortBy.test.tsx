@@ -1,9 +1,10 @@
 import renderer from 'react-test-renderer';
-
-import SortBy from '.';
 import { BrowserRouter } from 'react-router-dom';
 
-describe('<SortBy.test />', () => {
+// Components
+import SortBy from '.';
+
+describe('SortBy', () => {
   const options = [
     {
       label: 'Option 1',
@@ -20,7 +21,7 @@ describe('<SortBy.test />', () => {
     </BrowserRouter>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -6,6 +6,8 @@ import { updateUser as updateUserFn } from '@service/userServices';
 
 // Messages
 import { UPDATE_SUCCESS } from '@constant/messages';
+
+// Hooks
 import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
 
 /**

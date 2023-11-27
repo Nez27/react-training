@@ -18,7 +18,9 @@ import {
   initialState,
   reducer,
 } from '@context/UserRoomAvailableContext';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useMemo, useReducer } from 'react';
+
+// Services
 import { getUserNotBooked } from '@service/userServices';
 import { getRoomsAvailable } from '@service/roomServices';
 
@@ -55,16 +57,21 @@ function App() {
     load();
   }, []);
 
+  const store = useMemo(() => {
+    return { roomsAvailable, usersAvailable, dispatch };
+  }, [roomsAvailable, usersAvailable]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-        <UserRoomAvailableContext.Provider
-          value={{ roomsAvailable, usersAvailable, dispatch }}
-        >
+        <UserRoomAvailableContext.Provider value={store}>
           <BrowserRouter>
             <Routes>
               <Route element={<AppLayout />}>
-                <Route index element={<Navigate replace to={PATH.DASHBOARD} />} />
+                <Route
+                  index
+                  element={<Navigate replace to={PATH.DASHBOARD} />}
+                />
                 <Route path={PATH.DASHBOARD} element={<Dashboard />} />
                 <Route path={PATH.USER} element={<User />} />
                 <Route path={PATH.ROOM} element={<Room />} />

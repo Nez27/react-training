@@ -1,9 +1,10 @@
 import renderer from 'react-test-renderer';
-
-import Search from '.';
 import { BrowserRouter } from 'react-router-dom';
 
-describe('Search testing snapshot', () => {
+// Components
+import Search from '.';
+
+describe('Search', () => {
   const placeHolder = 'Search placeholder...';
   const wrapper = renderer.create(
     <BrowserRouter>
@@ -11,7 +12,7 @@ describe('Search testing snapshot', () => {
     </BrowserRouter>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

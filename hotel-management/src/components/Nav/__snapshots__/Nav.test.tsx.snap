@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Nav testing snapshot render 1`] = `
+exports[`Nav Should render correctly 1`] = `
 <nav
   className="sc-bdnyFh gGCifp"
 >

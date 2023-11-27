@@ -1,13 +1,12 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Menus from '.';
 import { RiEditBoxFill, RiDeleteBin2Line } from 'react-icons/ri';
 
-describe('Menus snapshot testing', () => {
+describe('Menus', () => {
   const id = '123';
-  const handleOnClick = () => {
-    console.log('Click');
-  };
+  const handleOnClick = jest.fn();
 
   const wrapper = renderer.create(
     <Menus>
@@ -26,7 +25,7 @@ describe('Menus snapshot testing', () => {
     </Menus>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

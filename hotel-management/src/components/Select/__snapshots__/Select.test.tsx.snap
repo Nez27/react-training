@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Select testing snapshot render 1`] = `
+exports[`Select Should render correctly 1`] = `
 <select
   aria-label="Sort"
   className="sc-bdnyFh dqXTRP"
-  onChange={[Function]}
+  onChange={[MockFunction]}
   value="Temp value"
 >
   <option

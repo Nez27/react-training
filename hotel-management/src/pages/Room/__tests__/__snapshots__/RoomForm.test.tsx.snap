@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RoomForm Should render correctly 1`] = `
+<form
+  className="sc-dlniIP bCPNqw"
+  onSubmit={[Function]}
+>
+  <div
+    className="sc-eCAqax eozPUK"
+  >
+    <label
+      className="sc-jSFipO cMYxin"
+    >
+      Name
+    </label>
+    <div>
+      <input
+        className="sc-gtsqUy fGZPSU"
+        id="name"
+        name="name"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+      />
+    </div>
+  </div>
+  <div
+    className="sc-eCAqax eozPUK"
+  >
+    <label
+      className="sc-jSFipO cMYxin"
+    >
+      Price
+    </label>
+    <div>
+      <input
+        className="sc-gtsqUy fGZPSU"
+        id="price"
+        name="price"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+      />
+    </div>
+  </div>
+  <div
+    className="sc-hKFymg dteuGK"
+  >
+    <button
+      className="sc-bdnyFh sc-iCoHzw hHmoPp jAHgeA"
+      disabled={false}
+      name="submit"
+      type="submit"
+      variations="primary"
+    >
+      Add
+    </button>
+    <button
+      className="sc-bdnyFh sc-iCoHzw bjdOKm jAHgeA"
+      type="button"
+      variations="secondary"
+    >
+      Close
+    </button>
+  </div>
+</form>
+`;

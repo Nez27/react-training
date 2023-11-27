@@ -4,14 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 // Components
 import Sidebar from '.';
 
-describe('Sidebar testing snapshot', () => {
+describe('Sidebar', () => {
   const wrapper = renderer.create(
     <BrowserRouter>
       <Sidebar heading="Hotel Management" />
     </BrowserRouter>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });

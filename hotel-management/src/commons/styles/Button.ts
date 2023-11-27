@@ -16,10 +16,10 @@ const variations: IVariations = {
     background-color: var(--danger-btn-color);
     color: var(--light-text);
   `,
-};
+} as const;
 
 interface IButtonStyle {
-  variations?: keyof IVariations;
+  variations?: keyof typeof variations;
 }
 
 const Button = styled.button<IButtonStyle>`

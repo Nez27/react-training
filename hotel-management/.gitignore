@@ -13,6 +13,7 @@ dist-ssr
 coverage
 *.local
 .vscode
+coverage
 .jest
 
 # Editor directories and files

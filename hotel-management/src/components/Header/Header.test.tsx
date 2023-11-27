@@ -1,10 +1,12 @@
-import renderer from 'react-test-renderer'
-import Header from '.'
+import renderer from 'react-test-renderer';
 
-describe('Header testing snapshot', () => {
-  const wrapper = renderer.create(<Header accountName='Nezumi' />)
+// Components
+import Header from '.';
 
-  test('render', () => {
-    expect(wrapper).toMatchSnapshot()
-  })
-})
+describe('Header', () => {
+  const wrapper = renderer.create(<Header accountName="Nezumi" />);
+
+  test('Should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+});

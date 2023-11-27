@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header testing snapshot render 1`] = `
+exports[`Header Should render correctly 1`] = `
 <header
   className="sc-dlniIP cClxoS"
 >

@@ -1,18 +1,17 @@
 import renderer from 'react-test-renderer';
 
+// Components
 import Form from '.';
 import Input from '@commonStyle/Input';
+
+// Styled
 import { FormBtn } from '@page/User/styled';
 
-describe('Form testing snapshot', () => {
+describe('Form ', () => {
   const isDisable = true;
   const errorMessage = 'This is error message';
-  const handleOnSubmit = () => {
-    console.log('Confirm');
-  };
-  const handleOnClick = () => {
-    console.log('On Click');
-  };
+  const handleOnSubmit = jest.fn();
+  const handleOnClick = jest.fn();
 
   const wrapper = renderer.create(
     <Form onSubmit={handleOnSubmit}>
@@ -35,7 +34,7 @@ describe('Form testing snapshot', () => {
     </Form>
   );
 
-  test('render', () => {
+  test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
