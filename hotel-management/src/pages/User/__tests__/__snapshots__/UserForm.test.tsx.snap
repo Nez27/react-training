@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserForm Should render correctly 1`] = `
+<form
+  className="sc-gtsqUy jMGskL"
+  onSubmit={[Function]}
+>
+  <div
+    className="sc-hKFymg frexHr"
+  >
+    <label
+      className="sc-eCAqax dnXnhF"
+    >
+      Full Name
+    </label>
+    <div>
+      <input
+        className="sc-bdnyFh gejiRq"
+        id="name"
+        name="name"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+      />
+    </div>
+  </div>
+  <div
+    className="sc-hKFymg frexHr"
+  >
+    <label
+      className="sc-eCAqax dnXnhF"
+    >
+      Phone
+    </label>
+    <div>
+      <input
+        className="sc-bdnyFh gejiRq"
+        id="phone"
+        name="phone"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+      />
+    </div>
+  </div>
+  <div
+    className="sc-dlniIP hBqqvG"
+  >
+    <button
+      className="sc-gKAaef sc-jrsKJM gifCOZ KLoQf"
+      disabled={true}
+      name="submit"
+      type="submit"
+      variations="primary"
+    >
+      Add
+    </button>
+    <button
+      className="sc-gKAaef sc-jrsKJM gbgZUe KLoQf"
+      type="button"
+      variations="secondary"
+    >
+      Close
+    </button>
+  </div>
+</form>
+`;

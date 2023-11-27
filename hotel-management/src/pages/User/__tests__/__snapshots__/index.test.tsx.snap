@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Should render correctly 1`] = `
+<main
+  className="sc-fKgKDd iDHRyD"
+>
+  <div
+    className="sc-lmgPJu bFEqIE"
+    type="horizontal"
+  >
+    <h2
+      className="sc-bCwene htGYaf"
+    >
+      List User
+    </h2>
+    <button
+      className="sc-kfYpNk QIeuT"
+      onClick={[Function]}
+      variations="primary"
+    >
+      Add user
+    </button>
+  </div>
+  <div
+    className="sc-lmgPJu hehIVl"
+    type="vertical"
+  >
+    <div
+      className="sc-iwaiBT eOzYWb"
+    >
+      <div
+        className="sc-crzpnZ iahNiP"
+      >
+        <button
+          active={true}
+          className="sc-dItHI guVVWw"
+          disabled={true}
+          onClick={[Function]}
+        >
+          Ascending
+        </button>
+        <button
+          active={false}
+          className="sc-dItHI fIRqtD"
+          disabled={false}
+          onClick={[Function]}
+        >
+          Descending
+        </button>
+      </div>
+      <select
+        aria-label="Sort"
+        className="sc-iqAbyq czAJZn"
+        onChange={[Function]}
+        value=""
+      >
+        <option
+          value="id"
+        >
+          Sort by id
+        </option>
+        <option
+          value="name"
+        >
+          Sort by name
+        </option>
+        <option
+          value="phone"
+        >
+          Sort by phone
+        </option>
+      </select>
+      <input
+        className="sc-kEqXeH jMVPeG"
+        onChange={[Function]}
+        placeholder="Search by phone..."
+      />
+    </div>
+    <div
+      className="sc-iJCSeZ gDbWTd"
+    />
+  </div>
+</main>
+`;
