@@ -1,6 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { IUser } from '@type/users';
 import renderer from 'react-test-renderer';
+
+// Types
+import { IUser } from '@type/users';
+
+// Components
 import UserRow from '../UserRow';
 
 describe('UserRow', () => {

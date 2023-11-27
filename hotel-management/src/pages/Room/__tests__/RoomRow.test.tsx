@@ -1,9 +1,11 @@
 import renderer from 'react-test-renderer';
-import RoomRow from '../RoomRow';
-import { IRoom } from '@type/rooms';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+// Types
+import { IRoom } from '@type/rooms';
+
 // Components
+import RoomRow from '../RoomRow';
 
 describe('RoomRow', () => {
   const tempRoom: IRoom = {

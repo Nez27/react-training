@@ -1,7 +1,9 @@
-import RoomForm from '../RoomForm';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import renderer from 'react-test-renderer';
+
+// Components
+import RoomForm from '../RoomForm';
 
 describe('RoomForm', () => {
   const queryClient = new QueryClient();

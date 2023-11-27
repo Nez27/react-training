@@ -3,15 +3,15 @@ import { BrowserRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
 
 // Components
-import UserForm from '../UserForm';
+import RoomTable from '@page/Room/RoomTable';
 
-describe('UserForm', () => {
+describe('UserTable', () => {
   const queryClient = new QueryClient();
 
   const wrapper = renderer.create(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <UserForm />
+        <RoomTable />
       </BrowserRouter>
     </QueryClientProvider>
   );

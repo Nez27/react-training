@@ -1,7 +1,9 @@
-import renderer from 'react-test-renderer';
 import Room from '..';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Components
+import renderer from 'react-test-renderer';
 
 describe('Room', () => {
   const queryClient = new QueryClient();
