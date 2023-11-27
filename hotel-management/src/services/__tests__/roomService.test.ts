@@ -10,6 +10,7 @@ import {
 
 // Types
 import { IRoom } from '@type/rooms';
+import supabase from '@service/supabaseService';
 
 const mockGetAllRooms = jest.fn(getAllRooms);
 const mockUpdateRoom = jest.fn(updateRoom);
@@ -42,6 +43,18 @@ describe('Rooms service', () => {
     const result = await mockGetAllRooms('name', 'asc', '');
 
     await waitFor(() => expect(result.length).toEqual(2));
+  });
+
+  test('Can not fetch data', async () => {
+    jest.spyOn(supabase.from('rooms').select(), 'single').mockRejectedValue(() => {
+      return {
+        error: 'Error'
+      }
+    })
+
+    await mockGetAllRooms('name', 'asc', '');
+
+    expect(mockGetAllRooms).toThrow();
   });
 
   test('Should create room correctly', async () => {

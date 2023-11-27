@@ -9,43 +9,82 @@ import {
 } from '@helper/validators';
 
 describe('isValidPhone', () => {
-  test('Should is valid phone', () => {
-    const result = isValidRegex(new RegExp(REGEX.PHONE), '0327212321');
+  const isValidPhone = (phone: string) =>
+    isValidRegex(new RegExp(REGEX.PHONE), phone);
 
-    expect(result).toEqual(true);
+  test('Should is valid phone', () => {
+    const case_1 = isValidPhone('0321123212');
+    const case_2 = isValidPhone('0533245422');
+    const case_3 = isValidPhone('0723342321');
+    const case_4 = isValidPhone('0823654321');
+    const case_5 = isValidPhone('0943212343');
+
+    expect(case_1).toBeTruthy();
+    expect(case_2).toBeTruthy();
+    expect(case_3).toBeTruthy();
+    expect(case_4).toBeTruthy();
+    expect(case_5).toBeTruthy();
   });
 
   test('Should is not valid phone', () => {
-    const result = isValidRegex(new RegExp(REGEX.PHONE), '0327212321Abc');
+    const case_1 = isValidPhone('0327212321Abc');
+    const case_2 = isValidPhone('0021432123');
+    const case_3 = isValidPhone('@325542321');
+    const case_4 = isValidPhone('A321443232');
+    const case_5 = isValidPhone('ValidPhone');
+    const case_6 = isValidPhone('000');
 
-    expect(result).toEqual(false);
+    expect(case_1).toBeFalsy();
+    expect(case_2).toBeFalsy();
+    expect(case_3).toBeFalsy();
+    expect(case_4).toBeFalsy();
+    expect(case_5).toBeFalsy();
+    expect(case_6).toBeFalsy();
   });
 });
 
 describe('isValidDiscount', () => {
   test('Should is valid discount', () => {
-    const result = isValidDiscount(23);
+    const case_1 = isValidDiscount(99.99);
+    const case_2 = isValidDiscount(50);
+    const case_3 = isValidDiscount(0);
+    const case_4 = isValidDiscount(100);
 
-    expect(result).toEqual(true);
+    expect(case_1).toBeTruthy();
+    expect(case_2).toBeTruthy();
+    expect(case_3).toBeTruthy();
+    expect(case_4).toBeTruthy();
   });
 
   test('Should is not valid discount', () => {
-    const result = isValidDiscount(101);
+    const case_1 = isValidDiscount(-1);
+    const case_2 = isValidDiscount(-0.99);
+    const case_3 = isValidDiscount(101);
 
-    expect(result).toEqual(false);
+    expect(case_1).toBeFalsy();
+    expect(case_2).toBeFalsy();
+    expect(case_3).toBeFalsy();
   });
 });
 
 describe('Should is valid string', () => {
   test('Is valid string', () => {
-    const result = isValidString('Phan Huu Loi');
+    const case_1 = isValidString('Phan Huu Loi');
+    const case_2 = isValidString('Nezumi');
 
-    expect(result).toEqual(true);
+    expect(case_1).toBeTruthy();
+    expect(case_2).toBeTruthy();
   });
 
   test('Should is not valid string', () => {
-    const result = isValidString('Phan');
+    const case_1 = isValidString('Le');
+    const case_2 = isValidString('1tét');
+    const case_3 = isValidString('@!');
+    const case_4 = isValidString('     ');
 
-    expect(result).toEqual(false);
+    expect(case_1).toBeFalsy();
+    expect(case_2).toBeFalsy();
+    expect(case_3).toBeFalsy();
+    expect(case_4).toBeFalsy();
   });
 });
