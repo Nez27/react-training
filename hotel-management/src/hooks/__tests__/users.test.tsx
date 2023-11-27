@@ -1,12 +1,16 @@
-import { useCreateUser } from '@hook/users/useCreateUser';
-import { useUpdateUser } from '@hook/users/useUpdateUser';
-import { useUsers } from '@hook/users/useUsers';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
-import { IUser } from '@type/users';
 import { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { act } from 'react-test-renderer';
+
+// Hooks
+import { useCreateUser } from '@hook/users/useCreateUser';
+import { useUpdateUser } from '@hook/users/useUpdateUser';
+import { useUsers } from '@hook/users/useUsers';
+
+// Types
+import { IUser } from '@type/users';
 
 const mockUseUsers = jest.fn(useUsers);
 const mockUseCreateUser = jest.fn(useCreateUser);
@@ -37,8 +41,8 @@ const wrapper = ({ children }: IWrapper) => {
   );
 };
 
-describe('CRUD User testing', () => {
-  test('Fetch user data', async () => {
+describe('Users hook', () => {
+  test('Should fetch user data correctly', async () => {
     mockUseUsers.mockImplementation(() => ({
       users: [
         {
@@ -55,17 +59,17 @@ describe('CRUD User testing', () => {
         },
       ],
       isLoading: false,
-    }))
+    }));
     const { result } = renderHook(() => mockUseUsers(), { wrapper });
 
-    await waitFor(() =>
-      expect(result.current.users?.length).toEqual(2)
-    );
+    await waitFor(() => expect(result.current.users?.length).toEqual(2));
   });
 
-  test('Create user', async () => {
+  test('Should create user correctly', async () => {
     mockUseCreateUser.mockImplementation(() => ({
-      createUser: () => {sampleData},
+      createUser: () => {
+        sampleData;
+      },
       isCreating: false,
       isSuccess: true,
     }));
@@ -81,9 +85,11 @@ describe('CRUD User testing', () => {
     });
   });
 
-  test('Update user', async () => {
+  test('Should update user correctly', async () => {
     mockUseUpdateUser.mockImplementation(() => ({
-      updateUser: () => {sampleData},
+      updateUser: () => {
+        sampleData;
+      },
       isUpdating: false,
       isSuccess: true,
     }));

@@ -17,20 +17,20 @@ const sampleData: IUser = {
   isBooked: true,
 };
 
-describe('CRUD User testing', () => {
-  test('Fetch user data', async () => {
+describe('User services', () => {
+  test('Should fetch user data correctly', async () => {
     mockGetAllUsers.mockResolvedValue([
       {
         id: 1,
         name: 'Nezumi',
         phone: '0324422123',
-       isBooked: true,
+        isBooked: true,
       },
       {
         id: 2,
         name: 'Loi Phan',
         phone: '0324422145',
-       isBooked: false,
+        isBooked: false,
       },
     ]);
     const result = await mockGetAllUsers('name', 'asc', '');
@@ -38,14 +38,14 @@ describe('CRUD User testing', () => {
     await waitFor(() => expect(result.length).toEqual(2));
   });
 
-  test('Create user', async () => {
+  test('Should create user correctly', async () => {
     mockCreateUser.mockResolvedValue(sampleData);
     const result = await mockCreateUser(sampleData);
 
     await waitFor(() => expect(result).toBeTruthy());
   });
 
-  test('Update user', async () => {
+  test('Should update user correctly', async () => {
     mockUpdateUser.mockResolvedValue(sampleData);
     const result = await mockUpdateUser(sampleData);
 

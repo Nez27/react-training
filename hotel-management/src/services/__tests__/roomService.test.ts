@@ -23,8 +23,8 @@ const sampleData: IRoom = {
   status: true,
 };
 
-describe('CRUD Room testing', () => {
-  test('Fetch room data', async () => {
+describe('Rooms service', () => {
+  test('Should fetch room correctly', async () => {
     mockGetAllRooms.mockResolvedValue([
       {
         id: 1,
@@ -44,7 +44,7 @@ describe('CRUD Room testing', () => {
     await waitFor(() => expect(result.length).toEqual(2));
   });
 
-  test('Create room', async () => {
+  test('Should create room correctly', async () => {
     mockCreateRoom.mockResolvedValue(sampleData);
 
     const result = await mockCreateRoom(sampleData);
@@ -52,7 +52,7 @@ describe('CRUD Room testing', () => {
     await waitFor(() => expect(result).toBeTruthy());
   });
 
-  test('Update room', async () => {
+  test('Should update room correctly', async () => {
     mockUpdateRoom.mockResolvedValue({
       id: 1,
       name: 'Nezumi',
@@ -64,7 +64,7 @@ describe('CRUD Room testing', () => {
     await waitFor(() => expect(result).toBeTruthy());
   });
 
-  test('Delete room', async () => {
+  test('Should delete room correctly', async () => {
     mockDeleteRoom.mockImplementation(() => Promise.resolve());
     await mockDeleteRoom(1);
   });

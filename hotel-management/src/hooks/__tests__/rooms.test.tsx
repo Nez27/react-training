@@ -1,15 +1,16 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { ReactNode } from 'react';
+
+// Hooks
 import { useRooms } from '@hook/rooms/useRooms';
 import { useCreateRoom } from '@hook/rooms/useCreateRoom';
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
-import { act, renderHook, waitFor } from '@testing-library/react';
-import { IRoom } from '@type/rooms';
-import { ReactNode } from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { useUpdateRoom } from '@hook/rooms/useUpdateRoom';
 import { useDeleteRoom } from '@hook/rooms/useDeleteRoom';
+
+// Types
+import { IRoom } from '@type/rooms';
 
 const mockUseRooms = jest.fn(useRooms);
 const mockUseCreateRoom = jest.fn(useCreateRoom);
@@ -40,8 +41,8 @@ const wrapper = ({ children }: IWrapper) => {
   );
 };
 
-describe('CRUD Room testing', () => {
-  test('Fetch room data', async () => {
+describe('Room hooks', () => {
+  test('Should fetch data correctly', async () => {
     mockUseRooms.mockImplementation(() => ({
       rooms: [
         {
@@ -66,11 +67,13 @@ describe('CRUD Room testing', () => {
     );
   });
 
-  test('Create room', async () => {
+  test('Should create room correctly', async () => {
     mockUseCreateRoom.mockImplementation(() => ({
-      createRoom: () => {sampleData},
+      createRoom: () => {
+        sampleData;
+      },
       isCreating: false,
-      isSuccess: true
+      isSuccess: true,
     }));
     const { result } = renderHook(() => mockUseCreateRoom(), { wrapper });
 
@@ -83,11 +86,13 @@ describe('CRUD Room testing', () => {
     expect(result.current.isSuccess).toBeTruthy();
   });
 
-  test('Edit room', async () => {
+  test('Should edit room correctly', async () => {
     mockUseUpdateRoom.mockImplementation(() => ({
-      updateRoom: () => {sampleData},
+      updateRoom: () => {
+        sampleData;
+      },
       isUpdating: false,
-      isSuccess: true
+      isSuccess: true,
     }));
     const { result } = renderHook(() => mockUseUpdateRoom(), { wrapper });
 
@@ -101,11 +106,13 @@ describe('CRUD Room testing', () => {
     });
   });
 
-  test('Delete room', async () => {
+  test('Should delete room correctly', async () => {
     mockUseDeleteRoom.mockImplementation(() => ({
-      deleteRoom: () => {sampleData.id},
+      deleteRoom: () => {
+        sampleData.id;
+      },
       isDeleting: false,
-      isSuccess: true
+      isSuccess: true,
     }));
     const { result } = renderHook(() => mockUseDeleteRoom(), { wrapper });
 

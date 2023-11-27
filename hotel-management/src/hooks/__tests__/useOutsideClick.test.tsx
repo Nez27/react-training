@@ -1,7 +1,9 @@
-import { useOutsideClick } from '@hook/useOutsideClick';
 import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 
-describe('useOutsideClick testing', () => {
+// Hooks
+import { useOutsideClick } from '@hook/useOutsideClick';
+
+describe('useOutsideClick', () => {
   test('Call handler when click outside element', () => {
     // Arrange
     const handler = jest.fn();
