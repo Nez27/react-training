@@ -8,11 +8,13 @@ exports[`Select Should render correctly 1`] = `
   value="Temp value"
 >
   <option
+    data-testid="select-option"
     value="Value 1"
   >
     Option 1
   </option>
   <option
+    data-testid="select-option"
     value="Value 2"
   >
     Option 2

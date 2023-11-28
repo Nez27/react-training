@@ -55,16 +55,19 @@ exports[`User Should render correctly 1`] = `
         value=""
       >
         <option
+          data-testid="select-option"
           value="id"
         >
           Sort by id
         </option>
         <option
+          data-testid="select-option"
           value="name"
         >
           Sort by name
         </option>
         <option
+          data-testid="select-option"
           value="phone"
         >
           Sort by phone

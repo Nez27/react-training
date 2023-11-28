@@ -1,9 +1,25 @@
+import { useState } from 'react';
 import { RenderResult, fireEvent, render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 // Components
 import OrderBy from '.';
 
-jest.mock('react-router-dom');
+let mockSearchParam = '';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useSearchParams: () => {
+    const [params, setParams] = useState(new URLSearchParams(mockSearchParam));
+    return [
+      params,
+      (newParams: string) => {
+        mockSearchParam = newParams;
+        setParams(new URLSearchParams(newParams));
+      },
+    ];
+  },
+}));
 
 describe('Order', () => {
   const options = [
@@ -20,7 +36,11 @@ describe('Order', () => {
   let wrapper: RenderResult | null = null;
 
   beforeEach(() => {
-    wrapper = render(<OrderBy options={options} />);
+    wrapper = render(
+      <MemoryRouter>
+        <OrderBy options={options} />
+      </MemoryRouter>
+    );
   });
 
   test('Should render correctly', () => {
@@ -28,13 +48,9 @@ describe('Order', () => {
   });
 
   test('handleClick should work correctly', async () => {
-    const mockSearchParams = jest.fn();
-    // useSearchParams.search = mockSearchParams;
-    // setSearchParams = jest.fn();
-
-    const nameButton = wrapper!.getByText('Name');
+    const nameButton = wrapper!.getByText('Option 2');
     fireEvent.click(nameButton);
 
-    expect(mockSearchParams).toHaveBeenCalled();
+    expect(mockSearchParam.toString()).toEqual('orderBy=value2');
   });
 });
