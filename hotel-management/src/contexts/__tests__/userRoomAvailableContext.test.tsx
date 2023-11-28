@@ -1,40 +1,129 @@
-import { render, act } from '@testing-library/react';
-import * as userServices from '@service/userServices';
-import * as roomServices from '@service/roomServices';
-import App from '../../App';
+import { reducer } from '@context/UserRoomAvailableContext';
+import { IDataState } from '@type/common';
 
 jest.mock('@service/userServices');
 jest.mock('@service/roomServices');
 
-describe('App', () => {
-  test('Should init room, user data', async () => {
-    const mockGetUserNotBooked = jest.spyOn(userServices, 'getUserNotBooked');
-    const mockGetRoomAvailable = jest.spyOn(roomServices, 'getRoomsAvailable');
+describe('userRoomAvailableContext', () => {
+  let initialState: {
+    roomsAvailable: IDataState[];
+    usersAvailable: IDataState[];
+  };
 
-    mockGetUserNotBooked.mockResolvedValue([
-      {
-        id: 1,
-        name: 'Nezumi',
-      },
-      {
-        id: 2,
-        name: 'Loi Phan',
-      },
-    ]);
+  const sampleRooms = [
+    {
+      id: 2,
+      name: 'Room 2',
+    },
+    {
+      id: 3,
+      name: 'Room 3',
+    },
+  ];
 
-    mockGetRoomAvailable.mockResolvedValue([
-      {
-        id: 1,
-        name: 'Room 1',
-      },
-      {
-        id: 2,
-        name: 'Room 2',
-      },
-    ]);
+  const sampleUsers = [
+    {
+      id: 2,
+      name: 'Loi Phan',
+    },
+    {
+      id: 3,
+      name: 'Van A',
+    },
+  ];
 
-    await act(async () => {
-      render(<App />);
+  beforeEach(() => {
+    initialState = {
+      roomsAvailable: [
+        {
+          id: 1,
+          name: 'Room 1',
+        },
+      ],
+      usersAvailable: [
+        {
+          id: 1,
+          name: 'Nezumi',
+        },
+      ],
+    };
+  });
+
+  test('Should init user correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'initUser',
+      payload: sampleUsers,
+    });
+
+    expect(state.usersAvailable.length).toEqual(2);
+  });
+
+  test('Should add user correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'addUser',
+      payload: [{ id: 2, name: 'Test Name' }],
+    });
+
+    expect(state.usersAvailable.length).toEqual(2);
+  });
+
+  test('Should remove user correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'removeUser',
+      payload: [{ id: 1 }],
+    });
+
+    expect(state.usersAvailable.length).toEqual(0);
+  });
+
+  test('Should update user correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'updateUserName',
+      payload: [{ id: 1, name: 'Update name' }],
+    });
+
+    expect(state.usersAvailable[0]).toEqual({
+      id: 1,
+      name: 'Update name'
+    });
+  });
+
+  test('Should init room correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'initRoom',
+      payload: sampleRooms,
+    });
+
+    expect(state.roomsAvailable.length).toEqual(2);
+  });
+
+  test('Should add room correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'addRoom',
+      payload: [{ id: 2, name: 'Test Room' }],
+    });
+
+    expect(state.roomsAvailable.length).toEqual(2);
+  });
+
+  test('Should remove room correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'removeRoom',
+      payload: [{ id: 1 }],
+    });
+
+    expect(state.roomsAvailable.length).toEqual(0);
+  });
+
+  test('Should update room correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'updateRoomName',
+      payload: [{ id: 1, name: 'Update name' }],
+    });
+
+    expect(state.roomsAvailable[0]).toEqual({
+      id: 1,
+      name: 'Update name'
     });
   });
 });
