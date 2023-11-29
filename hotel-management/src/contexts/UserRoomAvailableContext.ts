@@ -12,9 +12,9 @@ type TAction =
   | 'initRoom'
   | 'initUser'
   | 'addRoom'
-  | 'removeRoom'
+  | 'updateStatusRoom'
   | 'addUser'
-  | 'removeUser'
+  | 'updateStatusUser'
   | 'updateUserName'
   | 'updateRoomName';
 
@@ -38,19 +38,16 @@ const initialState: IUserRoomState = {
 
 const reducer = (state: IUserRoomState, action: IAction) => {
   switch (action.type) {
-
     case 'initRoom':
       return {
         ...state,
         roomsAvailable: action.payload,
       };
-
     case 'initUser':
       return {
         ...state,
         usersAvailable: action.payload,
       };
-
     case 'addUser': {
       const tempArr = state.usersAvailable;
       const itemExist = state.usersAvailable.find(
@@ -66,7 +63,6 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         usersAvailable: tempArr,
       };
     }
-
     case 'updateUserName': {
       const tempArr = state.usersAvailable;
 
@@ -83,15 +79,18 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         usersAvailable: tempArr,
       };
     }
+    case 'updateStatusUser': {
+      const tempArr = state.usersAvailable;
+      const indexItemUpdate = tempArr.findIndex(
+        (item) => item.id === action.payload[0].id
+      );
+      tempArr[indexItemUpdate].isBooked = action.payload[0].isBooked;
 
-    case 'removeUser':
       return {
         ...state,
-        usersAvailable: state.usersAvailable.filter(
-          (item) => item.id !== action.payload[0].id
-        ),
+        usersAvailable: tempArr,
       };
-
+    }
     case 'addRoom': {
       const tempArr = state.roomsAvailable;
       const itemExist = state.roomsAvailable.find(
@@ -107,7 +106,6 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
-
     case 'updateRoomName': {
       const tempArr = state.roomsAvailable;
 
@@ -124,15 +122,18 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
+    case 'updateStatusRoom': {
+      const tempArr = state.roomsAvailable;
+      const indexItemUpdate = tempArr.findIndex(
+        (item) => item.id === action.payload[0].id
+      );
+      tempArr[indexItemUpdate].status = action.payload[0].status;
 
-    case 'removeRoom':
       return {
         ...state,
-        roomsAvailable: state.roomsAvailable.filter(
-          (item) => item.id !== action.payload[0].id
-        ),
+        roomsAvailable: tempArr,
       };
-      
+    }
     default:
       throw new Error('Action unknown');
   }
