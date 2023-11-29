@@ -24,8 +24,6 @@ interface ICheckOutBooking {
 }
 
 interface IGetAllBookings {
-  sortBy: string;
-  orderBy: string;
   userNameSearch: string;
   page: number;
 }
@@ -35,8 +33,6 @@ interface IGetAllBookings {
  * @returns Return all bookings in database
  */
 const getAllBookings = async ({
-  sortBy,
-  orderBy,
   userNameSearch,
   page,
 }: IGetAllBookings): Promise<{
@@ -55,8 +51,7 @@ const getAllBookings = async ({
       }
     )
     .ilike('users.name', `%${userNameSearch}%`)
-    .range(from, to)
-    .order(sortBy, { ascending: orderBy === 'asc' });
+    .range(from, to);
 
   if (error) {
     console.error(error.message);

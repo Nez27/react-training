@@ -16,8 +16,6 @@ const useBookings = () => {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
-  const sortByValue = searchParams.get('sortBy') || 'id';
-  const orderByValue = searchParams.get('orderBy') || 'asc';
   const searchValue = searchParams.get('search') || '';
   const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
 
@@ -26,11 +24,9 @@ const useBookings = () => {
     data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ['bookings', sortByValue, orderByValue, searchValue, page],
+    queryKey: ['bookings', searchValue, page],
     queryFn: () =>
       getAllBookings({
-        sortBy: sortByValue,
-        orderBy: orderByValue,
         userNameSearch: searchValue,
         page,
       }),
@@ -47,11 +43,9 @@ const useBookings = () => {
     const nextPage = page + 1;
 
     queryClient.prefetchQuery({
-      queryKey: ['bookings', sortByValue, orderByValue, searchValue, nextPage],
+      queryKey: ['bookings', searchValue, nextPage],
       queryFn: () =>
         getAllBookings({
-          sortBy: sortByValue,
-          orderBy: orderByValue,
           userNameSearch: searchValue,
           page: nextPage,
         }),
@@ -62,17 +56,9 @@ const useBookings = () => {
     const previousPage = page - 1;
 
     queryClient.prefetchQuery({
-      queryKey: [
-        'bookings',
-        sortByValue,
-        orderByValue,
-        searchValue,
-        previousPage,
-      ],
+      queryKey: ['bookings', searchValue, previousPage],
       queryFn: () =>
         getAllBookings({
-          sortBy: sortByValue,
-          orderBy: orderByValue,
           userNameSearch: searchValue,
           page: previousPage,
         }),

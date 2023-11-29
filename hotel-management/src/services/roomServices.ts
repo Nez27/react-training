@@ -18,7 +18,7 @@ import {
 interface IGetAllRooms {
   sortBy: string;
   orderBy: string;
-  roomName: string;
+  roomSearch: string;
   page: number;
 }
 
@@ -29,7 +29,7 @@ interface IGetAllRooms {
 const getAllRooms = async ({
   sortBy,
   orderBy,
-  roomName,
+  roomSearch,
   page,
 }: IGetAllRooms): Promise<{ data: IRoom[]; count: number | null }> => {
   const from = (page - 1) * DEFAULT_PAGE_SIZE;
@@ -39,7 +39,7 @@ const getAllRooms = async ({
     .from(ROOMS_TABLE)
     .select('*', { count: 'exact' })
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .like('name', `%${roomName}%`);
+    .like('name', `%${roomSearch}%`);
 
   if(page) {
     query = query.range(from, to);

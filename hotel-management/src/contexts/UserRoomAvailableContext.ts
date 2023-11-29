@@ -82,7 +82,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         usersAvailable: tempArr,
       };
     }
-
+    
     case 'updateStatusUser': {
       const tempArr = state.usersAvailable;
       const indexItemUpdate = tempArr.findIndex(

@@ -48,6 +48,7 @@ const FORM = {
   DELETE: 'delete',
   USER: 'user-form',
   ROOM: 'room-form',
+  CHECKOUT: 'checkout',
 };
 
 const REGEX = {

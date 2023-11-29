@@ -2,11 +2,13 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import isPropValid from '@emotion/is-prop-valid';
 import { StyleSheetManager } from 'styled-components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect, useMemo, useReducer } from 'react';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // Components
 import AppLayout from './components/AppLayout';
 import User from './pages/User';
-import Dashboard from './pages/Dashboard';
+import Booking from './pages/Booking';
 import Room from './pages/Room';
 import NotFound from './pages/NotFound';
 
@@ -18,19 +20,10 @@ import {
   initialState,
   reducer,
 } from '@context/UserRoomAvailableContext';
-import { useEffect, useMemo, useReducer } from 'react';
+import { getAllUsers } from '@service/userServices';
+import { getAllRooms } from '@service/roomServices';
 
-// Services
-import { getUserNotBooked } from '@service/userServices';
-import { getRoomsAvailable } from '@service/roomServices';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 function App() {
   const [{ usersAvailable, roomsAvailable }, dispatch] = useReducer(
@@ -41,16 +34,26 @@ function App() {
   // Init list user and room available
   useEffect(() => {
     const load = async () => {
-      const tempUser = await getUserNotBooked();
+      const tempUser = await getAllUsers({
+        sortBy: 'id',
+        orderBy: 'asc',
+        phoneSearch: '',
+        page: 0,
+      });
 
       if (tempUser) {
-        dispatch({ type: 'initUser', payload: tempUser });
+        dispatch({ type: 'initUser', payload: tempUser.data });
       }
 
-      const tempRoom = await getRoomsAvailable();
+      const tempRoom = await getAllRooms({
+        sortBy: 'id',
+        orderBy: 'asc',
+        roomSearch: '',
+        page: 0,
+      });
 
       if (tempRoom) {
-        dispatch({ type: 'initRoom', payload: tempRoom });
+        dispatch({ type: 'initRoom', payload: tempRoom.data });
       }
     };
 
@@ -63,16 +66,14 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
         <UserRoomAvailableContext.Provider value={store}>
           <BrowserRouter>
             <Routes>
               <Route element={<AppLayout />}>
-                <Route
-                  index
-                  element={<Navigate replace to={PATH.DASHBOARD} />}
-                />
-                <Route path={PATH.DASHBOARD} element={<Dashboard />} />
+                <Route index element={<Navigate replace to={PATH.BOOKING} />} />
+                <Route path={PATH.BOOKING} element={<Booking />} />
                 <Route path={PATH.USER} element={<User />} />
                 <Route path={PATH.ROOM} element={<Room />} />
               </Route>
