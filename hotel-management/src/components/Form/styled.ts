@@ -1,3 +1,4 @@
+import Button from '@commonStyle/Button';
 import styled from 'styled-components';
 
 const StyledForm = styled.form`
@@ -35,4 +36,13 @@ const Error = styled.p`
   width: 220px;
 `;
 
-export { StyledForm, StyledActionBtn, StyledFormRow, Label, Error };
+const FormBtn = styled(Button)`
+  width: 100%;
+
+  &:disabled,
+  &[disabled] {
+    background-color: var(--disabled-btn-color);
+  }
+`;
+
+export { StyledForm, StyledActionBtn, StyledFormRow, Label, Error, FormBtn };

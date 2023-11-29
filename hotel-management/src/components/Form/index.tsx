@@ -7,6 +7,7 @@ import {
   Error,
   Label,
   StyledFormRow,
+  FormBtn,
 } from './styled';
 
 interface IFormProps {
@@ -29,7 +30,6 @@ const Form = ({ children, onSubmit, id }: IFormProps) => {
   );
 };
 
-
 const FormRow = ({ label, error, children }: IFormRow) => {
   return (
     <StyledFormRow>
@@ -44,5 +44,6 @@ const FormRow = ({ label, error, children }: IFormRow) => {
 
 Form.Row = FormRow;
 Form.Action = StyledActionBtn;
+Form.Button = FormBtn;
 
 export default Form;
