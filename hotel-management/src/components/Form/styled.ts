@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+// Styled
+import Button from '@commonStyle/Button';
+
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -35,4 +38,13 @@ const Error = styled.p`
   width: 220px;
 `;
 
-export { StyledForm, StyledActionBtn, StyledFormRow, Label, Error };
+const FormBtn = styled(Button)`
+  width: 100%;
+
+  &:disabled,
+  &[disabled] {
+    background-color: var(--disabled-btn-color);
+  }
+`;
+
+export { StyledForm, StyledActionBtn, StyledFormRow, Label, Error, FormBtn };
