@@ -1,5 +1,5 @@
 // Components
-import { MdSpaceDashboard } from 'react-icons/md';
+import { BiSolidCalendarAlt } from 'react-icons/bi';
 import { HiUsers } from 'react-icons/hi2';
 import { BsHouseDoorFill } from 'react-icons/bs';
 
@@ -7,14 +7,14 @@ import { BsHouseDoorFill } from 'react-icons/bs';
 import { StyledNav, StyledNavLink } from './styled';
 
 // Constants
-import { DASHBOARD, ROOM, USER } from '@constant/path';
+import { BOOKING, ROOM, USER } from '@constant/path';
 
 const Nav = () => {
   return (
     <StyledNav>
-      <StyledNavLink to={DASHBOARD}>
-        <MdSpaceDashboard />
-        <span>Dashboard</span>
+      <StyledNavLink to={BOOKING}>
+        <BiSolidCalendarAlt />
+        <span>Booking</span>
       </StyledNavLink>
       <StyledNavLink to={USER}>
         <HiUsers />
