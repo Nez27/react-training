@@ -7,12 +7,13 @@ import supabase from './supabaseService';
 
 // Constants
 import { DEFAULT_PAGE_SIZE } from '@constant/config';
-
-const ROOMS_TABLE = 'rooms';
-const ERROR_FETCHING = "Can't fetch room data!";
-const ERROR_UPDATE_ROOM = "Can't update room!";
-const ERROR_CREATE_ROOM = "Can't create room!";
-const ERROR_DELETE_ROOM = "Can't delete room!";
+import {
+  ERROR_CREATE_ROOM,
+  ERROR_DELETE_ROOM,
+  ERROR_FETCHING_ROOM,
+  ERROR_UPDATE_ROOM,
+  ROOMS_TABLE,
+} from '@constant/messages';
 
 interface IGetAllRooms {
   sortBy: string;
@@ -34,16 +35,21 @@ const getAllRooms = async ({
   const from = (page - 1) * DEFAULT_PAGE_SIZE;
   const to = from + DEFAULT_PAGE_SIZE - 1;
 
-  const { data, error, count } = await supabase
+  let query = supabase
     .from(ROOMS_TABLE)
     .select('*', { count: 'exact' })
-    .range(from, to)
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .ilike('name', `%${roomName}%`);
+    .like('name', `%${roomName}%`);
+
+  if(page) {
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_ROOM);
   }
 
   return { data, count };
@@ -101,18 +107,57 @@ const deleteRoom = async (idRoom: number) => {
   }
 };
 
-const getRoomsAvailable = async (): Promise<IDataState[]> => {
+const getRoomById = async (idRoom: string): Promise<IRoom> => {
   const { data, error } = await supabase
     .from(ROOMS_TABLE)
-    .select('id, name')
-    .eq('status', false);
+    .select('*')
+    .eq('id', idRoom)
+    .single();
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_ROOM);
   }
 
   return data;
 };
 
-export { getAllRooms, updateRoom, createRoom, deleteRoom, getRoomsAvailable };
+const getRoomsAvailable = async (): Promise<IDataState[]> => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .select('id, name, status');
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_FETCHING_ROOM);
+  }
+
+  return data;
+};
+
+const updateRoomStatus = async (
+  id: number,
+  status: boolean
+): Promise<number> => {
+  const { error, status: statusConnection } = await supabase
+    .from(ROOMS_TABLE)
+    .update({ status })
+    .eq('id', id);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_UPDATE_ROOM);
+  }
+
+  return statusConnection;
+};
+
+export {
+  getAllRooms,
+  updateRoom,
+  createRoom,
+  deleteRoom,
+  getRoomsAvailable,
+  getRoomById,
+  updateRoomStatus,
+};

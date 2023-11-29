@@ -6,6 +6,8 @@ const StyledSelect = styled.select`
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   font-weight: 500;
+
+  width: 200px;
 `;
 
 export { StyledSelect };

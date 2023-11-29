@@ -10,4 +10,16 @@ const formatCurrency = (value: number): string => {
   }).format(value);
 };
 
-export { formatCurrency };
+const getDayDiff = (startDate: Date, endDate: Date): number => {
+  const msInDay = 24 * 60 * 60 * 1000;
+
+  return Math.round(
+    Math.abs(Number(endDate) - Number(startDate)) / msInDay
+  );
+}
+
+const convertCurrencyToNumber = (currency: string) => {
+  return Number(currency.replace(/[^0-9.-]+/g,""))
+}
+
+export { formatCurrency, getDayDiff, convertCurrencyToNumber };
