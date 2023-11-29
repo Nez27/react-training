@@ -9,7 +9,7 @@ const StyledOrder = styled.div`
 `;
 
 interface IOrderBtn {
-  active: boolean;
+  disabled: boolean;
 }
 
 const OrderButton = styled.button<IOrderBtn>`
@@ -25,11 +25,11 @@ const OrderButton = styled.button<IOrderBtn>`
   padding: 5px 10px;
   
   ${(props) =>
-    props.active &&
+    props.disabled &&
     css`
       background-color: var(--primary-color);
       color: var(--light-text);
-      cursor: no-drop;
+      cursor: not-allowed;
     `}
 
   &:hover:not(:disabled) {
