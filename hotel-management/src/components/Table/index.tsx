@@ -1,7 +1,13 @@
 import { ReactNode, useContext } from 'react';
 
-// Components
-import { StyledBody, StyledHeader, StyledRow, StyledTable } from './styled';
+// Styled
+import {
+  StyledBody,
+  StyledHeader,
+  StyledRow,
+  StyledTable,
+  StyledFooter,
+} from './styled';
 
 // Contexts
 import TableContext from '@context/TableContext';
@@ -33,9 +39,13 @@ const Table = ({ columns, children }: ITable) => {
 const Header = ({ headerColumn }: IHeader) => {
   const { columns } = useContext(TableContext);
 
-  return <StyledHeader columns={columns}>
-    {headerColumn.map((item) => <div key={item}>{item}</div>)}
-  </StyledHeader>;
+  return (
+    <StyledHeader columns={columns}>
+      {headerColumn.map((item) => (
+        <div key={item}>{item}</div>
+      ))}
+    </StyledHeader>
+  );
 };
 
 const Body = <T,>({ data, render }: ITableBody<T>) => {
@@ -55,5 +65,6 @@ const Row = ({ children }: ITable) => {
 Table.Header = Header;
 Table.Body = Body;
 Table.Row = Row;
+Table.Footer = StyledFooter;
 
 export default Table;
