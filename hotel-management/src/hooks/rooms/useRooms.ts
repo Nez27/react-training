@@ -18,18 +18,22 @@ const useRooms = () => {
 
   const sortByValue = searchParams.get('sortBy') || 'id';
   const orderByValue = searchParams.get('orderBy') || 'asc';
-  const roomSearch = searchParams.get('search') || '';
-  const page = searchParams.get('page') 
-    ? Number(searchParams.get('page')) 
-    : 1;
+  const searchValue = searchParams.get('search') || '';
+  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
 
   const {
     isLoading,
     data: { data: rooms, count } = {},
     error,
   } = useQuery({
-    queryKey: ['rooms', sortByValue, orderByValue, roomSearch, page],
-    queryFn: () => getAllRooms(sortByValue, orderByValue, roomSearch, page),
+    queryKey: ['rooms', sortByValue, orderByValue, searchValue, page],
+    queryFn: () =>
+      getAllRooms({
+        sortBy: sortByValue,
+        orderBy: orderByValue,
+        roomName: searchValue,
+        page,
+      }),
   });
 
   if (error) {
@@ -43,9 +47,14 @@ const useRooms = () => {
     const nextPage = page + 1;
 
     queryClient.prefetchQuery({
-      queryKey: ['rooms', sortByValue, orderByValue, roomSearch, nextPage],
+      queryKey: ['rooms', sortByValue, orderByValue, searchValue, nextPage],
       queryFn: () =>
-        getAllRooms(sortByValue, orderByValue, roomSearch, nextPage),
+        getAllRooms({
+          sortBy: sortByValue,
+          orderBy: orderByValue,
+          roomName: searchValue,
+          page: nextPage,
+        }),
     });
   }
 
@@ -53,9 +62,14 @@ const useRooms = () => {
     const previousPage = page - 1;
 
     queryClient.prefetchQuery({
-      queryKey: ['rooms', sortByValue, orderByValue, roomSearch, previousPage],
+      queryKey: ['rooms', sortByValue, orderByValue, searchValue, previousPage],
       queryFn: () =>
-        getAllRooms(sortByValue, orderByValue, roomSearch, previousPage),
+        getAllRooms({
+          sortBy: sortByValue,
+          orderBy: orderByValue,
+          roomName: searchValue,
+          page: previousPage,
+        }),
     });
   }
 

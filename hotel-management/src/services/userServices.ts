@@ -52,6 +52,13 @@ const updateUser = async (user: IUser): Promise<IUser> => {
   return data;
 };
 
+interface IGetAllUsers {
+  sortBy: string;
+  orderBy: string;
+  phoneSearch: string;
+  page: number;
+}
+
 /**
  * Return data of users from database
  * @param sortBy Sort by column
@@ -59,12 +66,12 @@ const updateUser = async (user: IUser): Promise<IUser> => {
  * @param phoneSearch The phone need to be search
  * @returns The data of users from database
  */
-const getAllUsers = async (
-  sortBy: string,
-  orderBy: string,
-  phoneSearch: string,
-  page: number
-): Promise<{ data: IUser[]; count: number | null }> => {
+const getAllUsers = async ({
+  sortBy,
+  orderBy,
+  phoneSearch,
+  page,
+}: IGetAllUsers): Promise<{ data: IUser[]; count: number | null }> => {
   const from = (page - 1) * DEFAULT_PAGE_SIZE;
   const to = from + DEFAULT_PAGE_SIZE - 1;
 

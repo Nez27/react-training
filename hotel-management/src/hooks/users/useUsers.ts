@@ -17,18 +17,22 @@ const useUsers = () => {
   const queryClient = useQueryClient();
   const sortByValue = searchParams.get('sortBy') || 'id';
   const orderByValue = searchParams.get('orderBy') || 'asc';
-  const phoneSearch = searchParams.get('search') || '';
-  const page = searchParams.get('page') 
-    ? Number(searchParams.get('page')) 
-    : 1;
+  const searchValue = searchParams.get('search') || '';
+  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
 
   const {
     isLoading,
     data: { data: users, count } = {},
     error,
   } = useQuery({
-    queryKey: ['users', sortByValue, orderByValue, phoneSearch, page],
-    queryFn: () => getAllUsers(sortByValue, orderByValue, phoneSearch, page),
+    queryKey: ['users', sortByValue, orderByValue, searchValue, page],
+    queryFn: () =>
+      getAllUsers({
+        sortBy: sortByValue,
+        orderBy: orderByValue,
+        phoneSearch: searchValue,
+        page,
+      }),
   });
 
   if (error) {
@@ -42,9 +46,14 @@ const useUsers = () => {
     const nextPage = page + 1;
 
     queryClient.prefetchQuery({
-      queryKey: ['users', sortByValue, orderByValue, phoneSearch, nextPage],
+      queryKey: ['users', sortByValue, orderByValue, searchValue, nextPage],
       queryFn: () =>
-        getAllUsers(sortByValue, orderByValue, phoneSearch, nextPage),
+        getAllUsers({
+          sortBy: sortByValue,
+          orderBy: orderByValue,
+          phoneSearch: searchValue,
+          page: nextPage,
+        }),
     });
   }
 
@@ -52,9 +61,14 @@ const useUsers = () => {
     const previousPage = page - 1;
 
     queryClient.prefetchQuery({
-      queryKey: ['users', sortByValue, orderByValue, phoneSearch, previousPage],
+      queryKey: ['users', sortByValue, orderByValue, searchValue, previousPage],
       queryFn: () =>
-        getAllUsers(sortByValue, orderByValue, phoneSearch, previousPage),
+        getAllUsers({
+          sortBy: sortByValue,
+          orderBy: orderByValue,
+          phoneSearch: searchValue,
+          page: previousPage,
+        }),
     });
   }
 

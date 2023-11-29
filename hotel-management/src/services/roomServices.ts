@@ -14,16 +14,23 @@ const ERROR_UPDATE_ROOM = "Can't update room!";
 const ERROR_CREATE_ROOM = "Can't create room!";
 const ERROR_DELETE_ROOM = "Can't delete room!";
 
+interface IGetAllRooms {
+  sortBy: string;
+  orderBy: string;
+  roomName: string;
+  page: number;
+}
+
 /**
  * Get all rooms from database
  * @returns Return all rooms in database
  */
-const getAllRooms = async (
-  sortBy: string,
-  orderBy: string,
-  roomName: string,
-  page: number
-): Promise<{ data: IRoom[]; count: number | null }> => {
+const getAllRooms = async ({
+  sortBy,
+  orderBy,
+  roomName,
+  page,
+}: IGetAllRooms): Promise<{ data: IRoom[]; count: number | null }> => {
   const from = (page - 1) * DEFAULT_PAGE_SIZE;
   const to = from + DEFAULT_PAGE_SIZE - 1;
 
