@@ -4,9 +4,6 @@ import renderer from 'react-test-renderer';
 import Form from '.';
 import Input from '@commonStyle/Input';
 
-// Styled
-import { FormBtn } from '@page/User/styled';
-
 describe('Form ', () => {
   const isDisable = true;
   const errorMessage = 'This is error message';
@@ -24,12 +21,12 @@ describe('Form ', () => {
       </Form.Row>
 
       <Form.Action>
-        <FormBtn type="submit" name="submit" disabled={isDisable}>
+        <Form.Button type="submit" name="submit" disabled={isDisable}>
           Confirm
-        </FormBtn>
-        <FormBtn type="button" variations="secondary" onClick={handleOnClick}>
+        </Form.Button>
+        <Form.Button type="button" variations="secondary" onClick={handleOnClick}>
           Close
-        </FormBtn>
+        </Form.Button>
       </Form.Action>
     </Form>
   );
