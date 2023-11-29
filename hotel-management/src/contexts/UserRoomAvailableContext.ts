@@ -43,11 +43,13 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         ...state,
         roomsAvailable: action.payload,
       };
+
     case 'initUser':
       return {
         ...state,
         usersAvailable: action.payload,
       };
+
     case 'addUser': {
       const tempArr = state.usersAvailable;
       const itemExist = state.usersAvailable.find(
@@ -63,6 +65,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         usersAvailable: tempArr,
       };
     }
+
     case 'updateUserName': {
       const tempArr = state.usersAvailable;
 
@@ -79,6 +82,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         usersAvailable: tempArr,
       };
     }
+
     case 'updateStatusUser': {
       const tempArr = state.usersAvailable;
       const indexItemUpdate = tempArr.findIndex(
@@ -91,6 +95,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         usersAvailable: tempArr,
       };
     }
+
     case 'addRoom': {
       const tempArr = state.roomsAvailable;
       const itemExist = state.roomsAvailable.find(
@@ -106,6 +111,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
+
     case 'updateRoomName': {
       const tempArr = state.roomsAvailable;
 
@@ -122,6 +128,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
+
     case 'updateStatusRoom': {
       const tempArr = state.roomsAvailable;
       const indexItemUpdate = tempArr.findIndex(
@@ -134,6 +141,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
+    
     default:
       throw new Error('Action unknown');
   }
