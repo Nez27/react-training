@@ -1,18 +1,31 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
+// Components
+import UserForm from '../UserForm';
+import {
+  RenderResult,
+  fireEvent,
+  render,
+  waitFor,
+} from '@testing-library/react';
+
+const createUser = jest.fn();
 
 jest.mock('@hook/users/useCreateUser.ts', () => ({
   ...jest.requireActual('@hook/users/useCreateUser.ts'),
-  useCreateUser: () => ({
-    isCreating: true,
-    createUser: jest.fn(),
-  }),
+  useCreateUser: jest.fn(() => ({
+    isCreating: false,
+    createUser,
+  })),
 }));
 
-// Components
-import UserForm from '../UserForm';
-import { RenderResult, fireEvent, render } from '@testing-library/react';
-import { act } from 'react-test-renderer';
+jest.mock('@hook/users/useUpdateUser', () => ({
+  ...jest.requireActual('@hook/users/useUpdateUser'),
+  useUpdateUser: () => ({
+    isUpdating: false,
+    updateUser: jest.fn(),
+  }),
+}));
 
 describe('UserForm', () => {
   const queryClient = new QueryClient();
@@ -36,14 +49,25 @@ describe('UserForm', () => {
   test('Should submit correctly', async () => {
     const nameField = wrapper!.container.querySelector('#name');
     const phoneField = wrapper!.container.querySelector('#phone');
-    const submitBtn = wrapper!.getByText('Add');
+    const submitBtn = wrapper!.getByText('Add').closest('button');
+    let result: {
+      name: string;
+      phone: string;
+    };
 
-    await act(async () => {
-      fireEvent.input(nameField!, { target: { value: 'Phan Huu Loi' } });
-      fireEvent.input(phoneField!, { target: { value: '0324432321' } });
-      fireEvent.click(submitBtn);
+    createUser.mockImplementationOnce((newUser, { onSuccess }) => {
+      result = newUser;
+      onSuccess();
     });
 
-    wrapper?.debug();
+    fireEvent.input(nameField!, { target: { value: 'Nezumi' } });
+    fireEvent.input(phoneField!, { target: { value: '0327764321' } });
+
+    fireEvent.submit(submitBtn!);
+
+    await waitFor(() => {
+      expect(createUser).toHaveBeenCalled();
+      expect(result).toEqual({ name: 'Nezumi', phone: '0327764321' });
+    });
   });
 });

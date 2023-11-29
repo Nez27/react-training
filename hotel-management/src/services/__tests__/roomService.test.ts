@@ -1,4 +1,5 @@
 import { waitFor } from '@testing-library/react';
+import supabase from '@service/supabaseService';
 
 // Services
 import {
@@ -10,8 +11,8 @@ import {
 
 // Types
 import { IRoom } from '@type/rooms';
-import supabase from '@service/supabaseService';
 
+jest.mock('@service/supabaseService');
 const mockGetAllRooms = jest.fn(getAllRooms);
 const mockUpdateRoom = jest.fn(updateRoom);
 const mockCreateRoom = jest.fn(createRoom);
