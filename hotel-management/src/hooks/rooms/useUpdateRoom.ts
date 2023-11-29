@@ -18,14 +18,18 @@ const useUpdateRoom = () => {
   const queryClient = useQueryClient();
   const { dispatch } = useUserRoomAvailable();
 
-  const { mutate: updateRoom, isPending: isUpdating } = useMutation({
+  const {
+    mutate: updateRoom,
+    isPending: isUpdating,
+    isSuccess
+  } = useMutation({
     mutationFn: updateRoomFn,
     onSuccess: (room) => {
       toast.success(UPDATE_SUCCESS);
       queryClient.invalidateQueries({ queryKey: ['rooms'] });
 
       // Update name room in global state
-      dispatch!({
+      dispatch?.({
         type: 'updateRoomName',
         payload: [{ id: room.id, name: room.name }],
       });
@@ -33,7 +37,7 @@ const useUpdateRoom = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isUpdating, updateRoom };
+  return { isUpdating, updateRoom, isSuccess };
 };
 
 export { useUpdateRoom };
