@@ -1,5 +1,7 @@
-import Button from '@commonStyle/Button';
 import styled from 'styled-components';
+
+// Styled
+import Button from '@commonStyle/Button';
 
 const StyledForm = styled.form`
   display: flex;
