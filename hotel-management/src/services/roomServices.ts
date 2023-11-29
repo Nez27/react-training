@@ -6,6 +6,8 @@ import { IDataState } from '@type/common';
 import supabase from './supabaseService';
 
 // Constants
+import { DEFAULT_PAGE_SIZE } from '@constant/config';
+
 const ROOMS_TABLE = 'rooms';
 const ERROR_FETCHING = "Can't fetch room data!";
 const ERROR_UPDATE_ROOM = "Can't update room!";
@@ -19,11 +21,16 @@ const ERROR_DELETE_ROOM = "Can't delete room!";
 const getAllRooms = async (
   sortBy: string,
   orderBy: string,
-  roomName: string
-): Promise<IRoom[]> => {
-  const { data, error } = await supabase
+  roomName: string,
+  page: number
+): Promise<{ data: IRoom[]; count: number | null }> => {
+  const from = (page - 1) * DEFAULT_PAGE_SIZE;
+  const to = from + DEFAULT_PAGE_SIZE - 1;
+
+  const { data, error, count } = await supabase
     .from(ROOMS_TABLE)
-    .select('*')
+    .select('*', { count: 'exact' })
+    .range(from, to)
     .order(sortBy, { ascending: orderBy === 'asc' })
     .ilike('name', `%${roomName}%`);
 
@@ -32,7 +39,7 @@ const getAllRooms = async (
     throw new Error(ERROR_FETCHING);
   }
 
-  return data;
+  return { data, count };
 };
 
 /**

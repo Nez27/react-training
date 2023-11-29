@@ -18,7 +18,11 @@ const useCreateRoom = () => {
   const queryClient = useQueryClient();
   const { dispatch } = useUserRoomAvailable();
 
-  const { mutate: createRoom, isPending: isCreating } = useMutation({
+  const {
+    mutate: createRoom,
+    isPending: isCreating,
+    isSuccess,
+  } = useMutation({
     mutationFn: createRoomFn,
     onSuccess: (room) => {
       toast.success(ADD_SUCCESS);
@@ -33,7 +37,7 @@ const useCreateRoom = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isCreating, createRoom };
+  return { isCreating, createRoom, isSuccess };
 };
 
 export { useCreateRoom };
