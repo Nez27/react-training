@@ -1,7 +1,13 @@
-import { DEFAULT_PAGE_SIZE } from '@constant/config';
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+// Constants
+import { DEFAULT_PAGE_SIZE } from '@constant/config';
+
+// Styled
 import { Buttons, PaginationBtn, StyledPagination } from './styled';
+
+// Components
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
 
 interface IPagination {
@@ -17,14 +23,18 @@ const Pagination = ({ count }: IPagination) => {
   const totalPage = Math.ceil(count / DEFAULT_PAGE_SIZE);
 
   const nextPage = useCallback(() => {
-    const next = currentPage === totalPage ? currentPage : currentPage + 1;
+    const next = currentPage === totalPage 
+      ? currentPage 
+      : currentPage + 1;
 
     searchParams.set('page', next.toString());
     setSearchParams(searchParams);
   }, [currentPage, searchParams, totalPage, setSearchParams]);
 
   const previousPage = useCallback(() => {
-    const previous = currentPage === 1 ? currentPage : currentPage - 1;
+    const previous = currentPage === 1 
+      ? currentPage 
+      : currentPage - 1;
 
     searchParams.set('page', previous.toString());
     setSearchParams(searchParams);
@@ -36,7 +46,9 @@ const Pagination = ({ count }: IPagination) => {
   );
 
   const toIndex = useMemo(
-    () => (currentPage === totalPage ? count : currentPage * DEFAULT_PAGE_SIZE),
+    () => (currentPage === totalPage 
+        ? count 
+        : currentPage * DEFAULT_PAGE_SIZE),
     [currentPage, count, totalPage]
   );
 

@@ -1,6 +1,6 @@
 import { ReactNode, useContext } from 'react';
 
-// Components
+// Styled
 import {
   StyledBody,
   StyledHeader,
