@@ -10,6 +10,9 @@ import {
   FormBtn,
 } from './styled';
 
+// Types
+import { TDirection } from '@type/common';
+
 interface IFormProps {
   children: ReactNode;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
@@ -20,6 +23,7 @@ interface IFormRow {
   label: string;
   error?: string;
   children: ReactNode;
+  direction?: TDirection;
 }
 
 const Form = ({ children, onSubmit, id }: IFormProps) => {
@@ -30,9 +34,9 @@ const Form = ({ children, onSubmit, id }: IFormProps) => {
   );
 };
 
-const FormRow = ({ label, error, children }: IFormRow) => {
+const FormRow = ({ label, error, children, direction }: IFormRow) => {
   return (
-    <StyledFormRow>
+    <StyledFormRow direction={direction}>
       <Label>{label}</Label>
       <div>
         {children}

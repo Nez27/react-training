@@ -37,6 +37,7 @@ const Button = styled.button<IButtonStyle>`
   &:disabled,
   &[disabled] {
     cursor: not-allowed;
+    background-color: var(--disabled-btn-color);
   }
 `;
 
