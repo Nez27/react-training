@@ -1,5 +1,7 @@
-import { TDirection } from '@type/common';
 import styled, { css } from 'styled-components';
+
+// Types
+import { TDirection } from '@type/common';
 
 interface IDirection {
   type?: TDirection;
