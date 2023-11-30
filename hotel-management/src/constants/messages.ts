@@ -27,6 +27,8 @@ const ERROR_CREATE_USER = "Can't create user!";
 const ERROR_UPDATE_USER = "Can't update user!";
 const ERROR_DELETE_USER = "Can't delete user!";
 
+const UPDATE_ACCOUNT_SUCCESSFUL = 'Update account successfully!';
+
 export {
   ADD_SUCCESS,
   UPDATE_SUCCESS,
@@ -50,4 +52,5 @@ export {
   ERROR_CREATE_USER,
   ERROR_UPDATE_USER,
   ERROR_DELETE_USER,
+  UPDATE_ACCOUNT_SUCCESSFUL,
 };
