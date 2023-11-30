@@ -48,6 +48,7 @@ const FORM = {
   DELETE: 'delete',
   USER: 'user-form',
   ROOM: 'room-form',
+  BOOKING: 'booking-form',
   CHECKOUT: 'checkout',
 };
 
@@ -57,10 +58,4 @@ const REGEX = {
   NUMBER: /^[0-9]*$/,
 };
 
-export {
-  USER_PAGE,
-  ROOM_PAGE,
-  FORM,
-  REGEX,
-  ORDERBY_OPTIONS,
-};
+export { USER_PAGE, ROOM_PAGE, FORM, REGEX, ORDERBY_OPTIONS };
