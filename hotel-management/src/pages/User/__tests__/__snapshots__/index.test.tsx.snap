@@ -2,19 +2,19 @@
 
 exports[`User Should render correctly 1`] = `
 <main
-  className="sc-fKgKDd iDHRyD"
+  className="sc-lmgPJu fmDjvX"
 >
   <div
-    className="sc-lmgPJu bFEqIE"
+    className="sc-cxNGUP cGfCbe"
     type="horizontal"
   >
     <h2
-      className="sc-bCwene htGYaf"
+      className="sc-iJCSeZ jfWGKb"
     >
       List User
     </h2>
     <button
-      className="sc-kfYpNk QIeuT"
+      className="sc-iemXqs gdUlEE"
       onClick={[Function]}
       variations="primary"
     >
@@ -22,26 +22,24 @@ exports[`User Should render correctly 1`] = `
     </button>
   </div>
   <div
-    className="sc-lmgPJu hehIVl"
+    className="sc-cxNGUP hDpxxT"
     type="vertical"
   >
     <div
-      className="sc-iwaiBT eOzYWb"
+      className="sc-giAruI kILZpe"
     >
       <div
-        className="sc-crzpnZ iahNiP"
+        className="sc-dItHI exgtuU"
       >
         <button
-          active={true}
-          className="sc-dItHI guVVWw"
+          className="sc-bqGGcD entqcN"
           disabled={true}
           onClick={[Function]}
         >
           Ascending
         </button>
         <button
-          active={false}
-          className="sc-dItHI fIRqtD"
+          className="sc-bqGGcD graLyf"
           disabled={false}
           onClick={[Function]}
         >
@@ -50,34 +48,38 @@ exports[`User Should render correctly 1`] = `
       </div>
       <select
         aria-label="Sort"
-        className="sc-iqAbyq czAJZn"
+        className="sc-crzpnZ iXFhDe"
+        disabled={false}
         onChange={[Function]}
         value=""
       >
         <option
+          data-testid="select-option"
           value="id"
         >
           Sort by id
         </option>
         <option
+          data-testid="select-option"
           value="name"
         >
           Sort by name
         </option>
         <option
+          data-testid="select-option"
           value="phone"
         >
           Sort by phone
         </option>
       </select>
       <input
-        className="sc-kEqXeH jMVPeG"
+        className="sc-iqAbyq kOrhXJ"
         onChange={[Function]}
         placeholder="Search by phone..."
       />
     </div>
     <div
-      className="sc-iJCSeZ gDbWTd"
+      className="sc-ezyZrH dFKszz"
     />
   </div>
 </main>

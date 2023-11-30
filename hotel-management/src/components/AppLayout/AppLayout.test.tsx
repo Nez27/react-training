@@ -3,12 +3,17 @@ import { BrowserRouter } from 'react-router-dom';
 
 // Components
 import AppLayout from '.';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('AppLayout', () => {
+  const queryClient = new QueryClient();
+
   const wrapper = renderer.create(
-    <BrowserRouter>
-      <AppLayout />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AppLayout />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 
   test('Should render correctly', () => {

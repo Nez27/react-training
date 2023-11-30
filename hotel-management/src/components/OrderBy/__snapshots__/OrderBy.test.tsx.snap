@@ -1,47 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SortBy Should render correctly 1`] = `
+exports[`Order Should render correctly 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <select
-        aria-label="Sort"
-        class="sc-bdnyFh hPOEsG"
+      <div
+        class="sc-bdnyFh aZFGz"
       >
-        <option
-          data-testid="select-option"
-          value="Value1"
+        <button
+          class="sc-gtsqUy bOTmZQ"
+          disabled=""
         >
           Option 1
-        </option>
-        <option
-          data-testid="select-option"
-          value="Value2"
+        </button>
+        <button
+          class="sc-gtsqUy bwnpRq"
         >
           Option 2
-        </option>
-      </select>
+        </button>
+      </div>
     </div>
   </body>,
   "container": <div>
-    <select
-      aria-label="Sort"
-      class="sc-bdnyFh hPOEsG"
+    <div
+      class="sc-bdnyFh aZFGz"
     >
-      <option
-        data-testid="select-option"
-        value="Value1"
+      <button
+        class="sc-gtsqUy bOTmZQ"
+        disabled=""
       >
         Option 1
-      </option>
-      <option
-        data-testid="select-option"
-        value="Value2"
+      </button>
+      <button
+        class="sc-gtsqUy bwnpRq"
       >
         Option 2
-      </option>
-    </select>
+      </button>
+    </div>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],

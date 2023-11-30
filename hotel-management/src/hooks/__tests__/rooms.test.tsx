@@ -1,0 +1,132 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { ReactNode } from 'react';
+
+// Hooks
+import { useRooms } from '@hook/rooms/useRooms';
+import { useCreateRoom } from '@hook/rooms/useCreateRoom';
+import { useUpdateRoom } from '@hook/rooms/useUpdateRoom';
+import { useSetIsDeleteRoom } from '@hook/rooms/useSetIsDeleteRoom';
+
+// Types
+import { IRoom } from '@type/room';
+
+const mockUseRooms = jest.fn(useRooms);
+const mockUseCreateRoom = jest.fn(useCreateRoom);
+const mockUseUpdateRoom = jest.fn(useUpdateRoom);
+const mockUseDeleteRoom = jest.fn(useSetIsDeleteRoom);
+interface IWrapper {
+  children: ReactNode;
+}
+
+const sampleData: IRoom = {
+  id: 999,
+  name: 'Room name test',
+  price: 9999,
+  status: true,
+  isDelete: true,
+};
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+const wrapper = ({ children }: IWrapper) => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>{children}</MemoryRouter>
+    </QueryClientProvider>
+  );
+};
+
+describe('Room hooks', () => {
+  test('Should fetch data correctly', async () => {
+    mockUseRooms.mockImplementation(() => ({
+      rooms: [
+        {
+          id: 1,
+          name: 'Nezumi',
+          price: 2500,
+          status: true,
+          isDelete: true,
+        },
+        {
+          id: 2,
+          name: 'Loi Phan',
+          price: 8500,
+          status: false,
+          isDelete: true,
+        },
+      ],
+      isLoading: false,
+      count: 2
+    }));
+    const { result } = renderHook(() => mockUseRooms(), { wrapper });
+
+    await waitFor(() =>
+      expect(result.current.rooms?.length).toBeGreaterThan(0)
+    );
+  });
+
+  test('Should create room correctly', async () => {
+    mockUseCreateRoom.mockImplementation(() => ({
+      createRoom: () => {
+        sampleData;
+      },
+      isCreating: false,
+      isSuccess: true,
+    }));
+    const { result } = renderHook(() => mockUseCreateRoom(), { wrapper });
+
+    act(() => {
+      result.current.createRoom(sampleData);
+    });
+
+    await waitFor(() => result.current.isSuccess);
+
+    expect(result.current.isSuccess).toBeTruthy();
+  });
+
+  test('Should edit room correctly', async () => {
+    mockUseUpdateRoom.mockImplementation(() => ({
+      updateRoom: () => {
+        sampleData;
+      },
+      isUpdating: false,
+      isSuccess: true,
+    }));
+    const { result } = renderHook(() => mockUseUpdateRoom(), { wrapper });
+
+    act(() => {
+      const testMethod = async () => {
+        result.current.updateRoom(sampleData);
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+      };
+
+      testMethod();
+    });
+  });
+
+  test('Should delete room correctly', async () => {
+    mockUseDeleteRoom.mockImplementation(() => ({
+      setIsDeleteRoom: () => {
+        sampleData
+      },
+      isDeleting: false,
+      isSuccess: true,
+    }));
+    const { result } = renderHook(() => mockUseDeleteRoom(), { wrapper });
+
+    act(() => {
+      const testMethod = async () => {
+        result.current.setIsDeleteRoom(sampleData.id);
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+      };
+
+      testMethod();
+    });
+  });
+});

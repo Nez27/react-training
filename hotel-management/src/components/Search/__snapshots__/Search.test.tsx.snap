@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Search Should render correctly 1`] = `
-<input
-  className="sc-bdnyFh eAgOPb"
-  onChange={[Function]}
-  placeholder="Search placeholder..."
-/>
-`;

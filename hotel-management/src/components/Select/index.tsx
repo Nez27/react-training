@@ -46,7 +46,7 @@ const Select = ({
         : { onChange: onChange })}
     >
       {options.map((option) => (
-        <option value={option.value} key={option.value}>
+        <option value={option.value} key={option.value} data-testid='select-option'>
           {option.label}
         </option>
       ))}

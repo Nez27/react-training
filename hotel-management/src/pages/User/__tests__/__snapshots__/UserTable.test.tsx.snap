@@ -2,26 +2,24 @@
 
 exports[`UserTable Should render correctly 1`] = `
 <div
-  className="sc-iJCSeZ crZyCc"
+  className="sc-giAruI eEOXtt"
   type="vertical"
 >
   <div
-    className="sc-lmgPJu cuMSiO"
+    className="sc-iJCSeZ boUFen"
   >
     <div
-      className="sc-crzpnZ iahNiP"
+      className="sc-dItHI exgtuU"
     >
       <button
-        active={true}
-        className="sc-dItHI guVVWw"
+        className="sc-bqGGcD entqcN"
         disabled={true}
         onClick={[Function]}
       >
         Ascending
       </button>
       <button
-        active={false}
-        className="sc-dItHI fIRqtD"
+        className="sc-bqGGcD graLyf"
         disabled={false}
         onClick={[Function]}
       >
@@ -30,34 +28,38 @@ exports[`UserTable Should render correctly 1`] = `
     </div>
     <select
       aria-label="Sort"
-      className="sc-iqAbyq czAJZn"
+      className="sc-crzpnZ iXFhDe"
+      disabled={false}
       onChange={[Function]}
       value=""
     >
       <option
+        data-testid="select-option"
         value="id"
       >
         Sort by id
       </option>
       <option
+        data-testid="select-option"
         value="name"
       >
         Sort by name
       </option>
       <option
+        data-testid="select-option"
         value="price"
       >
         Sort by price
       </option>
     </select>
     <input
-      className="sc-kEqXeH jMVPeG"
+      className="sc-iqAbyq kOrhXJ"
       onChange={[Function]}
       placeholder="Search by name..."
     />
   </div>
   <div
-    className="sc-giAruI hMNXks"
+    className="sc-ezyZrH dFKszz"
   />
 </div>
 `;
