@@ -3,35 +3,31 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 // Services
-import { getAllRooms } from '@service/roomServices';
+import { getAllBookings } from '@service/bookingServices';
 
 // Constants
 import { DEFAULT_PAGE_SIZE } from '@constant/config';
 
 /**
- * Fetch room from database
- * @returns The status of loading rooms from database and data of rooms
+ * Fetch booking from database
+ * @returns The status of loading bookings from database and data of bookings
  */
-const useRooms = () => {
+const useBookings = () => {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
-  const sortByValue = searchParams.get('sortBy') || 'id';
-  const orderByValue = searchParams.get('orderBy') || 'asc';
   const searchValue = searchParams.get('search') || '';
   const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
 
   const {
     isLoading,
-    data: { data: rooms, count } = {},
+    data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ['rooms', sortByValue, orderByValue, searchValue, page],
+    queryKey: ['bookings', searchValue, page],
     queryFn: () =>
-      getAllRooms({
-        sortBy: sortByValue,
-        orderBy: orderByValue,
-        roomSearch: searchValue,
+      getAllBookings({
+        userNameSearch: searchValue,
         page,
       }),
   });
@@ -47,12 +43,10 @@ const useRooms = () => {
     const nextPage = page + 1;
 
     queryClient.prefetchQuery({
-      queryKey: ['rooms', sortByValue, orderByValue, searchValue, nextPage],
+      queryKey: ['bookings', searchValue, nextPage],
       queryFn: () =>
-        getAllRooms({
-          sortBy: sortByValue,
-          orderBy: orderByValue,
-          roomSearch: searchValue,
+        getAllBookings({
+          userNameSearch: searchValue,
           page: nextPage,
         }),
     });
@@ -62,18 +56,16 @@ const useRooms = () => {
     const previousPage = page - 1;
 
     queryClient.prefetchQuery({
-      queryKey: ['rooms', sortByValue, orderByValue, searchValue, previousPage],
+      queryKey: ['bookings', searchValue, previousPage],
       queryFn: () =>
-        getAllRooms({
-          sortBy: sortByValue,
-          orderBy: orderByValue,
-          roomSearch: searchValue,
+        getAllBookings({
+          userNameSearch: searchValue,
           page: previousPage,
         }),
     });
   }
 
-  return { isLoading, rooms, count };
+  return { isLoading, bookings, count };
 };
 
-export { useRooms };
+export { useBookings };
