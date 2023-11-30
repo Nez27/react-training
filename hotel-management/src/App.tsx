@@ -75,7 +75,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <StyleSheetManager shouldForwardProp={shouldForwardProp}>
         <UserRoomAvailableContext.Provider value={store}>
           <BrowserRouter>
