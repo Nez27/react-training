@@ -34,8 +34,6 @@ const Error = styled.p`
 
   margin-top: 5px;
   padding-inline: 5px;
-
-  width: 220px;
 `;
 
 const FormBtn = styled(Button)`

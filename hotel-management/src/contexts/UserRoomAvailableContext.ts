@@ -141,7 +141,7 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
-    
+
     default:
       throw new Error('Action unknown');
   }
