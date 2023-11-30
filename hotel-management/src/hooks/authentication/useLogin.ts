@@ -18,7 +18,9 @@ const useLogin = () => {
     mutationFn: ({ email, password }: ILogin) => loginFn({ email, password }),
     onSuccess: (account) => {
       queryClient.setQueryData(['account'], account.user);
-      redirectTo ? navigate(redirectTo) : navigate('/');
+      redirectTo
+        ? navigate(redirectTo)
+        : navigate('/');
     },
     onError: (err) => {
       console.error(err.message);
