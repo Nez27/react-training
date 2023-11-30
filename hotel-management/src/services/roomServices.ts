@@ -1,6 +1,5 @@
 // Types
 import { IRoom } from '@type/rooms';
-import { IDataState } from '@type/common';
 
 // Services
 import supabase from './supabaseService';
@@ -127,28 +126,17 @@ const getRoomById = async (idRoom: string): Promise<IRoom> => {
   return data;
 };
 
+
 /**
- * 
- * @returns 
+ * Update status of room
+ * @param id The id of room need to be change status
+ * @param status The status of room
  */
-const getRoomsAvailable = async (): Promise<IDataState[]> => {
-  const { data, error } = await supabase
-    .from(ROOMS_TABLE)
-    .select('id, name, status');
-
-  if (error) {
-    console.error(error.message);
-    throw new Error(ERROR_FETCHING_ROOM);
-  }
-
-  return data;
-};
-
 const updateRoomStatus = async (
   id: number,
   status: boolean
-): Promise<number> => {
-  const { error, status: statusConnection } = await supabase
+): Promise<void> => {
+  const { error} = await supabase
     .from(ROOMS_TABLE)
     .update({ status })
     .eq('id', id);
@@ -158,7 +146,6 @@ const updateRoomStatus = async (
     throw new Error(ERROR_UPDATE_ROOM);
   }
 
-  return statusConnection;
 };
 
 export {
@@ -166,7 +153,6 @@ export {
   updateRoom,
   createRoom,
   deleteRoom,
-  getRoomsAvailable,
   getRoomById,
   updateRoomStatus,
 };
