@@ -10,6 +10,13 @@ const formatCurrency = (value: number): string => {
   }).format(value);
 };
 
+
+/**
+ * Calculate the day durations
+ * @param startDate The start of date
+ * @param endDate The end of date
+ * @returns The number of days between 2 date input
+ */
 const getDayDiff = (startDate: Date, endDate: Date): number => {
   const msInDay = 24 * 60 * 60 * 1000;
 
@@ -18,6 +25,11 @@ const getDayDiff = (startDate: Date, endDate: Date): number => {
   );
 }
 
+/**
+ * Convert from currency string to the number
+ * @param currency The currency string
+ * @returns The number
+ */
 const convertCurrencyToNumber = (currency: string) => {
   return Number(currency.replace(/[^0-9.-]+/g,""))
 }

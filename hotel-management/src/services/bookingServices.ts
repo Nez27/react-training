@@ -82,8 +82,8 @@ const updateBooking = async (booking: IBooking): Promise<IBooking> => {
 };
 
 /**
- * Add room to database
- * @param room The room object need to be add
+ * Add booking to database
+ * @param booking The booking object need to be add
  */
 const createBooking = async (booking: IBooking): Promise<IBooking> => {
   const { data, error: createBookingError } = await supabase
@@ -101,8 +101,8 @@ const createBooking = async (booking: IBooking): Promise<IBooking> => {
 };
 
 /**
- * Delete room in database
- * @param idRoom The id of room need to delete
+ * Delete booking in database
+ * @param idRoom The id of booking need to delete
  */
 const deleteBooking = async (idBooking: number) => {
   const { error } = await supabase
@@ -116,6 +116,11 @@ const deleteBooking = async (idBooking: number) => {
   }
 };
 
+/**
+ * Check out booking services
+ * @param param0 The ICheckOutBooking object
+ * @returns The data of booking after insert to database
+ */
 const checkOutBooking = async ({
   idBooking,
   roomId,

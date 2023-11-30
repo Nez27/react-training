@@ -107,6 +107,11 @@ const deleteRoom = async (idRoom: number) => {
   }
 };
 
+/**
+ * Get room by id in database
+ * @param idRoom The id room need to be get
+ * @returns The data of room
+ */
 const getRoomById = async (idRoom: string): Promise<IRoom> => {
   const { data, error } = await supabase
     .from(ROOMS_TABLE)
@@ -122,6 +127,10 @@ const getRoomById = async (idRoom: string): Promise<IRoom> => {
   return data;
 };
 
+/**
+ * 
+ * @returns 
+ */
 const getRoomsAvailable = async (): Promise<IDataState[]> => {
   const { data, error } = await supabase
     .from(ROOMS_TABLE)
