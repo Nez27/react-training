@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+
+// Styled
 import { StyledButtonIcon } from './styled';
 
 interface IButtonIcon {
@@ -14,6 +16,7 @@ interface IButtonIcon {
     size?: string;
   };
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const ButtonIcon = ({
@@ -22,6 +25,7 @@ const ButtonIcon = ({
   style,
   iconStyle,
   onClick,
+  disabled,
 }: IButtonIcon) => {
   const isHaveChildren = Boolean(children);
 
@@ -35,6 +39,7 @@ const ButtonIcon = ({
       }}
       iconStyle={iconStyle}
       onClick={onClick}
+      disabled={disabled}
     >
       {icon} <span>{children}</span>
     </StyledButtonIcon>

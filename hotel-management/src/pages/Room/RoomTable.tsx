@@ -10,7 +10,7 @@ import OrderBy from '@component/OrderBy';
 import RoomRow from './RoomRow';
 
 // Types
-import { IRoom } from '@type/rooms';
+import { IRoom } from '@type/room';
 
 // Constants
 import { ORDERBY_OPTIONS, ROOM_PAGE } from '@constant/commons';
@@ -22,10 +22,11 @@ import Spinner from '@commonStyle/Spinner';
 
 // Hooks
 import { useRooms } from '@hook/rooms/useRooms';
+import Pagination from '@component/Pagination';
 
 const RoomTable = () => {
   const columnName = ['Id', 'Name', 'Price', 'Status'];
-  const { isLoading, rooms } = useRooms();
+  const { isLoading, rooms, count } = useRooms();
 
   const renderRoomRow = useCallback(
     (room: IRoom) => <RoomRow room={room} key={room.id} />,
@@ -49,6 +50,9 @@ const RoomTable = () => {
             <Table columns="10% 40% 20% 20% 5%">
               <Table.Header headerColumn={columnName} />
               <Table.Body<IRoom> data={rooms} render={renderRoomRow} />
+              <Table.Footer>
+                <Pagination count={count!}/>
+              </Table.Footer>
             </Table>
           </Menus>
         ) : (

@@ -4,7 +4,7 @@ import { waitFor } from '@testing-library/react';
 import { createUser, getAllUsers, updateUser } from '@service/userServices';
 
 // Types
-import { IUser } from '@type/users';
+import { IUser } from '@type/user';
 
 const mockGetAllUsers = jest.fn(getAllUsers);
 const mockCreateUser = jest.fn(createUser);
@@ -15,27 +15,37 @@ const sampleData: IUser = {
   name: 'User name test',
   phone: '123456789',
   isBooked: true,
+  isDelete: true,
 };
 
 describe('User services', () => {
   test('Should fetch user data correctly', async () => {
-    mockGetAllUsers.mockResolvedValue([
-      {
-        id: 1,
-        name: 'Nezumi',
-        phone: '0324422123',
-        isBooked: true,
-      },
-      {
-        id: 2,
-        name: 'Loi Phan',
-        phone: '0324422145',
-        isBooked: false,
-      },
-    ]);
-    const result = await mockGetAllUsers('name', 'asc', '');
+    mockGetAllUsers.mockResolvedValue({
+      data: [
+        {
+          id: 1,
+          name: 'Nezumi',
+          phone: '0324422123',
+          isBooked: true,
+          isDelete: true,
+        },
+        {
+          id: 2,
+          name: 'Loi Phan',
+          phone: '0324422145',
+          isBooked: false,
+          isDelete: true,
+        },
+      ], count: 2
+    });
+    const result = await mockGetAllUsers(({
+      sortBy: 'name',
+      orderBy: 'asc',
+      phoneSearch: '',
+      page: 1,
+    }));
 
-    await waitFor(() => expect(result.length).toEqual(2));
+    await waitFor(() => expect(result.data.length).toEqual(2));
   });
 
   test('Should create user correctly', async () => {

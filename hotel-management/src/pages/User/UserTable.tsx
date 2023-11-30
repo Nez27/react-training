@@ -10,7 +10,7 @@ import OrderBy from '@component/OrderBy';
 import UserRow from './UserRow';
 
 // Types
-import { IUser } from '@type/users';
+import { IUser } from '@type/user';
 
 // Constants
 import { ORDERBY_OPTIONS, USER_PAGE } from '@constant/commons';
@@ -22,10 +22,11 @@ import Spinner from '@commonStyle/Spinner';
 
 // Hooks
 import { useUsers } from '@hook/users/useUsers';
+import Pagination from '@component/Pagination';
 
 const UserTable = () => {
   const columnName = ['Id', 'Name', 'Phone', 'Is Booked'];
-  const { isLoading, users } = useUsers();
+  const { isLoading, users, count } = useUsers();
 
   const renderUserRow = useCallback(
     (user: IUser) => (
@@ -54,6 +55,9 @@ const UserTable = () => {
             <Table columns="10% 35% 30% 15% 10%">
               <Table.Header headerColumn={columnName} />
               <Table.Body<IUser> data={users} render={renderUserRow} />
+              <Table.Footer>
+                <Pagination count={count!}/>
+              </Table.Footer>
             </Table>
           </Menus>
         ) : (

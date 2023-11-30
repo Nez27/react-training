@@ -20,30 +20,48 @@ describe('App', () => {
   });
 
   test('Should init room, user data', async () => {
-    const mockGetUserNotBooked = jest.spyOn(userServices, 'getUserNotBooked');
-    const mockGetRoomAvailable = jest.spyOn(roomServices, 'getRoomsAvailable');
+    const mockGetUserNotBooked = jest.spyOn(userServices, 'getAllUsers');
+    const mockGetRoomAvailable = jest.spyOn(roomServices, 'getAllRooms');
 
-    mockGetUserNotBooked.mockResolvedValue([
-      {
-        id: 1,
-        name: 'Nezumi',
-      },
-      {
-        id: 2,
-        name: 'Loi Phan',
-      },
-    ]);
+    mockGetUserNotBooked.mockResolvedValue({
+      data: [
+        {
+          id: 1,
+          name: 'Nezumi',
+          phone: '0324432321',
+          isBooked: true,
+          isDelete: true,
+        },
+        {
+          id: 1,
+          name: 'Loi Phan',
+          phone: '0324432123',
+          isBooked: true,
+          isDelete: true,
+        },
+      ],  
+      count: 2,
+    });
 
-    mockGetRoomAvailable.mockResolvedValue([
-      {
-        id: 1,
-        name: 'Room 1',
-      },
-      {
-        id: 2,
-        name: 'Room 2',
-      },
-    ]);
+    mockGetRoomAvailable.mockResolvedValue({
+      data: [
+        {
+          id: 1,
+          name: 'Room 1',
+          price: 230,
+          status: true,
+          isDelete: true,
+        },
+        {
+          id: 2,
+          name: 'Room 2',
+          price: 242,
+          status: true,
+          isDelete: true
+        },
+      ],
+      count: 2
+    });
 
     expect(mockGetUserNotBooked).toHaveBeenCalled();
     expect(mockGetRoomAvailable).toHaveBeenCalled();

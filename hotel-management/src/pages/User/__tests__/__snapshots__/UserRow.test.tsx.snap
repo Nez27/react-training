@@ -18,11 +18,11 @@ exports[`UserRow Should render correctly 1`] = `
   </div>
   <div>
     <div
-      className="sc-jrsKJM cdPhia"
+      className="sc-kEqXeH jLboIv"
     >
       <button
         aria-label="Menu item 1"
-        className="sc-iqAbyq fyjyXl"
+        className="sc-crzpnZ gdsCet"
         onClick={[Function]}
       >
         <svg

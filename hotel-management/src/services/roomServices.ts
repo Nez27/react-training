@@ -1,38 +1,58 @@
 // Types
-import { IRoom } from '@type/rooms';
-import { IDataState } from '@type/common';
+import { IRoom } from '@type/room';
 
 // Services
 import supabase from './supabaseService';
 
 // Constants
-const ROOMS_TABLE = 'rooms';
-const ERROR_FETCHING = "Can't fetch room data!";
-const ERROR_UPDATE_ROOM = "Can't update room!";
-const ERROR_CREATE_ROOM = "Can't create room!";
-const ERROR_DELETE_ROOM = "Can't delete room!";
+import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import {
+  ERROR_CREATE_ROOM,
+  ERROR_DELETE_ROOM,
+  ERROR_FETCHING_ROOM,
+  ERROR_UPDATE_ROOM,
+  ROOMS_TABLE,
+} from '@constant/messages';
+
+interface IGetAllRooms {
+  sortBy: string;
+  orderBy: string;
+  roomSearch: string;
+  page: number;
+}
 
 /**
  * Get all rooms from database
  * @returns Return all rooms in database
  */
-const getAllRooms = async (
-  sortBy: string,
-  orderBy: string,
-  roomName: string
-): Promise<IRoom[]> => {
-  const { data, error } = await supabase
+const getAllRooms = async ({
+  sortBy,
+  orderBy,
+  roomSearch,
+  page,
+}: IGetAllRooms): Promise<{ data: IRoom[]; count: number | null }> => {
+  const from = (page - 1) * DEFAULT_PAGE_SIZE;
+  const to = from + DEFAULT_PAGE_SIZE - 1;
+
+  let query = supabase
     .from(ROOMS_TABLE)
-    .select('*')
+    .select('*', { count: 'exact' })
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .ilike('name', `%${roomName}%`);
+    .like('name', `%${roomSearch}%`)
+    .eq('isDelete', false);
+
+  if (page) {
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_ROOM);
   }
 
-  return data;
+  return { data, count };
 };
 
 /**
@@ -75,30 +95,67 @@ const createRoom = async (room: IRoom): Promise<IRoom> => {
 };
 
 /**
- * Delete room in database
- * @param idRoom The id of room need to delete
+ * Set room is delete status
+ * @param idRoom The id of room need to set
  */
-const deleteRoom = async (idRoom: number) => {
-  const { error } = await supabase.from(ROOMS_TABLE).delete().eq('id', idRoom);
+const setIsDeleteRoom = async (idRoom: number) => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .update({ isDelete: true })
+    .eq('id', idRoom)
+    .select()
+    .single();
 
   if (error) {
     console.error(error.message);
     throw new Error(ERROR_DELETE_ROOM);
   }
+
+  return data;
 };
 
-const getRoomsAvailable = async (): Promise<IDataState[]> => {
+/**
+ * Get room by id in database
+ * @param idRoom The id room need to be get
+ * @returns The data of room
+ */
+const getRoomById = async (idRoom: string): Promise<IRoom> => {
   const { data, error } = await supabase
     .from(ROOMS_TABLE)
-    .select('id, name')
-    .eq('status', false);
+    .select('*')
+    .eq('id', idRoom)
+    .single();
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_ROOM);
   }
 
   return data;
 };
 
-export { getAllRooms, updateRoom, createRoom, deleteRoom, getRoomsAvailable };
+/**
+ * Update status of room
+ * @param id The id of room need to be change status
+ * @param status The status of room
+ */
+const updateRoomStatus = async (id: number, status: boolean): Promise<void> => {
+  const { error } = await supabase
+    .from(ROOMS_TABLE)
+    .update({ status })
+    .eq('id', id);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_UPDATE_ROOM);
+  }
+};
+
+export {
+  getAllRooms,
+  updateRoom,
+  createRoom,
+  setIsDeleteRoom,
+  getRoomById,
+  updateRoomStatus,
+};

@@ -3,6 +3,7 @@
 
   --header-table-color: #ebebeb;
   --border-color: #8c8c8c;
+  --footer-table-color: #ebebeb;
 
   --secondary-btn-color: #d1d1d1;
   --disabled-btn-color: #7f82a6;
@@ -21,6 +22,8 @@
   --overlay-color: #0000004d;
 
   --form-color: #fff;
+
+  --background-login: #f8f8f8;
 
   --shadow-sm: 0px 10px 20px rgba(0, 0, 0, 0.2);
 

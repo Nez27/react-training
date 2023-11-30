@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 // Services
 import { updateUser as updateUserFn } from '@service/userServices';
 
-// Messages
+// Constants
 import { UPDATE_SUCCESS } from '@constant/messages';
 
 // Hooks

@@ -7,10 +7,15 @@ import Sidebar from '@component/Sidebar';
 // Styled
 import { Main, StyledAppLayout } from './styled';
 
+// Hooks
+import { useAccount } from '@hook/authentication/useAccount';
+
 const AppLayout = () => {
+  const { account } = useAccount();
+
   return (
     <StyledAppLayout>
-      <Header accountName="Admin" />
+      <Header accountName={account?.user_metadata.fullName} />
       <Sidebar heading="Hotel Management" />
       <Main>
         <Outlet />

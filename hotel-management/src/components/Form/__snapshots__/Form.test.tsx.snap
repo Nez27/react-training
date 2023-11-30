@@ -2,56 +2,58 @@
 
 exports[`Form  Should render correctly 1`] = `
 <form
-  className="sc-bdnyFh bzxSLR"
+  className="sc-gtsqUy jMGskL"
   onSubmit={[MockFunction]}
 >
   <div
-    className="sc-dlniIP gZHESL"
+    className="sc-hKFymg ivIEWo"
+    direction="horizontal"
   >
     <label
-      className="sc-hKFymg ddFGOI"
+      className="sc-eCAqax dnXnhF"
     >
       Name
     </label>
     <div>
       <input
-        className="sc-jSFipO enjwJE"
+        className="sc-iCoHzw csWeiH"
         id="name"
         type="text"
       />
       <p
-        className="sc-eCAqax bvOWPP"
+        className="sc-jSFipO iOcxfq"
       >
         This is error message
       </p>
     </div>
   </div>
   <div
-    className="sc-dlniIP gZHESL"
+    className="sc-hKFymg ivIEWo"
+    direction="horizontal"
   >
     <label
-      className="sc-hKFymg ddFGOI"
+      className="sc-eCAqax dnXnhF"
     >
       Price
     </label>
     <div>
       <input
-        className="sc-jSFipO enjwJE"
+        className="sc-iCoHzw csWeiH"
         id="price"
         type="text"
       />
       <p
-        className="sc-eCAqax bvOWPP"
+        className="sc-jSFipO iOcxfq"
       >
         This is error message
       </p>
     </div>
   </div>
   <div
-    className="sc-gtsqUy idhRSV"
+    className="sc-dlniIP hBqqvG"
   >
     <button
-      className="sc-gKAaef sc-jrsKJM gifCOZ KLoQf"
+      className="sc-bdnyFh sc-gKAaef bEtbaY fRlVwz"
       disabled={true}
       name="submit"
       type="submit"
@@ -60,7 +62,7 @@ exports[`Form  Should render correctly 1`] = `
       Confirm
     </button>
     <button
-      className="sc-gKAaef sc-jrsKJM gbgZUe KLoQf"
+      className="sc-bdnyFh sc-gKAaef buXbPz fRlVwz"
       onClick={[MockFunction]}
       type="button"
       variations="secondary"

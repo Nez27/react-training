@@ -1,61 +1,59 @@
 import { waitFor } from '@testing-library/react';
-import supabase from '@service/supabaseService';
 
 // Services
 import {
   createRoom,
-  deleteRoom,
+  setIsDeleteRoom,
   getAllRooms,
   updateRoom,
 } from '@service/roomServices';
 
 // Types
-import { IRoom } from '@type/rooms';
+import { IRoom } from '@type/room';
 
 jest.mock('@service/supabaseService');
 const mockGetAllRooms = jest.fn(getAllRooms);
 const mockUpdateRoom = jest.fn(updateRoom);
 const mockCreateRoom = jest.fn(createRoom);
-const mockDeleteRoom = jest.fn(deleteRoom);
+const mockIsDeleteRoom = jest.fn(setIsDeleteRoom);
 
 const sampleData: IRoom = {
   id: 999,
   name: 'Room name test',
   price: 9999,
   status: true,
+  isDelete: true,
 };
 
 describe('Rooms service', () => {
   test('Should fetch room correctly', async () => {
-    mockGetAllRooms.mockResolvedValue([
-      {
-        id: 1,
-        name: 'Nezumi',
-        price: 2500,
-        status: true,
-      },
-      {
-        id: 2,
-        name: 'Loi Phan',
-        price: 8500,
-        status: false,
-      },
-    ]);
-    const result = await mockGetAllRooms('name', 'asc', '');
+    mockGetAllRooms.mockResolvedValue({
+      data: [
+        {
+          id: 1,
+          name: 'Nezumi',
+          price: 2500,
+          status: true,
+          isDelete: true,
+        },
+        {
+          id: 2,
+          name: 'Loi Phan',
+          price: 8500,
+          status: false,
+          isDelete: true,
+        },
+      ],
+      count: 2,
+    });
+    const result = await mockGetAllRooms({
+      sortBy: 'name',
+      orderBy: 'asc',
+      roomSearch: '',
+      page: 1,
+    });
 
-    await waitFor(() => expect(result.length).toEqual(2));
-  });
-
-  test('Can not fetch data', async () => {
-    jest.spyOn(supabase.from('rooms').select(), 'single').mockRejectedValue(() => {
-      return {
-        error: 'Error'
-      }
-    })
-
-    await mockGetAllRooms('name', 'asc', '');
-
-    expect(mockGetAllRooms).toThrow();
+    await waitFor(() => expect(result.data.length).toEqual(2));
   });
 
   test('Should create room correctly', async () => {
@@ -72,6 +70,7 @@ describe('Rooms service', () => {
       name: 'Nezumi',
       price: 2500,
       status: true,
+      isDelete: true,
     });
     const result = await mockUpdateRoom(sampleData);
 
@@ -79,7 +78,9 @@ describe('Rooms service', () => {
   });
 
   test('Should delete room correctly', async () => {
-    mockDeleteRoom.mockImplementation(() => Promise.resolve());
-    await mockDeleteRoom(1);
+    mockIsDeleteRoom.mockResolvedValue(sampleData);
+    const result = await mockIsDeleteRoom(1);
+
+    await waitFor(() => expect(result).toBeTruthy());
   });
 });

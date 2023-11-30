@@ -12,11 +12,13 @@ type TAction =
   | 'initRoom'
   | 'initUser'
   | 'addRoom'
-  | 'removeRoom'
+  | 'updateStatusRoom'
   | 'addUser'
-  | 'removeUser'
+  | 'updateStatusUser'
   | 'updateUserName'
-  | 'updateRoomName';
+  | 'updateRoomName'
+  | 'removeUser'
+  | 'removeRoom';
 
 interface IAction {
   type: TAction;
@@ -38,7 +40,6 @@ const initialState: IUserRoomState = {
 
 const reducer = (state: IUserRoomState, action: IAction) => {
   switch (action.type) {
-
     case 'initRoom':
       return {
         ...state,
@@ -84,13 +85,24 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       };
     }
 
-    case 'removeUser':
+    case 'updateStatusUser': {
+      const tempArr = state.usersAvailable;
+      const indexItemUpdate = tempArr.findIndex(
+        (item) => item.id === action.payload[0].id
+      );
+      tempArr[indexItemUpdate].isBooked = action.payload[0].isBooked;
+
       return {
         ...state,
-        usersAvailable: state.usersAvailable.filter(
-          (item) => item.id !== action.payload[0].id
-        ),
+        usersAvailable: tempArr,
       };
+    }
+
+    case 'removeUser': 
+      return {
+        ...state,
+        usersAvailable: state.usersAvailable.filter((user) => user.id !== action.payload[0].id)
+      }
 
     case 'addRoom': {
       const tempArr = state.roomsAvailable;
@@ -125,14 +137,25 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       };
     }
 
-    case 'removeRoom':
+    case 'updateStatusRoom': {
+      const tempArr = state.roomsAvailable;
+      const indexItemUpdate = tempArr.findIndex(
+        (item) => item.id === action.payload[0].id
+      );
+      tempArr[indexItemUpdate].status = action.payload[0].status;
+
       return {
         ...state,
-        roomsAvailable: state.roomsAvailable.filter(
-          (item) => item.id !== action.payload[0].id
-        ),
+        roomsAvailable: tempArr,
       };
-      
+    }
+
+    case 'removeRoom': 
+      return {
+        ...state,
+        roomsAvailable: state.roomsAvailable.filter((room) => room.id !== action.payload[0].id)
+      }
+
     default:
       throw new Error('Action unknown');
   }

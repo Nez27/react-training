@@ -1,11 +1,8 @@
-import styled from 'styled-components';
-
 // Styled
-import Button from '@commonStyle/Button.ts';
 import Input from '@commonStyle/Input.ts';
 
 // Types
-import { IRoom } from '@type/rooms.ts';
+import { IRoom } from '@type/room.ts';
 
 // Constants
 import {
@@ -24,16 +21,6 @@ import Form from '@component/Form/index.tsx';
 import { useForm } from 'react-hook-form';
 import { useCreateRoom } from '@hook/rooms/useCreateRoom.ts';
 import { useUpdateRoom } from '@hook/rooms/useUpdateRoom.ts';
-
-const FormBtn = styled(Button)`
-  width: 100%;
-
-  &:disabled,
-  &[disabled] {
-    background-color: var(--disabled-btn-color);
-    cursor: no-drop;
-  }
-`;
 
 interface IRoomFormProp {
   onCloseModal?: () => void;
@@ -115,7 +102,7 @@ const RoomForm = ({ onCloseModal, room }: IRoomFormProp) => {
       </Form.Row>
 
       <Form.Action>
-        <FormBtn
+        <Form.Button
           type="submit"
           name="submit"
           disabled={!isDirty || !isValid || isLoading}
@@ -125,10 +112,10 @@ const RoomForm = ({ onCloseModal, room }: IRoomFormProp) => {
               ? 'Add' 
               : 'Save'
           }
-        </FormBtn>
-        <FormBtn type="button" variations="secondary" onClick={onCloseModal}>
+        </Form.Button>
+        <Form.Button type="button" variations="secondary" onClick={onCloseModal}>
           Close
-        </FormBtn>
+        </Form.Button>
       </Form.Action>
     </Form>
   );

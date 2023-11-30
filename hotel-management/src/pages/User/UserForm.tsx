@@ -19,11 +19,8 @@ import {
 } from '@constant/formValidateMessage.ts';
 import { REGEX } from '@constant/commons.ts';
 
-// Styled
-import { FormBtn } from './styled.ts';
-
 // Types
-import { IUser } from '@type/users.ts';
+import { IUser } from '@type/user';
 
 interface IUserFormProp {
   onCloseModal?: () => void;
@@ -106,7 +103,7 @@ const UserForm = ({ onCloseModal, user }: IUserFormProp) => {
         </Form.Row>
 
         <Form.Action>
-          <FormBtn
+          <Form.Button
             type="submit"
             name="submit"
             disabled={!isDirty || !isValid || isLoading}
@@ -116,10 +113,10 @@ const UserForm = ({ onCloseModal, user }: IUserFormProp) => {
                 ? 'Add' 
                 : 'Save'
             }
-          </FormBtn>
-          <FormBtn type="button" variations="secondary" onClick={onCloseModal}>
+          </Form.Button>
+          <Form.Button type="button" variations="secondary" onClick={onCloseModal}>
             Close
-          </FormBtn>
+          </Form.Button>
         </Form.Action>
       </Form>
     </FormProvider>

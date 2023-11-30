@@ -7,15 +7,15 @@ import { ReactNode } from 'react';
 import { useRooms } from '@hook/rooms/useRooms';
 import { useCreateRoom } from '@hook/rooms/useCreateRoom';
 import { useUpdateRoom } from '@hook/rooms/useUpdateRoom';
-import { useDeleteRoom } from '@hook/rooms/useDeleteRoom';
+import { useSetIsDeleteRoom } from '@hook/rooms/useSetIsDeleteRoom';
 
 // Types
-import { IRoom } from '@type/rooms';
+import { IRoom } from '@type/room';
 
 const mockUseRooms = jest.fn(useRooms);
 const mockUseCreateRoom = jest.fn(useCreateRoom);
 const mockUseUpdateRoom = jest.fn(useUpdateRoom);
-const mockUseDeleteRoom = jest.fn(useDeleteRoom);
+const mockUseDeleteRoom = jest.fn(useSetIsDeleteRoom);
 interface IWrapper {
   children: ReactNode;
 }
@@ -25,6 +25,7 @@ const sampleData: IRoom = {
   name: 'Room name test',
   price: 9999,
   status: true,
+  isDelete: true,
 };
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,15 +51,18 @@ describe('Room hooks', () => {
           name: 'Nezumi',
           price: 2500,
           status: true,
+          isDelete: true,
         },
         {
           id: 2,
           name: 'Loi Phan',
           price: 8500,
           status: false,
+          isDelete: true,
         },
       ],
       isLoading: false,
+      count: 2
     }));
     const { result } = renderHook(() => mockUseRooms(), { wrapper });
 
@@ -108,8 +112,8 @@ describe('Room hooks', () => {
 
   test('Should delete room correctly', async () => {
     mockUseDeleteRoom.mockImplementation(() => ({
-      deleteRoom: () => {
-        sampleData.id;
+      setIsDeleteRoom: () => {
+        sampleData
       },
       isDeleting: false,
       isSuccess: true,
@@ -118,7 +122,7 @@ describe('Room hooks', () => {
 
     act(() => {
       const testMethod = async () => {
-        result.current.deleteRoom(sampleData.id);
+        result.current.setIsDeleteRoom(sampleData.id);
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
       };
 

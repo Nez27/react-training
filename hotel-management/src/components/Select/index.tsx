@@ -19,6 +19,7 @@ interface ISelect {
   onChange?: ChangeEventHandler<HTMLSelectElement> | undefined;
   id?: string;
   ariaLabel: string;
+  disable?: boolean;
 }
 
 const Select = ({
@@ -28,6 +29,7 @@ const Select = ({
   value,
   onChange,
   ariaLabel,
+  disable = false,
 }: ISelect) => {
   const { register } = useFormContext() ?? {};
 
@@ -38,6 +40,7 @@ const Select = ({
       aria-label={ariaLabel}
       id={id}
       value={value}
+      disabled={disable}
       {...(register
         ? { ...register(id!, optionsConfigForm) }
         : { onChange: onChange })}

@@ -7,7 +7,7 @@ exports[`SortBy Should render correctly 1`] = `
     <div>
       <select
         aria-label="Sort"
-        class="sc-bdnyFh dqXTRP"
+        class="sc-bdnyFh hPOEsG"
       >
         <option
           data-testid="select-option"
@@ -27,7 +27,7 @@ exports[`SortBy Should render correctly 1`] = `
   "container": <div>
     <select
       aria-label="Sort"
-      class="sc-bdnyFh dqXTRP"
+      class="sc-bdnyFh hPOEsG"
     >
       <option
         data-testid="select-option"

@@ -1,14 +1,17 @@
 // Types
-import { IUser } from '@type/users';
-import { IDataState } from '@type/common';
+import { IUser } from '@type/user';
 
 // Services
 import supabase from './supabaseService';
-
-const USERS_TABLE = 'users';
-const ERROR_FETCHING = "Users can't be loaded!";
-const ERROR_CREATE_USER = "Can't create user!";
-const ERROR_UPDATE_USER = "Can't update user!";
+import { IDataState } from '@type/common';
+import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import {
+  ERROR_CREATE_USER,
+  ERROR_DELETE_USER,
+  ERROR_FETCHING_USER,
+  ERROR_UPDATE_USER,
+  USERS_TABLE,
+} from '@constant/messages';
 
 /**
  * Create user to the database
@@ -20,6 +23,8 @@ const createUser = async (user: IUser): Promise<IUser> => {
     .insert(user)
     .select()
     .single();
+
+    console.log('Create');
 
   if (error) {
     console.error(error.message);
@@ -50,43 +55,104 @@ const updateUser = async (user: IUser): Promise<IUser> => {
 };
 
 /**
+ * Set user in delete status
+ * @param idUser The id of user need to delete
+ */
+const setIsDeleteUser = async (idUser: number) => {
+  const { data, error } = await supabase
+    .from(USERS_TABLE)
+    .update({isDelete: true})
+    .eq('id', idUser)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_DELETE_USER);
+  }
+
+  return data;
+};
+
+interface IGetAllUsers {
+  sortBy: string;
+  orderBy: string;
+  phoneSearch: string;
+  page: number;
+}
+
+/**
  * Return data of users from database
  * @param sortBy Sort by column
  * @param orderBy Order by ascending or descending
  * @param phoneSearch The phone need to be search
  * @returns The data of users from database
  */
-const getAllUsers = async (
-  sortBy: string,
-  orderBy: string,
-  phoneSearch: string
-): Promise<IUser[]> => {
-  const { data, error } = await supabase
+const getAllUsers = async ({
+  sortBy,
+  orderBy,
+  phoneSearch,
+  page,
+}: IGetAllUsers): Promise<{ data: IUser[]; count: number | null }> => {
+  const from = (page - 1) * DEFAULT_PAGE_SIZE;
+  const to = from + DEFAULT_PAGE_SIZE - 1;
+
+  let query = supabase
     .from(USERS_TABLE)
-    .select('*')
+    .select('*', { count: 'exact' })
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .ilike('phone', `%${phoneSearch}%`);
+    .like('phone', `%${phoneSearch}%`)
+    .eq('isDelete', false);
+
+  if (page) {
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_USER);
   }
 
-  return data;
+  return { data, count };
 };
 
 const getUserNotBooked = async (): Promise<IDataState[]> => {
   const { data, error } = await supabase
     .from(USERS_TABLE)
-    .select('id, name')
-    .eq('isBooked', false);
+    .select('id, name, isBooked');
 
   if (error) {
     console.error(error.message);
-    throw new Error(ERROR_FETCHING);
+    throw new Error(ERROR_FETCHING_USER);
   }
 
   return data;
 };
 
-export { updateUser, createUser, getAllUsers, getUserNotBooked };
+const updateUserBookedStatus = async (
+  id: number,
+  isBooked: boolean
+): Promise<number> => {
+  const { error, status } = await supabase
+    .from(USERS_TABLE)
+    .update({ isBooked })
+    .eq('id', id);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(ERROR_UPDATE_USER);
+  }
+
+  return status;
+};
+
+export {
+  updateUser,
+  createUser,
+  getAllUsers,
+  setIsDeleteUser,
+  getUserNotBooked,
+  updateUserBookedStatus,
+};

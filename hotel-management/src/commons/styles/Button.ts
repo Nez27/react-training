@@ -16,10 +16,10 @@ const variations: IVariations = {
     background-color: var(--danger-btn-color);
     color: var(--light-text);
   `,
-} as const;
+};
 
 interface IButtonStyle {
-  variations?: keyof typeof variations;
+  variations?: keyof IVariations;
 }
 
 const Button = styled.button<IButtonStyle>`
@@ -36,7 +36,8 @@ const Button = styled.button<IButtonStyle>`
 
   &:disabled,
   &[disabled] {
-    cursor: no-drop;
+    cursor: not-allowed;
+    background-color: var(--disabled-btn-color);
   }
 `;
 

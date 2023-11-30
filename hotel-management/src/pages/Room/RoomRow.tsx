@@ -4,7 +4,7 @@ import { useCallback, useMemo } from 'react';
 import { formatCurrency } from '@helper/helper';
 
 // Types
-import { IRoom } from '@type/rooms';
+import { IRoom } from '@type/room';
 
 // Components
 import RoomForm from './RoomForm';
@@ -16,7 +16,7 @@ import { HiTrash } from 'react-icons/hi';
 import ConfirmMessage from '@component/ConfirmMessage';
 
 // Hooks
-import { useDeleteRoom } from '@hook/rooms/useDeleteRoom';
+import { useSetIsDeleteRoom } from '@hook/rooms/useSetIsDeleteRoom';
 
 // Constants
 import { FORM } from '@constant/commons';
@@ -27,7 +27,7 @@ interface IRoomRow {
 
 const RoomRow = ({ room }: IRoomRow) => {
   const { id, name, price, status } = room;
-  const { isDeleting, deleteRoom } = useDeleteRoom();
+  const { setIsDeleteRoom } = useSetIsDeleteRoom();
   const statusText = status 
     ? 'Unavailable' 
     : 'Available';
@@ -78,9 +78,8 @@ const RoomRow = ({ room }: IRoomRow) => {
 
             <Modal.Window name={FORM.DELETE} title="Delete Room">
               <ConfirmMessage
-                disabled={isDeleting}
                 message={`Are you sure to delete ${name}?`}
-                onConfirm={() => deleteRoom(id)}
+                onConfirm={() => setIsDeleteRoom(id)}
               />
             </Modal.Window>
           </Menus.Menu>

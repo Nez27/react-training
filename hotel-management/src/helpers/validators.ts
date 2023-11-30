@@ -26,4 +26,8 @@ const isValidString = (value: string): boolean => {
   return value.trim().length >= 5;
 };
 
-export { isValidRegex, isValidString, isValidDiscount };
+const compareTwoDates = (startDate: Date, endDate: Date): boolean => {
+  return startDate > endDate;
+};
+
+export { isValidRegex, isValidString, isValidDiscount, compareTwoDates };

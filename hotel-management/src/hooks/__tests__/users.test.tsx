@@ -10,7 +10,7 @@ import { useUpdateUser } from '@hook/users/useUpdateUser';
 import { useUsers } from '@hook/users/useUsers';
 
 // Types
-import { IUser } from '@type/users';
+import { IUser } from '@type/user';
 
 const mockUseUsers = jest.fn(useUsers);
 const mockUseCreateUser = jest.fn(useCreateUser);
@@ -25,6 +25,7 @@ const sampleData: IUser = {
   name: 'User name test',
   phone: '123456789',
   isBooked: true,
+  isDelete: true,
 };
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,15 +51,18 @@ describe('Users hook', () => {
           name: 'Nezumi',
           phone: '0123456678',
           isBooked: true,
+          isDelete: true,
         },
         {
           id: 2,
           name: 'Loi Phan',
           phone: '0123456678',
           isBooked: false,
+          isDelete: true,
         },
       ],
       isLoading: false,
+      count: 2,
     }));
     const { result } = renderHook(() => mockUseUsers(), { wrapper });
 

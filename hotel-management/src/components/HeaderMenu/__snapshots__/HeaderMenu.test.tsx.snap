@@ -13,6 +13,7 @@ exports[`HeaderMenu Should render correctly 1`] = `
         }
       }
       isHaveChildren={false}
+      onClick={[Function]}
       style={
         {
           "backgroundColor": undefined,
@@ -49,12 +50,14 @@ exports[`HeaderMenu Should render correctly 1`] = `
   <li>
     <button
       className="sc-bdnyFh bxHnoO"
+      disabled={false}
       iconStyle={
         {
           "size": "23px",
         }
       }
       isHaveChildren={false}
+      onClick={[Function]}
       style={
         {
           "backgroundColor": undefined,

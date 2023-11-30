@@ -10,27 +10,25 @@ import Button from '@commonStyle/Button';
 
 const Room = () => {
   return (
-    <>
-      <StyledRoom>
-        <Direction type="horizontal">
-          <Title>List Room</Title>
+    <StyledRoom>
+      <Direction type="horizontal">
+        <Title>List Room</Title>
 
-          <Modal>
-            <Modal.Open
-              modalName="room-form"
-              renderChildren={(onCloseModal) => (
-                <Button onClick={onCloseModal}>Add room</Button>
-              )}
-            />
-            <Modal.Window name="room-form" title="Add form">
-              <RoomForm />
-            </Modal.Window>
-          </Modal>
-        </Direction>
+        <Modal>
+          <Modal.Open
+            modalName="room-form"
+            renderChildren={(onCloseModal) => (
+              <Button onClick={onCloseModal}>Add room</Button>
+            )}
+          />
+          <Modal.Window name="room-form" title="Add form">
+            <RoomForm />
+          </Modal.Window>
+        </Modal>
+      </Direction>
 
-        <RoomTable />
-      </StyledRoom>
-    </>
+      <RoomTable />
+    </StyledRoom>
   );
 };
 

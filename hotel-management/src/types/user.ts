@@ -3,6 +3,7 @@ interface IUser {
   name: string;
   phone: string;
   isBooked: boolean;
+  isDelete: boolean;
 }
 
 export type { IUser };

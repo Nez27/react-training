@@ -3,7 +3,8 @@
 exports[`Select Should render correctly 1`] = `
 <select
   aria-label="Sort"
-  className="sc-bdnyFh dqXTRP"
+  className="sc-bdnyFh hPOEsG"
+  disabled={false}
   onChange={[MockFunction]}
   value="Temp value"
 >

@@ -9,7 +9,7 @@ exports[`Order Should render correctly 1`] = `
         class="sc-bdnyFh aZFGz"
       >
         <button
-          class="sc-gtsqUy fohQqJ"
+          class="sc-gtsqUy bOTmZQ"
           disabled=""
         >
           Option 1
@@ -27,7 +27,7 @@ exports[`Order Should render correctly 1`] = `
       class="sc-bdnyFh aZFGz"
     >
       <button
-        class="sc-gtsqUy fohQqJ"
+        class="sc-gtsqUy bOTmZQ"
         disabled=""
       >
         Option 1

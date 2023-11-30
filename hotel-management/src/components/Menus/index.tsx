@@ -23,6 +23,7 @@ interface IButton {
   children?: string;
   icon?: ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const Menus = ({ children }: { children: ReactNode }) => {
@@ -69,7 +70,7 @@ const List = ({
   return <StyledList ref={ref}>{children}</StyledList>;
 };
 
-const Button = ({ children, icon, onClick }: IButton): ReactNode => {
+const Button = ({ children, icon, onClick, disabled }: IButton): ReactNode => {
   const { close } = useContext(MenusContext);
   const handleClick = () => {
     onClick?.();
@@ -83,6 +84,7 @@ const Button = ({ children, icon, onClick }: IButton): ReactNode => {
         onClick={handleClick}
         iconStyle={{ color: COLOR.PRIMARY, size: '19px' }}
         style={{ fontSize: '16px' }}
+        disabled={disabled}
       >
         {children}
       </ButtonIcon>
