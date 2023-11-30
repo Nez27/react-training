@@ -3,7 +3,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
 import Input from '@commonStyle/Input.ts';
-import { FormBtn } from './styled.ts';
 
 // Constants
 import { REQUIRED_FIELD_ERROR } from '@constant/formValidateMessage.ts';
@@ -104,24 +103,24 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
             reset();
             onCloseModal?.();
 
-            // Update room in global state
-            // Old room
+            // Update room status in global state
+            // Reset status old room
             dispatch!({
               type: 'updateStatusRoom',
               payload: [{ id: booking!.rooms!.id, status: false }],
             });
 
-            // New room
+            // Change status new room
             dispatch!({
               type: 'updateStatusRoom',
               payload: [{ id: newBooking.roomId, status: true }],
             });
 
-            // Update room available in server
-            // Old room
+            // Update room status in server
+            // Reset status old room
             await updateRoomStatus(booking!.rooms!.id, false);
 
-            // New room
+            // Change status new room
             await updateRoomStatus(newBooking.roomId, true);
           },
         }
@@ -277,7 +276,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
         </Form.Row>
 
         <Form.Action>
-          <FormBtn
+          <Form.Button
             type="submit"
             name="submit"
             disabled={!isDirty || !isValid || isLoading}
@@ -287,10 +286,10 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
                 ? 'Add' 
                 : 'Save'
             }
-          </FormBtn>
-          <FormBtn type="button" variations="secondary" onClick={onCloseModal}>
+          </Form.Button>
+          <Form.Button type="button" variations="secondary" onClick={onCloseModal}>
             Close
-          </FormBtn>
+          </Form.Button>
         </Form.Action>
       </Form>
     </FormProvider>

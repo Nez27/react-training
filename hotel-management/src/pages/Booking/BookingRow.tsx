@@ -29,7 +29,15 @@ interface IBookingRow {
 
 const BookingRow = ({ booking }: IBookingRow) => {
   const { checkOutBooking } = useCheckOut();
-  const { id, users, startDate, endDate, rooms, amount, status } = booking;
+  const { 
+    id,
+    users,
+    startDate,
+    endDate,
+    rooms,
+    amount,
+    status
+  } = booking;
   const statusText = status 
     ? 'Check in' 
     : 'Check out';

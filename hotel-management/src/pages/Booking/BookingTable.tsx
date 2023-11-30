@@ -20,8 +20,18 @@ import { useBookings } from '@hook/bookings/useBookings';
 import { TBookingResponse } from '@type/booking';
 
 const BookingTable = () => {
-  const columnName = ['User', 'Date', 'Room', 'Amount', 'Status'];
-  const { isLoading, bookings, count } = useBookings();
+  const columnName = [
+    'User',
+    'Date',
+    'Room',
+    'Amount',
+    'Status'
+  ];
+  const { 
+    isLoading,
+    bookings,
+    count
+  } = useBookings();
 
   const renderBookingRow = useCallback(
     (booking: TBookingResponse) => (
