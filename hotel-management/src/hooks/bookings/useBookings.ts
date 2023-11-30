@@ -17,7 +17,9 @@ const useBookings = () => {
   const [searchParams] = useSearchParams();
 
   const searchValue = searchParams.get('search') || '';
-  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
+  const page = searchParams.get('page') 
+    ? Number(searchParams.get('page')) 
+    : 1;
 
   const {
     isLoading,
