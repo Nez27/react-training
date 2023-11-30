@@ -56,6 +56,7 @@ const REGEX = {
   PHONE: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
   NAME: /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/gm,
   NUMBER: /^[0-9]*$/,
+  PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,16}$/
 };
 
 export { USER_PAGE, ROOM_PAGE, FORM, REGEX, ORDERBY_OPTIONS };
