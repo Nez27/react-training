@@ -31,7 +31,7 @@ const useRooms = () => {
       getAllRooms({
         sortBy: sortByValue,
         orderBy: orderByValue,
-        roomName: searchValue,
+        roomSearch: searchValue,
         page,
       }),
   });
@@ -52,7 +52,7 @@ const useRooms = () => {
         getAllRooms({
           sortBy: sortByValue,
           orderBy: orderByValue,
-          roomName: searchValue,
+          roomSearch: searchValue,
           page: nextPage,
         }),
     });
@@ -67,7 +67,7 @@ const useRooms = () => {
         getAllRooms({
           sortBy: sortByValue,
           orderBy: orderByValue,
-          roomName: searchValue,
+          roomSearch: searchValue,
           page: previousPage,
         }),
     });
