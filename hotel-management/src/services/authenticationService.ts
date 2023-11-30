@@ -1,7 +1,11 @@
 import { ILogin } from '@type/common';
+import { UserAttributes } from '@supabase/supabase-js';
 
 // Services
 import supabase from './supabaseService';
+
+// Types
+import { IAccount } from '@type/account';
 
 const login = async ({ email, password }: ILogin) => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -40,4 +44,25 @@ const logout = async () => {
   }
 };
 
-export { login, logout, getCurrentAccount };
+const updateAccount = async ({ fullName, password }: IAccount) => {
+  let accountUpdate: UserAttributes | null = null;
+
+  if (password) {
+    accountUpdate = { password };
+  }
+
+  if (fullName) {
+    accountUpdate = { data: { fullName } };
+  }
+
+  const { data, error } = await supabase.auth.updateUser(accountUpdate!);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+export { login, logout, getCurrentAccount, updateAccount };

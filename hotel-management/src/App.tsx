@@ -16,6 +16,7 @@ import Booking from './pages/Booking';
 import Room from './pages/Room';
 import NotFound from './pages/NotFound';
 import Login from '@page/Login';
+import Account from '@page/Account';
 
 // Constants
 import * as PATH from './constants/path';
@@ -93,6 +94,7 @@ function App() {
                   <Route path={PATH.BOOKING} element={<Booking />} />
                   <Route path={PATH.USER} element={<User />} />
                   <Route path={PATH.ROOM} element={<Room />} />
+                  <Route path={PATH.ACCOUNT} element={<Account />} />
                 </Route>
                 <Route path={PATH.LOGIN} element={<Login />} />
                 <Route path={PATH.OTHER_PATH} element={<NotFound />} />
