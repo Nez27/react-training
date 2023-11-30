@@ -1,4 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+// Types
+import { TDirection } from '@type/common';
+
+interface IStyledFormRow {
+  direction?: TDirection;
+}
 
 // Styled
 import Button from '@commonStyle/Button';
@@ -16,11 +23,20 @@ const StyledActionBtn = styled.div`
   gap: 100px;
 `;
 
-const StyledFormRow = styled.div`
+const StyledFormRow = styled.div<IStyledFormRow>`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 100px;
+
+  ${(props) =>
+    props.direction === 'horizontal'
+      ? css`
+          align-items: center;
+          gap: 100px;
+        `
+      : css`
+          flex-direction: column;
+          gap: 15px;
+        `}
 `;
 
 const Label = styled.label`
@@ -44,5 +60,9 @@ const FormBtn = styled(Button)`
     background-color: var(--disabled-btn-color);
   }
 `;
+
+StyledFormRow.defaultProps = {
+  direction: 'horizontal',
+};
 
 export { StyledForm, StyledActionBtn, StyledFormRow, Label, Error, FormBtn };

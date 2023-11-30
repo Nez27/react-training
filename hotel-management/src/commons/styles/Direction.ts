@@ -1,6 +1,5 @@
+import { TDirection } from '@type/common';
 import styled, { css } from 'styled-components';
-
-type TDirection = 'vertical' | 'horizontal';
 
 interface IDirection {
   type?: TDirection;

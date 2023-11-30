@@ -6,7 +6,12 @@ import ButtonIcon from '@component/ButtonIcon';
 // Styled
 import { StyledHeaderMenu } from './styled';
 
+// Hooks
+import { useLogout } from '@hook/authentication/useLogout';
+
 const HeaderMenu = () => {
+  const { logout, isPending } = useLogout();
+
   return (
     <StyledHeaderMenu>
       <li>
@@ -18,9 +23,11 @@ const HeaderMenu = () => {
       </li>
       <li>
         <ButtonIcon
+          onClick={logout}
+          disabled={isPending}
           aria-label="Logout"
           icon={<HiOutlineLogout />}
-          iconStyle={{size: '23px' }}
+          iconStyle={{ size: '23px' }}
         />
       </li>
     </StyledHeaderMenu>
