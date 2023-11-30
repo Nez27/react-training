@@ -7,12 +7,15 @@ import { useEffect, useMemo, useReducer } from 'react';
 // Components
 import AppLayout from './components/AppLayout';
 import Toast from './components/Toast';
+import RouteProtected from '@component/RouteProtected';
+import RootLayout from '@component/RootLayout';
 
 // Pages
 import User from './pages/User';
 import Booking from './pages/Booking';
 import Room from './pages/Room';
 import NotFound from './pages/NotFound';
+import Login from '@page/Login';
 
 // Constants
 import * as PATH from './constants/path';
@@ -75,13 +78,25 @@ function App() {
         <UserRoomAvailableContext.Provider value={store}>
           <BrowserRouter>
             <Routes>
-              <Route element={<AppLayout />}>
-                <Route index element={<Navigate replace to={PATH.BOOKING} />} />
-                <Route path={PATH.BOOKING} element={<Booking />} />
-                <Route path={PATH.USER} element={<User />} />
-                <Route path={PATH.ROOM} element={<Room />} />
+              <Route element={<RootLayout />}>
+                <Route
+                  element={
+                    <RouteProtected>
+                      <AppLayout />
+                    </RouteProtected>
+                  }
+                >
+                  <Route
+                    index
+                    element={<Navigate replace to={PATH.BOOKING} />}
+                  />
+                  <Route path={PATH.BOOKING} element={<Booking />} />
+                  <Route path={PATH.USER} element={<User />} />
+                  <Route path={PATH.ROOM} element={<Room />} />
+                </Route>
+                <Route path={PATH.LOGIN} element={<Login />} />
+                <Route path={PATH.OTHER_PATH} element={<NotFound />} />
               </Route>
-              <Route path={PATH.OTHER_PATH} element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </UserRoomAvailableContext.Provider>
