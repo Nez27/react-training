@@ -13,6 +13,7 @@ describe('UserRow', () => {
     name: 'Temp Room',
     phone: '0324421232',
     isBooked: false,
+    isDelete: true,
   };
   const queryClient = new QueryClient();
   const wrapper = renderer.create(

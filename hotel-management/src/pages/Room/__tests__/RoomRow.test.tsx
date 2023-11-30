@@ -13,6 +13,7 @@ describe('RoomRow', () => {
     name: 'Temp Room',
     price: 250,
     status: true,
+    isDelete: true,
   };
   const queryClient = new QueryClient();
 

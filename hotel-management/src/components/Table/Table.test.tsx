@@ -18,12 +18,14 @@ describe('Table', () => {
       name: 'Nezumi',
       phone: '123',
       isBooked: true,
+      isDelete: true,
     },
     {
       id: 2,
       name: 'Loi Phan',
       phone: '453',
       isBooked: false,
+      isDelete: true,
     },
   ];
   const TableRow = ({ user }: ITableRow) => {
