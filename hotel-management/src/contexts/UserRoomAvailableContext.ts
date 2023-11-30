@@ -16,7 +16,9 @@ type TAction =
   | 'addUser'
   | 'updateStatusUser'
   | 'updateUserName'
-  | 'updateRoomName';
+  | 'updateRoomName'
+  | 'removeUser'
+  | 'removeRoom';
 
 interface IAction {
   type: TAction;
@@ -96,6 +98,12 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       };
     }
 
+    case 'removeUser': 
+      return {
+        ...state,
+        usersAvailable: state.usersAvailable.filter((user) => user.id !== action.payload[0].id)
+      }
+
     case 'addRoom': {
       const tempArr = state.roomsAvailable;
       const itemExist = state.roomsAvailable.find(
@@ -141,6 +149,12 @@ const reducer = (state: IUserRoomState, action: IAction) => {
         roomsAvailable: tempArr,
       };
     }
+
+    case 'removeRoom': 
+      return {
+        ...state,
+        roomsAvailable: state.roomsAvailable.filter((room) => room.id !== action.payload[0].id)
+      }
 
     default:
       throw new Error('Action unknown');

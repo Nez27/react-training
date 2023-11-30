@@ -2,7 +2,7 @@
 import Input from '@commonStyle/Input.ts';
 
 // Types
-import { IRoom } from '@type/rooms.ts';
+import { IRoom } from '@type/room.ts';
 
 // Constants
 import {

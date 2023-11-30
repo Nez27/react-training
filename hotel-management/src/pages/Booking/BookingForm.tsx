@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
@@ -17,11 +17,7 @@ import { useUpdateBooking } from '@hook/bookings/useUpdateBooking.ts';
 import { useUserRoomAvailable } from '@hook/useUserRoomAvailable.ts';
 
 // Helpers
-import {
-  convertCurrencyToNumber,
-  formatCurrency,
-  getDayDiff,
-} from '@helper/helper.ts';
+import { formatCurrency, getDayDiff } from '@helper/helper.ts';
 
 // Services
 import { getRoomById, updateRoomStatus } from '@service/roomServices.ts';
@@ -35,24 +31,25 @@ interface IBookingFormProp {
   booking?: TBookingResponse;
 }
 
-interface IBookingForm extends Omit<IBooking, 'amount'> {
-  amount: string;
-}
-
 const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
   const { roomsAvailable, usersAvailable, dispatch } = useUserRoomAvailable();
   const { isCreating, createBooking } = useCreateBooking();
   const { isUpdating, updateBooking } = useUpdateBooking();
   const isLoading = isCreating || isUpdating;
   const { id: editId, ...editValues } = { ...booking };
-  const formMethods = useForm<IBookingForm>({
+  const [ amountValue, setAmountValue ] = useState(
+    editValues.amount
+      ? formatCurrency(editValues.amount)
+      : '$0.00'
+    );
+  const formMethods = useForm<IBooking>({
     defaultValues: editId
       ? {
           startDate: editValues.startDate,
           endDate: editValues.endDate,
           roomId: editValues.rooms?.id,
           userId: editValues.users?.id,
-          amount: formatCurrency(editValues.amount!),
+          amount: editValues.amount!,
         }
       : {},
   });
@@ -67,64 +64,58 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
   } = formMethods;
 
   // Submit form
-  const onSubmit = async (newBooking: IBookingForm) => {
+  const onSubmit = async (newBooking: IBooking) => {
     if (!editId) {
       // Add request
-      createBooking(
-        { ...newBooking, amount: convertCurrencyToNumber(newBooking.amount) },
-        {
-          onSuccess: async () => {
-            reset();
-            onCloseModal?.();
+      createBooking(newBooking, {
+        onSuccess: async () => {
+          reset();
+          onCloseModal?.();
 
-            // Update room, user available in global state
-            dispatch!({
-              type: 'updateStatusUser',
-              payload: [{ id: newBooking.userId, isBooked: true }],
-            });
-            dispatch!({
-              type: 'updateStatusRoom',
-              payload: [{ id: newBooking.roomId, status: true }],
-            });
+          // Update room, user available in global state
+          dispatch!({
+            type: 'updateStatusUser',
+            payload: [{ id: newBooking.userId, isBooked: true }],
+          });
+          dispatch!({
+            type: 'updateStatusRoom',
+            payload: [{ id: newBooking.roomId, status: true }],
+          });
 
-            // Update room, user available in server
-            await updateRoomStatus(newBooking.roomId, true);
-            await updateUserBookedStatus(newBooking.userId, true);
-          },
-        }
-      );
+          // Update room, user available in server
+          await updateRoomStatus(newBooking.roomId, true);
+          await updateUserBookedStatus(newBooking.userId, true);
+        },
+      });
     } else {
       // Edit request
       newBooking.id = editId!;
-      updateBooking(
-        { ...newBooking, amount: convertCurrencyToNumber(newBooking.amount) },
-        {
-          onSuccess: async () => {
-            reset();
-            onCloseModal?.();
+      updateBooking(newBooking, {
+        onSuccess: async () => {
+          reset();
+          onCloseModal?.();
 
-            // Update room status in global state
-            // Reset status old room
-            dispatch!({
-              type: 'updateStatusRoom',
-              payload: [{ id: booking!.rooms!.id, status: false }],
-            });
+          // Update room status in global state
+          // Reset status old room
+          dispatch!({
+            type: 'updateStatusRoom',
+            payload: [{ id: booking!.rooms!.id, status: false }],
+          });
 
-            // Change status new room
-            dispatch!({
-              type: 'updateStatusRoom',
-              payload: [{ id: newBooking.roomId, status: true }],
-            });
+          // Change status new room
+          dispatch!({
+            type: 'updateStatusRoom',
+            payload: [{ id: newBooking.roomId, status: true }],
+          });
 
-            // Update room status in server
-            // Reset status old room
-            await updateRoomStatus(booking!.rooms!.id, false);
+          // Update room status in server
+          // Reset status old room
+          await updateRoomStatus(booking!.rooms!.id, false);
 
-            // Change status new room
-            await updateRoomStatus(newBooking.roomId, true);
-          },
-        }
-      );
+          // Change status new room
+          await updateRoomStatus(newBooking.roomId, true);
+        },
+      });
     }
   };
 
@@ -161,12 +152,13 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
 
   // Calculate the final price
   const computePrice = useCallback(async () => {
-    setValue('amount', 'Loading...');
     const startDateValue = getValues('startDate');
     const endDateValue = getValues('endDate');
     const roomValue = getValues('roomId');
 
     if (startDateValue && endDateValue && roomValue) {
+      setAmountValue('Loading...');
+
       const daysDiff = getDayDiff(
         new Date(startDateValue),
         new Date(endDateValue)
@@ -176,9 +168,19 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
       const room = await getRoomById(roomValue.toString());
       const amount = daysDiff * room.price;
 
-      setValue('amount', formatCurrency(amount), { shouldValidate: true });
+      setValue('amount', amount, { shouldValidate: true });
+      setAmountValue(formatCurrency(amount));
     }
   }, [getValues, setValue]);
+
+  const checkValidTwoDates = useCallback(() => {
+    const startDate = new Date(getValues().startDate);
+    const endDate = new Date(getValues().endDate);
+
+    if(startDate >= endDate) {
+      setValue('endDate', '');
+    }
+  }, [setValue, getValues]);
 
   const startDateValidate = useMemo(
     () => new Date().toISOString().split('T')[0],
@@ -241,13 +243,15 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
               required: REQUIRED_FIELD_ERROR,
               onChange: () => {
                 trigger('startDate');
+                checkValidTwoDates();
+
                 computePrice();
               },
             })}
           />
         </Form.Row>
 
-        <Form.Row label="End Date" error={errors?.startDate?.message}>
+        <Form.Row label="End Date" error={errors?.endDate?.message}>
           <Input
             type="date"
             id="endDate"
@@ -259,13 +263,15 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
                 trigger('endDate');
                 computePrice();
               },
+              validate: (endDateValue) =>
+                endDateValue > getValues().startDate || 'Invalid date',
             })}
           />
         </Form.Row>
 
         <Form.Row label="Amount">
           <Input
-            type="text"
+            type="hidden"
             id="amount"
             {...register('amount', {
               required: REQUIRED_FIELD_ERROR,
@@ -273,6 +279,8 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
             })}
             readOnly
           />
+
+          <span>{amountValue}</span>
         </Form.Row>
 
         <Form.Action>
@@ -281,13 +289,13 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
             name="submit"
             disabled={!isDirty || !isValid || isLoading}
           >
-            {
-              !editId 
-                ? 'Add' 
-                : 'Save'
-            }
+            {!editId ? 'Add' : 'Save'}
           </Form.Button>
-          <Form.Button type="button" variations="secondary" onClick={onCloseModal}>
+          <Form.Button
+            type="button"
+            variations="secondary"
+            onClick={onCloseModal}
+          >
             Close
           </Form.Button>
         </Form.Action>

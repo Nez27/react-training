@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import renderer from 'react-test-renderer';
 
 // Types
-import { IUser } from '@type/users';
+import { IUser } from '@type/user';
 
 // Components
 import UserRow from '../UserRow';

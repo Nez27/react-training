@@ -10,7 +10,7 @@ import OrderBy from '@component/OrderBy';
 import UserRow from './UserRow';
 
 // Types
-import { IUser } from '@type/users';
+import { IUser } from '@type/user';
 
 // Constants
 import { ORDERBY_OPTIONS, USER_PAGE } from '@constant/commons';

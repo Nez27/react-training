@@ -10,7 +10,7 @@ import OrderBy from '@component/OrderBy';
 import RoomRow from './RoomRow';
 
 // Types
-import { IRoom } from '@type/rooms';
+import { IRoom } from '@type/room';
 
 // Constants
 import { ORDERBY_OPTIONS, ROOM_PAGE } from '@constant/commons';

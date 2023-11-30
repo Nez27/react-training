@@ -20,7 +20,7 @@ import {
 import { REGEX } from '@constant/commons.ts';
 
 // Types
-import { IUser } from '@type/users.ts';
+import { IUser } from '@type/user';
 
 interface IUserFormProp {
   onCloseModal?: () => void;

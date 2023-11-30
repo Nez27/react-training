@@ -29,35 +29,33 @@ interface IBookingRow {
 
 const BookingRow = ({ booking }: IBookingRow) => {
   const { checkOutBooking } = useCheckOut();
-  const { 
-    id,
-    users,
-    startDate,
-    endDate,
-    rooms,
-    amount,
-    status
-  } = booking;
-  const statusText = status 
-    ? 'Check in' 
-    : 'Check out';
+  const { id, users, startDate, endDate, rooms, amount, status } = booking;
+  const statusText = status ? 'Check in' : 'Check out';
   const formattedPrice = useMemo(() => formatCurrency(amount), [amount]);
   const renderEditBtn = useCallback(
     (onCloseModal: () => void) => (
-      <Menus.Button onClick={onCloseModal} icon={<RiEditBoxFill />}>
+      <Menus.Button
+        onClick={onCloseModal}
+        icon={<RiEditBoxFill />}
+        disabled={!status}
+      >
         Edit
       </Menus.Button>
     ),
-    []
+    [status]
   );
 
   const renderCheckOutBtn = useCallback(
     (onCloseModal: () => void) => (
-      <Menus.Button onClick={onCloseModal} icon={<ImExit />}>
+      <Menus.Button 
+        onClick={onCloseModal}
+        icon={<ImExit />}
+        disabled={!status}
+      >
         Checkout
       </Menus.Button>
     ),
-    []
+    [status]
   );
 
   const handleClickCheckOutBtn = useCallback(() => {

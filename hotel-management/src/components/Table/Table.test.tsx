@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import Table from '.';
 
 // Types
-import { IUser } from '@type/users';
+import { IUser } from '@type/user';
 
 interface ITableRow {
   user: IUser;

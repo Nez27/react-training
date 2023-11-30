@@ -1,5 +1,5 @@
 // Types
-import { IUser } from '@type/users';
+import { IUser } from '@type/user';
 
 // Services
 import supabase from './supabaseService';
@@ -55,16 +55,23 @@ const updateUser = async (user: IUser): Promise<IUser> => {
 };
 
 /**
- * Delete user in database
+ * Set user in delete status
  * @param idUser The id of user need to delete
  */
-const deleteUser = async (idUser: number) => {
-  const { error } = await supabase.from('users').delete().eq('id', idUser);
+const setIsDeleteUser = async (idUser: number) => {
+  const { data, error } = await supabase
+    .from(USERS_TABLE)
+    .update({isDelete: true})
+    .eq('id', idUser)
+    .select()
+    .single();
 
   if (error) {
     console.error(error.message);
     throw new Error(ERROR_DELETE_USER);
   }
+
+  return data;
 };
 
 interface IGetAllUsers {
@@ -94,7 +101,8 @@ const getAllUsers = async ({
     .from(USERS_TABLE)
     .select('*', { count: 'exact' })
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .like('phone', `%${phoneSearch}%`);
+    .like('phone', `%${phoneSearch}%`)
+    .eq('isDelete', false);
 
   if (page) {
     query = query.range(from, to);
@@ -144,7 +152,7 @@ export {
   updateUser,
   createUser,
   getAllUsers,
-  deleteUser,
+  setIsDeleteUser,
   getUserNotBooked,
   updateUserBookedStatus,
 };

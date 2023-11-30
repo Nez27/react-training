@@ -1,5 +1,5 @@
 // Types
-import { IRoom } from '@type/rooms';
+import { IRoom } from '@type/room';
 
 // Services
 import supabase from './supabaseService';
@@ -38,9 +38,10 @@ const getAllRooms = async ({
     .from(ROOMS_TABLE)
     .select('*', { count: 'exact' })
     .order(sortBy, { ascending: orderBy === 'asc' })
-    .like('name', `%${roomSearch}%`);
+    .like('name', `%${roomSearch}%`)
+    .eq('isDelete', false);
 
-  if(page) {
+  if (page) {
     query = query.range(from, to);
   }
 
@@ -94,16 +95,23 @@ const createRoom = async (room: IRoom): Promise<IRoom> => {
 };
 
 /**
- * Delete room in database
- * @param idRoom The id of room need to delete
+ * Set room is delete status
+ * @param idRoom The id of room need to set
  */
-const deleteRoom = async (idRoom: number) => {
-  const { error } = await supabase.from(ROOMS_TABLE).delete().eq('id', idRoom);
+const setIsDeleteRoom = async (idRoom: number) => {
+  const { data, error } = await supabase
+    .from(ROOMS_TABLE)
+    .update({ isDelete: true })
+    .eq('id', idRoom)
+    .select()
+    .single();
 
   if (error) {
     console.error(error.message);
     throw new Error(ERROR_DELETE_ROOM);
   }
+
+  return data;
 };
 
 /**
@@ -126,17 +134,13 @@ const getRoomById = async (idRoom: string): Promise<IRoom> => {
   return data;
 };
 
-
 /**
  * Update status of room
  * @param id The id of room need to be change status
  * @param status The status of room
  */
-const updateRoomStatus = async (
-  id: number,
-  status: boolean
-): Promise<void> => {
-  const { error} = await supabase
+const updateRoomStatus = async (id: number, status: boolean): Promise<void> => {
+  const { error } = await supabase
     .from(ROOMS_TABLE)
     .update({ status })
     .eq('id', id);
@@ -145,14 +149,13 @@ const updateRoomStatus = async (
     console.error(error.message);
     throw new Error(ERROR_UPDATE_ROOM);
   }
-
 };
 
 export {
   getAllRooms,
   updateRoom,
   createRoom,
-  deleteRoom,
+  setIsDeleteRoom,
   getRoomById,
   updateRoomStatus,
 };

@@ -6,12 +6,12 @@ import Menus from '@component/Menus';
 import UserForm from './UserForm';
 
 // Types
-import { IUser } from '@type/users';
+import { IUser } from '@type/user';
 import { FORM } from '@constant/commons';
 import { HiTrash } from 'react-icons/hi';
 import { useCallback } from 'react';
 import ConfirmMessage from '@component/ConfirmMessage';
-import { useDeleteUser } from '@hook/users/useDeleteUser';
+import { useIsDeleteUser } from '@hook/users/useSetIsDeleteUser';
 
 interface IUserRow {
   user: IUser;
@@ -19,7 +19,7 @@ interface IUserRow {
 
 const UserRow = ({ user }: IUserRow) => {
   const { id, name, phone, isBooked } = user;
-  const { deleteUser } = useDeleteUser();
+  const { setIsDeleteUser } = useIsDeleteUser();
 
   const renderEditBtn = useCallback(
     (onCloseModal: () => void) => (
@@ -72,7 +72,7 @@ const UserRow = ({ user }: IUserRow) => {
             <Modal.Window name={FORM.DELETE} title="Delete User">
               <ConfirmMessage
                 message={`Are you sure to delete ${name}?`}
-                onConfirm={() => deleteUser(id)}
+                onConfirm={() => setIsDeleteUser(id)}
               />
             </Modal.Window>
           </Menus.Menu>
