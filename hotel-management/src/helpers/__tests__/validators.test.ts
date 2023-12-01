@@ -3,6 +3,7 @@ import { REGEX } from '@constant/commons';
 
 // Helpers
 import {
+  compareTwoDates,
   isValidDiscount,
   isValidRegex,
   isValidString,
@@ -86,5 +87,25 @@ describe('Should is valid string', () => {
     expect(case_2).toBeFalsy();
     expect(case_3).toBeFalsy();
     expect(case_4).toBeFalsy();
+  });
+});
+
+describe('Should compare two dates correctly', () => {
+  test('The start date should greater than end date', () => {
+    const result = compareTwoDates(
+      new Date('2023/12/05'),
+      new Date('2023/12/01')
+    );
+
+    expect(result).toBe(true);
+  });
+
+  test('The start date should fewer than end date', () => {
+    const result = compareTwoDates(
+      new Date('2023/12/01'),
+      new Date('2023/12/05')
+    );
+
+    expect(result).toBe(false);
   });
 });

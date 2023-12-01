@@ -38,12 +38,14 @@ describe('userRoomAvailableContext', () => {
         {
           id: 1,
           name: 'Room 1',
+          status: true,
         },
       ],
       usersAvailable: [
         {
           id: 1,
           name: 'Nezumi',
+          isBooked: true,
         },
       ],
     };
@@ -84,7 +86,8 @@ describe('userRoomAvailableContext', () => {
 
     expect(state.usersAvailable[0]).toEqual({
       id: 1,
-      name: 'Update name'
+      name: 'Update name',
+      isBooked: true,
     });
   });
 
@@ -123,7 +126,34 @@ describe('userRoomAvailableContext', () => {
 
     expect(state.roomsAvailable[0]).toEqual({
       id: 1,
-      name: 'Update name'
+      name: 'Update name',
+      status: true,
+    });
+  });
+
+  test('Should update room status correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'updateStatusRoom',
+      payload: [{ id: 1, status: false }],
+    });
+
+    expect(state.roomsAvailable[0]).toEqual({
+      id: 1,
+      name: 'Room 1',
+      status: false,
+    });
+  });
+
+  test('Should update user status correctly', async () => {
+    const state = reducer(initialState, {
+      type: 'updateStatusUser',
+      payload: [{ id: 1, isBooked: false }],
+    });
+
+    expect(state.usersAvailable[0]).toEqual({
+      id: 1,
+      name: 'Nezumi',
+      isBooked: false,
     });
   });
 });

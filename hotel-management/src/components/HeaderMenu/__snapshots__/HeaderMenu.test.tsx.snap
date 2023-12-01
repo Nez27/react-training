@@ -6,6 +6,7 @@ exports[`HeaderMenu Should render correctly 1`] = `
 >
   <li>
     <button
+      aria-label="Profile"
       className="sc-bdnyFh bxHnoO"
       iconStyle={
         {
@@ -49,6 +50,7 @@ exports[`HeaderMenu Should render correctly 1`] = `
   </li>
   <li>
     <button
+      aria-label="Logout"
       className="sc-bdnyFh bxHnoO"
       disabled={false}
       iconStyle={
