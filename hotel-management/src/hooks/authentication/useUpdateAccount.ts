@@ -7,6 +7,10 @@ import { updateAccount as updateAccountFn } from '@service/authenticationService
 // Constants
 import { UPDATE_ACCOUNT_SUCCESSFUL } from '@constant/messages';
 
+/**
+ * Update account currently login.
+ * @returns Return updateAccount function and isUpdating boolean
+ */
 const useUpdateAccount = () => {
   const queryClient = useQueryClient();
 

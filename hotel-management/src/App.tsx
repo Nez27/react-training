@@ -14,7 +14,7 @@ import RootLayout from '@component/RootLayout';
 import User from './pages/User';
 import Booking from './pages/Booking';
 import Room from './pages/Room';
-import NotFound from './pages/NotFound';
+import NotFound from './pages/NotFound/NotFound';
 import Login from '@page/Login';
 import Account from '@page/Account';
 

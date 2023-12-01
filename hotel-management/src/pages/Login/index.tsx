@@ -3,9 +3,6 @@ import { Navigate } from 'react-router-dom';
 // Styled
 import { LoginLayout, StyledLogo, TitleStyled } from './styled';
 
-// Assets
-import logo from '@assets/images/logo.png';
-
 // Components
 import LoginForm from './LoginForm';
 
@@ -21,7 +18,7 @@ const Login = () => {
 
   return (
     <LoginLayout>
-      <StyledLogo src={logo} />
+      <StyledLogo src={'./assets/images/logo.png'} />
       <TitleStyled>Log In</TitleStyled>
 
       <LoginForm />

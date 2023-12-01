@@ -26,8 +26,19 @@ const isValidString = (value: string): boolean => {
   return value.trim().length >= 5;
 };
 
+/**
+ * Compare two days
+ * @param startDate The start date
+ * @param endDate The end date
+ * @returns Return true if start date greater than end date
+ */
 const compareTwoDates = (startDate: Date, endDate: Date): boolean => {
   return startDate > endDate;
 };
 
-export { isValidRegex, isValidString, isValidDiscount, compareTwoDates };
+export {
+  isValidRegex,
+  isValidString,
+  isValidDiscount,
+  compareTwoDates
+};

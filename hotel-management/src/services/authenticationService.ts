@@ -7,6 +7,11 @@ import supabase from './supabaseService';
 // Types
 import { IAccount } from '@type/account';
 
+/**
+ * Login services
+ * @param param0 The object contains email and password to login
+ * @returns The data of account login if success
+ */
 const login = async ({ email, password }: ILogin) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -20,6 +25,10 @@ const login = async ({ email, password }: ILogin) => {
   return data;
 };
 
+/**
+ * Get data of account current login
+ * @returns The data of account currently login
+ */
 const getCurrentAccount = async () => {
   const { data } = await supabase.auth.getSession();
 
@@ -36,6 +45,9 @@ const getCurrentAccount = async () => {
   return accountData.user;
 };
 
+/**
+ * Logout services
+ */
 const logout = async () => {
   const { error } = await supabase.auth.signOut();
 
@@ -44,6 +56,11 @@ const logout = async () => {
   }
 };
 
+/**
+ * Update account currently login
+ * @param param0 The object contain fullName, password to be updated
+ * @returns The data of account after updated
+ */
 const updateAccount = async ({ fullName, password }: IAccount) => {
   let accountUpdate: UserAttributes | null = null;
 

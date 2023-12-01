@@ -33,7 +33,6 @@
       "@commonStyle/*": ["./src/commons/styles/*"],
       "@type/*": ["./src/types/*"],
       "@page/*": ["./src/pages/*"],
-      "@assets/*": ["./src/assets/*"],
     }
   },
   "include": ["src", "test"],

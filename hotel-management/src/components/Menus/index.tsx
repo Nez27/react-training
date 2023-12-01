@@ -16,9 +16,6 @@ import MenusContext from '@context/MenuContext';
 // Types
 import { Nullable } from '@type/common';
 
-// Constants
-import { COLOR } from '@constant/styles';
-
 interface IButton {
   children?: string;
   icon?: ReactNode;
@@ -32,19 +29,29 @@ const Menus = ({ children }: { children: ReactNode }) => {
   const open = setOpenId;
 
   return (
-    <MenusContext.Provider value={{ openId, close, open }}>
+    <MenusContext.Provider
+      value={{
+        openId,
+        close,
+        open,
+      }}
+    >
       {children}
     </MenusContext.Provider>
   );
 };
 
 const Toggle = ({ id }: { id: string }): ReactNode => {
-  const { openId, close, open } = useContext(MenusContext);
+  const {
+    openId,
+    close,
+    open
+  } = useContext(MenusContext);
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    openId === '' || openId !== id 
-      ? open!(id) 
+    openId !== id
+      ? open!(id)
       : close!();
   };
 
@@ -82,7 +89,7 @@ const Button = ({ children, icon, onClick, disabled }: IButton): ReactNode => {
       <ButtonIcon
         icon={icon}
         onClick={handleClick}
-        iconStyle={{ color: COLOR.PRIMARY, size: '19px' }}
+        iconStyle={{ color: 'var(--primary-color)', size: '19px' }}
         style={{ fontSize: '16px' }}
         disabled={disabled}
       >

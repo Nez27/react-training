@@ -10,7 +10,6 @@ import {
   BOOKINGS_TABLE,
   ERROR_CHECKOUT,
   ERROR_CREATE_BOOKING,
-  ERROR_DELETE_BOOKING,
   ERROR_FETCHING_BOOKING,
   ERROR_UPDATE_BOOKING,
 } from '@constant/messages';
@@ -101,22 +100,6 @@ const createBooking = async (booking: IBooking): Promise<IBooking> => {
 };
 
 /**
- * Delete booking in database
- * @param idRoom The id of booking need to delete
- */
-const deleteBooking = async (idBooking: number) => {
-  const { error } = await supabase
-    .from(BOOKINGS_TABLE)
-    .delete()
-    .eq('id', idBooking);
-
-  if (error) {
-    console.error(error.message);
-    throw new Error(ERROR_DELETE_BOOKING);
-  }
-};
-
-/**
  * Check out booking services
  * @param param0 The ICheckOutBooking object
  * @returns The data of booking after insert to database
@@ -150,6 +133,5 @@ export {
   createBooking,
   getAllBookings,
   updateBooking,
-  deleteBooking,
   checkOutBooking,
 };

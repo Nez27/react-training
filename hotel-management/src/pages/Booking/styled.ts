@@ -21,4 +21,8 @@ const StyledOperationTable = styled.div`
   justify-content: flex-end;
 `;
 
-export { StyledBooking, Title, StyledOperationTable };
+export {
+  StyledBooking,
+  Title,
+  StyledOperationTable
+};

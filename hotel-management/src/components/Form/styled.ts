@@ -65,4 +65,11 @@ StyledFormRow.defaultProps = {
   direction: 'horizontal',
 };
 
-export { StyledForm, StyledActionBtn, StyledFormRow, Label, Error, FormBtn };
+export {
+  StyledForm,
+  StyledActionBtn,
+  StyledFormRow,
+  Label,
+  Error,
+  FormBtn
+};

@@ -26,11 +26,13 @@ interface IRoomRow {
 }
 
 const RoomRow = ({ room }: IRoomRow) => {
-  const { id, name, price, status } = room;
+  const {
+    id,
+    name,
+    price,
+    status
+  } = room;
   const { setIsDeleteRoom } = useSetIsDeleteRoom();
-  const statusText = status 
-    ? 'Unavailable' 
-    : 'Available';
   const formattedPrice = useMemo(() => formatCurrency(price), [price]);
   const renderEditBtn = useCallback(
     (onCloseModal: () => void) => (
@@ -42,11 +44,11 @@ const RoomRow = ({ room }: IRoomRow) => {
   );
   const renderDeleteBtn = useCallback(
     (onCloseModal: () => void) => (
-      <Menus.Button icon={<HiTrash />} onClick={onCloseModal}>
+      <Menus.Button icon={<HiTrash />} onClick={onCloseModal} disabled={status}>
         Delete
       </Menus.Button>
     ),
-    []
+    [status]
   );
 
   return (
@@ -54,7 +56,11 @@ const RoomRow = ({ room }: IRoomRow) => {
       <div>{id}</div>
       <div>{name}</div>
       <div>{formattedPrice}</div>
-      <div>{statusText}</div>
+      <div>{
+        status 
+          ? 'Unavailable' 
+          : 'Available'
+      }</div>
 
       <div>
         <Modal>

@@ -34,7 +34,12 @@ const Form = ({ children, onSubmit, id }: IFormProps) => {
   );
 };
 
-const FormRow = ({ label, error, children, direction }: IFormRow) => {
+const FormRow = ({
+  label,
+  error,
+  children,
+  direction
+}: IFormRow) => {
   return (
     <StyledFormRow direction={direction}>
       <Label>{label}</Label>

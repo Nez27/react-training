@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const StyledNotFound = styled.div`
   height: 100vh;
@@ -27,20 +26,8 @@ const Button = styled.button`
   border-radius: var(--radius-sm);
 `;
 
-const useMoveBack = () => {
-  const navigate = useNavigate();
-  return () => navigate(-1);
-};
-
-const NotFound = () => {
-  const onBack = useMoveBack();
-
-  return (
-    <StyledNotFound>
-      <Heading>The page not found!</Heading>
-      <Button onClick={onBack}>Go back!</Button>
-    </StyledNotFound>
-  );
-};
-
-export default NotFound;
+export {
+  StyledNotFound,
+  Heading,
+  Button,
+}

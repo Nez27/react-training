@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 // Services
 import { logout as logoutFn } from '@service/authenticationService';
 
+/**
+ * Logout web
+ * @returns The logout function and isPending boolean
+ */
 const useLogout = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();

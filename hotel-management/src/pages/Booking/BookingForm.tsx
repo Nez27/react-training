@@ -32,16 +32,18 @@ interface IBookingFormProp {
 }
 
 const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
-  const { roomsAvailable, usersAvailable, dispatch } = useUserRoomAvailable();
+  const {
+    roomsAvailable,
+    usersAvailable,
+    dispatch
+  } = useUserRoomAvailable();
   const { isCreating, createBooking } = useCreateBooking();
   const { isUpdating, updateBooking } = useUpdateBooking();
   const isLoading = isCreating || isUpdating;
   const { id: editId, ...editValues } = { ...booking };
-  const [ amountValue, setAmountValue ] = useState(
-    editValues.amount
-      ? formatCurrency(editValues.amount)
-      : '$0.00'
-    );
+  const [amountValue, setAmountValue] = useState(
+    editValues.amount ? formatCurrency(editValues.amount) : '$0.00'
+  );
   const formMethods = useForm<IBooking>({
     defaultValues: editId
       ? {
@@ -177,15 +179,12 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
     const startDate = new Date(getValues().startDate);
     const endDate = new Date(getValues().endDate);
 
-    if(startDate >= endDate) {
+    if (startDate >= endDate) {
       setValue('endDate', '');
     }
   }, [setValue, getValues]);
 
-  const startDateValidate = useMemo(
-    () => new Date().toISOString().split('T')[0],
-    []
-  );
+  const startDateValidate = new Date().toISOString().split('T')[0];
 
   const endDateValidate = () => {
     if (getValues('startDate')) {
@@ -201,7 +200,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
   return (
     <FormProvider {...formMethods}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Row label="User" error={errors?.userId?.message}>
+        <Form.Row label="User:" error={errors?.userId?.message}>
           {userOptions.length ? (
             <Select
               ariaLabel="user-select"
@@ -218,7 +217,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
           )}
         </Form.Row>
 
-        <Form.Row label="Room" error={errors?.roomId?.message}>
+        <Form.Row label="Room:" error={errors?.roomId?.message}>
           {roomOptions.length ? (
             <Select
               ariaLabel="user-select"
@@ -234,7 +233,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
           )}
         </Form.Row>
 
-        <Form.Row label="Start Date" error={errors?.startDate?.message}>
+        <Form.Row label="Start Date:" error={errors?.startDate?.message}>
           <Input
             type="date"
             id="startDate"
@@ -251,7 +250,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
           />
         </Form.Row>
 
-        <Form.Row label="End Date" error={errors?.endDate?.message}>
+        <Form.Row label="End Date:" error={errors?.endDate?.message}>
           <Input
             type="date"
             id="endDate"
@@ -269,7 +268,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
           />
         </Form.Row>
 
-        <Form.Row label="Amount">
+        <Form.Row label="Amount:">
           <Input
             type="hidden"
             id="amount"
@@ -289,7 +288,11 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
             name="submit"
             disabled={!isDirty || !isValid || isLoading}
           >
-            {!editId ? 'Add' : 'Save'}
+            {
+              !editId
+                ? 'Add'
+                : 'Save'
+            }
           </Form.Button>
           <Form.Button
             type="button"

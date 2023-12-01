@@ -9,7 +9,6 @@ const BOOKINGS_TABLE = 'bookings';
 const ERROR_FETCHING_BOOKING = "Can't fetch booking data!";
 const ERROR_UPDATE_BOOKING = "Can't update booking!";
 const ERROR_CREATE_BOOKING = "Can't create booking!";
-const ERROR_DELETE_BOOKING = "Can't delete booking!";
 const CHECKOUT_SUCCESS = 'Check out success!';
 const ERROR_CHECKOUT = "Can't checkout!";
 
@@ -41,7 +40,6 @@ export {
   ERROR_FETCHING_BOOKING,
   ERROR_UPDATE_BOOKING,
   ERROR_CREATE_BOOKING,
-  ERROR_DELETE_BOOKING,
   ROOMS_TABLE,
   ERROR_FETCHING_ROOM,
   ERROR_UPDATE_ROOM,

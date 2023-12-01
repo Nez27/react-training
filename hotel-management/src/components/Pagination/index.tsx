@@ -1,4 +1,3 @@
-import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 // Constants
@@ -22,35 +21,24 @@ const Pagination = ({ count }: IPagination) => {
 
   const totalPage = Math.ceil(count / DEFAULT_PAGE_SIZE);
 
-  const nextPage = useCallback(() => {
-    const next = currentPage === totalPage 
-      ? currentPage 
-      : currentPage + 1;
+  const nextPage = () => {
+    const next = currentPage === totalPage ? currentPage : currentPage + 1;
 
     searchParams.set('page', next.toString());
     setSearchParams(searchParams);
-  }, [currentPage, searchParams, totalPage, setSearchParams]);
+  };
 
-  const previousPage = useCallback(() => {
-    const previous = currentPage === 1 
-      ? currentPage 
-      : currentPage - 1;
+  const previousPage = () => {
+    const previous = currentPage === 1 ? currentPage : currentPage - 1;
 
     searchParams.set('page', previous.toString());
     setSearchParams(searchParams);
-  }, [currentPage, searchParams, setSearchParams]);
+  };
 
-  const fromIndex = useMemo(
-    () => (currentPage - 1) * DEFAULT_PAGE_SIZE + 1,
-    [currentPage]
-  );
+  const fromIndex = (currentPage - 1) * DEFAULT_PAGE_SIZE + 1;
 
-  const toIndex = useMemo(
-    () => (currentPage === totalPage 
-        ? count 
-        : currentPage * DEFAULT_PAGE_SIZE),
-    [currentPage, count, totalPage]
-  );
+  const toIndex =
+    currentPage === totalPage ? count : currentPage * DEFAULT_PAGE_SIZE;
 
   return (
     totalPage > 1 && (

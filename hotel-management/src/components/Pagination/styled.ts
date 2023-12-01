@@ -47,4 +47,8 @@ const PaginationBtn = styled.button<IPaginationBtn>`
   }
 `;
 
-export { StyledPagination, PaginationBtn, Buttons };
+export {
+  StyledPagination,
+  PaginationBtn,
+  Buttons
+};

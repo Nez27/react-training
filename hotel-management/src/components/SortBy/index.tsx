@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, memo } from 'react';
 
 // Components
 import Select from '@component/Select';
@@ -11,7 +11,7 @@ interface ISortByProps {
   }[];
 }
 
-const SortBy = ({ options }: ISortByProps) => {
+const SortBy = memo(({ options }: ISortByProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get('sortBy') || '';
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -27,6 +27,6 @@ const SortBy = ({ options }: ISortByProps) => {
       ariaLabel="Sort"
     />
   );
-};
+});
 
 export default SortBy;

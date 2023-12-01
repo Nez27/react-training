@@ -3,7 +3,8 @@ import { IUser } from '@type/user';
 
 // Services
 import supabase from './supabaseService';
-import { IDataState } from '@type/common';
+
+// Constants
 import { DEFAULT_PAGE_SIZE } from '@constant/config';
 import {
   ERROR_CREATE_USER,
@@ -118,19 +119,6 @@ const getAllUsers = async ({
   return { data, count };
 };
 
-const getUserNotBooked = async (): Promise<IDataState[]> => {
-  const { data, error } = await supabase
-    .from(USERS_TABLE)
-    .select('id, name, isBooked');
-
-  if (error) {
-    console.error(error.message);
-    throw new Error(ERROR_FETCHING_USER);
-  }
-
-  return data;
-};
-
 const updateUserBookedStatus = async (
   id: number,
   isBooked: boolean
@@ -153,6 +141,5 @@ export {
   createUser,
   getAllUsers,
   setIsDeleteUser,
-  getUserNotBooked,
   updateUserBookedStatus,
 };

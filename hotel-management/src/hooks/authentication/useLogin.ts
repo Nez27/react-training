@@ -8,6 +8,10 @@ import { login as loginFn } from '@service/authenticationService';
 // Types
 import { ILogin } from '@type/common';
 
+/**
+ * Login web
+ * @returns The login function and isPending boolean
+ */
 const useLogin = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();

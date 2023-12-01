@@ -39,4 +39,9 @@ const TitleModal = styled.p`
   margin-bottom: 30px;
 `
 
-export { StyledModal, Overlay, StyledModalContent, TitleModal };
+export {
+  StyledModal,
+  Overlay,
+  StyledModalContent,
+  TitleModal
+};

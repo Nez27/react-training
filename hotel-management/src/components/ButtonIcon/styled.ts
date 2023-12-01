@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { COLOR, SIZE } from '@constant/styles';
 
 interface IStyledButtonIcon {
   isHaveChildren: boolean;
@@ -77,13 +76,13 @@ const StyledButtonIcon = styled.button<IStyledButtonIcon>`
 
 StyledButtonIcon.defaultProps = {
   style: {
-    fontSize: SIZE.DEFAULT,
-    backgroundColor: COLOR.DEFAULT,
-    color: COLOR.BLACK,
+    fontSize: '14px',
+    backgroundColor: 'var(--primary-color)',
+    color: '#000',
   },
   iconStyle: {
-    color: COLOR.BLACK,
-    size: SIZE.DEFAULT,
+    color: '#000',
+    size: '14px',
   },
 };
 

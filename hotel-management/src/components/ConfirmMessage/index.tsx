@@ -13,7 +13,11 @@ interface IConfirmMessage {
 }
 
 const ConfirmMessage = memo(
-  ({ message, onConfirm, onCloseModal }: IConfirmMessage) => {
+  ({
+    message,
+    onConfirm,
+    onCloseModal
+  }: IConfirmMessage) => {
     const handleConfirmBtn = useCallback(() => {
       onConfirm();
       onCloseModal!();

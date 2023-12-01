@@ -33,4 +33,9 @@ const FormArea = styled.div`
   margin-top: 50px;
 `
 
-export { Title, StyledAccount, FormArea, SubTitle };
+export {
+  Title,
+  StyledAccount,
+  FormArea,
+  SubTitle
+};

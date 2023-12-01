@@ -29,8 +29,15 @@ interface IBookingRow {
 
 const BookingRow = ({ booking }: IBookingRow) => {
   const { checkOutBooking } = useCheckOut();
-  const { id, users, startDate, endDate, rooms, amount, status } = booking;
-  const statusText = status ? 'Check in' : 'Check out';
+  const {
+    id,
+    users,
+    startDate,
+    endDate,
+    rooms,
+    amount,
+    status
+  } = booking;
   const formattedPrice = useMemo(() => formatCurrency(amount), [amount]);
   const renderEditBtn = useCallback(
     (onCloseModal: () => void) => (
@@ -79,7 +86,11 @@ const BookingRow = ({ booking }: IBookingRow) => {
       </div>
       <div>{rooms?.name}</div>
       <div>{formattedPrice}</div>
-      <div>{statusText}</div>
+      <div>{
+          status
+            ? 'Check in'
+            : 'Check out'
+        }</div>
 
       <div>
         <Modal>

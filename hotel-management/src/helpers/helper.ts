@@ -34,4 +34,8 @@ const convertCurrencyToNumber = (currency: string) => {
   return Number(currency.replace(/[^0-9.-]+/g,""))
 }
 
-export { formatCurrency, getDayDiff, convertCurrencyToNumber };
+export {
+  formatCurrency,
+  getDayDiff,
+  convertCurrencyToNumber
+};

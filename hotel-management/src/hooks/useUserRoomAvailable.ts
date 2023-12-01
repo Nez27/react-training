@@ -3,6 +3,10 @@ import { useContext } from 'react';
 // Contexts
 import { UserRoomAvailableContext } from '@context/UserRoomAvailableContext';
 
+/**
+ * The hooks check the place call is in UserRoomAvailableProvider or not
+ * @returns The context of UserRoomAvailableContext
+ */
 const useUserRoomAvailable = () => {
   const context = useContext(UserRoomAvailableContext);
 

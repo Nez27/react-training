@@ -63,4 +63,9 @@ const StyledList = styled.ul`
   width: max-content;
 `;
 
-export { StyledMenu, StyledButton, StyledList, StyledToggle };
+export {
+  StyledMenu,
+  StyledButton,
+  StyledList,
+  StyledToggle
+};

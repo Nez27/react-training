@@ -40,4 +40,10 @@ const FieldInput = styled.input`
   width: 300px;
 `
 
-export { LoginLayout, StyledLogo, TitleStyled, StyledLoginForm, FieldInput };
+export {
+  LoginLayout,
+  StyledLogo,
+  TitleStyled,
+  StyledLoginForm,
+  FieldInput
+};

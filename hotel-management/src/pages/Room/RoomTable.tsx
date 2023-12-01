@@ -26,7 +26,11 @@ import Pagination from '@component/Pagination';
 
 const RoomTable = () => {
   const columnName = ['Id', 'Name', 'Price', 'Status'];
-  const { isLoading, rooms, count } = useRooms();
+  const {
+    isLoading,
+    rooms,
+    count
+  } = useRooms();
 
   const renderRoomRow = useCallback(
     (room: IRoom) => <RoomRow room={room} key={room.id} />,

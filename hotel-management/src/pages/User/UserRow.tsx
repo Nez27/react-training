@@ -18,7 +18,12 @@ interface IUserRow {
 }
 
 const UserRow = ({ user }: IUserRow) => {
-  const { id, name, phone, isBooked } = user;
+  const {
+    id,
+    name,
+    phone,
+    isBooked
+  } = user;
   const { setIsDeleteUser } = useIsDeleteUser();
 
   const renderEditBtn = useCallback(
@@ -32,11 +37,11 @@ const UserRow = ({ user }: IUserRow) => {
 
   const renderDeleteBtn = useCallback(
     (onCloseModal: () => void) => (
-      <Menus.Button icon={<HiTrash />} onClick={onCloseModal}>
+      <Menus.Button icon={<HiTrash />} onClick={onCloseModal} disabled={isBooked}>
         Delete
       </Menus.Button>
     ),
-    []
+    [isBooked]
   );
   return (
     <Table.Row>
