@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Cabin';
-  src: url('./assets/fonts/Cabin.woff2') format('woff2'),
-    url('./assets/fonts/Cabin.ttf') format('truetype');
+  src: url('/assets/fonts/Cabin.woff2') format('woff2'),
+    url('/assets/fonts/Cabin.ttf') format('truetype');
 
   font-display: swap;
 }

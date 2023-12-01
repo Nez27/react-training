@@ -19,7 +19,7 @@ const HeaderMenu = () => {
     <StyledHeaderMenu>
       <li>
         <ButtonIcon
-          aria-label="Profile"
+          label="Profile"
           icon={<IoPersonCircleOutline />}
           iconStyle={{ size: '23px' }}
           onClick={() => navigate('/account')}
@@ -29,7 +29,7 @@ const HeaderMenu = () => {
         <ButtonIcon
           onClick={logout}
           disabled={isPending}
-          aria-label="Logout"
+          label='Logout'
           icon={<HiOutlineLogout />}
           iconStyle={{ size: '23px' }}
         />

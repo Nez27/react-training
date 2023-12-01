@@ -18,7 +18,7 @@ const Login = () => {
 
   return (
     <LoginLayout>
-      <StyledLogo src={'./assets/images/logo.png'} />
+      <StyledLogo src={'./assets/images/logo.png'} alt='Logo Web' />
       <TitleStyled>Log In</TitleStyled>
 
       <LoginForm />

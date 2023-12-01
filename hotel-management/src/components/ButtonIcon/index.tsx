@@ -17,6 +17,7 @@ interface IButtonIcon {
   };
   onClick?: () => void;
   disabled?: boolean;
+  label?: string;
 }
 
 const ButtonIcon = ({
@@ -26,11 +27,13 @@ const ButtonIcon = ({
   iconStyle,
   onClick,
   disabled,
+  label,
 }: IButtonIcon) => {
   const isHaveChildren = Boolean(children);
 
   return (
     <StyledButtonIcon
+      aria-label={label}
       isHaveChildren={isHaveChildren}
       style={{
         fontSize: style?.fontSize,
