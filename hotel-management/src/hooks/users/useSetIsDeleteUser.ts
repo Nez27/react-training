@@ -34,7 +34,11 @@ const useIsDeleteUser = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isDeleting, setIsDeleteUser, isSuccess };
+  return {
+    isDeleting,
+    setIsDeleteUser,
+    isSuccess,
+  };
 };
 
 export { useIsDeleteUser };

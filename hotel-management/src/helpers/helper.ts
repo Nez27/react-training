@@ -20,22 +20,16 @@ const formatCurrency = (value: number): string => {
 const getDayDiff = (startDate: Date, endDate: Date): number => {
   const msInDay = 24 * 60 * 60 * 1000;
 
-  return Math.round(
-    Math.abs(Number(endDate) - Number(startDate)) / msInDay
-  );
-}
+  if(endDate > startDate) {
+    return Math.round(
+      Math.abs(Number(endDate) - Number(startDate)) / msInDay
+    );
+  }
 
-/**
- * Convert from currency string to the number
- * @param currency The currency string
- * @returns The number
- */
-const convertCurrencyToNumber = (currency: string) => {
-  return Number(currency.replace(/[^0-9.-]+/g,""))
+  return 0;
 }
 
 export {
   formatCurrency,
   getDayDiff,
-  convertCurrencyToNumber
 };

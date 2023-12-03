@@ -1,14 +1,14 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Components
 import Header from '.';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('Header', () => {
   const queryClient = new QueryClient();
 
-  const wrapper = renderer.create(
+  const wrapper = render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Header accountName="Nezumi" />

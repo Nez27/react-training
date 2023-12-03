@@ -1,5 +1,6 @@
-// Hooks
 import { FormProvider, useForm } from 'react-hook-form';
+
+// Hooks
 import { useCreateUser } from '@hook/users/useCreateUser.ts';
 import { useUpdateUser } from '@hook/users/useUpdateUser.ts';
 
@@ -12,6 +13,7 @@ import Form from '@component/Form/index.tsx';
 // Helpers
 import { isValidRegex } from '@helper/validators.ts';
 
+// Constants
 import {
   INVALID_FIELD,
   INVALID_PHONE,
@@ -94,8 +96,8 @@ const UserForm = ({ onCloseModal, user }: IUserFormProp) => {
             {...register('phone', {
               required: REQUIRED_FIELD_ERROR,
               validate: {
-                checkPhoneNum: (v) =>
-                  isValidRegex(new RegExp(REGEX.PHONE), v) || INVALID_PHONE,
+                checkPhoneNum: (value) =>
+                  isValidRegex(new RegExp(REGEX.PHONE), value) || INVALID_PHONE,
               },
               onChange: () => trigger('phone'),
             })}

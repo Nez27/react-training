@@ -12,10 +12,11 @@ import { useSetIsDeleteRoom } from '@hook/rooms/useSetIsDeleteRoom';
 // Types
 import { IRoom } from '@type/room';
 
-const mockUseRooms = jest.fn(useRooms);
-const mockUseCreateRoom = jest.fn(useCreateRoom);
-const mockUseUpdateRoom = jest.fn(useUpdateRoom);
-const mockUseDeleteRoom = jest.fn(useSetIsDeleteRoom);
+jest.mock('@hook/rooms/useRooms');
+jest.mock('@hook/rooms/useCreateRoom');
+jest.mock('@hook/rooms/useUpdateRoom');
+jest.mock('@hook/rooms/useSetIsDeleteRoom');
+
 interface IWrapper {
   children: ReactNode;
 }
@@ -27,24 +28,26 @@ const sampleData: IRoom = {
   status: true,
   isDelete: true,
 };
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-const wrapper = ({ children }: IWrapper) => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <MemoryRouter>{children}</MemoryRouter>
-    </QueryClientProvider>
-  );
-};
 
 describe('Room hooks', () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+  const wrapper = ({ children }: IWrapper) => {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>{children}</MemoryRouter>
+      </QueryClientProvider>
+    );
+  };
+
+  
   test('Should fetch data correctly', async () => {
-    mockUseRooms.mockImplementation(() => ({
+    (useRooms as jest.Mock).mockImplementation(() => ({
       rooms: [
         {
           id: 1,
@@ -64,7 +67,7 @@ describe('Room hooks', () => {
       isLoading: false,
       count: 2
     }));
-    const { result } = renderHook(() => mockUseRooms(), { wrapper });
+    const { result } = renderHook(() => useRooms(), { wrapper });
 
     await waitFor(() =>
       expect(result.current.rooms?.length).toBeGreaterThan(0)
@@ -72,14 +75,14 @@ describe('Room hooks', () => {
   });
 
   test('Should create room correctly', async () => {
-    mockUseCreateRoom.mockImplementation(() => ({
+    (useCreateRoom as jest.Mock).mockImplementation(() => ({
       createRoom: () => {
         sampleData;
       },
       isCreating: false,
       isSuccess: true,
     }));
-    const { result } = renderHook(() => mockUseCreateRoom(), { wrapper });
+    const { result } = renderHook(() => useCreateRoom(), { wrapper });
 
     act(() => {
       result.current.createRoom(sampleData);
@@ -91,14 +94,14 @@ describe('Room hooks', () => {
   });
 
   test('Should edit room correctly', async () => {
-    mockUseUpdateRoom.mockImplementation(() => ({
+    (useUpdateRoom as jest.Mock).mockImplementation(() => ({
       updateRoom: () => {
         sampleData;
       },
       isUpdating: false,
       isSuccess: true,
     }));
-    const { result } = renderHook(() => mockUseUpdateRoom(), { wrapper });
+    const { result } = renderHook(() => useUpdateRoom(), { wrapper });
 
     act(() => {
       const testMethod = async () => {
@@ -111,14 +114,14 @@ describe('Room hooks', () => {
   });
 
   test('Should delete room correctly', async () => {
-    mockUseDeleteRoom.mockImplementation(() => ({
+    (useSetIsDeleteRoom as jest.Mock).mockImplementation(() => ({
       setIsDeleteRoom: () => {
         sampleData
       },
       isDeleting: false,
       isSuccess: true,
     }));
-    const { result } = renderHook(() => mockUseDeleteRoom(), { wrapper });
+    const { result } = renderHook(() => useSetIsDeleteRoom(), { wrapper });
 
     act(() => {
       const testMethod = async () => {

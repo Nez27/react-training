@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Room Should render correctly 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <main
+        class="sc-cxNGUP fhRVMt"
+      >
+        <div
+          class="sc-giAruI itcrUM"
+          type="horizontal"
+        >
+          <h2
+            class="sc-lmgPJu iEjhbq"
+          >
+            List Room
+          </h2>
+          <button
+            class="sc-hBMVwJ kEyqtv"
+            variations="primary"
+          >
+            Add room
+          </button>
+        </div>
+        <div
+          class="sc-giAruI eEOXtt"
+          type="vertical"
+        >
+          <div
+            class="sc-iJCSeZ boUFen"
+          >
+            <div
+              class="sc-dItHI exgtuU"
+            >
+              <button
+                class="sc-bqGGcD entqcN"
+                disabled=""
+              >
+                Ascending
+              </button>
+              <button
+                class="sc-bqGGcD graLyf"
+              >
+                Descending
+              </button>
+            </div>
+            <select
+              aria-label="Sort"
+              class="sc-crzpnZ iXFhDe"
+            >
+              <option
+                value="id"
+              >
+                Sort by id
+              </option>
+              <option
+                value="name"
+              >
+                Sort by name
+              </option>
+              <option
+                value="price"
+              >
+                Sort by price
+              </option>
+            </select>
+            <input
+              class="sc-iqAbyq kOrhXJ"
+              placeholder="Search by name..."
+            />
+          </div>
+          <div
+            class="sc-ezyZrH gLRBxl"
+          />
+        </div>
+      </main>
+    </div>
+  </body>,
+  "container": <div>
+    <main
+      class="sc-cxNGUP fhRVMt"
+    >
+      <div
+        class="sc-giAruI itcrUM"
+        type="horizontal"
+      >
+        <h2
+          class="sc-lmgPJu iEjhbq"
+        >
+          List Room
+        </h2>
+        <button
+          class="sc-hBMVwJ kEyqtv"
+          variations="primary"
+        >
+          Add room
+        </button>
+      </div>
+      <div
+        class="sc-giAruI eEOXtt"
+        type="vertical"
+      >
+        <div
+          class="sc-iJCSeZ boUFen"
+        >
+          <div
+            class="sc-dItHI exgtuU"
+          >
+            <button
+              class="sc-bqGGcD entqcN"
+              disabled=""
+            >
+              Ascending
+            </button>
+            <button
+              class="sc-bqGGcD graLyf"
+            >
+              Descending
+            </button>
+          </div>
+          <select
+            aria-label="Sort"
+            class="sc-crzpnZ iXFhDe"
+          >
+            <option
+              value="id"
+            >
+              Sort by id
+            </option>
+            <option
+              value="name"
+            >
+              Sort by name
+            </option>
+            <option
+              value="price"
+            >
+              Sort by price
+            </option>
+          </select>
+          <input
+            class="sc-iqAbyq kOrhXJ"
+            placeholder="Search by name..."
+          />
+        </div>
+        <div
+          class="sc-ezyZrH gLRBxl"
+        />
+      </div>
+    </main>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

@@ -1,11 +1,12 @@
-import renderer from 'react-test-renderer';
+
+import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 // Components
 import Nav from '.';
 
 describe('Nav', () => {
-  const wrapper = renderer.create(
+  const wrapper = render(
     <BrowserRouter>
       <Nav />
     </BrowserRouter>

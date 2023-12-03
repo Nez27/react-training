@@ -1,3 +1,5 @@
+import { useForm } from 'react-hook-form';
+
 // Styled
 import Input from '@commonStyle/Input.ts';
 
@@ -18,7 +20,6 @@ import { isValidRegex, isValidString } from '@helper/validators.ts';
 import Form from '@component/Form/index.tsx';
 
 // Hooks
-import { useForm } from 'react-hook-form';
 import { useCreateRoom } from '@hook/rooms/useCreateRoom.ts';
 import { useUpdateRoom } from '@hook/rooms/useUpdateRoom.ts';
 

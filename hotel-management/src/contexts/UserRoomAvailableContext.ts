@@ -40,18 +40,20 @@ const initialState: IUserRoomState = {
 
 const reducer = (state: IUserRoomState, action: IAction) => {
   switch (action.type) {
-    case 'initRoom':
-      return {
-        ...state,
-        roomsAvailable: action.payload,
-      };
-
+    // Init data for the first load
     case 'initUser':
       return {
         ...state,
         usersAvailable: action.payload,
       };
 
+    case 'initRoom':
+      return {
+        ...state,
+        roomsAvailable: action.payload,
+      };
+
+    // Add data to state
     case 'addUser': {
       const tempArr = state.usersAvailable;
       const itemExist = state.usersAvailable.find(
@@ -68,6 +70,23 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       };
     }
 
+    case 'addRoom': {
+      const tempArr = state.roomsAvailable;
+      const itemExist = state.roomsAvailable.find(
+        (item) => item.id === action.payload[0].id
+      );
+
+      if (!itemExist) {
+        tempArr.push(action.payload[0]);
+      }
+
+      return {
+        ...state,
+        roomsAvailable: tempArr,
+      };
+    }
+
+    // Update state
     case 'updateUserName': {
       const tempArr = state.usersAvailable;
 
@@ -82,41 +101,6 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       return {
         ...state,
         usersAvailable: tempArr,
-      };
-    }
-
-    case 'updateStatusUser': {
-      const tempArr = state.usersAvailable;
-      const indexItemUpdate = tempArr.findIndex(
-        (item) => item.id === action.payload[0].id
-      );
-      tempArr[indexItemUpdate].isBooked = action.payload[0].isBooked;
-
-      return {
-        ...state,
-        usersAvailable: tempArr,
-      };
-    }
-
-    case 'removeUser': 
-      return {
-        ...state,
-        usersAvailable: state.usersAvailable.filter((user) => user.id !== action.payload[0].id)
-      }
-
-    case 'addRoom': {
-      const tempArr = state.roomsAvailable;
-      const itemExist = state.roomsAvailable.find(
-        (item) => item.id === action.payload[0].id
-      );
-
-      if (!itemExist) {
-        tempArr.push(action.payload[0]);
-      }
-
-      return {
-        ...state,
-        roomsAvailable: tempArr,
       };
     }
 
@@ -137,6 +121,19 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       };
     }
 
+    case 'updateStatusUser': {
+      const tempArr = state.usersAvailable;
+      const indexItemUpdate = tempArr.findIndex(
+        (item) => item.id === action.payload[0].id
+      );
+      tempArr[indexItemUpdate].isBooked = action.payload[0].isBooked;
+
+      return {
+        ...state,
+        usersAvailable: tempArr,
+      };
+    }
+
     case 'updateStatusRoom': {
       const tempArr = state.roomsAvailable;
       const indexItemUpdate = tempArr.findIndex(
@@ -150,11 +147,22 @@ const reducer = (state: IUserRoomState, action: IAction) => {
       };
     }
 
-    case 'removeRoom': 
+    // Remove state
+    case 'removeUser':
       return {
         ...state,
-        roomsAvailable: state.roomsAvailable.filter((room) => room.id !== action.payload[0].id)
-      }
+        usersAvailable: state.usersAvailable.filter(
+          (user) => user.id !== action.payload[0].id
+        ),
+      };
+
+    case 'removeRoom':
+      return {
+        ...state,
+        roomsAvailable: state.roomsAvailable.filter(
+          (room) => room.id !== action.payload[0].id
+        ),
+      };
 
     default:
       throw new Error('Action unknown');

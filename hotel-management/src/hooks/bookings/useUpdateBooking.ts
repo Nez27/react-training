@@ -27,7 +27,11 @@ const useUpdateBooking = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isUpdating, updateBooking, isSuccess };
+  return {
+    isUpdating,
+    updateBooking,
+    isSuccess
+  };
 };
 
 export { useUpdateBooking };

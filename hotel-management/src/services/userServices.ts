@@ -25,8 +25,6 @@ const createUser = async (user: IUser): Promise<IUser> => {
     .select()
     .single();
 
-    console.log('Create');
-
   if (error) {
     console.error(error.message);
     throw new Error(ERROR_CREATE_USER);

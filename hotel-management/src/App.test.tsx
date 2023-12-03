@@ -1,6 +1,10 @@
 import { render, act, RenderResult } from '@testing-library/react';
+
+// Services
 import * as userServices from '@service/userServices';
 import * as roomServices from '@service/roomServices';
+
+// Components
 import App from './App';
 
 jest.mock('@service/userServices');

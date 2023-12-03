@@ -18,7 +18,9 @@ const useUsers = () => {
   const sortByValue = searchParams.get('sortBy') || 'id';
   const orderByValue = searchParams.get('orderBy') || 'asc';
   const searchValue = searchParams.get('search') || '';
-  const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
+  const page = searchParams.get('page')
+    ? Number(searchParams.get('page'))
+    : 1;
 
   const {
     isLoading,
@@ -72,7 +74,11 @@ const useUsers = () => {
     });
   }
 
-  return { isLoading, users, count };
+  return {
+    isLoading,
+    users,
+    count,
+  };
 };
 
 export { useUsers };

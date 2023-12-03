@@ -1,14 +1,14 @@
-import renderer from 'react-test-renderer';
 import { BrowserRouter } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Components
 import AppLayout from '.';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('AppLayout', () => {
   const queryClient = new QueryClient();
 
-  const wrapper = renderer.create(
+  const wrapper = render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AppLayout />

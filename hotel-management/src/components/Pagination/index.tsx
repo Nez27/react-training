@@ -22,14 +22,18 @@ const Pagination = ({ count }: IPagination) => {
   const totalPage = Math.ceil(count / DEFAULT_PAGE_SIZE);
 
   const nextPage = () => {
-    const next = currentPage === totalPage ? currentPage : currentPage + 1;
+    const next = currentPage === totalPage
+    ? currentPage
+    : currentPage + 1;
 
     searchParams.set('page', next.toString());
     setSearchParams(searchParams);
   };
 
   const previousPage = () => {
-    const previous = currentPage === 1 ? currentPage : currentPage - 1;
+    const previous = currentPage === 1
+    ? currentPage
+    : currentPage - 1;
 
     searchParams.set('page', previous.toString());
     setSearchParams(searchParams);
@@ -38,7 +42,9 @@ const Pagination = ({ count }: IPagination) => {
   const fromIndex = (currentPage - 1) * DEFAULT_PAGE_SIZE + 1;
 
   const toIndex =
-    currentPage === totalPage ? count : currentPage * DEFAULT_PAGE_SIZE;
+    currentPage === totalPage
+    ? count
+    : currentPage * DEFAULT_PAGE_SIZE;
 
   return (
     totalPage > 1 && (

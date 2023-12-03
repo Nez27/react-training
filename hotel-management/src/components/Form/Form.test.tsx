@@ -1,7 +1,9 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 // Components
 import Form from '.';
+
+// Styled
 import Input from '@commonStyle/Input';
 
 describe('Form ', () => {
@@ -10,7 +12,7 @@ describe('Form ', () => {
   const handleOnSubmit = jest.fn();
   const handleOnClick = jest.fn();
 
-  const wrapper = renderer.create(
+  const wrapper = render(
     <Form onSubmit={handleOnSubmit}>
       <Form.Row label="Name" error={errorMessage}>
         <Input type="text" id="name" />
@@ -24,7 +26,11 @@ describe('Form ', () => {
         <Form.Button type="submit" name="submit" disabled={isDisable}>
           Confirm
         </Form.Button>
-        <Form.Button type="button" variations="secondary" onClick={handleOnClick}>
+        <Form.Button
+          type="button"
+          variations="secondary"
+          onClick={handleOnClick}
+        >
           Close
         </Form.Button>
       </Form.Action>

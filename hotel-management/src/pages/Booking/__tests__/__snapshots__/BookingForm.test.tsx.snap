@@ -1,0 +1,346 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookingForm Should render correctly 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <form
+        class="sc-dlniIP bCPNqw"
+      >
+        <div
+          class="sc-eCAqax dgDilB"
+          direction="horizontal"
+        >
+          <label
+            class="sc-jSFipO cMYxin"
+          >
+            User:
+          </label>
+          <div>
+            <select
+              aria-label="user-select"
+              class="sc-fujznN rEQue"
+              id="userId"
+              name="userId"
+            >
+              <option
+                value="1"
+              >
+                User 1
+              </option>
+              <option
+                value="2"
+              >
+                User 2
+              </option>
+            </select>
+          </div>
+        </div>
+        <div
+          class="sc-eCAqax dgDilB"
+          direction="horizontal"
+        >
+          <label
+            class="sc-jSFipO cMYxin"
+          >
+            Room:
+          </label>
+          <div>
+            <select
+              aria-label="user-select"
+              class="sc-fujznN rEQue"
+              id="roomId"
+              name="roomId"
+            >
+              <option
+                value="1"
+              >
+                Room 1
+              </option>
+              <option
+                value="2"
+              >
+                Room 2
+              </option>
+            </select>
+          </div>
+        </div>
+        <div
+          class="sc-eCAqax dgDilB"
+          direction="horizontal"
+        >
+          <label
+            class="sc-jSFipO cMYxin"
+          >
+            Start Date:
+          </label>
+          <div>
+            <input
+              class="sc-bdnyFh gXSWSo"
+              id="startDate"
+              min="2023-12-03"
+              name="startDate"
+              type="date"
+            />
+          </div>
+        </div>
+        <div
+          class="sc-eCAqax dgDilB"
+          direction="horizontal"
+        >
+          <label
+            class="sc-jSFipO cMYxin"
+          >
+            End Date:
+          </label>
+          <div>
+            <input
+              class="sc-bdnyFh gXSWSo"
+              disabled=""
+              id="endDate"
+              name="endDate"
+              type="date"
+            />
+          </div>
+        </div>
+        <div
+          class="sc-eCAqax dgDilB"
+          direction="horizontal"
+        >
+          <label
+            class="sc-jSFipO cMYxin"
+          >
+            Amount:
+          </label>
+          <div>
+            <input
+              class="sc-bdnyFh gXSWSo"
+              id="amount"
+              name="amount"
+              type="hidden"
+            />
+            <span>
+              $0.00
+            </span>
+          </div>
+        </div>
+        <div
+          class="sc-hKFymg dteuGK"
+        >
+          <button
+            class="sc-gtsqUy sc-iCoHzw iXmfC cwhbgM"
+            disabled=""
+            name="submit"
+            type="submit"
+            variations="primary"
+          >
+            Add
+          </button>
+          <button
+            class="sc-gtsqUy sc-iCoHzw hesuRJ cwhbgM"
+            type="button"
+            variations="secondary"
+          >
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>,
+  "container": <div>
+    <form
+      class="sc-dlniIP bCPNqw"
+    >
+      <div
+        class="sc-eCAqax dgDilB"
+        direction="horizontal"
+      >
+        <label
+          class="sc-jSFipO cMYxin"
+        >
+          User:
+        </label>
+        <div>
+          <select
+            aria-label="user-select"
+            class="sc-fujznN rEQue"
+            id="userId"
+            name="userId"
+          >
+            <option
+              value="1"
+            >
+              User 1
+            </option>
+            <option
+              value="2"
+            >
+              User 2
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
+        class="sc-eCAqax dgDilB"
+        direction="horizontal"
+      >
+        <label
+          class="sc-jSFipO cMYxin"
+        >
+          Room:
+        </label>
+        <div>
+          <select
+            aria-label="user-select"
+            class="sc-fujznN rEQue"
+            id="roomId"
+            name="roomId"
+          >
+            <option
+              value="1"
+            >
+              Room 1
+            </option>
+            <option
+              value="2"
+            >
+              Room 2
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
+        class="sc-eCAqax dgDilB"
+        direction="horizontal"
+      >
+        <label
+          class="sc-jSFipO cMYxin"
+        >
+          Start Date:
+        </label>
+        <div>
+          <input
+            class="sc-bdnyFh gXSWSo"
+            id="startDate"
+            min="2023-12-03"
+            name="startDate"
+            type="date"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-eCAqax dgDilB"
+        direction="horizontal"
+      >
+        <label
+          class="sc-jSFipO cMYxin"
+        >
+          End Date:
+        </label>
+        <div>
+          <input
+            class="sc-bdnyFh gXSWSo"
+            disabled=""
+            id="endDate"
+            name="endDate"
+            type="date"
+          />
+        </div>
+      </div>
+      <div
+        class="sc-eCAqax dgDilB"
+        direction="horizontal"
+      >
+        <label
+          class="sc-jSFipO cMYxin"
+        >
+          Amount:
+        </label>
+        <div>
+          <input
+            class="sc-bdnyFh gXSWSo"
+            id="amount"
+            name="amount"
+            type="hidden"
+          />
+          <span>
+            $0.00
+          </span>
+        </div>
+      </div>
+      <div
+        class="sc-hKFymg dteuGK"
+      >
+        <button
+          class="sc-gtsqUy sc-iCoHzw iXmfC cwhbgM"
+          disabled=""
+          name="submit"
+          type="submit"
+          variations="primary"
+        >
+          Add
+        </button>
+        <button
+          class="sc-gtsqUy sc-iCoHzw hesuRJ cwhbgM"
+          type="button"
+          variations="secondary"
+        >
+          Close
+        </button>
+      </div>
+    </form>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

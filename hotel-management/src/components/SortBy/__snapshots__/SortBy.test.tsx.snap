@@ -10,13 +10,11 @@ exports[`SortBy Should render correctly 1`] = `
         class="sc-bdnyFh hPOEsG"
       >
         <option
-          data-testid="select-option"
           value="Value1"
         >
           Option 1
         </option>
         <option
-          data-testid="select-option"
           value="Value2"
         >
           Option 2
@@ -30,13 +28,11 @@ exports[`SortBy Should render correctly 1`] = `
       class="sc-bdnyFh hPOEsG"
     >
       <option
-        data-testid="select-option"
         value="Value1"
       >
         Option 1
       </option>
       <option
-        data-testid="select-option"
         value="Value2"
       >
         Option 2

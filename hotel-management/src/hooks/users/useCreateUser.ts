@@ -37,7 +37,11 @@ const useCreateUser = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isCreating, createUser, isSuccess };
+  return {
+    isCreating,
+    createUser,
+    isSuccess,
+  };
 };
 
 export { useCreateUser };

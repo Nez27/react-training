@@ -3,7 +3,11 @@ import styled, { css } from 'styled-components';
 // Styled
 import CommonInput from './CommonInput';
 
-type TInput = 'text' | 'checkbox' | 'hidden' | 'date' | 'password';
+type TInput = 'text'
+  | 'checkbox'
+  | 'hidden'
+  | 'date'
+  | 'password';
 
 interface IInputTyped {
   type?: TInput;

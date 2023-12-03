@@ -1,206 +1,360 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AppLayout Should render correctly 1`] = `
-<div
-  className="sc-iCoHzw jFLeHb"
->
-  <header
-    className="sc-dlniIP cClxoS"
-  >
-    <p>
-      Hi, 
-      !
-    </p>
-    <ul
-      className="sc-gtsqUy gOWXQs"
-    >
-      <li>
-        <button
-          className="sc-bdnyFh bxHnoO"
-          iconStyle={
-            {
-              "size": "23px",
-            }
-          }
-          isHaveChildren={false}
-          onClick={[Function]}
-          style={
-            {
-              "backgroundColor": undefined,
-              "color": undefined,
-              "fontSize": undefined,
-            }
-          }
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="sc-iCoHzw kcSkNP"
+      >
+        <header
+          class="sc-dlniIP eqIruu"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            strokeWidth="0"
-            style={
-              {
-                "color": undefined,
-              }
-            }
-            viewBox="0 0 512 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <p>
+            Hi, 
+            !
+          </p>
+          <ul
+            class="sc-gtsqUy gOWXQs"
           >
-            <path
-              d="M258.9 48C141.92 46.42 46.42 141.92 48 258.9c1.56 112.19 92.91 203.54 205.1 205.1 117 1.6 212.48-93.9 210.88-210.88C462.44 140.91 371.09 49.56 258.9 48zm126.42 327.25a4 4 0 01-6.14-.32 124.27 124.27 0 00-32.35-29.59C321.37 329 289.11 320 256 320s-65.37 9-90.83 25.34a124.24 124.24 0 00-32.35 29.58 4 4 0 01-6.14.32A175.32 175.32 0 0180 259c-1.63-97.31 78.22-178.76 175.57-179S432 158.81 432 256a175.32 175.32 0 01-46.68 119.25z"
-            />
-            <path
-              d="M256 144c-19.72 0-37.55 7.39-50.22 20.82s-19 32-17.57 51.93C191.11 256 221.52 288 256 288s64.83-32 67.79-71.24c1.48-19.74-4.8-38.14-17.68-51.82C293.39 151.44 275.59 144 256 144z"
-            />
-          </svg>
-           
-          <span />
-        </button>
-      </li>
-      <li>
-        <button
-          className="sc-bdnyFh bxHnoO"
-          disabled={false}
-          iconStyle={
-            {
-              "size": "23px",
-            }
-          }
-          isHaveChildren={false}
-          onClick={[Function]}
-          style={
-            {
-              "backgroundColor": undefined,
-              "color": undefined,
-              "fontSize": undefined,
-            }
-          }
+            <li>
+              <button
+                aria-label="Profile"
+                class="sc-bdnyFh bxHnoO"
+                iconstyle="[object Object]"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M258.9 48C141.92 46.42 46.42 141.92 48 258.9c1.56 112.19 92.91 203.54 205.1 205.1 117 1.6 212.48-93.9 210.88-210.88C462.44 140.91 371.09 49.56 258.9 48zm126.42 327.25a4 4 0 01-6.14-.32 124.27 124.27 0 00-32.35-29.59C321.37 329 289.11 320 256 320s-65.37 9-90.83 25.34a124.24 124.24 0 00-32.35 29.58 4 4 0 01-6.14.32A175.32 175.32 0 0180 259c-1.63-97.31 78.22-178.76 175.57-179S432 158.81 432 256a175.32 175.32 0 01-46.68 119.25z"
+                  />
+                  <path
+                    d="M256 144c-19.72 0-37.55 7.39-50.22 20.82s-19 32-17.57 51.93C191.11 256 221.52 288 256 288s64.83-32 67.79-71.24c1.48-19.74-4.8-38.14-17.68-51.82C293.39 151.44 275.59 144 256 144z"
+                  />
+                </svg>
+                 
+                <span />
+              </button>
+            </li>
+            <li>
+              <button
+                aria-label="Logout"
+                class="sc-bdnyFh bxHnoO"
+                iconstyle="[object Object]"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                 
+                <span />
+              </button>
+            </li>
+          </ul>
+        </header>
+        <aside
+          class="sc-jSFipO ejTmsl"
         >
-          <svg
-            aria-hidden="true"
-            fill="none"
-            height="1em"
-            stroke="currentColor"
-            strokeWidth="2"
-            style={
-              {
-                "color": undefined,
-              }
-            }
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <h1
+            class="sc-gKAaef kdwrvt"
           >
-            <path
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-           
-          <span />
-        </button>
-      </li>
-    </ul>
-  </header>
-  <aside
-    className="sc-jSFipO ejTmsl"
-  >
-    <h1
-      className="sc-gKAaef kdwrvt"
-      onClick={[Function]}
+            Hotel Management
+          </h1>
+          <nav
+            class="sc-hKFymg eIMPQI"
+          >
+            <a
+              class="sc-eCAqax hQZHUY"
+              href="/booking"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM5 7h14v2H5V7z"
+                />
+              </svg>
+              <span>
+                Booking
+              </span>
+            </a>
+            <a
+              class="sc-eCAqax hQZHUY"
+              href="/user"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"
+                />
+              </svg>
+              <span>
+                User
+              </span>
+            </a>
+            <a
+              class="sc-eCAqax hQZHUY"
+              href="/room"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"
+                />
+              </svg>
+              <span>
+                Room
+              </span>
+            </a>
+          </nav>
+        </aside>
+        <main
+          class="sc-fujznN cdRedX"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sc-iCoHzw kcSkNP"
     >
-      Hotel Management
-    </h1>
-    <nav
-      className="sc-hKFymg eIMPQI"
-    >
-      <a
-        className="sc-eCAqax hQZHUY"
-        href="/booking"
-        onClick={[Function]}
+      <header
+        class="sc-dlniIP eqIruu"
       >
-        <svg
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          strokeWidth="0"
-          style={
-            {
-              "color": undefined,
-            }
-          }
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <p>
+          Hi, 
+          !
+        </p>
+        <ul
+          class="sc-gtsqUy gOWXQs"
         >
-          <path
-            d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM5 7h14v2H5V7z"
-          />
-        </svg>
-        <span>
-          Booking
-        </span>
-      </a>
-      <a
-        className="sc-eCAqax hQZHUY"
-        href="/user"
-        onClick={[Function]}
+          <li>
+            <button
+              aria-label="Profile"
+              class="sc-bdnyFh bxHnoO"
+              iconstyle="[object Object]"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M258.9 48C141.92 46.42 46.42 141.92 48 258.9c1.56 112.19 92.91 203.54 205.1 205.1 117 1.6 212.48-93.9 210.88-210.88C462.44 140.91 371.09 49.56 258.9 48zm126.42 327.25a4 4 0 01-6.14-.32 124.27 124.27 0 00-32.35-29.59C321.37 329 289.11 320 256 320s-65.37 9-90.83 25.34a124.24 124.24 0 00-32.35 29.58 4 4 0 01-6.14.32A175.32 175.32 0 0180 259c-1.63-97.31 78.22-178.76 175.57-179S432 158.81 432 256a175.32 175.32 0 01-46.68 119.25z"
+                />
+                <path
+                  d="M256 144c-19.72 0-37.55 7.39-50.22 20.82s-19 32-17.57 51.93C191.11 256 221.52 288 256 288s64.83-32 67.79-71.24c1.48-19.74-4.8-38.14-17.68-51.82C293.39 151.44 275.59 144 256 144z"
+                />
+              </svg>
+               
+              <span />
+            </button>
+          </li>
+          <li>
+            <button
+              aria-label="Logout"
+              class="sc-bdnyFh bxHnoO"
+              iconstyle="[object Object]"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+               
+              <span />
+            </button>
+          </li>
+        </ul>
+      </header>
+      <aside
+        class="sc-jSFipO ejTmsl"
       >
-        <svg
-          aria-hidden="true"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          strokeWidth="0"
-          style={
-            {
-              "color": undefined,
-            }
-          }
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <h1
+          class="sc-gKAaef kdwrvt"
         >
-          <path
-            d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"
-          />
-        </svg>
-        <span>
-          User
-        </span>
-      </a>
-      <a
-        className="sc-eCAqax hQZHUY"
-        href="/room"
-        onClick={[Function]}
-      >
-        <svg
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          strokeWidth="0"
-          style={
-            {
-              "color": undefined,
-            }
-          }
-          viewBox="0 0 16 16"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+          Hotel Management
+        </h1>
+        <nav
+          class="sc-hKFymg eIMPQI"
         >
-          <path
-            d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"
-          />
-        </svg>
-        <span>
-          Room
-        </span>
-      </a>
-    </nav>
-  </aside>
-  <main
-    className="sc-fujznN cdRedX"
-  />
-</div>
+          <a
+            class="sc-eCAqax hQZHUY"
+            href="/booking"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM5 7h14v2H5V7z"
+              />
+            </svg>
+            <span>
+              Booking
+            </span>
+          </a>
+          <a
+            class="sc-eCAqax hQZHUY"
+            href="/user"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"
+              />
+            </svg>
+            <span>
+              User
+            </span>
+          </a>
+          <a
+            class="sc-eCAqax hQZHUY"
+            href="/room"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 16 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"
+              />
+            </svg>
+            <span>
+              Room
+            </span>
+          </a>
+        </nav>
+      </aside>
+      <main
+        class="sc-fujznN cdRedX"
+      />
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

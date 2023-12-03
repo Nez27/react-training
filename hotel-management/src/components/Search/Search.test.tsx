@@ -1,67 +1,42 @@
-import { BrowserRouter } from 'react-router-dom';
-import { useState } from 'react';
+import { BrowserRouter, useSearchParams } from 'react-router-dom';
+import { RenderResult, fireEvent, render } from '@testing-library/react';
 
 // Components
 import Search from '.';
-import {
-  RenderResult,
-  fireEvent,
-  render,
-  act,
-} from '@testing-library/react';
 
-let mockSearchParam = '';
-
-jest.useFakeTimers();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useSearchParams: () => {
-    const [params, setParams] = useState(new URLSearchParams(mockSearchParam));
-    return [
-      params,
-      (newParams: string) => {
-        mockSearchParam = newParams;
-        setParams(new URLSearchParams(newParams));
-      },
-    ];
-  },
+  useSearchParams: jest.fn(),
+}));
+
+jest.mock('@hook/useDebounce', () => ({
+  useDebounce: jest.fn((value) => value),
 }));
 
 describe('Search', () => {
-  // const placeHolder = 'Search placeholder...';
-  // let wrapper: RenderResult | null = null;
+  const mockSearchParams = new URLSearchParams();
+  (useSearchParams as jest.Mock).mockReturnValue([mockSearchParams, jest.fn()]);
+  let wrapper: RenderResult | null = null;
 
-  // beforeEach(() => {
-  //   wrapper = render(
-  //     <BrowserRouter>
-  //       <Search setPlaceHolder={placeHolder} />
-  //     </BrowserRouter>
-  //   );
-  // });
-
-  // test('Should render correctly', () => {
-  //   expect(wrapper).toMatchSnapshot();
-  // });
-
-  test('Should add query to url after 1 second', async () => {
-    let wrapper: RenderResult | null = null;
-    act(() => {
-      wrapper = render(
-        <BrowserRouter>
-          <Search setPlaceHolder={'Search placeholder...'} />
-        </BrowserRouter>
-      );
-    });
-
-    const searchField = await wrapper!.findByPlaceholderText(
-      'Search placeholder...'
+  beforeEach(() => {
+    wrapper = render(
+      <BrowserRouter>
+        <Search setPlaceHolder="Search" />
+      </BrowserRouter>
     );
+  });
 
-    act(() => {
-      fireEvent.change(searchField, { target: { value: 'abc' } });
-    });
+  test('Should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  })
 
-    // jest.advanceTimersByTime(1000);
+  test('updates searchParams on input change', () => {
+    const searchInput = wrapper!.getByPlaceholderText('Search');
+
+    // Type into the search input
+    fireEvent.change(searchInput, { target: { value: 'Search value' } });
+
+    // Expect searchParams to be updated
+    expect(mockSearchParams.get('search')).toBe('Search value');
   });
 });
-  

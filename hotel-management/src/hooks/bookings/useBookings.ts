@@ -67,7 +67,11 @@ const useBookings = () => {
     });
   }
 
-  return { isLoading, bookings, count };
+  return {
+    isLoading,
+    bookings,
+    count
+  };
 };
 
 export { useBookings };

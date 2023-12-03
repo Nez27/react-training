@@ -1,44 +1,110 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ButtonIcon Should render correctly 1`] = `
-<button
-  className="sc-bdnyFh bxHnoO"
-  iconStyle={
-    {
-      "size": "23px",
-    }
-  }
-  isHaveChildren={false}
-  style={
-    {
-      "backgroundColor": undefined,
-      "color": undefined,
-      "fontSize": undefined,
-    }
-  }
->
-  <svg
-    aria-hidden="true"
-    fill="none"
-    height="1em"
-    stroke="currentColor"
-    strokeWidth="2"
-    style={
-      {
-        "color": undefined,
-      }
-    }
-    viewBox="0 0 24 24"
-    width="1em"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-   
-  <span />
-</button>
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <button
+        class="sc-bdnyFh bxHnoO"
+        iconstyle="[object Object]"
+      >
+        <svg
+          aria-hidden="true"
+          fill="none"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+         
+        <span />
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <button
+      class="sc-bdnyFh bxHnoO"
+      iconstyle="[object Object]"
+    >
+      <svg
+        aria-hidden="true"
+        fill="none"
+        height="1em"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+       
+      <span />
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

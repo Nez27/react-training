@@ -1,6 +1,7 @@
+import { RenderResult, fireEvent, render } from '@testing-library/react';
+
 // Components
 import ConfirmMessage from '.';
-import { RenderResult, fireEvent, render } from '@testing-library/react';
 
 describe('ConfirmMessage testing snapshot', () => {
   const message = 'Hello World!';

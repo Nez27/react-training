@@ -1,14 +1,12 @@
 // Components
 import UserTable from './UserTable';
+import Modal from '@component/Modal';
+import UserForm from './UserForm';
 
 // Styled
 import Button from '@commonStyle/Button';
 import Direction from '@commonStyle/Direction.ts';
 import { StyledUser, Title } from './styled';
-
-// Types
-import Modal from '@component/Modal';
-import UserForm from './UserForm';
 
 // Constants
 import { FORM } from '@constant/commons';

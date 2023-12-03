@@ -37,7 +37,11 @@ const useUpdateUser = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isUpdating, updateUser, isSuccess };
+  return {
+    isUpdating,
+    updateUser,
+    isSuccess,
+  };
 };
 
 export { useUpdateUser };

@@ -1,8 +1,4 @@
-import {
-  FieldValues,
-  RegisterOptions,
-  useFormContext,
-} from 'react-hook-form';
+import { FieldValues, RegisterOptions, useFormContext } from 'react-hook-form';
 import { ChangeEventHandler } from 'react';
 
 // Styled
@@ -46,7 +42,7 @@ const Select = ({
         : { onChange: onChange })}
     >
       {options.map((option) => (
-        <option value={option.value} key={option.value} data-testid='select-option'>
+        <option value={option.value} key={option.value}>
           {option.label}
         </option>
       ))}

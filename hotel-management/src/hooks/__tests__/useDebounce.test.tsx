@@ -1,6 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { useState } from 'react';
-import { act } from 'react-test-renderer';
 
 // Hooks
 import { useDebounce } from '@hook/useDebounce';

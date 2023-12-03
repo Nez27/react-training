@@ -1,7 +1,8 @@
-// Components
-import Menus from '.';
 import { RiEditBoxFill, RiDeleteBin2Line } from 'react-icons/ri';
 import { RenderResult, fireEvent, render } from '@testing-library/react';
+
+// Components
+import Menus from '.';
 
 describe('Menus', () => {
   const id = '123';

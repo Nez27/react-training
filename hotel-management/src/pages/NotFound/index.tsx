@@ -1,33 +1,17 @@
-import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
 
-const StyledNotFound = styled.div`
-  height: 100vh;
+// Styled
+import { Button, Heading, StyledNotFound } from './styled';
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 30px;
-`;
+const NotFound = () => {
+  const navigate = useNavigate();
 
-const Heading = styled.h1`
-  font-size: 40px;
-  color: var(--primary-color);
-`;
+  return (
+    <StyledNotFound>
+      <Heading>The page not found!</Heading>
+      <Button onClick={() => navigate(-1)}>Go back!</Button>
+    </StyledNotFound>
+  );
+};
 
-const Button = styled.button`
-  padding: 10px 20px;
-
-  background-color: var(--primary-color);
-  color: var(--light-text);
-  text-transform: uppercase;
-  font-weight: 500;
-
-  border-radius: var(--radius-sm);
-`;
-
-export {
-  StyledNotFound,
-  Heading,
-  Button,
-}
+export default NotFound;

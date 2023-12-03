@@ -59,4 +59,10 @@ const REGEX = {
   PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,16}$/
 };
 
-export { USER_PAGE, ROOM_PAGE, FORM, REGEX, ORDERBY_OPTIONS };
+export {
+  USER_PAGE,
+  ROOM_PAGE,
+  FORM,
+  REGEX,
+  ORDERBY_OPTIONS
+};
