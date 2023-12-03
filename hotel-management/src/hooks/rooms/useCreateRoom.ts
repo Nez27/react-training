@@ -37,7 +37,11 @@ const useCreateRoom = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isCreating, createRoom, isSuccess };
+  return {
+    isCreating,
+    createRoom,
+    isSuccess
+  };
 };
 
 export { useCreateRoom };

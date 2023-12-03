@@ -1,8 +1,8 @@
 import { BrowserRouter, useSearchParams } from 'react-router-dom';
+import { RenderResult, fireEvent, render } from '@testing-library/react';
 
 // Components
 import Search from '.';
-import { RenderResult, fireEvent, render } from '@testing-library/react';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),

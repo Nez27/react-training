@@ -1,4 +1,4 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 // Components
 import Table from '.';
@@ -29,7 +29,12 @@ describe('Table', () => {
     },
   ];
   const TableRow = ({ user }: ITableRow) => {
-    const { id, name, phone, isBooked } = user;
+    const {
+      id,
+      name,
+      phone,
+      isBooked
+    } = user;
 
     return (
       <Table.Row>
@@ -42,7 +47,7 @@ describe('Table', () => {
   };
   const renderRow = (user: IUser) => <TableRow user={user} key={user.id} />;
 
-  const wrapper = renderer.create(
+  const wrapper = render(
     <Table columns="10% 35% 30% 15% 10%">
       <Table.Header headerColumn={columnName} />
       <Table.Body<IUser> data={tempUser} render={renderRow} />

@@ -1,16 +1,21 @@
+import { useCallback } from 'react';
+
 // Components
 import { RiEditBoxFill } from 'react-icons/ri';
 import Modal from '@component/Modal';
 import Table from '@component/Table';
 import Menus from '@component/Menus';
 import UserForm from './UserForm';
+import ConfirmMessage from '@component/ConfirmMessage';
+import { HiTrash } from 'react-icons/hi';
 
 // Types
 import { IUser } from '@type/user';
+
+// Constants
 import { FORM } from '@constant/commons';
-import { HiTrash } from 'react-icons/hi';
-import { useCallback } from 'react';
-import ConfirmMessage from '@component/ConfirmMessage';
+
+// Hooks
 import { useIsDeleteUser } from '@hook/users/useSetIsDeleteUser';
 
 interface IUserRow {

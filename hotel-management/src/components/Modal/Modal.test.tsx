@@ -1,11 +1,11 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 // Components
 import Modal from '.';
 import Button from '@commonStyle/Button';
 
 describe('Modal', () => {
-  const wrapper = renderer.create(
+  const wrapper = render(
     <Modal>
       <Modal.Open
         modalName="room-form"

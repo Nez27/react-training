@@ -1,10 +1,10 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 // Components
 import Message from '.';
 
 describe('Message', () => {
-  const wrapper = renderer.create(<Message>This is a message!</Message>);
+  const wrapper = render(<Message>This is a message!</Message>);
 
   test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();

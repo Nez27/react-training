@@ -1,4 +1,7 @@
+// Contexts
 import { reducer } from '@context/UserRoomAvailableContext';
+
+// Types
 import { IDataState } from '@type/common';
 
 jest.mock('@service/userServices');

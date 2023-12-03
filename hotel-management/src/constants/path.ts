@@ -1,8 +1,15 @@
-export const BOOKING = '/booking';
-export const USER = '/user';
-export const ROOM = '/room';
-export const ACCOUNT = '/account';
-export const OTHER_PATH = '*';
-export const USER_PATH = 'users';
-export const ROOM_PATH = 'rooms';
-export const LOGIN = 'login';
+const BOOKING = '/booking';
+const USER = '/user';
+const ROOM = '/room';
+const ACCOUNT = '/account';
+const OTHER_PATH = '*';
+const LOGIN = 'login';
+
+export {
+  BOOKING,
+  USER,
+  ROOM,
+  ACCOUNT,
+  OTHER_PATH,
+  LOGIN,
+}

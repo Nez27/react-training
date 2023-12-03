@@ -1,10 +1,10 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 // Components
 import Toast from '.';
 
 describe('Toast', () => {
-  const wrapper = renderer.create(<Toast />);
+  const wrapper = render(<Toast />);
 
   test('Should render correctly', () => {
     expect(wrapper).toMatchSnapshot();

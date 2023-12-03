@@ -1,8 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { act } from 'react-test-renderer';
 
 // Hooks
 import { useCreateUser } from '@hook/users/useCreateUser';
@@ -12,9 +11,9 @@ import { useUsers } from '@hook/users/useUsers';
 // Types
 import { IUser } from '@type/user';
 
-const mockUseUsers = jest.fn(useUsers);
-const mockUseCreateUser = jest.fn(useCreateUser);
-const mockUseUpdateUser = jest.fn(useUpdateUser);
+jest.mock('@hook/users/useUsers');
+jest.mock('@hook/users/useCreateUser');
+jest.mock('@hook/users/useUpdateUser');
 
 interface IWrapper {
   children: ReactNode;
@@ -44,7 +43,7 @@ const wrapper = ({ children }: IWrapper) => {
 
 describe('Users hook', () => {
   test('Should fetch user data correctly', async () => {
-    mockUseUsers.mockImplementation(() => ({
+    (useUsers as jest.Mock).mockImplementation(() => ({
       users: [
         {
           id: 1,
@@ -64,20 +63,20 @@ describe('Users hook', () => {
       isLoading: false,
       count: 2,
     }));
-    const { result } = renderHook(() => mockUseUsers(), { wrapper });
+    const { result } = renderHook(() => useUsers(), { wrapper });
 
     await waitFor(() => expect(result.current.users?.length).toEqual(2));
   });
 
   test('Should create user correctly', async () => {
-    mockUseCreateUser.mockImplementation(() => ({
+    (useCreateUser as jest.Mock).mockImplementation(() => ({
       createUser: () => {
         sampleData;
       },
       isCreating: false,
       isSuccess: true,
     }));
-    const { result } = renderHook(() => mockUseCreateUser(), { wrapper });
+    const { result } = renderHook(() => useCreateUser(), { wrapper });
 
     act(() => {
       const testMethod = async () => {
@@ -90,14 +89,14 @@ describe('Users hook', () => {
   });
 
   test('Should update user correctly', async () => {
-    mockUseUpdateUser.mockImplementation(() => ({
+    (useUpdateUser as jest.Mock).mockImplementation(() => ({
       updateUser: () => {
         sampleData;
       },
       isUpdating: false,
       isSuccess: true,
     }));
-    const { result } = renderHook(() => mockUseUpdateUser(), { wrapper });
+    const { result } = renderHook(() => useUpdateUser(), { wrapper });
 
     act(() => {
       const testMethod = async () => {

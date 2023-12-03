@@ -8,6 +8,7 @@ import Search from '@component/Search';
 import SortBy from '@component/SortBy';
 import OrderBy from '@component/OrderBy';
 import UserRow from './UserRow';
+import Pagination from '@component/Pagination';
 
 // Types
 import { IUser } from '@type/user';
@@ -22,7 +23,6 @@ import Spinner from '@commonStyle/Spinner';
 
 // Hooks
 import { useUsers } from '@hook/users/useUsers';
-import Pagination from '@component/Pagination';
 
 const UserTable = () => {
   const columnName = [

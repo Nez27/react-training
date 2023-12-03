@@ -1,14 +1,12 @@
 import { render, fireEvent, RenderResult } from '@testing-library/react';
-import Pagination from '.';
 import { BrowserRouter } from 'react-router-dom';
+
+// Components
+import Pagination from '.';
 
 describe('Pagination', () => {
   const count = 10;
   let wrapper: RenderResult | null = null;
-
-  jest.mock('react-router-dom', () => ({
-    useSearchParams: jest.fn(() => [new URLSearchParams(), jest.fn()]),
-  }));
 
   beforeEach(() => {
     wrapper = render(

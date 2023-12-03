@@ -1,14 +1,14 @@
-import renderer from 'react-test-renderer';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { render } from '@testing-library/react';
 
 // Components
 import HeaderMenu from '.';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 describe('HeaderMenu', () => {
   const queryClient = new QueryClient();
 
-  const wrapper = renderer.create(
+  const wrapper = render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <HeaderMenu />

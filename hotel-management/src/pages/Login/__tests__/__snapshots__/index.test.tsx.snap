@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Should render correctly 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <main
+        class="sc-bdnyFh fWdqRC"
+      >
+        <img
+          alt="Logo Web"
+          class="sc-gtsqUy cUcA-DD"
+          src="./assets/images/logo.png"
+        />
+        <h1
+          class="sc-dlniIP bJwJBk"
+        >
+          Log In
+        </h1>
+        <div
+          class="sc-hKFymg htLQlQ"
+        >
+          <form
+            class="sc-gKAaef fefJbB"
+          >
+            <div
+              class="sc-fujznN fRJTpo"
+              direction="vertical"
+            >
+              <label
+                class="sc-pNWRh gSLqll"
+              >
+                Email:
+              </label>
+              <div>
+                <input
+                  class="sc-eCAqax gsyAlx"
+                  id="email"
+                  name="email"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div
+              class="sc-fujznN fRJTpo"
+              direction="vertical"
+            >
+              <label
+                class="sc-pNWRh gSLqll"
+              >
+                Password:
+              </label>
+              <div>
+                <input
+                  class="sc-eCAqax gsyAlx"
+                  id="password"
+                  name="password"
+                  type="password"
+                />
+              </div>
+            </div>
+            <button
+              class="sc-jSFipO fQJaue"
+              type="submit"
+              variations="primary"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </main>
+    </div>
+  </body>,
+  "container": <div>
+    <main
+      class="sc-bdnyFh fWdqRC"
+    >
+      <img
+        alt="Logo Web"
+        class="sc-gtsqUy cUcA-DD"
+        src="./assets/images/logo.png"
+      />
+      <h1
+        class="sc-dlniIP bJwJBk"
+      >
+        Log In
+      </h1>
+      <div
+        class="sc-hKFymg htLQlQ"
+      >
+        <form
+          class="sc-gKAaef fefJbB"
+        >
+          <div
+            class="sc-fujznN fRJTpo"
+            direction="vertical"
+          >
+            <label
+              class="sc-pNWRh gSLqll"
+            >
+              Email:
+            </label>
+            <div>
+              <input
+                class="sc-eCAqax gsyAlx"
+                id="email"
+                name="email"
+                type="text"
+              />
+            </div>
+          </div>
+          <div
+            class="sc-fujznN fRJTpo"
+            direction="vertical"
+          >
+            <label
+              class="sc-pNWRh gSLqll"
+            >
+              Password:
+            </label>
+            <div>
+              <input
+                class="sc-eCAqax gsyAlx"
+                id="password"
+                name="password"
+                type="password"
+              />
+            </div>
+          </div>
+          <button
+            class="sc-jSFipO fQJaue"
+            type="submit"
+            variations="primary"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

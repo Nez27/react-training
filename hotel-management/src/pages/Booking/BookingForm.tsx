@@ -276,7 +276,6 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
               required: REQUIRED_FIELD_ERROR,
               onChange: () => trigger('amount'),
             })}
-            readOnly
           />
 
           <span>{amountValue}</span>

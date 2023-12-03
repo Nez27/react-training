@@ -1,86 +1,206 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`User Should render correctly 1`] = `
-<main
-  className="sc-lmgPJu fmDjvX"
->
-  <div
-    className="sc-cxNGUP cGfCbe"
-    type="horizontal"
-  >
-    <h2
-      className="sc-iJCSeZ jfWGKb"
-    >
-      List User
-    </h2>
-    <button
-      className="sc-iemXqs gdUlEE"
-      onClick={[Function]}
-      variations="primary"
-    >
-      Add user
-    </button>
-  </div>
-  <div
-    className="sc-cxNGUP hDpxxT"
-    type="vertical"
-  >
-    <div
-      className="sc-giAruI kILZpe"
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <main
+        class="sc-ezyZrH hDMmuA"
+      >
+        <div
+          class="sc-giAruI itcrUM"
+          type="horizontal"
+        >
+          <h2
+            class="sc-bYwyHq hzDKSH"
+          >
+            List User
+          </h2>
+          <button
+            class="sc-iemXqs gdUlEE"
+            variations="primary"
+          >
+            Add user
+          </button>
+        </div>
+        <div
+          class="sc-giAruI eEOXtt"
+          type="vertical"
+        >
+          <div
+            class="sc-kLokBR lEQmc"
+          >
+            <div
+              class="sc-dItHI exgtuU"
+            >
+              <button
+                class="sc-bqGGcD entqcN"
+                disabled=""
+              >
+                Ascending
+              </button>
+              <button
+                class="sc-bqGGcD graLyf"
+              >
+                Descending
+              </button>
+            </div>
+            <select
+              aria-label="Sort"
+              class="sc-crzpnZ iXFhDe"
+            >
+              <option
+                value="id"
+              >
+                Sort by id
+              </option>
+              <option
+                value="name"
+              >
+                Sort by name
+              </option>
+              <option
+                value="phone"
+              >
+                Sort by phone
+              </option>
+            </select>
+            <input
+              class="sc-iqAbyq kOrhXJ"
+              placeholder="Search by phone..."
+            />
+          </div>
+          <div
+            class="sc-iklJRA dNgqKM"
+          />
+        </div>
+      </main>
+    </div>
+  </body>,
+  "container": <div>
+    <main
+      class="sc-ezyZrH hDMmuA"
     >
       <div
-        className="sc-dItHI exgtuU"
+        class="sc-giAruI itcrUM"
+        type="horizontal"
       >
-        <button
-          className="sc-bqGGcD entqcN"
-          disabled={true}
-          onClick={[Function]}
+        <h2
+          class="sc-bYwyHq hzDKSH"
         >
-          Ascending
-        </button>
+          List User
+        </h2>
         <button
-          className="sc-bqGGcD graLyf"
-          disabled={false}
-          onClick={[Function]}
+          class="sc-iemXqs gdUlEE"
+          variations="primary"
         >
-          Descending
+          Add user
         </button>
       </div>
-      <select
-        aria-label="Sort"
-        className="sc-crzpnZ iXFhDe"
-        disabled={false}
-        onChange={[Function]}
-        value=""
+      <div
+        class="sc-giAruI eEOXtt"
+        type="vertical"
       >
-        <option
-          data-testid="select-option"
-          value="id"
+        <div
+          class="sc-kLokBR lEQmc"
         >
-          Sort by id
-        </option>
-        <option
-          data-testid="select-option"
-          value="name"
-        >
-          Sort by name
-        </option>
-        <option
-          data-testid="select-option"
-          value="phone"
-        >
-          Sort by phone
-        </option>
-      </select>
-      <input
-        className="sc-iqAbyq kOrhXJ"
-        onChange={[Function]}
-        placeholder="Search by phone..."
-      />
-    </div>
-    <div
-      className="sc-ezyZrH dFKszz"
-    />
-  </div>
-</main>
+          <div
+            class="sc-dItHI exgtuU"
+          >
+            <button
+              class="sc-bqGGcD entqcN"
+              disabled=""
+            >
+              Ascending
+            </button>
+            <button
+              class="sc-bqGGcD graLyf"
+            >
+              Descending
+            </button>
+          </div>
+          <select
+            aria-label="Sort"
+            class="sc-crzpnZ iXFhDe"
+          >
+            <option
+              value="id"
+            >
+              Sort by id
+            </option>
+            <option
+              value="name"
+            >
+              Sort by name
+            </option>
+            <option
+              value="phone"
+            >
+              Sort by phone
+            </option>
+          </select>
+          <input
+            class="sc-iqAbyq kOrhXJ"
+            placeholder="Search by phone..."
+          />
+        </div>
+        <div
+          class="sc-iklJRA dNgqKM"
+        />
+      </div>
+    </main>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

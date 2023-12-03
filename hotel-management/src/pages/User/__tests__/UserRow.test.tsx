@@ -1,5 +1,5 @@
+import { render } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import renderer from 'react-test-renderer';
 
 // Types
 import { IUser } from '@type/user';
@@ -16,7 +16,7 @@ describe('UserRow', () => {
     isDelete: true,
   };
   const queryClient = new QueryClient();
-  const wrapper = renderer.create(
+  const wrapper = render(
     <QueryClientProvider client={queryClient}>
       <UserRow user={tempUser} />
     </QueryClientProvider>

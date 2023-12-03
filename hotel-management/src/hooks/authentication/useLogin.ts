@@ -1,12 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 // Services
 import { login as loginFn } from '@service/authenticationService';
-
-// Types
-import { ILogin } from '@type/common';
 
 /**
  * Login web
@@ -15,16 +12,13 @@ import { ILogin } from '@type/common';
 const useLogin = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get('redirectTo') || null;
 
   const { mutate: login, isPending } = useMutation({
-    mutationFn: ({ email, password }: ILogin) => loginFn({ email, password }),
+    mutationFn: loginFn,
     onSuccess: (account) => {
       queryClient.setQueryData(['account'], account.user);
-      redirectTo
-        ? navigate(redirectTo)
-        : navigate('/');
+
+      navigate('/');
     },
     onError: (err) => {
       console.error(err.message);

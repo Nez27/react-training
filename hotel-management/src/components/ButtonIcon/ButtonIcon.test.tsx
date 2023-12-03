@@ -1,11 +1,11 @@
-import renderer from 'react-test-renderer';
-
-// Components
-import ButtonIcon from '.';
 import { HiOutlineLogout } from 'react-icons/hi';
 
+// Components
+import { render } from '@testing-library/react';
+import ButtonIcon from '.';
+
 describe('ButtonIcon', () => {
-  const wrapper = renderer.create(
+  const wrapper = render(
     <ButtonIcon
       aria-label="Logout"
       icon={<HiOutlineLogout />}

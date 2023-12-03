@@ -1,6 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { useState } from 'react';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
+
 // Components
 import SortBy from '.';
 

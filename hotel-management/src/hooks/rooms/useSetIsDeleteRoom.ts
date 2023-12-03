@@ -6,6 +6,8 @@ import { setIsDeleteRoom as setIsDeleteRoomFn } from '@service/roomServices';
 
 // Constants
 import * as messages from '@constant/messages';
+
+// Hooks
 import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
 
 /**
@@ -33,7 +35,11 @@ const useSetIsDeleteRoom = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isDeleting, setIsDeleteRoom, isSuccess };
+  return {
+    isDeleting,
+    setIsDeleteRoom,
+    isSuccess
+  };
 };
 
 export { useSetIsDeleteRoom };

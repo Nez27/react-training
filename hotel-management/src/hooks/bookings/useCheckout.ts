@@ -37,7 +37,11 @@ const useCheckOut = () => {
     onError: (err) => toast.error(err.message),
   });
 
-  return { checkOutBooking, isChecking, isSuccess };
+  return {
+    checkOutBooking,
+    isChecking,
+    isSuccess
+  };
 };
 
 export default useCheckOut;

@@ -2,13 +2,17 @@ import { MouseEvent, ReactNode, useContext, useState } from 'react';
 
 // Components
 import { HiEllipsisVertical } from 'react-icons/hi2';
+import ButtonIcon from '@component/ButtonIcon';
 
 // Hooks
 import { useOutsideClick } from '@hook/useOutsideClick';
-import ButtonIcon from '@component/ButtonIcon';
 
 // Styled
-import { StyledMenu, StyledList, StyledToggle } from './styled';
+import {
+  StyledMenu,
+  StyledList,
+  StyledToggle
+} from './styled';
 
 // Contexts
 import MenusContext from '@context/MenuContext';

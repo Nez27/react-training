@@ -1,4 +1,4 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 // Components
 import Select from '.';
@@ -11,13 +11,13 @@ describe('Select', () => {
     },
     {
       label: 'Option 2',
-      value: 'Value 2'
-    }
+      value: 'Value 2',
+    },
   ];
   const value = 'Temp value';
   const handleOnChange = jest.fn();
 
-  const wrapper = renderer.create(
+  const wrapper = render(
     <Select
       options={options}
       value={value}

@@ -38,6 +38,7 @@ const LoginForm = () => {
         >
           <FieldInput
             type="text"
+            id="email"
             {...register('email', {
               required: REQUIRED_FIELD_ERROR,
               pattern: {
@@ -54,13 +55,16 @@ const LoginForm = () => {
         >
           <FieldInput
             type="password"
+            id="password"
             {...register('password', {
               required: REQUIRED_FIELD_ERROR,
             })}
           />
         </Form.Row>
 
-        <Button type="submit" disabled={isPending}>Login</Button>
+        <Button type="submit" disabled={isPending}>
+          Login
+        </Button>
       </Form>
     </StyledLoginForm>
   );

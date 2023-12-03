@@ -1,6 +1,6 @@
+import { render } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 
 // Components
 import RoomTable from '@page/Room/RoomTable';
@@ -8,7 +8,7 @@ import RoomTable from '@page/Room/RoomTable';
 describe('UserTable', () => {
   const queryClient = new QueryClient();
 
-  const wrapper = renderer.create(
+  const wrapper = render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <RoomTable />

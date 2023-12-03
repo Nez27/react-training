@@ -73,7 +73,11 @@ const useRooms = () => {
     });
   }
 
-  return { isLoading, rooms, count };
+  return {
+    isLoading,
+    rooms,
+    count
+  };
 };
 
 export { useRooms };
