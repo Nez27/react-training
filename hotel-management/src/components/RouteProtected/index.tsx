@@ -9,7 +9,9 @@ const RouteProtected = ({ children }: IRouteProtected) => {
   // Load user login
   const { account } = useAccount();
 
-  return !account ? <Navigate to="/login" /> : children;
+  return !account
+    ? <Navigate to="/login" />
+    : children;
 };
 
 export default RouteProtected;

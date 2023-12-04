@@ -6,7 +6,7 @@ exports[`Room Should render correctly 1`] = `
   "baseElement": <body>
     <div>
       <main
-        class="sc-cxNGUP fhRVMt"
+        class="sc-cxNGUP fHVylE"
       >
         <div
           class="sc-giAruI itcrUM"
@@ -80,7 +80,7 @@ exports[`Room Should render correctly 1`] = `
   </body>,
   "container": <div>
     <main
-      class="sc-cxNGUP fhRVMt"
+      class="sc-cxNGUP fHVylE"
     >
       <div
         class="sc-giAruI itcrUM"

@@ -6,7 +6,7 @@ exports[`Booking Should render correctly 1`] = `
   "baseElement": <body>
     <div>
       <main
-        class="sc-gtsqUy gfxnvD"
+        class="sc-gtsqUy eStAWW"
       >
         <div
           class="sc-bdnyFh bpfZjm"
@@ -45,7 +45,7 @@ exports[`Booking Should render correctly 1`] = `
   </body>,
   "container": <div>
     <main
-      class="sc-gtsqUy gfxnvD"
+      class="sc-gtsqUy eStAWW"
     >
       <div
         class="sc-bdnyFh bpfZjm"

@@ -79,7 +79,7 @@ exports[`BookingForm Should render correctly 1`] = `
             <input
               class="sc-bdnyFh gXSWSo"
               id="startDate"
-              min="2023-12-03"
+              min="2023-12-04"
               name="startDate"
               type="date"
             />
@@ -223,7 +223,7 @@ exports[`BookingForm Should render correctly 1`] = `
           <input
             class="sc-bdnyFh gXSWSo"
             id="startDate"
-            min="2023-12-03"
+            min="2023-12-04"
             name="startDate"
             type="date"
           />

@@ -6,7 +6,7 @@ exports[`User Should render correctly 1`] = `
   "baseElement": <body>
     <div>
       <main
-        class="sc-ezyZrH hDMmuA"
+        class="sc-ezyZrH fBrULh"
       >
         <div
           class="sc-giAruI itcrUM"
@@ -80,7 +80,7 @@ exports[`User Should render correctly 1`] = `
   </body>,
   "container": <div>
     <main
-      class="sc-ezyZrH hDMmuA"
+      class="sc-ezyZrH fBrULh"
     >
       <div
         class="sc-giAruI itcrUM"

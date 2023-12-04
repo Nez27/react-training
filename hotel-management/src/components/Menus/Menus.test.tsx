@@ -47,7 +47,7 @@ describe('Menus', () => {
     expect(editBtn).not.toBeInTheDocument();
   });
 
-  test('HandleOnClick should work', async () => {
+  test('Should call handleOnClick correctly', async () => {
     const btn = await wrapper!.findByRole('button');
 
     fireEvent.click(btn);

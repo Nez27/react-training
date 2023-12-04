@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const StyledRoom = styled.main`
   padding: 20px;
-  padding-bottom: 100px;
 
   display: flex;
   flex-direction: column;
