@@ -8,13 +8,22 @@ import { FieldInput, StyledLoginForm } from './styled';
 import Button from '@commonStyle/Button';
 
 // Constants
-import { REQUIRED_FIELD_ERROR } from '@constant/formValidateMessage';
+import {
+  INVALID_EMAIL,
+  REQUIRED_FIELD_ERROR,
+} from '@constant/formValidateMessage';
 
 // Types
 import { ILogin } from '@type/common';
 
 // Hooks
 import { useLogin } from '@hook/authentication/useLogin';
+
+// Helpers
+import { isValidRegex } from '@helper/validators';
+
+// Constants
+import { REGEX } from '@constant/commons';
 
 const LoginForm = () => {
   const {
@@ -41,10 +50,8 @@ const LoginForm = () => {
             id="email"
             {...register('email', {
               required: REQUIRED_FIELD_ERROR,
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Invalid email address',
-              },
+              validate: (value) =>
+                isValidRegex(REGEX.EMAIL, value) || INVALID_EMAIL,
             })}
           />
         </Form.Row>

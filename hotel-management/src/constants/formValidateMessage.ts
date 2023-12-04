@@ -7,6 +7,7 @@ const PASSWORD_CONDITION =
 const INVALID_PASSWORD = 'Invalid password';
 const PASSWORD_NOT_MATCH = 'Password not match!';
 const PASSWORD_NOT_MATCH_REQUIREMENT = 'Password not match the requirement!';
+const INVALID_EMAIL = 'Invalid email address';
 
 export {
   REQUIRED_FIELD_ERROR,
@@ -17,4 +18,5 @@ export {
   INVALID_PASSWORD,
   PASSWORD_NOT_MATCH,
   PASSWORD_NOT_MATCH_REQUIREMENT,
+  INVALID_EMAIL,
 };

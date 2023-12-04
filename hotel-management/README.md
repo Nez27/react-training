@@ -5,29 +5,30 @@
 ## Overview
 
 - Introduce: Build a hotel management web application using HTML5, CSS3, Typescript, json-server, React and compile by Vite.
-- Plan: [Link](https://docs.google.com/document/d/1t2kx17iGCceEe3EbaKO6-3g70ejOJ1PAu9u3KXSKWi4/edit?usp=sharing)
+- Plan: [Link](https://docs.google.com/document/d/1fE_dv1M9Sbcc1KGCmMAC86-T1rYPW6rvhluNhi8nAWU/edit)
 - Deploy: [Link](https://hotel-management.loiphan.com/)
 
 ## Requirements
 
-- Use develop tools below:
-  - [Pnpm](https://pnpm.io/)
-  - [Commitlint](https://github.com/conventional-changelog/commitlint)
-  - [Eslint](https://eslint.org/)
-  - [Prettier](https://prettier.io/)
-  - [Husky](https://github.com/typicode/husky)
-  - [Why-did-you-render](https://github.com/welldone-software/why-did-you-render)
-- Use latest react app version
-- Apply [Styled component](https://styled-components.com/).
-- Compile by [Vite](https://vitejs.dev/)
-- Deploy to Vercel is mandatory as a final result
+- Adding more features for practice 2:
+  - Converting json-server to Supabase
+  - Add pagination method
+  - Add booking pages
+  - Create booking function
+  - Add login, logout method
+  - Update information user login
+- Apply useReducer for state management
+- Apply [TanStack Query](https://tanstack.com/query/latest/) for fetching data
+- Write unit tests for the project.
+- Apply [React Hook Form](https://react-hook-form.com/).
 
 ## Target
 
-- Known how to build a web application with React
-- Understanding and how to use React hooks.
-- Understanding in depth about useCallback and useMemo.
-- [PageSpeed](https://pagespeed.web.dev/) scores at minimum 98 points
+- Known how to state management with useReducer and useContext.
+- Understand and know how to use [TanStack Query](https://tanstack.com/query/latest/)
+- Unit test coverage greater than 80%
+- Know how to use [React Hook Form](https://react-hook-form.com/).
+- [PageSpeed](https://pagespeed.web.dev/) scores at minimum of 98 points
 
 ## Technical
 
@@ -36,22 +37,23 @@
 - [Typescript](https://www.typescriptlang.org/): TypeScript is a strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.
 - [React](https://react.dev/): React is a framework that employs Webpack to automatically compile React, JSX, and ES6 code while handling CSS file prefixes. React is a JavaScript-based UI development library. Although React is a library rather than a language, it is widely used in web development.
 - [Vite](https://vitejs.dev/): Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects.
-- [json-server](https://github.com/typicode/json-server): Get a full fake REST API with zero coding.
+- [TanStack Query](https://tanstack.com/query/latest/): Powerful asynchronous state management for TS/JS, React, Solid, Vue and Svelte
+- [Supabase](https://supabase.com/): Supabase is an incredible tool for building secure and high-performance Postgres backends with minimal configuration. It provides developers with a wide array of functionalities similar to Firebase, such as authentication, real-time database, and storage.
 
 ## Information
 
 - Timeline:
-  - Estimate: 11 days
-  - Actual: 13 days.
+  - Estimate: 7 days
+  - Actual: 10 days.
   - Calendar:
-    - Start: 2023/10/16
-    - End: 2023/10/30
+    - Start: 2023/11/17
+    - End: 2023/11/30
 
 ## Development Environment
 
-- Node: v18.17.1
-- Npm: v10.1.0
-- Pnpm: 8.8.0
+- Node: v18.18.2
+- Npm: v9.8.1
+- Pnpm: 8.9.2
 
 ## Getting started
 
@@ -60,15 +62,17 @@
     - `$ git clone https://github.com/Nez27/react-training.git`.
 - Step 2: Move to folder which just cloned in your computer.
   - `cd ./react-training`.
-- Step 3: Move it to branch react-practice.
-  - `$ git checkout react-practice`.
+- Step 3: Move it to branch react-practice-02.
+  - `$ git checkout react-practice-02`.
 - Step 4: Move to folder hotel-management.
   - `$ cd ./hotel-management`.
 - Step 5:
-  - Open terminal > `pnpm i`.
+  - Download this [_file_](https://nezumi27-my.sharepoint.com/:u:/g/personal/admin_nezumi_site/EWmB4skriS9JjPQlemYuFfsB3JZ2-47OuAVDbrzSntUEFg?e=KAFbbh) and put into folder hotel-management (Password: _nezumi_)
 - Step 6:
-  - Run `pnpm run dev`.
+  - Open terminal > `pnpm i`.
 - Step 7:
+  - Run `pnpm run dev`.
+- Step 8:
   - Open http://localhost:5173/ in browser.
 
 ## Author
