@@ -1,6 +1,6 @@
 const DEFAULT_SORT_BY = 'id';
 const DEFAULT_ORDER_BY = 'asc';
-const DEFAULT_PAGE_SIZE = 5;
+const DEFAULT_PAGE_SIZE = 10;
 const supabaseUrl = 'https://pjqujsjzzdrlrgqbxepe.supabase.co';
 const supabaseKey = process.env.VITE_SUPABASE_KEY;
 
