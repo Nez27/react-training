@@ -1,17 +1,17 @@
 import { useForm } from 'react-hook-form';
 
 // Styled
-import Input from '@commonStyle/Input';
+import Input from '@src/commons/styles/Input';
 
 // Components
-import Form from '@component/Form';
+import Form from '@src/components/Form';
 
 // Constants
-import { REQUIRED_FIELD_ERROR } from '@constant/formValidateMessage';
+import { REQUIRED_FIELD_ERROR } from '@src/constants/formValidateMessage';
 
 // Hooks
-import { useUpdateAccount } from '@hook/authentication/useUpdateAccount';
-import { useAccount } from '@hook/authentication/useAccount';
+import { useUpdateAccount } from '@src/hooks/authentication/useUpdateAccount';
+import { useAccount } from '@src/hooks/authentication/useAccount';
 
 interface IAccountForm {
   fullName: string;

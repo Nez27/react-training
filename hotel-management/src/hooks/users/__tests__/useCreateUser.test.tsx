@@ -11,20 +11,20 @@ import { ReactNode } from 'react';
 import { useCreateUser } from '../useCreateUser';
 
 // Types
-import { IUser } from '@type/user';
+import { IUser } from '@src/types/user';
 
 // Constants
-import { ADD_SUCCESS } from '@constant/messages';
+import { ADD_SUCCESS } from '@src/constants/messages';
 
 // Services
-import { createUser } from '@service/userServices';
+import { createUser } from '@src/services/userServices';
 
 // Mock the necessary dependencies
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }));
-jest.mock('@service/userServices', () => ({
+jest.mock('@src/services/userServices', () => ({
   createUser: jest.fn(),
 }));
 jest.mock('react-hot-toast');

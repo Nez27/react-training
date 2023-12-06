@@ -1,8 +1,8 @@
 // Contexts
-import { reducer } from '@context/UserRoomAvailableContext';
+import { reducer } from '../UserRoomAvailableContext';
 
 // Types
-import { IDataState } from '@type/common';
+import { IDataState } from '@src/types/common';
 
 describe('userRoomAvailableContext', () => {
   let initialState: {

@@ -3,10 +3,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 // Services
-import { getAllRooms } from '@service/roomServices';
+import { getAllRooms } from '@src/services/roomServices';
 
 // Constants
-import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import { DEFAULT_PAGE_SIZE } from '@src/constants/config';
 
 /**
  * Fetch room from database

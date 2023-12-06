@@ -1,23 +1,23 @@
 import { useCallback } from 'react';
 
 // Components
-import Menus from '@component/Menus';
-import Table from '@component/Table';
-import Message from '@component/Message';
-import Search from '@component/Search';
-import Pagination from '@component/Pagination';
+import Menus from '@src/components/Menus';
+import Table from '@src/components/Table';
+import Message from '@src/components/Message';
+import Search from '@src/components/Search';
+import Pagination from '@src/components/Pagination';
 import BookingRow from './BookingRow';
 
 // Styled
 import { StyledOperationTable } from './styled';
-import Direction from '@commonStyle/Direction';
-import Spinner from '@commonStyle/Spinner';
+import Direction from '@src/commons/styles/Direction';
+import Spinner from '@src/commons/styles/Spinner';
 
 // Hooks
-import { useBookings } from '@hook/bookings/useBookings';
+import { useBookings } from '@src/hooks/bookings/useBookings';
 
 // Types
-import { TBookingResponse } from '@type/booking';
+import { TBookingResponse } from '@src/types/booking';
 
 const BookingTable = () => {
   const columnName = [

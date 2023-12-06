@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 
 // Types
-import { IRoom } from '@type/room';
+import { IRoom } from '@src/types/room';
 
 // Components
 import RoomRow from '../RoomRow';

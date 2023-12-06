@@ -2,29 +2,29 @@ import { useCallback, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 // Styled
-import Input from '@commonStyle/Input.ts';
+import Input from '@src/commons/styles/Input';
 
 // Constants
-import { REQUIRED_FIELD_ERROR } from '@constant/formValidateMessage.ts';
+import { REQUIRED_FIELD_ERROR } from '@src/constants/formValidateMessage';
 
 // Components
-import Form from '@component/Form/index.tsx';
-import Select, { ISelectOptions } from '@component/Select/index.tsx';
+import Form from '@src/components/Form';
+import Select, { ISelectOptions } from '@src/components/Select/index.tsx';
 
 // Hooks
-import { useCreateBooking } from '@hook/bookings/useCreateBooking.ts';
-import { useUpdateBooking } from '@hook/bookings/useUpdateBooking.ts';
-import { useUserRoomAvailable } from '@hook/useUserRoomAvailable.ts';
+import { useCreateBooking } from '@src/hooks/bookings/useCreateBooking';
+import { useUpdateBooking } from '@src/hooks/bookings/useUpdateBooking';
+import { useUserRoomAvailable } from '@src/hooks/useUserRoomAvailable';
 
 // Helpers
-import { formatCurrency, getDayDiff } from '@helper/helper.ts';
+import { formatCurrency, getDayDiff } from '@src/helpers/helper';
 
 // Services
-import { getRoomById, updateRoomStatus } from '@service/roomServices.ts';
-import { updateUserBookedStatus } from '@service/userServices.ts';
+import { getRoomById, updateRoomStatus } from '@src/services/roomServices';
+import { updateUserBookedStatus } from '@src/services/userServices';
 
 // Types
-import { IBooking, TBookingResponse } from '@type/booking.ts';
+import { IBooking, TBookingResponse } from '@src/types/booking';
 
 interface IBookingFormProp {
   onCloseModal?: () => void;

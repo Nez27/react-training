@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 // Services
-import { login as loginFn } from '@service/authenticationService';
+import { login as loginFn } from '@src/services/authenticationService';
 
 /**
  * Login web

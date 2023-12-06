@@ -1,28 +1,28 @@
 import { useCallback } from 'react';
 
 // Components
-import Menus from '@component/Menus';
-import Table from '@component/Table';
-import Message from '@component/Message';
-import Search from '@component/Search';
-import SortBy from '@component/SortBy';
-import OrderBy from '@component/OrderBy';
+import Menus from '@src/components/Menus';
+import Table from '@src/components/Table';
+import Message from '@src/components/Message';
+import Search from '@src/components/Search';
+import SortBy from '@src/components/SortBy';
+import OrderBy from '@src/components/OrderBy';
 import RoomRow from './RoomRow';
 
 // Types
-import { IRoom } from '@type/room';
+import { IRoom } from '@src/types/room';
 
 // Constants
-import { ORDERBY_OPTIONS, ROOM_PAGE } from '@constant/commons';
+import { ORDERBY_OPTIONS, ROOM_PAGE } from '@src/constants/commons';
 
 // Styled
 import { StyledOperationTable } from './styled';
-import Direction from '@commonStyle/Direction';
-import Spinner from '@commonStyle/Spinner';
+import Direction from '@src/commons/styles/Direction';
+import Spinner from '@src/commons/styles/Spinner';
 
 // Hooks
-import { useRooms } from '@hook/rooms/useRooms';
-import Pagination from '@component/Pagination';
+import { useRooms } from '@src/hooks/rooms/useRooms';
+import Pagination from '@src/components/Pagination';
 
 const RoomTable = () => {
   const columnName = ['Id', 'Name', 'Price', 'Status'];

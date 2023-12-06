@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 // Services
-import { createBooking as createBookingFn } from '@service/bookingServices';
+import { createBooking as createBookingFn} from '@src/services/bookingServices';
 
 // Constants
-import { ADD_SUCCESS } from '@constant/messages';
+import { ADD_SUCCESS } from '@src/constants/messages';
 
 /**
  * Create booking on database

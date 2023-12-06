@@ -11,20 +11,20 @@ import toast from 'react-hot-toast';
 import { useCreateBooking } from '../useCreateBooking';
 
 // Types
-import { IBooking } from '@type/booking';
+import { IBooking } from '@src/types/booking';
 
 // Constants
-import { ADD_SUCCESS } from '@constant/messages';
+import { ADD_SUCCESS } from '@src/constants/messages';
 
 // Services
-import { createBooking } from '@service/bookingServices';
+import { createBooking } from '@src/services/bookingServices';
 
 // Mock the necessary dependencies
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }));
-jest.mock('@service/bookingServices', () => ({
+jest.mock('@src/services/bookingServices', () => ({
   createBooking: jest.fn(),
 }));
 jest.mock('react-hot-toast');

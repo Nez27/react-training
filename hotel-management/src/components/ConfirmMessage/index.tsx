@@ -4,7 +4,7 @@ import { memo, useCallback } from 'react';
 import { StyledConfirmDelete } from './styled';
 
 // Component
-import Button from '@commonStyle/Button';
+import Button from '@src/commons/styles/Button';
 
 interface IConfirmMessage {
   message: string;

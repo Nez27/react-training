@@ -7,16 +7,16 @@ import { useEffect, useMemo, useReducer } from 'react';
 // Components
 import AppLayout from './components/AppLayout';
 import Toast from './components/Toast';
-import RouteProtected from '@component/RouteProtected';
-import RootLayout from '@component/RootLayout';
+import RouteProtected from '@src/components/RouteProtected';
+import RootLayout from '@src/components/RootLayout';
 
 // Pages
 import User from './pages/User';
 import Booking from './pages/Booking';
 import Room from './pages/Room';
 import NotFound from './pages/NotFound';
-import Login from '@page/Login';
-import Account from '@page/Account';
+import Login from '@src/pages/Login';
+import Account from '@src/pages/Account';
 
 // Constants
 import * as PATH from './constants/path';
@@ -26,11 +26,11 @@ import {
   UserRoomAvailableContext,
   initialState,
   reducer,
-} from '@context/UserRoomAvailableContext';
+} from '@src/contexts/UserRoomAvailableContext';
 
 // Services
-import { getAllUsers } from '@service/userServices';
-import { getAllRooms } from '@service/roomServices';
+import { getAllUsers } from '@src/services/userServices';
+import { getAllRooms } from '@src/services/roomServices';
 
 const queryClient = new QueryClient();
 

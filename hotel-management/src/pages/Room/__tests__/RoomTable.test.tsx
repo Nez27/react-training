@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 // Components
-import RoomTable from '@page/Room/RoomTable';
+import RoomTable from '@src/pages/Room/RoomTable';
 
 describe('UserTable', () => {
   const queryClient = new QueryClient();

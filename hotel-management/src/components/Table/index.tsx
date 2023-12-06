@@ -10,7 +10,7 @@ import {
 } from './styled';
 
 // Contexts
-import TableContext from '@context/TableContext';
+import TableContext from '@src/contexts/TableContext';
 
 export interface ITable {
   columns?: string;

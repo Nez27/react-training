@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { ChangeEvent, memo } from 'react';
 
 // Components
-import Select from '@component/Select';
+import Select from '../Select';
 
 interface ISortByProps {
   options: {

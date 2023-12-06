@@ -1,18 +1,18 @@
 // Types
-import { IRoom } from '@type/room';
+import { IRoom } from '@src/types/room';
 
 // Services
 import supabase from './supabaseService';
 
 // Constants
-import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import { DEFAULT_PAGE_SIZE } from '@src/constants/config';
 import {
   ERROR_CREATE_ROOM,
   ERROR_DELETE_ROOM,
   ERROR_FETCHING_ROOM,
   ERROR_UPDATE_ROOM,
   ROOMS_TABLE,
-} from '@constant/messages';
+} from '@src/constants/messages';
 
 interface IGetAllRooms {
   sortBy: string;

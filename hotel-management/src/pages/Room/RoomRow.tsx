@@ -1,54 +1,72 @@
 import { useCallback, useMemo } from 'react';
 
 // Helpers
-import { formatCurrency } from '@helper/helper';
+import { formatCurrency } from '@src/helpers/helper';
 
 // Types
-import { IRoom } from '@type/room';
+import { IRoom } from '@src/types/room';
 
 // Components
 import RoomForm from './RoomForm';
-import Modal from '@component/Modal';
-import Table from '@component/Table';
-import Menus from '@component/Menus';
+import Modal from '@src/components/Modal';
+import Table from '@src/components/Table';
+import Menus from '@src/components/Menus';
 import { RiEditBoxFill } from 'react-icons/ri';
 import { HiTrash } from 'react-icons/hi';
-import ConfirmMessage from '@component/ConfirmMessage';
+import ConfirmMessage from '@src/components/ConfirmMessage';
 
 // Hooks
-import { useSetIsDeleteRoom } from '@hook/rooms/useSetIsDeleteRoom';
+import { useSetIsDeleteRoom } from '@src/hooks/rooms/useSetIsDeleteRoom';
 
 // Constants
-import { FORM } from '@constant/commons';
+import { FORM } from '@src/constants/commons';
 
 interface IRoomRow {
   room: IRoom;
 }
 
 const RoomRow = ({ room }: IRoomRow) => {
-  const {
-    id,
-    name,
-    price,
-    status
-  } = room;
+  const { id, name, price, status } = room;
   const { setIsDeleteRoom } = useSetIsDeleteRoom();
   const formattedPrice = useMemo(() => formatCurrency(price), [price]);
   const renderEditBtn = useCallback(
-    (onCloseModal: () => void) => (
-      <Menus.Button onClick={onCloseModal} icon={<RiEditBoxFill />}>
-        Edit
-      </Menus.Button>
+    (onOpenModal: () => void) => (
+      <Menus.Button
+        onClick={onOpenModal}
+        icon={<RiEditBoxFill />}
+        label={'Edit'}
+      />
     ),
     []
   );
   const renderDeleteBtn = useCallback(
-    (onCloseModal: () => void) => (
-      <Menus.Button icon={<HiTrash />} onClick={onCloseModal} disabled={status}>
-        Delete
-      </Menus.Button>
+    (onOpenModal: () => void) => (
+      <Menus.Button
+        icon={<HiTrash />}
+        onClick={onOpenModal}
+        disabled={status}
+        label={'Delete'}
+      />
     ),
     [status]
+  );
+
+  const renderRow = useCallback(
+    (onCloseModal: () => void) => (
+      <RoomForm room={room} onCloseModal={onCloseModal} />
+    ),
+    [room]
+  );
+
+  const renderConfirmMessage = useCallback(
+    (onCloseModal: () => void) => (
+      <ConfirmMessage
+        message={`Are you sure to delete ${name}?`}
+        onConfirm={() => setIsDeleteRoom(id)}
+        onCloseModal={onCloseModal}
+      />
+    ),
+    [id, name, setIsDeleteRoom]
   );
 
   return (
@@ -56,11 +74,7 @@ const RoomRow = ({ room }: IRoomRow) => {
       <div>{id}</div>
       <div>{name}</div>
       <div>{formattedPrice}</div>
-      <div>{
-        status 
-          ? 'Unavailable' 
-          : 'Available'
-      }</div>
+      <div>{status ? 'Unavailable' : 'Available'}</div>
 
       <div>
         <Modal>
@@ -78,16 +92,17 @@ const RoomRow = ({ room }: IRoomRow) => {
               />
             </Menus.List>
 
-            <Modal.Window name={FORM.EDIT} title="Edit Room">
-              <RoomForm room={room} />
-            </Modal.Window>
+            <Modal.Window
+              name={FORM.EDIT}
+              title="Edit Room"
+              renderChildren={renderRow}
+            />
 
-            <Modal.Window name={FORM.DELETE} title="Delete Room">
-              <ConfirmMessage
-                message={`Are you sure to delete ${name}?`}
-                onConfirm={() => setIsDeleteRoom(id)}
-              />
-            </Modal.Window>
+            <Modal.Window
+              name={FORM.DELETE}
+              title="Delete Room"
+              renderChildren={renderConfirmMessage}
+            />
           </Menus.Menu>
         </Modal>
       </div>

@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 
 // Types
-import { TBookingResponse } from '@type/booking';
+import { TBookingResponse } from '@src/types/booking';
 
 // Components
 import BookingRow from '../BookingRow';

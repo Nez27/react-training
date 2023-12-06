@@ -1,14 +1,14 @@
 import { Outlet } from 'react-router-dom';
 
 // Components
-import Header from '@component/Header';
-import Sidebar from '@component/Sidebar';
+import Header from '../Header';
+import Sidebar from '../Sidebar';
 
 // Styled
 import { Main, StyledAppLayout } from './styled';
 
 // Hooks
-import { useAccount } from '@hook/authentication/useAccount';
+import { useAccount } from '@src/hooks/authentication/useAccount';
 
 const AppLayout = () => {
   const { account } = useAccount();

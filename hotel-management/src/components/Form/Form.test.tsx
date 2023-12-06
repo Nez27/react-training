@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import Form from '.';
 
 // Styled
-import Input from '@commonStyle/Input';
+import Input from '@src/commons/styles/Input';
 
 describe('Form ', () => {
   const isDisable = true;

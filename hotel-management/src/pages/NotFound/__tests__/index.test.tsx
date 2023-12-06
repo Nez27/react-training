@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import NotFound from "..";
 import { useNavigate } from "react-router-dom";
 
@@ -9,18 +9,18 @@ jest.mock('react-router-dom', () => ({
 
 describe('NotFound', () => {
   test('Should render correctly', () => {
-    render(<NotFound />);
+    const wrapper = render(<NotFound />);
 
-    expect(screen.getByText('The page not found!')).toBeInTheDocument();
-    expect(screen.getByText('Go back!')).toBeInTheDocument();
+    expect(wrapper.getByText('The page not found!')).toBeInTheDocument();
+    expect(wrapper.getByText('Go back!')).toBeInTheDocument();
   });
 
   test('Should call navigate correctly when click button', () => {
     const mockNavigate = jest.fn();
     (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
-    render(<NotFound />);
+    const wrapper = render(<NotFound />);
 
-    fireEvent.click(screen.getByText('Go back!'));
+    fireEvent.click(wrapper.getByText('Go back!'));
 
     expect(mockNavigate).toHaveBeenCalledTimes(1);
     expect(mockNavigate).toHaveBeenCalledWith(-1);

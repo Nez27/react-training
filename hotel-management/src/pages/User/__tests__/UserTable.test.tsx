@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 
 // Components
-import RoomTable from '@page/Room/RoomTable';
+import RoomTable from '@src/pages/Room/RoomTable';
 
 describe('UserTable', () => {
   const queryClient = new QueryClient();

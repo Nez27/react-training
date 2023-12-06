@@ -7,7 +7,7 @@ import { BsHouseDoorFill } from 'react-icons/bs';
 import { StyledNav, StyledNavLink } from './styled';
 
 // Constants
-import { BOOKING, ROOM, USER } from '@constant/path';
+import { BOOKING, ROOM, USER } from '@src/constants/path';
 
 const Nav = () => {
   return (

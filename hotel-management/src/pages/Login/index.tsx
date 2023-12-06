@@ -7,7 +7,7 @@ import { LoginLayout, StyledLogo, TitleStyled } from './styled';
 import LoginForm from './LoginForm';
 
 // Hooks
-import { useAccount } from '@hook/authentication/useAccount';
+import { useAccount } from '@src/hooks/authentication/useAccount';
 
 const Login = () => {
   const { account } = useAccount();

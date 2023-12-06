@@ -8,22 +8,22 @@ import {
 import { ReactNode } from 'react';
 
 // Types
-import { IRoom } from '@type/room';
+import { IRoom } from '@src/types/room';
 
 // Hooks
 import { useCreateRoom } from '../useCreateRoom';
 
 // Constants
-import { ADD_SUCCESS } from '@constant/messages';
+import { ADD_SUCCESS } from '@src/constants/messages';
 
 // Services
-import { createRoom } from '@service/roomServices';
+import { createRoom } from '@src/services/roomServices';
 
 jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }));
-jest.mock('@service/roomServices', () => ({
+jest.mock('@src/services/roomServices', () => ({
   createRoom: jest.fn(),
 }));
 jest.mock('react-hot-toast');

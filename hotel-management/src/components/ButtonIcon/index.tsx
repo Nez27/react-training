@@ -1,50 +1,29 @@
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 // Styled
 import { StyledButtonIcon } from './styled';
 
-interface IButtonIcon {
+interface IButtonIcon extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: ReactNode;
-  children?: ReactNode;
-  style?: {
-    fontSize?: string;
-    backgroundColor?: string;
-    color?: string;
-  };
-  iconStyle?: {
-    color?: string;
-    size?: string;
-  };
-  onClick?: () => void;
-  disabled?: boolean;
-  label?: string;
+  iconSize?: string;
+  iconColor?: string;
+  text?: string;
 }
 
 const ButtonIcon = ({
   icon,
-  children,
-  style,
-  iconStyle,
-  onClick,
-  disabled,
-  label,
+  iconSize,
+  iconColor,
+  text,
+  ...props
 }: IButtonIcon) => {
-  const isHaveChildren = Boolean(children);
-
   return (
     <StyledButtonIcon
-      aria-label={label}
-      isHaveChildren={isHaveChildren}
-      style={{
-        fontSize: style?.fontSize,
-        backgroundColor: style?.backgroundColor,
-        color: style?.color,
-      }}
-      iconStyle={iconStyle}
-      onClick={onClick}
-      disabled={disabled}
+      iconColor={iconColor}
+      iconSize={iconSize}
+      {...props}
     >
-      {icon} <span>{children}</span>
+      {icon} {text && <span>{text}</span>}
     </StyledButtonIcon>
   );
 };

@@ -1,15 +1,15 @@
 // Styled
-import Direction from '@commonStyle/Direction';
+import Direction from '@src/commons/styles/Direction';
 import { StyledBooking, Title } from './styled';
-import Button from '@commonStyle/Button';
+import Button from '@src/commons/styles/Button';
 
 // Components
-import Modal from '@component/Modal';
+import Modal from '@src/components/Modal';
 import BookingTable from './BookingTable';
 import BookingForm from './BookingForm';
 
 // Constants
-import { FORM } from '@constant/commons';
+import { FORM } from '@src/constants/commons';
 
 const Booking = () => {
   return (
@@ -24,9 +24,13 @@ const Booking = () => {
               <Button onClick={onCloseModal}>Add booking</Button>
             )}
           />
-          <Modal.Window name={FORM.BOOKING} title="Add form">
-            <BookingForm />
-          </Modal.Window>
+          <Modal.Window
+            name={FORM.BOOKING}
+            title="Add form"
+            renderChildren={(onCloseModal) => (
+              <BookingForm onCloseModal={onCloseModal} />
+            )}
+          />
         </Modal>
       </Direction>
 

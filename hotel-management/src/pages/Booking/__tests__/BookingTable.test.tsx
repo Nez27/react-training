@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 // Components
-import BookingTable from '@page/Booking/BookingTable';
+import BookingTable from '@src/pages/Booking/BookingTable';
 
 describe('UserTable', () => {
   const queryClient = new QueryClient();

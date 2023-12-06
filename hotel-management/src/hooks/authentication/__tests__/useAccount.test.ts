@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react';
 import { User } from '@supabase/supabase-js';
 
 // Services
-import * as authenticationService from '@service/authenticationService';
+import * as authenticationService from '@src/services/authenticationService';
 
 // Hooks
 import { useAccount } from '../useAccount';

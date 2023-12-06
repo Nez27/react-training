@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 // Services
-import { getCurrentAccount } from '@service/authenticationService';
+import { getCurrentAccount } from '@src/services/authenticationService';
 
 /**
  * Get data of account currently login

@@ -1,12 +1,12 @@
 // Components
 import RoomTable from './RoomTable';
 import RoomForm from './RoomForm';
-import Modal from '@component/Modal';
+import Modal from '@src/components/Modal';
 
 // Styled
 import { StyledRoom, Title } from './styled';
-import Direction from '@commonStyle/Direction.ts';
-import Button from '@commonStyle/Button';
+import Direction from '@src/commons/styles/Direction';
+import Button from '@src/commons/styles/Button';
 
 const Room = () => {
   return (
@@ -21,9 +21,13 @@ const Room = () => {
               <Button onClick={onCloseModal}>Add room</Button>
             )}
           />
-          <Modal.Window name="room-form" title="Add form">
-            <RoomForm />
-          </Modal.Window>
+          <Modal.Window
+            name="room-form"
+            title="Add form"
+            renderChildren={(onCloseModal) => (
+              <RoomForm onCloseModal={onCloseModal} />
+            )}
+          />
         </Modal>
       </Direction>
 

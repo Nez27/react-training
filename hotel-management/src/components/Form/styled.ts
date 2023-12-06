@@ -1,14 +1,14 @@
 import styled, { css } from 'styled-components';
 
 // Types
-import { TDirection } from '@type/common';
+import { TDirection } from '@src/types/common';
 
 interface IStyledFormRow {
   direction?: TDirection;
 }
 
 // Styled
-import Button from '@commonStyle/Button';
+import Button from '@src/commons/styles/Button';
 
 const StyledForm = styled.form`
   display: flex;

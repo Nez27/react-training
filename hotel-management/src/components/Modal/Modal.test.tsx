@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 // Components
 import Modal from '.';
-import Button from '@commonStyle/Button';
+import Button from '@src/commons/styles/Button';
 
 describe('Modal', () => {
   const wrapper = render(
@@ -13,9 +13,11 @@ describe('Modal', () => {
           <Button onClick={onCloseModal}>Add room</Button>
         )}
       />
-      <Modal.Window name="room-form" title="Add form">
-        <p>This is a windows</p>
-      </Modal.Window>
+      <Modal.Window
+        name="room-form"
+        title="Add form"
+        renderChildren={(fn) => <p onClick={fn}>This is a windows</p>}
+      />
     </Modal>
   );
 

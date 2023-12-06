@@ -1,4 +1,4 @@
-import { useAccount } from '@hook/authentication/useAccount';
+import { useAccount } from '@src/hooks/authentication/useAccount';
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 

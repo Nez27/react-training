@@ -1,17 +1,15 @@
 import {
-  ReactElement,
   ReactNode,
-  cloneElement,
   useContext,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 
 // Hooks
-import { useOutsideClick } from '@hook/useOutsideClick';
+import { useOutsideClick } from '@src/hooks/useOutsideClick';
 
 // Contexts
-import { ModalContext } from '@context/ModalContext';
+import { ModalContext } from '@src/contexts/ModalContext';
 
 // Styled
 import { Overlay, StyledModal, StyledModalContent, TitleModal } from './styled';
@@ -25,7 +23,7 @@ const Modal = ({ children }: IModal) => {
 
   const close = () => setOpenName('');
   const open = setOpenName;
-
+  
   return (
     <ModalContext.Provider value={{ openName, close, open }}>
       {children}
@@ -34,7 +32,7 @@ const Modal = ({ children }: IModal) => {
 };
 
 interface IOpen {
-  renderChildren: (onCloseModal: () => void) => ReactNode;
+  renderChildren: (onOpenModal: () => void) => ReactNode;
   modalName: string;
 }
 
@@ -45,12 +43,12 @@ const Open = ({ renderChildren, modalName }: IOpen) => {
 };
 
 interface IWindow {
-  children: ReactElement;
+  renderChildren: (callBack: () => void) => ReactNode;
   name: string;
   title: string;
 }
 
-const Window = ({ children, name, title }: IWindow) => {
+const Window = ({ renderChildren, name, title }: IWindow) => {
   const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick<HTMLDivElement>(close!);
 
@@ -61,7 +59,7 @@ const Window = ({ children, name, title }: IWindow) => {
       <StyledModal ref={ref}>
         <StyledModalContent>
           <TitleModal>{title}</TitleModal>
-          {cloneElement(children, { onCloseModal: close })}
+          {renderChildren(close!)}
         </StyledModalContent>
       </StyledModal>
     </Overlay>,

@@ -8,13 +8,13 @@ import {
 import { ReactNode } from 'react';
 
 // Types
-import { IUser } from '@type/user';
+import { IUser } from '@src/types/user';
 
 // Constants
-import { DELETE_SUCCESS } from '@constant/messages';
+import { DELETE_SUCCESS } from '@src/constants/messages';
 
 // Services
-import { setIsDeleteUser } from '@service/userServices';
+import { setIsDeleteUser } from '@src/services/userServices';
 
 // Hooks
 import { useIsDeleteUser } from '../useSetIsDeleteUser';
@@ -24,7 +24,7 @@ jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }));
-jest.mock('@service/userServices', () => ({
+jest.mock('@src/services/userServices', () => ({
   setIsDeleteUser: jest.fn(),
 }));
 jest.mock('react-hot-toast');

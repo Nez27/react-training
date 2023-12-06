@@ -1,14 +1,14 @@
 import { render, act, RenderResult } from '@testing-library/react';
 
 // Services
-import * as userServices from '@service/userServices';
-import * as roomServices from '@service/roomServices';
+import * as userServices from '@src/services/userServices';
+import * as roomServices from '@src/services/roomServices';
 
 // Components
 import App from './App';
 
-jest.mock('@service/userServices');
-jest.mock('@service/roomServices');
+jest.mock('@src/services/userServices');
+jest.mock('@src/services/roomServices');
 
 describe('App', () => {
   let wrapper: RenderResult | null = null;

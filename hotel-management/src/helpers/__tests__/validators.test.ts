@@ -1,5 +1,5 @@
 // Constants
-import { REGEX } from '@constant/commons';
+import { REGEX } from '@src/constants/commons';
 
 // Helpers
 import {
@@ -7,7 +7,7 @@ import {
   isValidDiscount,
   isValidRegex,
   isValidString,
-} from '@helper/validators';
+} from '../validators';
 
 describe('isValidPhone', () => {
   const isValidPhone = (phone: string) =>

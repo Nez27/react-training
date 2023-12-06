@@ -1,28 +1,28 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 // Hooks
-import { useCreateUser } from '@hook/users/useCreateUser.ts';
-import { useUpdateUser } from '@hook/users/useUpdateUser.ts';
+import { useCreateUser } from '@src/hooks/users/useCreateUser';
+import { useUpdateUser } from '@src/hooks/users/useUpdateUser';
 
 // Styled
-import Input from '@commonStyle/Input.ts';
+import Input from '@src/commons/styles/Input';
 
 // Components
-import Form from '@component/Form/index.tsx';
+import Form from '@src/components/Form';
 
 // Helpers
-import { isValidRegex } from '@helper/validators.ts';
+import { isValidRegex } from '@src/helpers/validators';
 
 // Constants
 import {
   INVALID_FIELD,
   INVALID_PHONE,
   REQUIRED_FIELD_ERROR,
-} from '@constant/formValidateMessage.ts';
-import { REGEX } from '@constant/commons.ts';
+} from '@src/constants/formValidateMessage';
+import { REGEX } from '@src/constants/commons';
 
 // Types
-import { IUser } from '@type/user';
+import { IUser } from '@src/types/user';
 
 interface IUserFormProp {
   onCloseModal?: () => void;

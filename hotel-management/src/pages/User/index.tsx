@@ -1,15 +1,15 @@
 // Components
 import UserTable from './UserTable';
-import Modal from '@component/Modal';
+import Modal from '@src/components/Modal';
 import UserForm from './UserForm';
 
 // Styled
-import Button from '@commonStyle/Button';
-import Direction from '@commonStyle/Direction.ts';
+import Button from '@src/commons/styles/Button';
+import Direction from '@src/commons/styles/Direction';
 import { StyledUser, Title } from './styled';
 
 // Constants
-import { FORM } from '@constant/commons';
+import { FORM } from '@src/constants/commons';
 
 const User = () => {
   const TITLE = 'Add user';
@@ -27,9 +27,13 @@ const User = () => {
                 <Button onClick={onCloseModal}>Add user</Button>
               )}
             />
-            <Modal.Window name={FORM.USER} title={TITLE}>
-              <UserForm />
-            </Modal.Window>
+            <Modal.Window
+              name={FORM.USER}
+              title={TITLE}
+              renderChildren={(onCloseModal) => (
+                <UserForm onCloseModal={onCloseModal} />
+              )}
+            />
           </Modal>
         </Direction>
 

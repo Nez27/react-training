@@ -5,10 +5,10 @@ import { useSearchParams } from 'react-router-dom';
 import { StyledSearch } from './styled';
 
 // Hooks
-import { useDebounce } from '@hook/useDebounce';
+import { useDebounce } from '@src/hooks/useDebounce';
 
 // Types
-import { Nullable } from '@type/common';
+import { Nullable } from '@src/types/common';
 
 interface ISearch {
   setPlaceHolder: string;

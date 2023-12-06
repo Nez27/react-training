@@ -1,27 +1,27 @@
 import { useForm } from 'react-hook-form';
 
 // Styled
-import Input from '@commonStyle/Input.ts';
+import Input from '@src/commons/styles/Input.ts';
 
 // Types
-import { IRoom } from '@type/room.ts';
+import { IRoom } from '@src/types/room.ts';
 
 // Constants
 import {
   INVALID_FIELD,
   REQUIRED_FIELD_ERROR,
-} from '@constant/formValidateMessage.ts';
+} from '@src/constants/formValidateMessage.ts';
 import { REGEX } from '../../constants/commons.ts';
 
 // Helpers
-import { isValidRegex, isValidString } from '@helper/validators.ts';
+import { isValidRegex, isValidString } from '@src/helpers/validators.ts';
 
 // Components
-import Form from '@component/Form/index.tsx';
+import Form from '@src/components/Form/index.tsx';
 
 // Hooks
-import { useCreateRoom } from '@hook/rooms/useCreateRoom.ts';
-import { useUpdateRoom } from '@hook/rooms/useUpdateRoom.ts';
+import { useCreateRoom } from '@src/hooks/rooms/useCreateRoom.ts';
+import { useUpdateRoom } from '@src/hooks/rooms/useUpdateRoom.ts';
 
 interface IRoomFormProp {
   onCloseModal?: () => void;

@@ -2,26 +2,26 @@ import toast from 'react-hot-toast';
 import { useCallback, useMemo } from 'react';
 
 // Helpers
-import { formatCurrency } from '@helper/helper';
+import { formatCurrency } from '@src/helpers/helper';
 
 // Types
-import { TBookingResponse } from '@type/booking';
+import { TBookingResponse } from '@src/types/booking';
 
 // Components
-import Modal from '@component/Modal';
-import Table from '@component/Table';
-import Menus from '@component/Menus';
+import Modal from '@src/components/Modal';
+import Table from '@src/components/Table';
+import Menus from '@src/components/Menus';
 import { RiEditBoxFill } from 'react-icons/ri';
 import { TbArrowNarrowRight } from 'react-icons/tb';
 import { ImExit } from 'react-icons/im';
 import BookingForm from './BookingForm';
-import ConfirmMessage from '@component/ConfirmMessage';
+import ConfirmMessage from '@src/components/ConfirmMessage';
 
 // Hooks
-import useCheckOut from '@hook/bookings/useCheckout';
+import useCheckOut from '@src/hooks/bookings/useCheckout';
 
 // Constants
-import { FORM } from '@constant/commons';
+import { FORM } from '@src/constants/commons';
 
 interface IBookingRow {
   booking: TBookingResponse;
@@ -29,38 +29,28 @@ interface IBookingRow {
 
 const BookingRow = ({ booking }: IBookingRow) => {
   const { checkOutBooking } = useCheckOut();
-  const {
-    id,
-    users,
-    startDate,
-    endDate,
-    rooms,
-    amount,
-    status
-  } = booking;
+  const { id, users, startDate, endDate, rooms, amount, status } = booking;
   const formattedPrice = useMemo(() => formatCurrency(amount), [amount]);
   const renderEditBtn = useCallback(
-    (onCloseModal: () => void) => (
+    (onOpenModal: () => void) => (
       <Menus.Button
-        onClick={onCloseModal}
+        onClick={onOpenModal}
         icon={<RiEditBoxFill />}
         disabled={!status}
-      >
-        Edit
-      </Menus.Button>
+        label={'Edit'}
+      />
     ),
     [status]
   );
 
   const renderCheckOutBtn = useCallback(
-    (onCloseModal: () => void) => (
-      <Menus.Button 
-        onClick={onCloseModal}
+    (onOpenModal: () => void) => (
+      <Menus.Button
+        onClick={onOpenModal}
         icon={<ImExit />}
         disabled={!status}
-      >
-        Checkout
-      </Menus.Button>
+        label={'Check out'}
+      />
     ),
     [status]
   );
@@ -77,6 +67,28 @@ const BookingRow = ({ booking }: IBookingRow) => {
     }
   }, [booking, checkOutBooking]);
 
+  const renderRow = useCallback(
+    (onCloseModal: () => void) => (
+      <BookingForm
+        booking={booking}
+        key={booking.id}
+        onCloseModal={onCloseModal}
+      />
+    ),
+    [booking]
+  );
+
+  const renderConfirmMessage = useCallback(
+    (onCloseModal: () => void) => (
+      <ConfirmMessage
+        message={`Are you sure to checkout this user? '${booking.users?.name}'`}
+        onConfirm={handleClickCheckOutBtn}
+        onCloseModal={onCloseModal}
+      />
+    ),
+    [booking.users?.name, handleClickCheckOutBtn]
+  );
+
   return (
     <Table.Row>
       <div>{users?.name}</div>
@@ -86,11 +98,7 @@ const BookingRow = ({ booking }: IBookingRow) => {
       </div>
       <div>{rooms?.name}</div>
       <div>{formattedPrice}</div>
-      <div>{
-          status
-            ? 'Check in'
-            : 'Check out'
-        }</div>
+      <div>{status ? 'Check in' : 'Check out'}</div>
 
       <div>
         <Modal>
@@ -109,16 +117,17 @@ const BookingRow = ({ booking }: IBookingRow) => {
               />
             </Menus.List>
 
-            <Modal.Window name={FORM.EDIT} title="Edit Booking">
-              <BookingForm booking={booking} key={booking.id} />
-            </Modal.Window>
+            <Modal.Window
+              name={FORM.EDIT}
+              title="Edit Booking"
+              renderChildren={renderRow}
+            />
 
-            <Modal.Window name={FORM.CHECKOUT} title="Checkout">
-              <ConfirmMessage
-                message={`Are you sure to checkout this user? '${booking.users?.name}'`}
-                onConfirm={handleClickCheckOutBtn}
-              />
-            </Modal.Window>
+            <Modal.Window
+              name={FORM.CHECKOUT}
+              title="Checkout"
+              renderChildren={renderConfirmMessage}
+            />
           </Menus.Menu>
         </Modal>
       </div>

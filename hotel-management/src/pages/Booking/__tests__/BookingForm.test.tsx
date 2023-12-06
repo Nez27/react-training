@@ -8,25 +8,25 @@ import {
 } from '@testing-library/react';
 
 // Types
-import { TBookingResponse } from '@type/booking';
+import { TBookingResponse } from '@src/types/booking';
 
 // Components
 import BookingForm from '../BookingForm';
 
 // Hooks
-import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
+import { useUserRoomAvailable } from '@src/hooks/useUserRoomAvailable';
 
 const mockUpdateBooking = jest.fn();
 
-jest.mock('@hook/bookings/useUpdateBooking', () => ({
-  ...jest.requireActual('@hook/bookings/useUpdateBooking'),
+jest.mock('@src/hooks/bookings/useUpdateBooking', () => ({
+  ...jest.requireActual('@src/hooks/bookings/useUpdateBooking'),
   useUpdateBooking: jest.fn(() => ({
     isUpdating: false,
     updateBooking: mockUpdateBooking,
   })),
 }));
 
-jest.mock('@hook/useUserRoomAvailable.ts');
+jest.mock('@src/hooks/useUserRoomAvailable.ts');
 
 const mockUseUserRoomAvailable = useUserRoomAvailable as jest.MockedFunction<
   typeof useUserRoomAvailable

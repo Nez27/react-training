@@ -2,14 +2,14 @@ import { act, fireEvent, render, RenderResult, waitFor } from '@testing-library/
 import '@testing-library/jest-dom';
 
 // Components
-import AccountInforForm from '@page/Account/AccountInforForm';
+import AccountInforForm from '@src/pages/Account/AccountInforForm';
 
 // Hooks
-import { useAccount } from '@hook/authentication/useAccount';
-import { useUpdateAccount } from '@hook/authentication/useUpdateAccount';
+import { useAccount } from '@src/hooks/authentication/useAccount';
+import { useUpdateAccount } from '@src/hooks/authentication/useUpdateAccount';
 
-jest.mock('@hook/authentication/useUpdateAccount');
-jest.mock('@hook/authentication/useAccount');
+jest.mock('@src/hooks/authentication/useUpdateAccount');
+jest.mock('@src/hooks/authentication/useAccount');
 
 const mockAccount = {
   email: 'admin@nezumi.site',

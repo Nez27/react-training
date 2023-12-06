@@ -1,12 +1,12 @@
 // Services
-import { createUser, getAllUsers, setIsDeleteUser, updateUser, updateUserBookedStatus } from '@service/userServices';
+import { createUser, getAllUsers, setIsDeleteUser, updateUser, updateUserBookedStatus } from '@src/services/userServices';
 
 // Types
-import { IUser } from '@type/user';
-import supabase from '@service/supabaseService';
-import { ERROR_CREATE_USER, ERROR_DELETE_USER, ERROR_FETCHING_USER, ERROR_UPDATE_USER } from '@constant/messages';
+import { IUser } from '@src/types/user';
+import supabase from '@src/services/supabaseService';
+import { ERROR_CREATE_USER, ERROR_DELETE_USER, ERROR_FETCHING_USER, ERROR_UPDATE_USER } from '@src/constants/messages';
 
-jest.mock('@service/supabaseService', () => ({
+jest.mock('@src/services/supabaseService', () => ({
   __esModule: true,
   default: {
     from: jest.fn(() => ({

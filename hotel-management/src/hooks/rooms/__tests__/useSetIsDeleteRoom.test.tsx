@@ -8,13 +8,13 @@ import {
 import { ReactNode } from 'react';
 
 // Types
-import { IRoom } from '@type/room';
+import { IRoom } from '@src/types/room';
 
 // Constants
-import { DELETE_SUCCESS } from '@constant/messages';
+import { DELETE_SUCCESS } from '@src/constants/messages';
 
 // Services
-import { setIsDeleteRoom } from '@service/roomServices';
+import { setIsDeleteRoom } from '@src/services/roomServices';
 
 // Hooks
 import { useSetIsDeleteRoom } from '../useSetIsDeleteRoom';
@@ -24,7 +24,7 @@ jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }));
-jest.mock('@service/roomServices', () => ({
+jest.mock('@src/services/roomServices', () => ({
   setIsDeleteRoom: jest.fn(),
 }));
 jest.mock('react-hot-toast');

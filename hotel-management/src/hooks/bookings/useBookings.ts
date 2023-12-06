@@ -3,10 +3,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 // Services
-import { getAllBookings } from '@service/bookingServices';
+import { getAllBookings } from '@src/services/bookingServices';
 
 // Constants
-import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import { DEFAULT_PAGE_SIZE } from '@src/constants/config';
 
 /**
  * Fetch booking from database

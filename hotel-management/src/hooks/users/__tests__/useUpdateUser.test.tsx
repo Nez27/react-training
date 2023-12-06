@@ -8,13 +8,13 @@ import {
 import { ReactNode } from 'react';
 
 // Types
-import { IUser } from '@type/user';
+import { IUser } from '@src/types/user';
 
 // Constants
-import { UPDATE_SUCCESS } from '@constant/messages';
+import { UPDATE_SUCCESS } from '@src/constants/messages';
 
 // Services
-import { updateUser } from '@service/userServices';
+import { updateUser } from '@src/services/userServices';
 
 // Hooks
 import { useUpdateUser } from '../useUpdateUser';
@@ -24,7 +24,7 @@ jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }));
-jest.mock('@service/userServices', () => ({
+jest.mock('@src/services/userServices', () => ({
   updateUser: jest.fn(),
 }));
 jest.mock('react-hot-toast');

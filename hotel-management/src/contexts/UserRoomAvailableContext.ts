@@ -1,7 +1,7 @@
 import { Dispatch, createContext } from 'react';
 
 // Types
-import { IDataState } from '@type/common';
+import { IDataState } from '@src/types/common';
 
 interface IUserRoomState {
   usersAvailable: IDataState[];

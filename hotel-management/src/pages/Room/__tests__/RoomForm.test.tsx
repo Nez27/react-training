@@ -8,7 +8,7 @@ import {
 } from '@testing-library/react';
 
 // Types
-import { IRoom } from '@type/room';
+import { IRoom } from '@src/types/room';
 
 // Components
 import RoomForm from '../RoomForm';
@@ -16,16 +16,16 @@ import RoomForm from '../RoomForm';
 const mockCreateRoom = jest.fn();
 const mockUpdateRoom = jest.fn();
 
-jest.mock('@hook/rooms/useCreateRoom.ts', () => ({
-  ...jest.requireActual('@hook/rooms/useCreateRoom.ts'),
+jest.mock('@src/hooks/rooms/useCreateRoom.ts', () => ({
+  ...jest.requireActual('@src/hooks/rooms/useCreateRoom.ts'),
   useCreateRoom: jest.fn(() => ({
     isCreating: false,
     createRoom: mockCreateRoom,
   })),
 }));
 
-jest.mock('@hook/rooms/useUpdateRoom', () => ({
-  ...jest.requireActual('@hook/rooms/useUpdateRoom'),
+jest.mock('@src/hooks/rooms/useUpdateRoom', () => ({
+  ...jest.requireActual('@src/hooks/rooms/useUpdateRoom'),
   useUpdateRoom: jest.fn(() => ({
     isUpdating: false,
     updateRoom: mockUpdateRoom,
