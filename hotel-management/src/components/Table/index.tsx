@@ -1,70 +1,70 @@
-import { ReactNode, useContext } from 'react';
-
-// Styled
+import { ColumnProps } from '@src/types/common';
 import {
   StyledBody,
+  StyledFooter,
   StyledHeader,
   StyledRow,
   StyledTable,
-  StyledFooter,
 } from './styled';
+import Pagination from '../Pagination';
 
-// Contexts
-import TableContext from '@src/contexts/TableContext';
+const parseWidthString = (columnsWidth: number[]): string => {
+  let result: string = '';
 
-export interface ITable {
-  columns?: string;
-  children: ReactNode;
-}
+  const totalWidth = columnsWidth.reduce((partialSum, a) => partialSum + a, 0);
+  columnsWidth.forEach((width) => {
+    result += Math.round((width / totalWidth) * 100).toString() + '% ';
+  });
 
-export interface IHeader {
-  headerColumn: string[];
-}
+  return result;
+};
 
-interface ITableBody<T> {
-  data?: T[];
-  render?: CallbackMapFunc<T>;
-}
+type Props<T> = {
+  columns: ColumnProps[];
+  rows: T[];
+  count?: number | null;
+};
 
-type CallbackMapFunc<T> = (value: T, index: number, array: T[]) => ReactNode;
+const Table = <T,>({ rows, columns, count }: Props<T>) => {
+  const width = parseWidthString(columns.map((item) => item.width));
 
-const Table = ({ columns, children }: ITable) => {
+  const headers = columns.map((column, index) => {
+    return <div key={`headCell-${index}`}>{column.title}</div>;
+  });
+
+  const renderRows = rows.map((row, rowIndex) => {
+    return (
+      <StyledRow
+        key={`row-${rowIndex}`}
+        width={width}
+        onClick={
+          row[
+            'onClick' as keyof typeof row
+          ] as React.MouseEventHandler<HTMLDivElement>
+        }
+      >
+        {columns.map((column, columnIndex) => {
+          const value = row[column.key as keyof typeof row] as string;
+
+          return <div key={`cell-${columnIndex}`}>{value}</div>;
+        })}
+      </StyledRow>
+    );
+  });
+
   return (
-    <TableContext.Provider value={{ columns }}>
-      <StyledTable>{children}</StyledTable>
-    </TableContext.Provider>
+    <StyledTable>
+      <StyledHeader width={width}>{headers}</StyledHeader>
+
+      <StyledBody>{renderRows}</StyledBody>
+
+      {Boolean(count) && (
+        <StyledFooter>
+          <Pagination count={count!} />
+        </StyledFooter>
+      )}
+    </StyledTable>
   );
 };
-
-const Header = ({ headerColumn }: IHeader) => {
-  const { columns } = useContext(TableContext);
-
-  return (
-    <StyledHeader columns={columns}>
-      {headerColumn.map((item) => (
-        <div key={item}>{item}</div>
-      ))}
-    </StyledHeader>
-  );
-};
-
-const Body = <T,>({ data, render }: ITableBody<T>) => {
-  return (
-    data!.length && (
-      <StyledBody>{data?.map(render as CallbackMapFunc<T>)}</StyledBody>
-    )
-  );
-};
-
-const Row = ({ children }: ITable) => {
-  const { columns } = useContext(TableContext);
-
-  return <StyledRow columns={columns}>{children}</StyledRow>;
-};
-
-Table.Header = Header;
-Table.Body = Body;
-Table.Row = Row;
-Table.Footer = StyledFooter;
 
 export default Table;

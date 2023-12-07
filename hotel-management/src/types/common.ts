@@ -12,6 +12,18 @@ interface ILogin {
   password: string;
 }
 
+interface ColumnProps {
+  key: string;
+  title: string;
+  width: number;
+}
+
 type TDirection = 'vertical' | 'horizontal';
 
-export type { Nullable, IDataState, TDirection, ILogin };
+export type {
+  Nullable,
+  IDataState,
+  TDirection,
+  ILogin,
+  ColumnProps
+};

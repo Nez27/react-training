@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-// Interfaces
-import { ITable } from '.';
+interface ICommonRow {
+  width: string;
+}
 
 const StyledTable = styled.div`
   border: 1px solid var(--border-color);
@@ -10,9 +11,9 @@ const StyledTable = styled.div`
   font-size: 20px;
 `;
 
-const CommonRow = styled.div<ITable>`
+const CommonRow = styled.div<ICommonRow>`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
+  grid-template-columns: ${(props) => props.width};
   column-gap: 10px;
   align-items: center;
   justify-items: center;

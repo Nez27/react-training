@@ -1,16 +1,13 @@
-import { useCallback } from 'react';
-
 // Components
-import Menus from '@src/components/Menus';
 import Table from '@src/components/Table';
 import Message from '@src/components/Message';
 import Search from '@src/components/Search';
 import SortBy from '@src/components/SortBy';
 import OrderBy from '@src/components/OrderBy';
-import RoomRow from './RoomRow';
 
 // Types
 import { IRoom } from '@src/types/room';
+import { ColumnProps } from '@src/types/common';
 
 // Constants
 import { ORDERBY_OPTIONS, ROOM_PAGE } from '@src/constants/commons';
@@ -22,20 +19,44 @@ import Spinner from '@src/commons/styles/Spinner';
 
 // Hooks
 import { useRooms } from '@src/hooks/rooms/useRooms';
-import Pagination from '@src/components/Pagination';
+
+interface IRoomTable extends Omit<IRoom, 'status'>{
+  status: string;
+  onClick: () => void;
+}
 
 const RoomTable = () => {
-  const columnName = ['Id', 'Name', 'Price', 'Status'];
-  const {
-    isLoading,
-    rooms,
-    count
-  } = useRooms();
+  const columns: ColumnProps[] = [
+    {
+      key: 'id',
+      title: 'Id',
+      width: 10,
+    },
+    {
+      key: 'name',
+      title: 'Name',
+      width: 40,
+    },
+    {
+      key: 'price',
+      title: 'Price',
+      width: 20,
+    },
+    {
+      key: 'status',
+      title: 'Status',
+      width: 20,
+    },
+  ];
+  const { isLoading, rooms, count } = useRooms();
 
-  const renderRoomRow = useCallback(
-    (room: IRoom) => <RoomRow room={room} key={room.id} />,
-    []
-  );
+  const tempRooms = rooms?.map((room) => ({
+    ...room,
+    status: room.status 
+      ? 'Unavailable' 
+      : 'Available',
+    onClick: () => console.log(room),
+  }));
 
   return (
     <>
@@ -49,16 +70,8 @@ const RoomTable = () => {
 
         {isLoading && <Spinner />}
 
-        {rooms && rooms.length ? (
-          <Menus>
-            <Table columns="10% 40% 20% 20% 5%">
-              <Table.Header headerColumn={columnName} />
-              <Table.Body<IRoom> data={rooms} render={renderRoomRow} />
-              <Table.Footer>
-                <Pagination count={count!}/>
-              </Table.Footer>
-            </Table>
-          </Menus>
+        {tempRooms && tempRooms.length ? (
+          <Table<IRoomTable> columns={columns} rows={tempRooms} count={count}/>
         ) : (
           !isLoading && <Message>No data to show here!</Message>
         )}
