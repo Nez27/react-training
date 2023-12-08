@@ -17,21 +17,23 @@ const Booking = () => {
       <Direction type="horizontal">
         <Title>List Booking</Title>
 
-        <Modal>
-          <Modal.Open
-            modalName={FORM.BOOKING}
-            renderChildren={(onCloseModal) => (
-              <Button onClick={onCloseModal}>Add booking</Button>
-            )}
-          />
-          <Modal.Window
-            name={FORM.BOOKING}
-            title="Add form"
-            renderChildren={(onCloseModal) => (
-              <BookingForm onCloseModal={onCloseModal} />
-            )}
-          />
-        </Modal>
+        <div style={{ display: 'flex', gap: '15px' }}>
+          <Modal>
+            <Modal.Open
+              modalName={FORM.BOOKING}
+              renderChildren={(onCloseModal) => (
+                <Button onClick={onCloseModal}>Add booking</Button>
+              )}
+            />
+            <Modal.Window
+              name={FORM.BOOKING}
+              title="Add form"
+              renderChildren={(onCloseModal) => (
+                <BookingForm onCloseModal={onCloseModal} />
+              )}
+            />
+          </Modal>
+        </div>
       </Direction>
 
       <BookingTable />

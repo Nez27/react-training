@@ -7,6 +7,7 @@ import {
   StyledTable,
 } from './styled';
 import Pagination from '../Pagination';
+import { TbArrowNarrowRight } from 'react-icons/tb';
 
 const parseWidthString = (columnsWidth: number[]): string => {
   let result: string = '';
@@ -45,6 +46,18 @@ const Table = <T,>({ rows, columns, count }: Props<T>) => {
       >
         {columns.map((column, columnIndex) => {
           const value = row[column.key as keyof typeof row] as string;
+
+          if (column.isDateValue) {
+            return (
+              <div
+                style={{ display: 'flex', alignItems: 'center' }}
+                key={`cell-${columnIndex}`}
+              >
+                {value[0]} &nbsp; <TbArrowNarrowRight />
+                &nbsp; {value[1]}
+              </div>
+            );
+          }
 
           return <div key={`cell-${columnIndex}`}>{value}</div>;
         })}

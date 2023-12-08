@@ -16,6 +16,7 @@ interface ColumnProps {
   key: string;
   title: string;
   width: number;
+  isDateValue?: boolean;
 }
 
 type TDirection = 'vertical' | 'horizontal';

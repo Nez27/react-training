@@ -26,6 +26,10 @@ const StyledBody = styled.div`
 const StyledRow = styled(CommonRow)`
   padding: 20px;
 
+  &.active {
+    background-color: red;
+  }
+
   &:not(:last-child) {
     border-bottom: 1px solid var(--border-color);
   }

@@ -14,10 +14,11 @@ import { useBookings } from '@src/hooks/bookings/useBookings';
 // Types
 import { ColumnProps } from '@src/types/common';
 import { formatCurrency } from '@src/helpers/helper';
+import { useItemSelect } from '@src/hooks/useItemSelected';
 
 interface IBookingTable {
   user: string;
-  date: string;
+  date: string[];
   room: string;
   amount: string;
   status: string;
@@ -25,16 +26,19 @@ interface IBookingTable {
 }
 
 const BookingTable = () => {
+  const { dispatch } = useItemSelect();
+
   const columns: ColumnProps[] = [
     {
       key: 'user',
       title: 'User',
-      width: 15,
+      width: 10,
     },
     {
       key: 'date',
       title: 'Date',
       width: 25,
+      isDateValue: true,
     },
     {
       key: 'room',
@@ -49,19 +53,21 @@ const BookingTable = () => {
     {
       key: 'status',
       title: 'Status',
-      width: 15,
+      width: 20,
     },
   ];
 
   const { isLoading, bookings, count } = useBookings();
 
   const tempBookings = bookings?.map((booking) => ({
-    date: 'Error',
+    date: [booking.startDate, booking.endDate],
     amount: formatCurrency(booking.amount),
     room: booking.rooms!.name,
     user: booking.users!.name,
     status: booking.status ? 'Check in' : 'Check out',
-    onClick: () => console.log(booking),
+    onClick: () => {
+      dispatch!({type: 'setData', payload: booking})
+    },
   }));
 
   return (  
