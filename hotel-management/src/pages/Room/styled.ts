@@ -14,14 +14,20 @@ const Title = styled.h2`
   text-transform: capitalize;
 `;
 
-const StyledOperationTable = styled.div`
+const StyledTableOption = styled.div`
   display: flex;
   gap: 30px;
   justify-content: flex-end;
 `;
 
+const ActionTable = styled.div`
+  display: flex;
+  gap: 30px;
+`
+
 export {
   StyledRoom,
   Title,
-  StyledOperationTable
+  StyledTableOption,
+  ActionTable
 };

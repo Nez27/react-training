@@ -1,13 +1,22 @@
+// Types
 import { ColumnProps } from '@src/types/common';
+
+// Styled
 import {
-  StyledBody,
-  StyledFooter,
-  StyledHeader,
-  StyledRow,
-  StyledTable,
+  StyledBody, StyledFooter, StyledHeader, StyledRow, StyledTable
 } from './styled';
+
+// Components
 import Pagination from '../Pagination';
 import { TbArrowNarrowRight } from 'react-icons/tb';
+import { StyledTableOption } from '@src/pages/Room/styled.ts';
+import OrderBy from '@src/components/OrderBy';
+import { ORDERBY_OPTIONS, ROOM_PAGE } from '@src/constants/commons.ts';
+import SortBy from '@src/components/SortBy';
+import Search from '@src/components/Search';
+import Message from '@src/components/Message';
+import Direction from '@src/commons/styles/Direction.ts';
+import { Dispatch, SetStateAction } from 'react';
 
 const parseWidthString = (columnsWidth: number[]): string => {
   let result: string = '';
@@ -23,61 +32,86 @@ const parseWidthString = (columnsWidth: number[]): string => {
 type Props<T> = {
   columns: ColumnProps[];
   rows: T[];
+  stateSelected: {
+    itemSelected: T | undefined;
+    setItemSelected: Dispatch<SetStateAction<T | undefined>>
+  };
   count?: number | null;
+  onRowClick?: (rowData: T) => void;
+  enabledOrder?: boolean;
+  enabledSort?: boolean;
+  enabledSearch?: boolean;
 };
 
-const Table = <T,>({ rows, columns, count }: Props<T>) => {
+const Table = <T, >({
+  rows,
+  columns,
+  count,
+  onRowClick,
+  stateSelected,
+  enabledSort = false,
+  enabledSearch = false,
+  enabledOrder = false
+}: Props<T>) => {
   const width = parseWidthString(columns.map((item) => item.width));
+  const { itemSelected, setItemSelected } = stateSelected;
 
   const headers = columns.map((column, index) => {
     return <div key={`headCell-${index}`}>{column.title}</div>;
   });
 
   const renderRows = rows.map((row, rowIndex) => {
+    const handleRowClick = () => {
+      if (onRowClick) {
+        onRowClick(row);
+        setItemSelected(row);
+      }
+    };
+
     return (
       <StyledRow
         key={`row-${rowIndex}`}
         width={width}
-        onClick={
-          row[
-            'onClick' as keyof typeof row
-          ] as React.MouseEventHandler<HTMLDivElement>
-        }
-      >
+        onDoubleClick={handleRowClick}
+        className={JSON.stringify(itemSelected) === JSON.stringify(row)
+          ? 'selected'
+          : ''
+        }>
         {columns.map((column, columnIndex) => {
           const value = row[column.key as keyof typeof row] as string;
 
           if (column.isDateValue) {
-            return (
-              <div
-                style={{ display: 'flex', alignItems: 'center' }}
-                key={`cell-${columnIndex}`}
-              >
-                {value[0]} &nbsp; <TbArrowNarrowRight />
-                &nbsp; {value[1]}
-              </div>
-            );
+            return (<div
+              style={{ display: 'flex', alignItems: 'center' }}
+              key={`cell-${columnIndex}`}
+            >
+              {value[0]} &nbsp; <TbArrowNarrowRight />
+              &nbsp; {value[1]}
+            </div>);
           }
 
           return <div key={`cell-${columnIndex}`}>{value}</div>;
         })}
-      </StyledRow>
-    );
+      </StyledRow>);
   });
 
-  return (
-    <StyledTable>
+  return (<Direction>
+    <StyledTableOption>
+      {enabledOrder && <OrderBy options={ORDERBY_OPTIONS} />}
+      {enabledSort && <SortBy options={ROOM_PAGE.SORTBY_OPTIONS} />}
+      {enabledSearch && <Search setPlaceHolder="Search by name..." />}
+    </StyledTableOption>
+
+    {rows && rows.length ? (<StyledTable>
       <StyledHeader width={width}>{headers}</StyledHeader>
 
       <StyledBody>{renderRows}</StyledBody>
 
-      {Boolean(count) && (
-        <StyledFooter>
-          <Pagination count={count!} />
-        </StyledFooter>
-      )}
-    </StyledTable>
-  );
+      {Boolean(count) && (<StyledFooter>
+        <Pagination count={count!} />
+      </StyledFooter>)}
+    </StyledTable>) : (<Message>No data to show here!</Message>)}
+  </Direction>);
 };
 
 export default Table;

@@ -26,8 +26,8 @@ const StyledBody = styled.div`
 const StyledRow = styled(CommonRow)`
   padding: 20px;
 
-  &.active {
-    background-color: red;
+  &.selected {
+    background-color: var(--item-selected);
   }
 
   &:not(:last-child) {

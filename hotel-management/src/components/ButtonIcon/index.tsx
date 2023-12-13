@@ -7,7 +7,9 @@ interface IButtonIcon extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: ReactNode;
   iconSize?: string;
   iconColor?: string;
+  fontSize?: string;
   text?: string;
+  variations?: string;
 }
 
 const ButtonIcon = ({
@@ -15,12 +17,16 @@ const ButtonIcon = ({
   iconSize,
   iconColor,
   text,
+  fontSize,
+  variations,
   ...props
 }: IButtonIcon) => {
   return (
     <StyledButtonIcon
       iconColor={iconColor}
       iconSize={iconSize}
+      fontSize={fontSize}
+      variations={variations}
       {...props}
     >
       {icon} {text && <span>{text}</span>}

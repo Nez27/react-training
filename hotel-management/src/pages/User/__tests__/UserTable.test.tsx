@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
+import UserTable from '@src/pages/User/UserTable.tsx';
 
 // Components
-import RoomTable from '@src/pages/Room/RoomTable';
 
 describe('UserTable', () => {
   const queryClient = new QueryClient();
@@ -11,7 +11,7 @@ describe('UserTable', () => {
   const wrapper = render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <RoomTable />
+        <UserTable />
       </BrowserRouter>
     </QueryClientProvider>
   );
