@@ -1,29 +1,29 @@
 import { useForm } from 'react-hook-form';
 
 // Components
-import Form from '@component/Form';
+import Form from '@src/components/Form';
 
 // Styled
 import { FieldInput, StyledLoginForm } from './styled';
-import Button from '@commonStyle/Button';
+import Button from '@src/commons/styles/Button';
 
 // Constants
 import {
   INVALID_EMAIL,
   REQUIRED_FIELD_ERROR,
-} from '@constant/formValidateMessage';
+} from '@src/constants/formValidateMessage';
 
 // Types
-import { ILogin } from '@type/common';
+import { ILogin } from '@src/types/common';
 
 // Hooks
-import { useLogin } from '@hook/authentication/useLogin';
+import { useLogin } from '@src/hooks/authentication/useLogin';
 
 // Helpers
-import { isValidRegex } from '@helper/validators';
+import { isValidRegex } from '@src/helpers/validators';
 
 // Constants
-import { REGEX } from '@constant/commons';
+import { REGEX } from '@src/constants/commons';
 
 const LoginForm = () => {
   const {

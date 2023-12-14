@@ -11,7 +11,7 @@ import { URLSearchParams } from 'url';
 import { useBookings } from '../useBookings';
 
 // Services
-import { getAllBookings } from '@service/bookingServices';
+import { getAllBookings } from '@src/services/bookingServices';
 
 jest.mock('react-router-dom', () => ({
   useSearchParams: jest.fn(),
@@ -22,7 +22,7 @@ jest.mock('@tanstack/react-query', () => ({
   useQuery: jest.fn(),
 }));
 
-jest.mock('@service/bookingServices', () => ({
+jest.mock('@src/services/bookingServices', () => ({
   getAllBookings: jest.fn(),
 }));
 
@@ -67,7 +67,7 @@ describe('useBookings hook', () => {
   });
 
   test('Should prefetch the second page when in the first page', async () => {
-    const sampleDate = { data: [{ id: 1, name: 'Booking 1' }], count: 7 };
+    const sampleDate = { data: [{ id: 1, name: 'Booking 1' }], count: 11 };
 
     (queryClient.prefetchQuery as jest.Mock) = jest.fn();
     (useSearchParams as jest.Mock).mockReturnValue([
@@ -105,7 +105,7 @@ describe('useBookings hook', () => {
   });
 
   test('Should prefetch the previous page and next page when in the second page', async () => {
-    const sampleDate = { data: [{ id: 1, name: 'Booking 1' }], count: 12 };
+    const sampleDate = { data: [{ id: 1, name: 'Booking 1' }], count: 22 };
 
     (useSearchParams as jest.Mock).mockReturnValue([
       new URLSearchParams('page=2'),

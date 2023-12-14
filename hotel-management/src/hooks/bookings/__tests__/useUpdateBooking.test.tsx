@@ -8,13 +8,13 @@ import {
 import { ReactNode } from 'react';
 
 // Types
-import { IBooking } from '@type/booking';
+import { IBooking } from '@src/types/booking';
 
 // Constants
-import { UPDATE_SUCCESS } from '@constant/messages';
+import { UPDATE_SUCCESS } from '@src/constants/messages';
 
 // Services
-import { updateBooking } from '@service/bookingServices';
+import { updateBooking } from '@src/services/bookingServices';
 
 // Hooks
 import { useUpdateBooking } from '../useUpdateBooking';
@@ -24,7 +24,7 @@ jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }));
-jest.mock('@service/bookingServices', () => ({
+jest.mock('@src/services/bookingServices', () => ({
   updateBooking: jest.fn(),
 }));
 jest.mock('react-hot-toast');

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // Styled
-import CommonInput from '@commonStyle/CommonInput';
+import CommonInput from '@src/commons/styles/CommonInput';
 
 const LoginLayout = styled.main`
   height: 100vh;

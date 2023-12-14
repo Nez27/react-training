@@ -2,26 +2,22 @@ import { MouseEvent, ReactNode, useContext, useState } from 'react';
 
 // Components
 import { HiEllipsisVertical } from 'react-icons/hi2';
-import ButtonIcon from '@component/ButtonIcon';
+import ButtonIcon from '../ButtonIcon';
 
 // Hooks
-import { useOutsideClick } from '@hook/useOutsideClick';
+import { useOutsideClick } from '@src/hooks/useOutsideClick';
 
 // Styled
-import {
-  StyledMenu,
-  StyledList,
-  StyledToggle
-} from './styled';
+import { StyledMenu, StyledList, StyledToggle } from './styled';
 
 // Contexts
-import MenusContext from '@context/MenuContext';
+import MenusContext from '@src/contexts/MenuContext';
 
 // Types
-import { Nullable } from '@type/common';
+import { Nullable } from '@src/types/common';
 
 interface IButton {
-  children?: string;
+  label?: string;
   icon?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
@@ -46,17 +42,11 @@ const Menus = ({ children }: { children: ReactNode }) => {
 };
 
 const Toggle = ({ id }: { id: string }): ReactNode => {
-  const {
-    openId,
-    close,
-    open
-  } = useContext(MenusContext);
+  const { openId, close, open } = useContext(MenusContext);
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    openId !== id
-      ? open!(id)
-      : close!();
+    openId !== id ? open!(id) : close!();
   };
 
   return (
@@ -81,7 +71,7 @@ const List = ({
   return <StyledList ref={ref}>{children}</StyledList>;
 };
 
-const Button = ({ children, icon, onClick, disabled }: IButton): ReactNode => {
+const Button = ({ label, icon, onClick, disabled }: IButton): ReactNode => {
   const { close } = useContext(MenusContext);
   const handleClick = () => {
     onClick?.();
@@ -91,14 +81,13 @@ const Button = ({ children, icon, onClick, disabled }: IButton): ReactNode => {
   return (
     <li>
       <ButtonIcon
+        text={label}
+        aria-label={label}
         icon={icon}
+        iconColor='var(--primary-color)'
         onClick={handleClick}
-        iconStyle={{ color: 'var(--primary-color)', size: '19px' }}
-        style={{ fontSize: '16px' }}
         disabled={disabled}
-      >
-        {children}
-      </ButtonIcon>
+      />
     </li>
   );
 };

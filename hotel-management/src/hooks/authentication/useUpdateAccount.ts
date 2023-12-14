@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 
 // Services
-import { updateAccount as updateAccountFn } from '@service/authenticationService';
+import { updateAccount as updateAccountFn } from '@src/services/authenticationService';
 
 // Constants
-import { UPDATE_ACCOUNT_SUCCESSFUL } from '@constant/messages';
+import { UPDATE_ACCOUNT_SUCCESSFUL } from '@src/constants/messages';
 
 /**
  * Update account currently login.

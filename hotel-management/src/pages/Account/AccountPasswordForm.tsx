@@ -3,24 +3,24 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 // Styled
-import Input from '@commonStyle/Input';
+import Input from '@src/commons/styles/Input';
 
 // Components
-import Form from '@component/Form';
+import Form from '@src/components/Form';
 
 // Constants
-import { REGEX } from '@constant/commons';
+import { REGEX } from '@src/constants/commons';
 import {
   PASSWORD_CONDITION,
   PASSWORD_NOT_MATCH,
   PASSWORD_NOT_MATCH_REQUIREMENT,
-} from '@constant/formValidateMessage';
+} from '@src/constants/formValidateMessage';
 
 // Helpers
-import { isValidRegex } from '@helper/validators';
+import { isValidRegex } from '@src/helpers/validators';
 
 // Hooks
-import { useUpdateAccount } from '@hook/authentication/useUpdateAccount';
+import { useUpdateAccount } from '@src/hooks/authentication/useUpdateAccount';
 
 interface IAccountPasswordForm {
   password: string;

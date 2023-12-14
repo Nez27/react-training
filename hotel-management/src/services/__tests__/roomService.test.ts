@@ -1,8 +1,8 @@
-import { ERROR_CREATE_ROOM, ERROR_DELETE_ROOM, ERROR_FETCHING_ROOM, ERROR_UPDATE_ROOM } from '@constant/messages';
-import { createRoom, getAllRooms, getRoomById, setIsDeleteRoom, updateRoom, updateRoomStatus } from '@service/roomServices';
-import supabase from '@service/supabaseService';
+import { ERROR_CREATE_ROOM, ERROR_DELETE_ROOM, ERROR_FETCHING_ROOM, ERROR_UPDATE_ROOM } from '@src/constants/messages';
+import { createRoom, getAllRooms, getRoomById, setIsDeleteRoom, updateRoom, updateRoomStatus } from '@src/services/roomServices';
+import supabase from '@src/services/supabaseService';
 
-jest.mock('@service/supabaseService', () => ({
+jest.mock('@src/services/supabaseService', () => ({
   __esModule: true,
   default: {
     from: jest.fn(() => ({

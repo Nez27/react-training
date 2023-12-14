@@ -1,18 +1,18 @@
 // Types
-import { IBooking, TBookingResponse } from '@type/booking';
+import { IBooking, TBookingResponse } from '@src/types/booking';
 
 // Services
 import supabase from './supabaseService';
 
 // Constants
-import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import { DEFAULT_PAGE_SIZE } from '@src/constants/config';
 import {
   BOOKINGS_TABLE,
   ERROR_CHECKOUT,
   ERROR_CREATE_BOOKING,
   ERROR_FETCHING_BOOKING,
   ERROR_UPDATE_BOOKING,
-} from '@constant/messages';
+} from '@src/constants/messages';
 import { updateRoomStatus } from './roomServices';
 import { updateUserBookedStatus } from './userServices';
 

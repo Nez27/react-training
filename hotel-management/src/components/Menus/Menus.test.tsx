@@ -17,12 +17,16 @@ describe('Menus', () => {
           <Menus.Toggle id={id} />
 
           <Menus.List id={id.toString()}>
-            <Menus.Button onClick={handleOnClick} icon={<RiEditBoxFill />}>
-              Edit
-            </Menus.Button>
-            <Menus.Button onClick={handleOnClick} icon={<RiDeleteBin2Line />}>
-              Delete
-            </Menus.Button>
+            <Menus.Button
+              onClick={handleOnClick}
+              icon={<RiEditBoxFill />}
+              label="Edit"
+            />
+            <Menus.Button
+              onClick={handleOnClick}
+              icon={<RiDeleteBin2Line />}
+              label="Delete"
+            />
           </Menus.List>
         </Menus.Menu>
       </Menus>

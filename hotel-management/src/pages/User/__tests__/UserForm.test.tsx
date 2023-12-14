@@ -11,21 +11,21 @@ import {
 import UserForm from '../UserForm';
 
 // Types
-import { IUser } from '@type/user';
+import { IUser } from '@src/types/user';
 
 const mockCreateUser = jest.fn();
 const mockUpdateUser = jest.fn();
 
-jest.mock('@hook/users/useCreateUser.ts', () => ({
-  ...jest.requireActual('@hook/users/useCreateUser.ts'),
+jest.mock('@src/hooks/users/useCreateUser.ts', () => ({
+  ...jest.requireActual('@src/hooks/users/useCreateUser.ts'),
   useCreateUser: jest.fn(() => ({
     isCreating: false,
     createUser: mockCreateUser,
   })),
 }));
 
-jest.mock('@hook/users/useUpdateUser', () => ({
-  ...jest.requireActual('@hook/users/useUpdateUser'),
+jest.mock('@src/hooks/users/useUpdateUser', () => ({
+  ...jest.requireActual('@src/hooks/users/useUpdateUser'),
   useUpdateUser: jest.fn(() => ({
     isUpdating: false,
     updateUser: mockUpdateUser,

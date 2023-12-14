@@ -1,11 +1,11 @@
-import { ILogin } from '@type/common';
+import { ILogin } from '@src/types/common';
 import { UserAttributes } from '@supabase/supabase-js';
 
 // Services
 import supabase from './supabaseService';
 
 // Types
-import { IAccount } from '@type/account';
+import { IAccount } from '@src/types/account';
 
 /**
  * Login services

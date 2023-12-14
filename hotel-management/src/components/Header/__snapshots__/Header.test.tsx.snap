@@ -19,8 +19,9 @@ exports[`Header Should render correctly 1`] = `
           <li>
             <button
               aria-label="Profile"
-              class="sc-bdnyFh bxHnoO"
-              iconstyle="[object Object]"
+              class="sc-bdnyFh olJWF"
+              iconcolor="#000"
+              iconsize="23px"
             >
               <svg
                 fill="currentColor"
@@ -39,14 +40,14 @@ exports[`Header Should render correctly 1`] = `
                 />
               </svg>
                
-              <span />
             </button>
           </li>
           <li>
             <button
               aria-label="Logout"
-              class="sc-bdnyFh bxHnoO"
-              iconstyle="[object Object]"
+              class="sc-bdnyFh olJWF"
+              iconcolor="#000"
+              iconsize="23px"
             >
               <svg
                 aria-hidden="true"
@@ -65,7 +66,6 @@ exports[`Header Should render correctly 1`] = `
                 />
               </svg>
                
-              <span />
             </button>
           </li>
         </ul>
@@ -87,8 +87,9 @@ exports[`Header Should render correctly 1`] = `
         <li>
           <button
             aria-label="Profile"
-            class="sc-bdnyFh bxHnoO"
-            iconstyle="[object Object]"
+            class="sc-bdnyFh olJWF"
+            iconcolor="#000"
+            iconsize="23px"
           >
             <svg
               fill="currentColor"
@@ -107,14 +108,14 @@ exports[`Header Should render correctly 1`] = `
               />
             </svg>
              
-            <span />
           </button>
         </li>
         <li>
           <button
             aria-label="Logout"
-            class="sc-bdnyFh bxHnoO"
-            iconstyle="[object Object]"
+            class="sc-bdnyFh olJWF"
+            iconcolor="#000"
+            iconsize="23px"
           >
             <svg
               aria-hidden="true"
@@ -133,7 +134,6 @@ exports[`Header Should render correctly 1`] = `
               />
             </svg>
              
-            <span />
           </button>
         </li>
       </ul>

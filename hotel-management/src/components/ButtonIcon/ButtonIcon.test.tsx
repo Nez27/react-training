@@ -9,7 +9,6 @@ describe('ButtonIcon', () => {
     <ButtonIcon
       aria-label="Logout"
       icon={<HiOutlineLogout />}
-      iconStyle={{ size: '23px' }}
     />
   );
 

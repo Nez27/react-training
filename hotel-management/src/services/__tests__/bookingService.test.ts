@@ -3,17 +3,17 @@ import {
   ERROR_CREATE_BOOKING,
   ERROR_FETCHING_BOOKING,
   ERROR_UPDATE_BOOKING,
-} from '@constant/messages';
+} from '@src/constants/messages';
 import {
   checkOutBooking,
   createBooking,
   getAllBookings,
   updateBooking,
-} from '@service/bookingServices';
-import supabase from '@service/supabaseService';
-import { IBooking } from '@type/booking';
+} from '@src/services/bookingServices';
+import supabase from '@src/services/supabaseService';
+import { IBooking } from '@src/types/booking';
 
-jest.mock('@service/supabaseService', () => ({
+jest.mock('@src/services/supabaseService', () => ({
   __esModule: true,
   default: {
     from: jest.fn(() => ({

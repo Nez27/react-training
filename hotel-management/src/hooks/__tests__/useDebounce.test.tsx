@@ -2,7 +2,7 @@ import { act, fireEvent, render } from '@testing-library/react';
 import { useState } from 'react';
 
 // Hooks
-import { useDebounce } from '@hook/useDebounce';
+import { useDebounce } from '../useDebounce';
 
 jest.useFakeTimers();
 

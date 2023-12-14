@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 
 // Constants
-import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import { DEFAULT_PAGE_SIZE } from '@src/constants/config';
 
 // Styled
 import { Buttons, PaginationBtn, StyledPagination } from './styled';

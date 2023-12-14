@@ -3,12 +3,12 @@ import {
   login,
   logout,
   updateAccount,
-} from '@service/authenticationService';
-import supabase from '@service/supabaseService';
+} from '@src/services/authenticationService';
+import supabase from '@src/services/supabaseService';
 import { Session, UserAttributes } from '@supabase/supabase-js';
 
 // Mock Supabase module
-jest.mock('@service/supabaseService', () => ({
+jest.mock('@src/services/supabaseService', () => ({
   auth: {
     signInWithPassword: jest.fn(),
     getSession: jest.fn(),

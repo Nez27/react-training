@@ -1,18 +1,18 @@
 // Types
-import { IUser } from '@type/user';
+import { IUser } from '@src/types/user';
 
 // Services
 import supabase from './supabaseService';
 
 // Constants
-import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import { DEFAULT_PAGE_SIZE } from '@src/constants/config';
 import {
   ERROR_CREATE_USER,
   ERROR_DELETE_USER,
   ERROR_FETCHING_USER,
   ERROR_UPDATE_USER,
   USERS_TABLE,
-} from '@constant/messages';
+} from '@src/constants/messages';
 
 /**
  * Create user to the database

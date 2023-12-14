@@ -1,10 +1,10 @@
-import { useLogin } from "@hook/authentication/useLogin";
-import LoginForm from "@page/Login/LoginForm";
+import { useLogin } from "@src/hooks/authentication/useLogin";
+import LoginForm from "@src/pages/Login/LoginForm";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 
 
 // Mock the useLogin hook
-jest.mock('@hook/authentication/useLogin', () => ({
+jest.mock('@src/hooks/authentication/useLogin', () => ({
   useLogin: jest.fn(),
 }));
 

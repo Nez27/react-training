@@ -21,8 +21,9 @@ exports[`AppLayout Should render correctly 1`] = `
             <li>
               <button
                 aria-label="Profile"
-                class="sc-bdnyFh bxHnoO"
-                iconstyle="[object Object]"
+                class="sc-bdnyFh olJWF"
+                iconcolor="#000"
+                iconsize="23px"
               >
                 <svg
                   fill="currentColor"
@@ -41,14 +42,14 @@ exports[`AppLayout Should render correctly 1`] = `
                   />
                 </svg>
                  
-                <span />
               </button>
             </li>
             <li>
               <button
                 aria-label="Logout"
-                class="sc-bdnyFh bxHnoO"
-                iconstyle="[object Object]"
+                class="sc-bdnyFh olJWF"
+                iconcolor="#000"
+                iconsize="23px"
               >
                 <svg
                   aria-hidden="true"
@@ -67,7 +68,6 @@ exports[`AppLayout Should render correctly 1`] = `
                   />
                 </svg>
                  
-                <span />
               </button>
             </li>
           </ul>
@@ -172,8 +172,9 @@ exports[`AppLayout Should render correctly 1`] = `
           <li>
             <button
               aria-label="Profile"
-              class="sc-bdnyFh bxHnoO"
-              iconstyle="[object Object]"
+              class="sc-bdnyFh olJWF"
+              iconcolor="#000"
+              iconsize="23px"
             >
               <svg
                 fill="currentColor"
@@ -192,14 +193,14 @@ exports[`AppLayout Should render correctly 1`] = `
                 />
               </svg>
                
-              <span />
             </button>
           </li>
           <li>
             <button
               aria-label="Logout"
-              class="sc-bdnyFh bxHnoO"
-              iconstyle="[object Object]"
+              class="sc-bdnyFh olJWF"
+              iconcolor="#000"
+              iconsize="23px"
             >
               <svg
                 aria-hidden="true"
@@ -218,7 +219,6 @@ exports[`AppLayout Should render correctly 1`] = `
                 />
               </svg>
                
-              <span />
             </button>
           </li>
         </ul>

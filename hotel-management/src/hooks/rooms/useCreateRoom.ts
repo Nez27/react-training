@@ -2,13 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 // Services
-import { createRoom as createRoomFn } from '@service/roomServices';
+import { createRoom as createRoomFn} from '@src/services/roomServices';
 
 // Constants
-import { ADD_SUCCESS } from '@constant/messages';
+import { ADD_SUCCESS } from '@src/constants/messages';
 
 // Hooks
-import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
+import { useUserRoomAvailable } from '../useUserRoomAvailable';
 
 /**
  * Create room on database

@@ -5,10 +5,10 @@ import { useSearchParams } from 'react-router-dom';
 import { StyledSearch } from './styled';
 
 // Hooks
-import { useDebounce } from '@hook/useDebounce';
+import { useDebounce } from '@src/hooks/useDebounce';
 
 // Types
-import { Nullable } from '@type/common';
+import { Nullable } from '@src/types/common';
 
 interface ISearch {
   setPlaceHolder: string;
@@ -17,7 +17,12 @@ interface ISearch {
 const Search = ({ setPlaceHolder }: ISearch) => {
   const field = 'search';
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState<Nullable<string>>(null);
+  const [query, setQuery] = useState<Nullable<string>>(
+    searchParams.get(field)
+      ? searchParams.get(field)
+      : '',
+  );
+  
   const debounceValue = useDebounce<Nullable<string>>(query, 700);
 
   useEffect(() => {
@@ -32,6 +37,7 @@ const Search = ({ setPlaceHolder }: ISearch) => {
     <StyledSearch
       onChange={(e) => setQuery(e.target.value)}
       placeholder={setPlaceHolder}
+      value={query!}
     />
   );
 };

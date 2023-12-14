@@ -2,13 +2,13 @@ import toast from 'react-hot-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // Constants
-import { CHECKOUT_SUCCESS } from '@constant/messages';
+import { CHECKOUT_SUCCESS } from '@src/constants/messages';
 
 // Hooks
-import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
+import { useUserRoomAvailable } from '../useUserRoomAvailable';
 
 // Services
-import { checkOutBooking as checkOutBookingFn } from '@service/bookingServices';
+import { checkOutBooking as checkOutBookingFn } from '@src/services/bookingServices';
 
 const useCheckOut = () => {
   const queryClient = useQueryClient();

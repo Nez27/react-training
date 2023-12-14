@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 // Services
-import { logout as logoutFn } from '@service/authenticationService';
+import { logout as logoutFn } from '@src/services/authenticationService';
 
 /**
  * Logout web

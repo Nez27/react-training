@@ -12,10 +12,10 @@ exports[`Pagination Should render correctly 1`] = `
           Showing 
           1
            to 
-          5
+          10
            of 
           <span>
-            10
+            20
           </span>
            results
         </p>
@@ -84,10 +84,10 @@ exports[`Pagination Should render correctly 1`] = `
         Showing 
         1
          to 
-        5
+        10
          of 
         <span>
-          10
+          20
         </span>
          results
       </p>

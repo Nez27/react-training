@@ -24,15 +24,7 @@
 
     /* Alias */
     "paths": {
-      "@service/*": ["./src/services/*"],
-      "@constant/*": ["./src/constants/*"],
-      "@hook/*": ["./src/hooks/*"],
-      "@helper/*": ["./src/helpers/*"],
-      "@context/*": ["./src/contexts/*"],
-      "@component/*": ["./src/components/*"],
-      "@commonStyle/*": ["./src/commons/styles/*"],
-      "@type/*": ["./src/types/*"],
-      "@page/*": ["./src/pages/*"],
+      "@src/*": ["./src/*"],
     }
   },
   "include": ["src", "test"],

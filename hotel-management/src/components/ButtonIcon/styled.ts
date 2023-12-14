@@ -1,89 +1,104 @@
-import styled, { css } from 'styled-components';
+import styled, { css, RuleSet } from 'styled-components';
 
 interface IStyledButtonIcon {
-  isHaveChildren: boolean;
-  style?: {
-    fontSize?: string;
-    backgroundColor?: string;
-    color?: string;
-  };
-  iconStyle?: {
-    color?: string;
-    size?: string;
-  };
+  iconSize?: string;
+  iconColor?: string;
+  fontSize?: string;
+  variations?: string;
 }
+
+export interface IVariations {
+  [key: string]: RuleSet<object>;
+}
+
+const variations: IVariations = {
+  success: css`
+    background-color: var(--success-btn-color);
+    color: var(--light-text);
+
+    &:hover {
+      background-color: var(--success-btn-hover-color);
+    }
+    
+    &:disabled {
+      background-color: var(--success-btn-hover-color);
+    }
+  `,
+  primary: css`
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    
+    &:hover {
+      background-color: var(--primary-hover-color);
+    }
+  `,
+  danger: css`
+    background-color: var(--danger-btn-color);
+    color: var(--light-text);
+    
+    &:hover {
+      background-color: var(--danger-btn-hover-color);
+    }
+
+    &:disabled {
+      background-color: var(--danger-btn-hover-color);
+    }
+  `,
+  default: css`
+    &:hover {
+      background-color: var(--hover-background-color);
+    }
+  `,
+};
 
 const StyledButtonIcon = styled.button<IStyledButtonIcon>`
   background: none;
 
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  ${(props) =>
+    props.fontSize &&
+    css`
+      font-size: ${props.fontSize};
+    `}
+
+  padding: 10px 20px;
   transition: all 0.2s;
 
   border: none;
-
-  ${(props) =>
-    props.style?.fontSize &&
-    css`
-      font-size: ${props.style.fontSize};
-    `}
-
-  ${(props) =>
-    props.style?.fontSize &&
-    css`
-      font-size: ${props.style.fontSize};
-    `}
-
-  ${(props) =>
-    props.color &&
-    css`
-      font-size: ${props.color};
-    `}
-
-  ${(props) =>
-    props.isHaveChildren
-      ? css`
-          display: flex;
-          align-items: center;
-          gap: 10px;
-
-          text-align: left;
-          width: 100%;
-        `
-      : css`
-          border-radius: var(--radius-md);
-        `}
-
-  &:hover {
-    background-color: var(--hover-background-color);
+  border-radius: var(--radius-md);
+  
+  &:disabled {
+    cursor: not-allowed;
   }
+
+  ${(props) => variations[props.variations!]}
 
   & svg {
     ${(props) =>
-      props.iconStyle?.size &&
+      props.iconSize &&
       css`
-        width: ${props.iconStyle.size};
-        height: ${props.iconStyle.size};
+        width: ${props.iconSize};
+        height: ${props.iconSize};
       `}
 
     ${(props) =>
-      props.iconStyle?.color &&
+      props.iconColor &&
       css`
-        color: ${props.iconStyle.color};
+        color: ${props.iconColor};
       `}
+
     transition: all 0.3s;
   }
 `;
 
 StyledButtonIcon.defaultProps = {
-  style: {
-    fontSize: '14px',
-    backgroundColor: 'var(--primary-color)',
-    color: '#000',
-  },
-  iconStyle: {
-    color: '#000',
-    size: '14px',
-  },
+  iconSize: '16px',
+  iconColor: '#000',
+  fontSize: 'var(--fs-sm-2x)',
+  variations: 'default',
 };
 
 export { StyledButtonIcon };

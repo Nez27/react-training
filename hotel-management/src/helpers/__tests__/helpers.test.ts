@@ -1,5 +1,5 @@
 // Helpers
-import { formatCurrency, getDayDiff } from '@helper/helper';
+import { formatCurrency, getDayDiff } from '../helper';
 
 describe('formatCurrency', () => {
   test('Should format correctly', () => {

@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 // Components
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { HiOutlineLogout } from 'react-icons/hi';
-import ButtonIcon from '@component/ButtonIcon';
+import ButtonIcon from '../ButtonIcon';
 
 // Styled
 import { StyledHeaderMenu } from './styled';
 
 // Hooks
-import { useLogout } from '@hook/authentication/useLogout';
+import { useLogout } from '@src/hooks/authentication/useLogout';
 
 const HeaderMenu = () => {
   const { logout, isPending } = useLogout();
@@ -19,19 +19,19 @@ const HeaderMenu = () => {
     <StyledHeaderMenu>
       <li>
         <ButtonIcon
-          label="Profile"
+          aria-label="Profile"
           icon={<IoPersonCircleOutline />}
-          iconStyle={{ size: '23px' }}
+          iconSize='23px'
           onClick={() => navigate('/account')}
         />
       </li>
       <li>
         <ButtonIcon
-          onClick={logout}
+          onClick={() => logout()}
           disabled={isPending}
-          label='Logout'
+          aria-label='Logout'
           icon={<HiOutlineLogout />}
-          iconStyle={{ size: '23px' }}
+          iconSize='23px'
         />
       </li>
     </StyledHeaderMenu>

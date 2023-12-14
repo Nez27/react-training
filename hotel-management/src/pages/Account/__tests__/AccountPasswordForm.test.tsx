@@ -10,9 +10,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AccountPasswordForm from '../AccountPasswordForm';
 
 // Hooks
-import { useUpdateAccount } from '@hook/authentication/useUpdateAccount';
+import { useUpdateAccount } from '@src/hooks/authentication/useUpdateAccount';
 
-jest.mock('@hook/authentication/useUpdateAccount');
+jest.mock('@src/hooks/authentication/useUpdateAccount');
 
 describe('AccountPasswordForm', () => {
   let wrapper: RenderResult | null = null;

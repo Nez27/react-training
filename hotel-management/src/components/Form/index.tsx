@@ -11,7 +11,7 @@ import {
 } from './styled';
 
 // Types
-import { TDirection } from '@type/common';
+import { TDirection } from '@src/types/common';
 
 interface IFormProps {
   children: ReactNode;

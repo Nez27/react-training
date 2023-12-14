@@ -8,13 +8,13 @@ import useCheckOut from '../useCheckout';
 import { act, renderHook } from '@testing-library/react';
 
 // Services
-import { checkOutBooking } from '@service/bookingServices';
+import { checkOutBooking } from '@src/services/bookingServices';
 
 // Hooks
-import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
+import { useUserRoomAvailable } from '@src/hooks/useUserRoomAvailable';
 
 // Constants
-import { CHECKOUT_SUCCESS } from '@constant/messages';
+import { CHECKOUT_SUCCESS } from '@src/constants/messages';
 
 // Mock services and constants
 jest.mock('react-hot-toast');
@@ -22,10 +22,10 @@ jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }));
-jest.mock('@service/bookingServices', () => ({
+jest.mock('@src/services/bookingServices', () => ({
   checkOutBooking: jest.fn(),
 }));
-jest.mock('@hook/useUserRoomAvailable', () => ({
+jest.mock('@src/hooks/useUserRoomAvailable', () => ({
   useUserRoomAvailable: jest.fn(),
 }));
 

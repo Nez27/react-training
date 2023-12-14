@@ -6,8 +6,10 @@ exports[`ButtonIcon Should render correctly 1`] = `
   "baseElement": <body>
     <div>
       <button
-        class="sc-bdnyFh bxHnoO"
-        iconstyle="[object Object]"
+        aria-label="Logout"
+        class="sc-bdnyFh gPNQLR"
+        iconcolor="#000"
+        iconsize="16px"
       >
         <svg
           aria-hidden="true"
@@ -26,14 +28,15 @@ exports[`ButtonIcon Should render correctly 1`] = `
           />
         </svg>
          
-        <span />
       </button>
     </div>
   </body>,
   "container": <div>
     <button
-      class="sc-bdnyFh bxHnoO"
-      iconstyle="[object Object]"
+      aria-label="Logout"
+      class="sc-bdnyFh gPNQLR"
+      iconcolor="#000"
+      iconsize="16px"
     >
       <svg
         aria-hidden="true"
@@ -52,7 +55,6 @@ exports[`ButtonIcon Should render correctly 1`] = `
         />
       </svg>
        
-      <span />
     </button>
   </div>,
   "debug": [Function],

@@ -1,10 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Types
-import { Database } from '@type/supabase';
+import { Database } from '@src/types/supabase';
 
 // Constants
-import { supabaseKey, supabaseUrl } from '@constant/config';
+import { supabaseKey, supabaseUrl } from '@src/constants/config';
 
 const supabase = createClient<Database>(supabaseUrl, supabaseKey!);
 

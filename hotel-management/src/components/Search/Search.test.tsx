@@ -9,7 +9,7 @@ jest.mock('react-router-dom', () => ({
   useSearchParams: jest.fn(),
 }));
 
-jest.mock('@hook/useDebounce', () => ({
+jest.mock('@src/hooks/useDebounce', () => ({
   useDebounce: jest.fn((value) => value),
 }));
 

@@ -2,13 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 // Services
-import { setIsDeleteRoom as setIsDeleteRoomFn } from '@service/roomServices';
+import { setIsDeleteRoom as setIsDeleteRoomFn } from '@src/services/roomServices';
 
 // Constants
-import * as messages from '@constant/messages';
+import { DELETE_SUCCESS } from '@src/constants/messages';
 
 // Hooks
-import { useUserRoomAvailable } from '@hook/useUserRoomAvailable';
+import { useUserRoomAvailable } from '../useUserRoomAvailable';
 
 /**
  * Delete the room from database
@@ -25,7 +25,7 @@ const useSetIsDeleteRoom = () => {
   } = useMutation({
     mutationFn: setIsDeleteRoomFn,
     onSuccess: (room) => {
-      toast.success(messages.DELETE_SUCCESS);
+      toast.success(DELETE_SUCCESS);
       queryClient.invalidateQueries({
         queryKey: ['rooms'],
       });

@@ -3,10 +3,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 // Services
-import { getAllUsers } from '@service/userServices';
+import { getAllUsers } from '@src/services/userServices';
 
 // Constants
-import { DEFAULT_PAGE_SIZE } from '@constant/config';
+import { DEFAULT_PAGE_SIZE } from '@src/constants/config';
 
 /**
  * Fetch data of users from database

@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
 
 // Styled
-import Spinner from '@commonStyle/Spinner';
+import Spinner from '@src/commons/styles/Spinner';
 import { FullPageLayout } from './styled';
 
 // Hooks
-import { useAccount } from '@hook/authentication/useAccount';
+import { useAccount } from '@src/hooks/authentication/useAccount';
 
 const RootLayout = () => {
   const { isPending } = useAccount();

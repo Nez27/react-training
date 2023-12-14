@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Pagination from '.';
 
 describe('Pagination', () => {
-  const count = 10;
+  const count = 20;
   let wrapper: RenderResult | null = null;
 
   beforeEach(() => {
