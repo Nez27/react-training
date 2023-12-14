@@ -25,6 +25,12 @@ const StyledBody = styled.div`
 
 const StyledRow = styled(CommonRow)`
   padding: 20px;
+  
+  cursor: pointer;
+  
+  &:hover {
+    background-color: var(--item-hover);
+  }
 
   &.selected {
     background-color: var(--item-selected);

@@ -17,7 +17,12 @@ interface ISearch {
 const Search = ({ setPlaceHolder }: ISearch) => {
   const field = 'search';
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState<Nullable<string>>(null);
+  const [query, setQuery] = useState<Nullable<string>>(
+    searchParams.get(field)
+      ? searchParams.get(field)
+      : '',
+  );
+  
   const debounceValue = useDebounce<Nullable<string>>(query, 700);
 
   useEffect(() => {
@@ -32,6 +37,7 @@ const Search = ({ setPlaceHolder }: ISearch) => {
     <StyledSearch
       onChange={(e) => setQuery(e.target.value)}
       placeholder={setPlaceHolder}
+      value={query!}
     />
   );
 };

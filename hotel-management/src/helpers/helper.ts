@@ -29,7 +29,12 @@ const getDayDiff = (startDate: Date, endDate: Date): number => {
   return 0;
 }
 
+const findItemInListById = <T,>(id: number, listItem: T[]): T | undefined => {
+  return listItem.find((item) => item["id" as keyof typeof item] === id);
+}
+
 export {
   formatCurrency,
   getDayDiff,
+  findItemInListById,
 };

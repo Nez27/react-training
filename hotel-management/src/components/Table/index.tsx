@@ -1,29 +1,38 @@
 // Types
-import { ColumnProps } from '@src/types/common';
+import {ColumnProps} from '@src/types/common';
 
 // Styled
 import {
-  StyledBody, StyledFooter, StyledHeader, StyledRow, StyledTable
+  StyledBody,
+  StyledFooter,
+  StyledHeader,
+  StyledRow,
+  StyledTable,
 } from './styled';
 
 // Components
 import Pagination from '../Pagination';
-import { TbArrowNarrowRight } from 'react-icons/tb';
-import { StyledTableOption } from '@src/pages/Room/styled.ts';
+import {TbArrowNarrowRight} from 'react-icons/tb';
+import {StyledTableOption} from '@src/pages/Room/styled.ts';
 import OrderBy from '@src/components/OrderBy';
-import { ORDERBY_OPTIONS, ROOM_PAGE } from '@src/constants/commons.ts';
+import {ORDERBY_OPTIONS} from '@src/constants/commons.ts';
 import SortBy from '@src/components/SortBy';
 import Search from '@src/components/Search';
-import Message from '@src/components/Message';
 import Direction from '@src/commons/styles/Direction.ts';
-import { Dispatch, SetStateAction } from 'react';
+import {Dispatch, SetStateAction} from 'react';
 
 const parseWidthString = (columnsWidth: number[]): string => {
   let result: string = '';
 
-  const totalWidth = columnsWidth.reduce((partialSum, a) => partialSum + a, 0);
+  const totalWidth = columnsWidth.reduce((
+    partialSum,
+    a
+  ) => partialSum + a, 0);
   columnsWidth.forEach((width) => {
-    result += Math.round((width / totalWidth) * 100).toString() + '% ';
+    result += Math.round((
+      width / totalWidth
+    ) * 100)
+      .toString() + '% ';
   });
 
   return result;
@@ -34,13 +43,16 @@ type Props<T> = {
   rows: T[];
   stateSelected: {
     itemSelected: T | undefined;
-    setItemSelected: Dispatch<SetStateAction<T | undefined>>
+    setItemSelected: Dispatch<SetStateAction<T | undefined>>;
   };
   count?: number | null;
   onRowClick?: (rowData: T) => void;
   enabledOrder?: boolean;
-  enabledSort?: boolean;
-  enabledSearch?: boolean;
+  sortBy?: {
+    value: string;
+    label: string;
+  }[];
+  searchPlaceHolder?: string;
 };
 
 const Table = <T, >({
@@ -49,18 +61,24 @@ const Table = <T, >({
   count,
   onRowClick,
   stateSelected,
-  enabledSort = false,
-  enabledSearch = false,
-  enabledOrder = false
+  sortBy,
+  searchPlaceHolder,
+  enabledOrder = false,
 }: Props<T>) => {
   const width = parseWidthString(columns.map((item) => item.width));
-  const { itemSelected, setItemSelected } = stateSelected;
+  const {itemSelected, setItemSelected} = stateSelected;
 
-  const headers = columns.map((column, index) => {
+  const headers = columns.map((
+    column,
+    index
+  ) => {
     return <div key={`headCell-${index}`}>{column.title}</div>;
   });
 
-  const renderRows = rows.map((row, rowIndex) => {
+  const renderRows = rows.map((
+    row,
+    rowIndex
+  ) => {
     const handleRowClick = () => {
       if (onRowClick) {
         onRowClick(row);
@@ -73,45 +91,61 @@ const Table = <T, >({
         key={`row-${rowIndex}`}
         width={width}
         onDoubleClick={handleRowClick}
-        className={JSON.stringify(itemSelected) === JSON.stringify(row)
-          ? 'selected'
-          : ''
-        }>
-        {columns.map((column, columnIndex) => {
+        className={
+          JSON.stringify(itemSelected) === JSON.stringify(row)
+            ? 'selected'
+            : ''
+        }
+      >
+        {columns.map((
+          column,
+          columnIndex
+        ) => {
           const value = row[column.key as keyof typeof row] as string;
 
           if (column.isDateValue) {
-            return (<div
-              style={{ display: 'flex', alignItems: 'center' }}
-              key={`cell-${columnIndex}`}
-            >
-              {value[0]} &nbsp; <TbArrowNarrowRight />
-              &nbsp; {value[1]}
-            </div>);
+            return (
+              <div
+                style={{display: 'flex', alignItems: 'center'}}
+                key={`cell-${columnIndex}`}
+              >
+                {value[0]} &nbsp; <TbArrowNarrowRight/>
+                &nbsp; {value[1]}
+              </div>
+            );
           }
 
           return <div key={`cell-${columnIndex}`}>{value}</div>;
         })}
-      </StyledRow>);
+      </StyledRow>
+    );
   });
 
-  return (<Direction>
-    <StyledTableOption>
-      {enabledOrder && <OrderBy options={ORDERBY_OPTIONS} />}
-      {enabledSort && <SortBy options={ROOM_PAGE.SORTBY_OPTIONS} />}
-      {enabledSearch && <Search setPlaceHolder="Search by name..." />}
-    </StyledTableOption>
+  return (
+    <Direction>
+      <StyledTableOption>
+        {enabledOrder && <OrderBy options={ORDERBY_OPTIONS}/>}
+        {Boolean(sortBy?.length) && <SortBy options={sortBy!}/>}
+        {Boolean(searchPlaceHolder) && <Search setPlaceHolder={searchPlaceHolder!}/>}
+      </StyledTableOption>
 
-    {rows && rows.length ? (<StyledTable>
-      <StyledHeader width={width}>{headers}</StyledHeader>
+      {rows && rows.length &&
+        (
+          <StyledTable>
+            <StyledHeader width={width}>{headers}</StyledHeader>
 
-      <StyledBody>{renderRows}</StyledBody>
+            <StyledBody>{renderRows}</StyledBody>
 
-      {Boolean(count) && (<StyledFooter>
-        <Pagination count={count!} />
-      </StyledFooter>)}
-    </StyledTable>) : (<Message>No data to show here!</Message>)}
-  </Direction>);
-};
+            {Boolean(count) && (
+              <StyledFooter>
+                <Pagination count={count!}/>
+              </StyledFooter>
+            )}
+          </StyledTable>
+        )
+      }
+    </Direction>
+  );
+}
 
 export default Table;

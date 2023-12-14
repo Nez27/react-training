@@ -37,6 +37,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
     usersAvailable,
     dispatch
   } = useUserRoomAvailable();
+  
   const { isCreating, createBooking } = useCreateBooking();
   const { isUpdating, updateBooking } = useUpdateBooking();
   const isLoading = isCreating || isUpdating;
@@ -83,7 +84,7 @@ const BookingForm = ({ onCloseModal, booking }: IBookingFormProp) => {
             type: 'updateStatusRoom',
             payload: [{ id: newBooking.roomId, status: true }],
           });
-
+          
           // Update room, user available in server
           await updateRoomStatus(newBooking.roomId, true);
           await updateUserBookedStatus(newBooking.userId, true);

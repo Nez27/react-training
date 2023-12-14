@@ -57,7 +57,7 @@ const AppLayout = () => {
   }, []);
 
   return (
-    <UserRoomAvailableContext.Provider value={{usersAvailable, roomsAvailable}}>
+    <UserRoomAvailableContext.Provider value={{usersAvailable, roomsAvailable, dispatch}}>
       <StyledAppLayout>
         <Header accountName={account?.user_metadata.fullName} />
         <Sidebar heading="Hotel Management" />

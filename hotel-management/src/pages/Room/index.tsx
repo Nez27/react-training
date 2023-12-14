@@ -19,13 +19,20 @@ import { IRoom } from '@src/types/room.ts';
 // Hooks
 import { useRooms } from '@src/hooks/rooms/useRooms.ts';
 import { useEffect, useState } from 'react';
+import {FORM, ROOM_PAGE} from '@src/constants/commons.ts';
+import { findItemInListById } from '@src/helpers/helper.ts';
+import ConfirmMessage from '@src/components/ConfirmMessage';
+import { useSetIsDeleteRoom } from '@src/hooks/rooms/useSetIsDeleteRoom.ts';
+import Message from "@src/components/Message";
 
 interface IRoomTable extends Omit<IRoom, 'status'> {
   status: string;
 }
 
 const Room = () => {
+  const { setIsDeleteRoom } = useSetIsDeleteRoom();
   const [itemSelected, setItemSelected] = useState<IRoomTable>();
+  let roomSelected: IRoom | undefined;
 
   const columns: ColumnProps[] = [
     {
@@ -50,7 +57,7 @@ const Room = () => {
     }
   ];
   const { isLoading, rooms, count } = useRooms();
-  
+
   // Reset value when rooms changed.
   useEffect(() => {
     setItemSelected(undefined);
@@ -63,6 +70,10 @@ const Room = () => {
       : 'Available'
   }));
 
+  if (itemSelected && rooms) {
+    roomSelected = findItemInListById<IRoom>(itemSelected.id, rooms);
+  }
+
   return (
     <StyledRoom>
       <Direction type="horizontal">
@@ -71,7 +82,7 @@ const Room = () => {
         <Modal>
           <ActionTable>
             <Modal.Open
-              modalName="room-form"
+              modalName={FORM.ROOM}
               renderChildren={(onCloseModal) => (
                 <ButtonIcon
                   icon={<MdOutlineAddCircleOutline />}
@@ -84,32 +95,65 @@ const Room = () => {
                 />
               )}
             />
+
+            <Modal.Open
+              modalName={FORM.EDIT}
+              renderChildren={(onCloseModal) => (
+                <ButtonIcon
+                  icon={<FiEdit />}
+                  text={'Edit'}
+                  iconSize={'18px'}
+                  fontSize={'var(--fs-sm)'}
+                  variations={'success'}
+                  iconColor={'white'}
+                  disabled={!itemSelected}
+                  onClick={onCloseModal}
+                />
+              )}
+            />
+
+            <Modal.Open
+              modalName={FORM.DELETE}
+              renderChildren={(onCloseModal) => (
+                <ButtonIcon
+                  icon={<FaRegTrashAlt />}
+                  text={'Delete'}
+                  iconSize={'18px'}
+                  fontSize={'var(--fs-sm)'}
+                  variations={'danger'}
+                  iconColor={'white'}
+                  disabled={!itemSelected || itemSelected?.status === 'Available'}
+                  onClick={onCloseModal}
+                />
+              )}
+            />
+
             <Modal.Window
-              name="room-form"
+              name={FORM.ROOM}
               title="Add form"
               renderChildren={(onCloseModal) => (
                 <RoomForm onCloseModal={onCloseModal} />
               )}
             />
 
-            <ButtonIcon
-              icon={<FiEdit />}
-              text={'Edit'}
-              iconSize={'18px'}
-              fontSize={'var(--fs-sm)'}
-              variations={'success'}
-              iconColor={'white'}
-              disabled={Boolean(!itemSelected)}
-            />
-            <ButtonIcon
-              icon={<FaRegTrashAlt />}
-              text={'Delete'}
-              iconSize={'18px'}
-              fontSize={'var(--fs-sm)'}
-              variations={'danger'}
-              iconColor={'white'}
-              disabled={Boolean(!itemSelected)}
-            />
+            <Modal.Window
+              name={FORM.EDIT}
+              title="Edit Room"
+              renderChildren={(onCloseModal) =>
+                <RoomForm room={roomSelected} onCloseModal={onCloseModal} />
+              } />
+
+            <Modal.Window
+              name={FORM.DELETE}
+              title="Delete Room"
+              renderChildren={(onCloseModal) =>
+                <ConfirmMessage
+                  message={`Are you sure to delete ${roomSelected!.name}?`}
+                  onConfirm={() => setIsDeleteRoom(roomSelected!.id)}
+                  onCloseModal={onCloseModal}
+                />
+              } />
+
           </ActionTable>
         </Modal>
       </Direction>
@@ -123,16 +167,19 @@ const Room = () => {
           columns={columns}
           rows={tempRooms}
           count={count}
-          enabledSort={true}
+          sortBy={ROOM_PAGE.SORTBY_OPTIONS}
           enabledOrder={true}
-          enabledSearch={true}
+          searchPlaceHolder={'Search by name...'}
           stateSelected={{
             itemSelected,
-            setItemSelected,
+            setItemSelected
           }}
           onRowClick={(data) => {
             setItemSelected(data);
-          }} />}
+          }} />
+      }
+
+      {tempRooms && Boolean(!tempRooms.length) && <Message>No data to show here!</Message>}
     </StyledRoom>
   );
 };
