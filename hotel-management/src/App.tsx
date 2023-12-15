@@ -16,10 +16,10 @@ import Room from './pages/Room';
 import NotFound from './pages/NotFound';
 import Login from '@src/pages/Login';
 import Account from '@src/pages/Account';
+import SignUpAccount from '@src/pages/SignUpAccount';
 
 // Constants
 import * as PATH from './constants/path';
-import SignUpAccount from "@src/pages/SignUpAccount";
 
 const queryClient = new QueryClient();
 
@@ -42,7 +42,10 @@ function App() {
                 <Route path={PATH.USER} element={<User />} />
                 <Route path={PATH.ROOM} element={<Room />} />
                 <Route path={PATH.ACCOUNT} element={<Account />} />
-                <Route path={PATH.SIGN_UP_ACCOUNT} element={<SignUpAccount />} />
+                <Route
+                  path={PATH.SIGN_UP_ACCOUNT}
+                  element={<SignUpAccount />}
+                />
               </Route>
               <Route path={PATH.LOGIN} element={<Login />} />
               <Route path={PATH.OTHER_PATH} element={<NotFound />} />
