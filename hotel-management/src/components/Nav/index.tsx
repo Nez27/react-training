@@ -7,7 +7,8 @@ import { BsHouseDoorFill } from 'react-icons/bs';
 import { StyledNav, StyledNavLink } from './styled';
 
 // Constants
-import { BOOKING, ROOM, USER } from '@src/constants/path';
+import {BOOKING, ROOM, SIGN_UP_ACCOUNT, USER} from '@src/constants/path';
+import {FaUserPlus} from "react-icons/fa6";
 
 const Nav = () => {
   return (
@@ -23,6 +24,10 @@ const Nav = () => {
       <StyledNavLink to={ROOM}>
         <BsHouseDoorFill />
         <span>Room</span>
+      </StyledNavLink>
+      <StyledNavLink to={SIGN_UP_ACCOUNT}>
+        <FaUserPlus />
+        <span>Create Account</span>
       </StyledNavLink>
     </StyledNav>
   );

@@ -35,7 +35,7 @@ const StyledLoginForm = styled.div`
 `;
 
 const FieldInput = styled.input`
-  ${CommonInput}
+  ${CommonInput};
 
   width: 300px;
 `

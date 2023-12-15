@@ -6,6 +6,7 @@ import supabase from './supabaseService';
 
 // Types
 import { IAccount } from '@src/types/account';
+import toast from 'react-hot-toast';
 
 /**
  * Login services
@@ -82,4 +83,30 @@ const updateAccount = async ({ fullName, password }: IAccount) => {
   return data;
 };
 
-export { login, logout, getCurrentAccount, updateAccount };
+const createAccount = async ({ email, password }: IAccount) => {
+  if (!email || !password) {
+    toast.error('Email and password is not valid!');
+
+    return;
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.error(error.message);
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+export {
+  login,
+  logout,
+  getCurrentAccount,
+  updateAccount,
+  createAccount
+};
