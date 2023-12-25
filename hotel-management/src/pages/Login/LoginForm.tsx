@@ -30,7 +30,12 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILogin>();
+  } = useForm<ILogin>({
+    defaultValues: {
+      email: 'admin@nezumi.site',
+      password: 'Phanhuuloi2@@1',
+    }
+  });
   const { login, isPending } = useLogin();
 
   const onSubmit = (data: ILogin) => {
